@@ -3,8 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\TicketRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -28,6 +26,9 @@ class Ticket
     #[ORM\JoinColumn(nullable: false)]
     private ?Project $project = null;
 
+    #[ORM\ManyToOne(inversedBy: 'assigneeTickets')]
+    private ?User $assignee = null;
+
     #[ORM\Column(length: 255)]
     private ?string $title = null;
 
@@ -37,12 +38,6 @@ class Ticket
     #[ORM\ManyToOne(inversedBy: 'tickets')]
     #[ORM\JoinColumn(nullable: false)]
     private ?TicketLabel $label = null;
-
-    /**
-     * @var Collection<int, User>
-     */
-    #[ORM\OneToMany(targetEntity: User::class, mappedBy: 'ticket')]
-    private Collection $assignee;
 
     #[ORM\ManyToOne(inversedBy: 'tickets')]
     #[ORM\JoinColumn(nullable: false)]
@@ -56,7 +51,6 @@ class Ticket
 
     public function __construct()
     {
-        $this->assignee = new ArrayCollection();
         $this->setCreatedAt(new \DateTime());
     }
 
@@ -101,6 +95,18 @@ class Ticket
         return $this;
     }
 
+    public function getAssignee(): ?User
+    {
+        return $this->assignee;
+    }
+
+    public function setAssignee(?User $assignee): static
+    {
+        $this->assignee = $assignee;
+
+        return $this;
+    }
+
     public function getTitle(): ?string
     {
         return $this->title;
@@ -133,36 +139,6 @@ class Ticket
     public function setLabel(?TicketLabel $label): static
     {
         $this->label = $label;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, User>
-     */
-    public function getAssignee(): Collection
-    {
-        return $this->assignee;
-    }
-
-    public function addAssignee(User $assignee): static
-    {
-        if (!$this->assignee->contains($assignee)) {
-            $this->assignee->add($assignee);
-            $assignee->setTicket($this);
-        }
-
-        return $this;
-    }
-
-    public function removeAssignee(User $assignee): static
-    {
-        if ($this->assignee->removeElement($assignee)) {
-            // set the owning side to null (unless already changed)
-            if ($assignee->getTicket() === $this) {
-                $assignee->setTicket(null);
-            }
-        }
 
         return $this;
     }

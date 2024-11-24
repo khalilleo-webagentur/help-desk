@@ -65,14 +65,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Project::class, mappedBy: 'user', orphanRemoval: true)]
     private Collection $projects;
 
-    #[ORM\ManyToOne(inversedBy: 'assignee')]
-    private ?Ticket $ticket = null;
-
     /**
      * @var Collection<int, Ticket>
      */
     #[ORM\OneToMany(targetEntity: Ticket::class, mappedBy: 'customer', orphanRemoval: true)]
     private Collection $tickets;
+
+    /**
+     * @var Collection<int, Ticket>
+     */
+    #[ORM\OneToMany(targetEntity: Ticket::class, mappedBy: 'assignee')]
+    private Collection $assigneeTickets;
 
     public function __construct()
     {
@@ -81,6 +84,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->tempUsers = new ArrayCollection();
         $this->projects = new ArrayCollection();
         $this->tickets = new ArrayCollection();
+        $this->assigneeTickets = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -305,18 +309,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getTicket(): ?Ticket
-    {
-        return $this->ticket;
-    }
-
-    public function setTicket(?Ticket $ticket): static
-    {
-        $this->ticket = $ticket;
-
-        return $this;
-    }
-
     /**
      * @return Collection<int, Ticket>
      */
@@ -341,6 +333,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($ticket->getCustomer() === $this) {
                 $ticket->setCustomer(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Ticket>
+     */
+    public function getAssigneeTickets(): Collection
+    {
+        return $this->assigneeTickets;
+    }
+
+    public function addAssigneeTicket(Ticket $assigneeTicket): static
+    {
+        if (!$this->assigneeTickets->contains($assigneeTicket)) {
+            $this->assigneeTickets->add($assigneeTicket);
+            $assigneeTicket->setAssignee($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAssigneeTicket(Ticket $assigneeTicket): static
+    {
+        if ($this->assigneeTickets->removeElement($assigneeTicket)) {
+            // set the owning side to null (unless already changed)
+            if ($assigneeTicket->getAssignee() === $this) {
+                $assigneeTicket->setAssignee(null);
             }
         }
 
