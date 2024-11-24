@@ -52,7 +52,7 @@ class IndexController extends AbstractController
         }
 
         if ($this->projectService->getOneByTitle($title)) {
-            $this->addFlash('warning', 'Project is already exists.');
+            $this->addFlash('warning', 'Project already exists.');
             return $this->redirectToRoute(self::DASHBOARD_PROJECTS_ROUTE);
         }
 
@@ -99,7 +99,7 @@ class IndexController extends AbstractController
         $title = $this->validate($request->request->get('title'));
 
         if (!$title) {
-            $this->addFlash('warning', 'Title of thr project is required.');
+            $this->addFlash('warning', 'Title of the project is required.');
             return $this->redirectToRoute(self::DASHBOARD_PROJECTS_ROUTE);
         }
 
