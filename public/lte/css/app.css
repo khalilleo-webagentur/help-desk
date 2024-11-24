@@ -52,12 +52,16 @@ label, label:not(.form-check-label):not(.custom-file-label){
     cursor: pointer;
 }
 
+.fs-13 {
+    font-size: 13px !important;
+}
+
 .fs-14 {
-    font-size: 14px;
+    font-size: 14px !important;
 }
 
 .fs-15 {
-    font-size: 15px;
+    font-size: 15px !important;
 }
 
 .alert-fixed-z-index {
