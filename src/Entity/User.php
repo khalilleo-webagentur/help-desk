@@ -65,14 +65,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Project::class, mappedBy: 'user', orphanRemoval: true)]
     private Collection $projects;
 
+    #[ORM\ManyToOne(inversedBy: 'assignee')]
+    private ?Ticket $ticket = null;
+
     /**
      * @var Collection<int, Ticket>
      */
-    #[ORM\OneToMany(targetEntity: Ticket::class, mappedBy: 'user', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: Ticket::class, mappedBy: 'customer', orphanRemoval: true)]
     private Collection $tickets;
-
-    #[ORM\ManyToOne(inversedBy: 'assignee')]
-    private ?Ticket $ticket = null;
 
     public function __construct()
     {
@@ -305,6 +305,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    public function getTicket(): ?Ticket
+    {
+        return $this->ticket;
+    }
+
+    public function setTicket(?Ticket $ticket): static
+    {
+        $this->ticket = $ticket;
+
+        return $this;
+    }
+
     /**
      * @return Collection<int, Ticket>
      */
@@ -317,7 +329,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if (!$this->tickets->contains($ticket)) {
             $this->tickets->add($ticket);
-            $ticket->setUser($this);
+            $ticket->setCustomer($this);
         }
 
         return $this;
@@ -327,22 +339,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if ($this->tickets->removeElement($ticket)) {
             // set the owning side to null (unless already changed)
-            if ($ticket->getUser() === $this) {
-                $ticket->setUser(null);
+            if ($ticket->getCustomer() === $this) {
+                $ticket->setCustomer(null);
             }
         }
-
-        return $this;
-    }
-
-    public function getTicket(): ?Ticket
-    {
-        return $this->ticket;
-    }
-
-    public function setTicket(?Ticket $ticket): static
-    {
-        $this->ticket = $ticket;
 
         return $this;
     }
