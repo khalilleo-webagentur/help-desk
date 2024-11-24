@@ -17,6 +17,9 @@ class Ticket
     #[ORM\Column]
     private ?int $id = null;
 
+    #[ORM\Column(length: 150)]
+    private int $ticketNo = 0;
+
     #[ORM\ManyToOne(inversedBy: 'tickets')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
@@ -41,7 +44,7 @@ class Ticket
     #[ORM\OneToMany(targetEntity: User::class, mappedBy: 'ticket')]
     private Collection $assignee;
 
-    #[ORM\OneToOne(inversedBy: 'ticket', cascade: ['persist', 'remove'])]
+    #[ORM\ManyToOne(inversedBy: 'tickets')]
     #[ORM\JoinColumn(nullable: false)]
     private ?TicketType $type = null;
 
@@ -60,6 +63,18 @@ class Ticket
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getTicketNo(): int
+    {
+        return $this->ticketNo;
+    }
+
+    public function setTicketNo(int $ticketNo): static
+    {
+        $this->ticketNo = $ticketNo;
+
+        return $this;
     }
 
     public function getUser(): ?User
@@ -152,18 +167,6 @@ class Ticket
         return $this;
     }
 
-    public function getType(): ?TicketType
-    {
-        return $this->type;
-    }
-
-    public function setType(TicketType $type): static
-    {
-        $this->type = $type;
-
-        return $this;
-    }
-
     public function getUpdatedAt(): ?\DateTimeInterface
     {
         return $this->updatedAt;
@@ -184,6 +187,18 @@ class Ticket
     public function setCreatedAt(\DateTimeInterface $createdAt): static
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getType(): ?TicketType
+    {
+        return $this->type;
+    }
+
+    public function setType(?TicketType $type): static
+    {
+        $this->type = $type;
 
         return $this;
     }

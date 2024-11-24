@@ -97,6 +97,14 @@ body {
     animation: fadein 2s;
 }
 
+.ticket-label {
+    background: rgba(223, 222, 222, 0.63);
+    padding: 2px 11px;
+    border-radius: 50px;
+    font-size: 13px !important;
+    user-select: none;
+}
+
 @keyframes fadein {
     from {
         opacity: 0;

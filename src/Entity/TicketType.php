@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\TicketTypeRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -24,12 +26,16 @@ class TicketType
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $createdAt = null;
 
-    #[ORM\OneToOne(mappedBy: 'type', cascade: ['persist', 'remove'])]
-    private ?Ticket $ticket = null;
+    /**
+     * @var Collection<int, Ticket>
+     */
+    #[ORM\OneToMany(targetEntity: Ticket::class, mappedBy: 'type', orphanRemoval: true)]
+    private Collection $tickets;
 
     public function __construct()
     {
         $this->setCreatedAt(new \DateTime());
+        $this->tickets = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -73,19 +79,32 @@ class TicketType
         return $this;
     }
 
-    public function getTicket(): ?Ticket
+    /**
+     * @return Collection<int, Ticket>
+     */
+    public function getTickets(): Collection
     {
-        return $this->ticket;
+        return $this->tickets;
     }
 
-    public function setTicket(Ticket $ticket): static
+    public function addTicket(Ticket $ticket): static
     {
-        // set the owning side of the relation if necessary
-        if ($ticket->getType() !== $this) {
+        if (!$this->tickets->contains($ticket)) {
+            $this->tickets->add($ticket);
             $ticket->setType($this);
         }
 
-        $this->ticket = $ticket;
+        return $this;
+    }
+
+    public function removeTicket(Ticket $ticket): static
+    {
+        if ($this->tickets->removeElement($ticket)) {
+            // set the owning side to null (unless already changed)
+            if ($ticket->getType() === $this) {
+                $ticket->setType(null);
+            }
+        }
 
         return $this;
     }

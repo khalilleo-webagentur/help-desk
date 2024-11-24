@@ -9,10 +9,10 @@ use App\Repository\UserRepository;
 use DateTime;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-final class UserService
+final readonly class UserService
 {
     public function __construct(
-        private readonly UserRepository $userRepository,
+        private UserRepository $userRepository,
     ) {
     }
 
@@ -39,7 +39,12 @@ final class UserService
         return $this->userRepository->findBy([], ['id' => 'DESC']);
     }
 
-    public function save(User|UserInterface $model): ?User
+    public function isAdmin(UserInterface $user): bool
+    {
+        return in_array('ROLE_SUPER_ADMIN', $user->getRoles());
+    }
+
+    public function save(User $model): ?User
     {
         $this->userRepository->save($model->setUpdatedAt(new DateTime()), true);
 
