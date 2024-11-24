@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\TicketLabelRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -30,12 +32,16 @@ class TicketLabel
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $createdAt = null;
 
-    #[ORM\OneToOne(mappedBy: 'label', cascade: ['persist', 'remove'])]
-    private ?Ticket $ticket = null;
+    /**
+     * @var Collection<int, Ticket>
+     */
+    #[ORM\OneToMany(targetEntity: Ticket::class, mappedBy: 'label', orphanRemoval: true)]
+    private Collection $tickets;
 
     public function __construct()
     {
         $this->setCreatedAt(new \DateTime());
+        $this->tickets = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -103,20 +109,33 @@ class TicketLabel
         return $this;
     }
 
-    public function getTicket(): ?Ticket
-    {
-        return $this->ticket;
-    }
+  /**
+   * @return Collection<int, Ticket>
+   */
+  public function getTickets(): Collection
+  {
+      return $this->tickets;
+  }
 
-    public function setTicket(Ticket $ticket): static
-    {
-        // set the owning side of the relation if necessary
-        if ($ticket->getLabel() !== $this) {
-            $ticket->setLabel($this);
-        }
+  public function addTicket(Ticket $ticket): static
+  {
+      if (!$this->tickets->contains($ticket)) {
+          $this->tickets->add($ticket);
+          $ticket->setLabel($this);
+      }
 
-        $this->ticket = $ticket;
+      return $this;
+  }
 
-        return $this;
-    }
+  public function removeTicket(Ticket $ticket): static
+  {
+      if ($this->tickets->removeElement($ticket)) {
+          // set the owning side to null (unless already changed)
+          if ($ticket->getLabel() === $this) {
+              $ticket->setLabel(null);
+          }
+      }
+
+      return $this;
+  }
 }

@@ -14,16 +14,8 @@
                 </div>
                 <div class="modal-body">
 
-                    <div class="mb-3">
-                        <label for="iO7nM4yT4bG2sO5i" class="form-label">
-                            Title <span class="text-danger">*</span>
-                        </label>
-                        <input type="text" class="form-control" id="iO7nM4yT4bG2sO5i" placeholder="Type title" name="title"
-                               required autofocus>
-                    </div>
-
                     <div class="row">
-                        <div class="col-lg-3">
+                        <div class="col-lg-4">
                             <div class="form-group">
                                 <label for="iO7nM4yT4bG2sO00">
                                     Project  <span class="text-danger">*</span>
@@ -37,7 +29,7 @@
                             </div>
                         </div>
 
-                        <div class="col-lg-3">
+                        <div class="col-lg-4">
                             <div class="form-group">
                                 <label for="iO7nM4yT4bG2sO22">
                                     Type  <span class="text-danger">*</span>
@@ -49,6 +41,28 @@
                                 </select>
                             </div>
                         </div>
+
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label for="iO7nM4yT4bG2sO55">
+                                    Labels  <span class="text-danger">*</span>
+                                </label>
+                                <select class="form-control" name="label" id="iO7nM4yT4bG2sO55">
+                                    <option value="0" selected disabled>Select Label</option>
+                                    {% for label in ticketLabels %}
+                                        <option value="{{ label.id }}">{{ label.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="iO7nM4yT4bG2sO5i" class="form-label">
+                            Title <span class="text-danger">*</span>
+                        </label>
+                        <input type="text" class="form-control" id="iO7nM4yT4bG2sO5i" placeholder="Type title" name="title"
+                               required autofocus>
                     </div>
 
                     <div class="mb-3">
@@ -75,22 +89,6 @@
                                     <option value="0" selected>Unassigned</option>
                                     {% for user in users %}
                                         <option value="{{ user.id }}">{{ user.name }}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-lg-3">
-                            <div class="form-group">
-                                <label for="iO7nM4yT4bG2sO55">
-                                    Labels  <span class="text-danger">*</span>
-                                </label>
-                                <select class="form-control" name="label" id="iO7nM4yT4bG2sO55">
-                                    <option value="0" selected disabled>Select Label</option>
-                                    {% for label in ticketLabels %}
-                                        <option value="{{ label.id }}">{{ label.name }}</option>
                                     {% endfor %}
                                 </select>
                             </div>

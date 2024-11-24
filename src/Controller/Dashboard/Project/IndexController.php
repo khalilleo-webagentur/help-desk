@@ -6,6 +6,7 @@ namespace App\Controller\Dashboard\Project;
 
 use App\Entity\Project;
 use App\Service\ProjectService;
+use App\Service\UserService;
 use App\Traits\FormValidationTrait;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -21,8 +22,10 @@ class IndexController extends AbstractController
     private const DASHBOARD_PROJECTS_ROUTE = 'app_dashboard_projects_index';
 
     public function __construct(
-        private readonly ProjectService $projectService
-    ){
+        private readonly UserService    $userService,
+        private readonly ProjectService $projectService,
+    )
+    {
     }
 
     #[Route('/home', name: 'app_dashboard_projects_index')]
@@ -32,8 +35,11 @@ class IndexController extends AbstractController
 
         $projects = $this->projectService->getAll();
 
+        $customers = $this->userService->getAllCustomers();
+
         return $this->render('dashboard/projects/index.html.twig', [
             'projects' => $projects,
+            'customers' => $customers,
         ]);
     }
 
@@ -41,8 +47,6 @@ class IndexController extends AbstractController
     public function new(Request $request): RedirectResponse
     {
         $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
-
-        $user = $this->getUser();
 
         $title = $this->validate($request->request->get('title'));
 
@@ -56,6 +60,15 @@ class IndexController extends AbstractController
             return $this->redirectToRoute(self::DASHBOARD_PROJECTS_ROUTE);
         }
 
+        $customer = $this->userService->getById(
+            $this->validateNumber($request->request->get('customer'))
+        );
+
+        if (!$customer || !$this->userService->isCustomer($customer)) {
+            $this->addFlash('warning', 'Customer not found.');
+            return $this->redirectToRoute(self::DASHBOARD_PROJECTS_ROUTE);
+        }
+
         $description = $this->validateTextarea($request->request->get('description'));
 
         $project = new Project();
@@ -63,7 +76,7 @@ class IndexController extends AbstractController
         $this->projectService->save(
             $project
                 ->setTitle($title)
-                ->setUser($user)
+                ->setUser($customer)
                 ->setDescription($description)
         );
 

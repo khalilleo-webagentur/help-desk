@@ -83,7 +83,9 @@ class IndexController extends AbstractDashboardController
             return $this->redirectToRoute(self::DASHBOARD_TICKETS_ROUTE);
         }
 
-        $project = $this->projectService->getByUserAndId($user, $project);
+        $project = $this->userService->isAdmin($user)
+            ? $this->projectService->getById($project)
+            : $this->projectService->getByUserAndId($user, $project);
 
         if (!$project) {
             $this->addFlash('warning', 'Project not found.');
@@ -118,7 +120,7 @@ class IndexController extends AbstractDashboardController
         $this->ticketService->save(
             $ticket
                 ->setTicketNo($ticketNo)
-                ->setUser($user)
+                ->setUser($project->getUser())
                 ->setProject($project)
                 ->setType($ticketType)
                 ->setLabel($ticketLabel)
@@ -126,7 +128,7 @@ class IndexController extends AbstractDashboardController
                 ->setDescription($description)
         );
 
-        $this->addFlash('notice', 'New issue has been added.');
+        $this->addFlash('success', 'New issue has been added.');
 
         return $this->redirectToRoute(self::DASHBOARD_TICKETS_ROUTE);
     }

@@ -13,12 +13,25 @@
                     </button>
                 </div>
                 <div class="modal-body">
+
+                    <div class="form-group">
+                        <label for="iO7nM4yT4bG2sO00">
+                            Customer  <span class="text-danger">*</span>
+                        </label>
+                        <select class="form-control" name="customer" id="iO7nM4yT4bG2sO00" required>
+                            <option value="0" selected disabled>Select Customer</option>
+                            {% for customer in customers %}
+                                <option value="{{ customer.id }}">{{ customer.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
                     <div class="mb-3">
                         <label for="iO7nM4yT4bG2sO5i" class="form-label">
-                            Title <span class="text-danger">*</span>
+                            Name <span class="text-danger">*</span>
                         </label>
-                        <input type="text" class="form-control" id="iO7nM4yT4bG2sO5i" placeholder="Type title" name="title"
-                               required autofocus>
+                        <input type="text" class="form-control" id="iO7nM4yT4bG2sO5i" placeholder="Type name" name="title"
+                               required>
                     </div>
 
                     <div class="mb-3">

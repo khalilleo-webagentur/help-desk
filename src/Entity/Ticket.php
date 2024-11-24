@@ -34,7 +34,7 @@ class Ticket
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
-    #[ORM\OneToOne(inversedBy: 'ticket', cascade: ['persist', 'remove'])]
+    #[ORM\ManyToOne(inversedBy: 'tickets')]
     #[ORM\JoinColumn(nullable: false)]
     private ?TicketLabel $label = null;
 
@@ -130,7 +130,7 @@ class Ticket
         return $this->label;
     }
 
-    public function setLabel(TicketLabel $label): static
+    public function setLabel(?TicketLabel $label): static
     {
         $this->label = $label;
 

@@ -34,6 +34,22 @@ final readonly class UserService
     /**
      * @return User[]
      */
+    public function getAllCustomers(): array
+    {
+        $customers = [];
+
+        foreach ($this->getAll() as $user) {
+            if (in_array('ROLE_CUSTOMER', $user->getRoles(), true)) {
+                $customers[] = $user;
+            }
+        }
+
+        return $customers;
+    }
+
+    /**
+     * @return User[]
+     */
     public function getAll(): array
     {
         return $this->userRepository->findBy([], ['id' => 'DESC']);
@@ -42,6 +58,11 @@ final readonly class UserService
     public function isAdmin(UserInterface $user): bool
     {
         return in_array('ROLE_SUPER_ADMIN', $user->getRoles());
+    }
+
+    public function isCustomer(UserInterface $user): bool
+    {
+        return in_array('ROLE_CUSTOMER', $user->getRoles());
     }
 
     public function save(User $model): ?User

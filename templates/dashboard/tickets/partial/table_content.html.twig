@@ -4,7 +4,7 @@
             <thead>
             <tr class="fs-14">
                 <th>ID</th>
-                <th>{{ 'Owner'|trans }}</th>
+                <th>{{ 'Customer'|trans }}</th>
                 <th>{{ 'Project'|trans }}</th>
                 <th>{{ 'Type'|trans }}</th>
                 <th>{{ 'Label'|trans }}</th>
@@ -26,9 +26,7 @@
                     </td>
 
                     <td>
-                        <a href="#">
-                            {{ row.project.title }}
-                        </a>
+                        {{ row.project.title }}
                     </td>
 
                     <td>{{ row.type.name }}</td>
@@ -44,18 +42,25 @@
                     <td title="{{ row.createdAt|date }}">{{ timeAgo(row.createdAt) }}</td>
 
                     <td class="d-flex">
-
-                        <form action="#" method="post">
-                            <button class="btn small-btn btn-secondary mr-2" type="submit">
-                                <span class="fa fa-pen fa-sm"></span>
+                        <form action="#">
+                            <button class="btn small-btn btn-primary mr-2" type="submit">
+                                <span class="fa fa-eye fa-sm"></span>
                             </button>
                         </form>
 
-                        <form action="#" method="post">
-                            <button class="btn small-btn btn-danger" type="submit">
-                                <span class="fa fa-trash-alt fa-sm"></span>
-                            </button>
-                        </form>
+                        {% if is_granted('ROLE_SUPER_ADMIN') %}
+                            <form action="#">
+                                <button class="btn small-btn btn-secondary mr-2" type="submit">
+                                    <span class="fa fa-pen fa-sm"></span>
+                                </button>
+                            </form>
+
+                            <form action="#" method="post">
+                                <button class="btn small-btn btn-danger mr-2" type="submit">
+                                    <span class="fa fa-trash-alt fa-sm"></span>
+                                </button>
+                            </form>
+                        {% endif %}
                     </td>
                 </tr>
             {% endfor %}
