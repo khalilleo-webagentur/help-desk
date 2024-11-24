@@ -36,7 +36,7 @@ final readonly class TicketService
      */
     public function getAllByUser(User|UserInterface $user): array
     {
-        return $this->ticketRepository->findBy(['user' => $user]);
+        return $this->ticketRepository->findBy(['user' => $user], ['createdAt' => 'DESC']);
     }
 
     public function getAll(): array
