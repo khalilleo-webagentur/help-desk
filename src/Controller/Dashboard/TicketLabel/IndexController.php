@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace App\Controller\Dashboard\TicketLabel;
 
+use App\Controller\Dashboard\AbstractDashboardController;
 use App\Entity\TicketLabel;
 use App\Service\TicketLabelsService;
 use App\Traits\FormValidationTrait;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/dashboard/ticket-labels/62o8i0p1v6sgp2wk')]
-class IndexController extends AbstractController
+class IndexController extends AbstractDashboardController
 {
     use FormValidationTrait;
 
@@ -28,7 +28,7 @@ class IndexController extends AbstractController
     #[Route('/home', name: 'app_dashboard_ticket_labels_index')]
     public function index(): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
+        $this->denyAccessUnlessGrantedRoleCustomer();
 
         $ticketLabels = $this->ticketLabelsService->getAll();
 

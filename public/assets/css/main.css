@@ -109,6 +109,10 @@ input[type="color"]:focus,
     --bs-gradient: none;
 }
 
+.btn-outline-primary:hover {
+    color: #fff !important;
+}
+
 .d-border {
     border: 1px solid #b9b9b934;
     border-radius: 7px;

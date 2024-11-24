@@ -6,6 +6,7 @@
                 <th>{{ 'Name'|trans }}</th>
                 <th>{{ 'Email'|trans }}</th>
                 <th>{{ 'Token'|trans }}</th>
+                <th>{{ 'Role'|trans }}</th>
                 <th>{{ 'Verified'|trans }}</th>
                 <th>{{ 'Deleted'|trans }}</th>
                 <th>{{ 'Updated'|trans }}</th>
@@ -19,7 +20,16 @@
                 <td>{{ row.id }}</td>
                 <td>{{ row.name|capitalize }}</td>
                 <td>{{ row.email }}</td>
-                <td>{{ row.token ? row.token : '---' }}</td>
+                <td>
+                    {% if row.token %}
+                        <span class="text-danger">{{ row.token }}</span>
+                    {% else %}
+                        ---
+                    {% endif %}
+                </td>
+                <td>
+                    <span class="small">{{ role(row) }}</span>
+                </td>
                 <td>{{ row.isVerified ? faThumbsUp() : faThumbsDown() }}</td>
                 <td>{{ row.isDeleted ? 'Yes' : 'No' }}</td>
 
@@ -28,9 +38,11 @@
                 <td title="{{ row.createdAt|date }}">{{ timeAgo(row.createdAt) }}</td>
 
                 <td>
-                    <a href="{{path('app_dashboard_user_edit', {id:row.id})}}">
-                        <span class="fa fa-edit fa-sm"></span>
-                    </a>
+                    <form action="{{ path('app_dashboard_user_edit', {id:row.id}) }}">
+                        <button class="btn small-btn btn-secondary" type="submit">
+                            <span class="fa fa-edit fa-sm"></span>
+                        </button>
+                    </form>
                 </td>
             </tr>
             {% endfor %}

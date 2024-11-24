@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Twig;
 
+use App\Entity\User;
 use App\Service\ConfigService;
 use DateTime;
 use DateTimeInterface;
@@ -21,6 +22,8 @@ class TwigHelper extends AbstractExtension
     public function getFunctions(): array
     {
         return [
+            new TwigFunction('role', [$this, 'getRole']),
+            new TwigFunction('isCustomer', [$this, 'isCustomer']),
             new TwigFunction('hash', [$this, 'hash']),
             new TwigFunction('timeAgo', [$this, 'timeAgo']),
             new TwigFunction('formatSizeUnits', [$this, 'formatSizeUnits']),
@@ -37,6 +40,26 @@ class TwigHelper extends AbstractExtension
             new TwigFunction('madeBy', [$this, 'getMadeBy']),
             new TwigFunction('version', [$this, 'getVersion']),
         ];
+    }
+
+    public function getRole(?User $user): string
+    {
+        $role = $user instanceof User ? $user->getRoles()[0]: '';
+
+        if ($role === 'ROLE_CUSTOMER') {
+            $role = 'CUSTOMER';
+        } elseif ($role === 'ROLE_SUPER_ADMIN') {
+            $role = 'SUPER_ADMIN';
+        } else {
+            $role = 'USER';
+        }
+
+        return $role;
+    }
+
+    public function isCustomer(?User $user): bool
+    {
+        return $user && in_array('ROLE_CUSTOMER', $user->getRoles(), true);
     }
 
     public function hash(string $text): string

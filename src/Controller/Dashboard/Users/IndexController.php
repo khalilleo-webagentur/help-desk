@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace App\Controller\Dashboard\Users;
 
+use App\Controller\Dashboard\AbstractDashboardController;
 use App\Service\UserService;
 use App\Traits\FormValidationTrait;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('dashboard/users/c2o5i0p7v6s5p4w5')]
-class IndexController extends AbstractController
+class IndexController extends AbstractDashboardController
 {
     use FormValidationTrait;
 
@@ -21,13 +21,14 @@ class IndexController extends AbstractController
 
     public function __construct(
         private readonly UserService $userService
-    ) {
+    )
+    {
     }
 
     #[Route('/home', name: 'app_dashboard_users_index')]
     public function index(): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
+        $this->denyAccessUnlessGrantedRoleSuperAdmin();
 
         $users = $this->userService->getAll();
 
@@ -39,7 +40,7 @@ class IndexController extends AbstractController
     #[Route('/edit/{id}', name: 'app_dashboard_user_edit')]
     public function edit(?string $id): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
+        $this->denyAccessUnlessGrantedRoleSuperAdmin();
 
         $user = $this->userService->getById(
             $this->validateNumber($id)
@@ -58,7 +59,7 @@ class IndexController extends AbstractController
     #[Route('/store/{id}', name: 'app_dashboard_user_store', methods: 'POST')]
     public function store(?string $id, Request $request): RedirectResponse
     {
-        $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
+        $this->denyAccessUnlessGrantedRoleSuperAdmin();
 
         $name = $this->validate($request->request->get('name'));
 
@@ -85,7 +86,7 @@ class IndexController extends AbstractController
         if (!$isVerified) {
             $token = null;
         }
-        
+
         $isDeleted = $this->validateCheckbox($request->request->get('isDeleted'));
 
         if ($isDeleted) {
