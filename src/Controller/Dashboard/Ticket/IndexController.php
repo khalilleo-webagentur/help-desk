@@ -44,7 +44,7 @@ class IndexController extends AbstractDashboardController
 
         $issues = $isAdmin
             ? $this->ticketService->getAll()
-            : $this->ticketService->getAllByUser($user);
+            : $this->ticketService->getAllByCustomer($user);
 
         $ticketTypes = $this->ticketTypesService->getAll();
 

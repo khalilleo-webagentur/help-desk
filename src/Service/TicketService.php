@@ -34,9 +34,9 @@ final readonly class TicketService
     /**
      * @return Ticket[]
      */
-    public function getAllByUser(User|UserInterface $user): array
+    public function getAllByCustomer(User|UserInterface $user): array
     {
-        return $this->ticketRepository->findBy(['user' => $user], ['createdAt' => 'DESC']);
+        return $this->ticketRepository->findBy(['customer' => $user], ['createdAt' => 'DESC']);
     }
 
     public function getAll(): array
