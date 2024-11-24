@@ -16,9 +16,35 @@ final readonly class ProjectService
     ) {
     }
 
+    public function getById(int $id): ?Project
+    {
+        return $this->projectRepository->findOneBy(['id' => $id]);
+    }
+
     public function getOneByUser(User $user): ?Project
     {
         return $this->projectRepository->findOneBy(['user' => $user]);
+    }
+
+    public function getOneByTitle(string $title): ?Project
+    {
+        return $this->projectRepository->findOneBy(['title' => $title]);
+    }
+
+    /**
+     * @return Project[]
+     */
+    public function getAllByUser(User $user): array
+    {
+        return $this->projectRepository->findBy(['user' => $user]);
+    }
+
+    /**
+     * @return Project[]
+     */
+    public function getAll(): array
+    {
+        return $this->projectRepository->findAll();
     }
 
     public function save(Project $model): Project
@@ -26,5 +52,10 @@ final readonly class ProjectService
         $this->projectRepository->save($model->setUpdatedAt(new DateTime()), true);
 
         return $model;
+    }
+
+    public function delete(Project $model): void
+    {
+        $this->projectRepository->remove($model, true);
     }
 }

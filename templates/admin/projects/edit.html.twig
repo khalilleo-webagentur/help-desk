@@ -1,6 +1,6 @@
 {% extends 'admin/layout/base.html.twig' %}
 
-{% block title %} Dashboard :: Edit Ticket-Label Details {% endblock %}
+{% block title %} Dashboard :: Edit Project Details {% endblock %}
 
 {% block body %}
 
@@ -10,11 +10,11 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-sm-6">
-                        <h4 class="m-0 text-dark">Edit Ticket-Label Details</h4>
+                        <h4 class="m-0 text-dark">Edit Project Details</h4>
                     </div>
                     <div class="col-sm-6">
                         <div class="breadcrumb float-sm-right">
-                            <a href="{{ path('app_admin_ticket_labels_index') }}" class="text-secondary">
+                            <a href="{{ path('app_admin_projects_index') }}" class="text-secondary">
                                 Close <span class="fa fa-window-close"></span>
                             </a>
                         </div>
@@ -28,29 +28,22 @@
 
                 <div class="row px-2 py-3">
                     <div class="col-lg-6">
-                        <form action="{{ path('app_admin_ticket_label_store', {id:ticketLabel.id}) }}" method="post">
+                        <form action="{{ path('app_admin_project_store', {id:project.id}) }}" method="post">
 
                             <div class="mb-3">
-                                <label for="V9xO3aD7v" class="form-label">Name <span
+                                <label for="V9xO3aD7v" class="form-label">Title <span
                                             class="text-danger">*</span></label>
-                                <input type="text" class="form-control" id="V9xO3aD7v" placeholder="Type name"
-                                       value="{{ ticketLabel.name }}" name="name">
+                                <input type="text" class="form-control" id="V9xO3aD7v" placeholder="Type title"
+                                       value="{{ project.title }}" name="title">
                             </div>
 
                             <div class="mb-3">
                                 <label for="2hV9xO3aD7v" class="form-label">Description <span
                                             class="text-danger">*</span></label>
                                 <textarea type="text" class="form-control" id="2hV9xO3aD7v"
+                                          rows="7"
                                           placeholder="Type description"
-                                          rows="5"
-                                          name="description">{{ ticketLabel.description }}</textarea>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="V9xO3aD7v" class="form-label">Color <span
-                                            class="text-danger">*</span></label>
-                                <input type="color" class="form-control" id="V9xO3aD7v" placeholder="Type color"
-                                       value="{{ ticketLabel.color }}" name="color">
+                                          name="description">{{ project.description }}</textarea>
                             </div>
 
                             {% include "admin/component/edit_save_btn.html.twig" %}
