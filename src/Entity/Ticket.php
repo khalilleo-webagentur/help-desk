@@ -41,6 +41,10 @@ class Ticket
     #[ORM\OneToMany(targetEntity: User::class, mappedBy: 'ticket')]
     private Collection $assignee;
 
+    #[ORM\OneToOne(inversedBy: 'ticket', cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?TicketType $type = null;
+
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $updatedAt = null;
 
@@ -144,6 +148,18 @@ class Ticket
                 $assignee->setTicket(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getType(): ?TicketType
+    {
+        return $this->type;
+    }
+
+    public function setType(TicketType $type): static
+    {
+        $this->type = $type;
 
         return $this;
     }
