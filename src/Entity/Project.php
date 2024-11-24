@@ -25,7 +25,7 @@ class Project
 
     #[ORM\ManyToOne(inversedBy: 'projects')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?User $user = null;
+    private ?User $customer = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $updatedAt = null;
@@ -74,14 +74,14 @@ class Project
         return $this;
     }
 
-    public function getUser(): ?User
+    public function getCustomer(): ?User
     {
-        return $this->user;
+        return $this->customer;
     }
 
-    public function setUser(?User $user): static
+    public function setCustomer(?User $customer): static
     {
-        $this->user = $user;
+        $this->customer = $customer;
 
         return $this;
     }

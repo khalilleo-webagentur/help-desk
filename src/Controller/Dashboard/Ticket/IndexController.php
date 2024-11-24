@@ -120,7 +120,7 @@ class IndexController extends AbstractDashboardController
         $this->ticketService->save(
             $ticket
                 ->setTicketNo($ticketNo)
-                ->setUser($project->getUser())
+                ->setUser($project->getCustomer())
                 ->setProject($project)
                 ->setType($ticketType)
                 ->setLabel($ticketLabel)

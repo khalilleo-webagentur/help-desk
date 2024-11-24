@@ -76,7 +76,7 @@ class IndexController extends AbstractController
         $this->projectService->save(
             $project
                 ->setTitle($title)
-                ->setUser($customer)
+                ->setCustomer($customer)
                 ->setDescription($description)
         );
 
