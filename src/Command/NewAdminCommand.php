@@ -15,11 +15,11 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-// $ php bin/console app:new-admin
+// $ php bin/console app:new-dashboard
 
 #[AsCommand(
-    name: 'app:new-admin',
-    description: 'Add demo admin for demonstration purposes.',
+    name: 'app:new-dashboard',
+    description: 'Add demo dashboard for demonstration purposes.',
     hidden: false
 )]
 class NewAdminCommand extends Command
@@ -63,12 +63,12 @@ class NewAdminCommand extends Command
 
             $this->userSettingService->save($userSetting->setUser($user));
 
-            $output->writeln(sprintf('Admin added. E:: %s and OTP:: %s', $email, $code));
+            $output->writeln(sprintf('Dashboard added. E:: %s and OTP:: %s', $email, $code));
 
             return self::SUCCESS;
         }
 
-        $output->writeln('Admin cannot be created ...');
+        $output->writeln('Dashboard cannot be created ...');
 
         return self::FAILURE;
     }

@@ -1,0 +1,46 @@
+{% extends 'dashboard/layout/base.html.twig' %}
+
+{% block title %} Dashboard Projects {% endblock %}
+
+{% block body %}
+
+    <div class="content-wrapper">
+
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-6 mt-1">
+                        <h5 class="m-0 text-dark mt-1">Projects</h5>
+                    </div>
+                    <div class="col-sm-6 mt-1">
+                        <div class="breadcrumb float-right">
+                            <button class="btn btn-outline-secondary"
+                                    data-toggle="modal" data-target="#newProjectModal">
+                                <span class="fa fa-plus fa-sm"></span> <span class="ps-1">Add new Project</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <section class="content">
+            <div class="container-fluid">
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        {% include 'dashboard/projects/partial/table_content.html.twig' %}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <section class="col-lg-7 connectedSortable"></section>
+                    <section class="col-lg-5 connectedSortable"></section>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    {% include 'dashboard/projects/modal/new.html.twig' %}
+
+{% endblock %}

@@ -13,7 +13,7 @@
               <span class="bi bi-house pe-1"></span> Home</a>
           </li>
           {% if is_granted('ROLE_SUPER_ADMIN') %}
-          <a href="{{path('app_admin_index')}}" class="dropdown-item">
+          <a href="{{path('app_dashboard_index')}}" class="dropdown-item">
             <span class="bi bi-speedometer2 pe-1"></span> Dashboard
           </a>
           {% endif %}
