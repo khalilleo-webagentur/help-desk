@@ -18,7 +18,7 @@ class IndexController extends AbstractController
 {
     use FormValidationTrait;
 
-    private const ADMIN_TICKET_LABELS_ROUTE = 'app_admin_ticket_labels_index';
+    private const DASHBOARD_TICKET_LABELS_ROUTE = 'app_admin_ticket_labels_index';
 
     public function __construct(
         private readonly TicketLabelsService $ticketLabelsService
@@ -47,12 +47,12 @@ class IndexController extends AbstractController
 
         if (!$name || !$color) {
             $this->addFlash('warning', 'Name and color are required.');
-            return $this->redirectToRoute(self::ADMIN_TICKET_LABELS_ROUTE);
+            return $this->redirectToRoute(self::DASHBOARD_TICKET_LABELS_ROUTE);
         }
 
         if ($this->ticketLabelsService->getOneByName($name)) {
             $this->addFlash('warning', 'Name already exists.');
-            return $this->redirectToRoute(self::ADMIN_TICKET_LABELS_ROUTE);
+            return $this->redirectToRoute(self::DASHBOARD_TICKET_LABELS_ROUTE);
         }
 
         $description = $this->validateTextarea($request->request->get('description'));
@@ -68,7 +68,7 @@ class IndexController extends AbstractController
 
         $this->addFlash('notice', 'New Label has been added.');
 
-        return $this->redirectToRoute(self::ADMIN_TICKET_LABELS_ROUTE);
+        return $this->redirectToRoute(self::DASHBOARD_TICKET_LABELS_ROUTE);
     }
 
     #[Route('/edit/{id}', name: 'app_admin_ticket_label_edit')]
@@ -81,8 +81,8 @@ class IndexController extends AbstractController
         );
 
         if (!$ticketLabel) {
-            $this->addFlash('warning', 'User could not be found.');
-            return $this->redirectToRoute(self::ADMIN_TICKET_LABELS_ROUTE);
+            $this->addFlash('warning', 'Ticket-Label could not be found.');
+            return $this->redirectToRoute(self::DASHBOARD_TICKET_LABELS_ROUTE);
         }
 
         return $this->render('admin/ticket-labels/edit.html.twig', [
@@ -100,8 +100,8 @@ class IndexController extends AbstractController
         $color = $this->validate($request->request->get('color'));
 
         if (!$name || !$color) {
-            $this->addFlash('warning', 'Name and Email are required.');
-            return $this->redirectToRoute(self::ADMIN_TICKET_LABELS_ROUTE);
+            $this->addFlash('warning', 'Name and color are required.');
+            return $this->redirectToRoute(self::DASHBOARD_TICKET_LABELS_ROUTE);
         }
 
         $ticketLabel = $this->ticketLabelsService->getById(
@@ -109,13 +109,13 @@ class IndexController extends AbstractController
         );
 
         if (!$ticketLabel) {
-            $this->addFlash('warning', 'User could not be found.');
-            return $this->redirectToRoute(self::ADMIN_TICKET_LABELS_ROUTE);
+            $this->addFlash('warning', 'Ticket-Label could not be found.');
+            return $this->redirectToRoute(self::DASHBOARD_TICKET_LABELS_ROUTE);
         }
 
         if ($this->ticketLabelsService->getOneByName($name) && $name !== $ticketLabel->getName()) {
             $this->addFlash('warning', 'Name already exists.');
-            return $this->redirectToRoute(self::ADMIN_TICKET_LABELS_ROUTE);
+            return $this->redirectToRoute(self::DASHBOARD_TICKET_LABELS_ROUTE);
         }
 
         $description = $this->validateTextarea($request->request->get('description'));
@@ -129,7 +129,7 @@ class IndexController extends AbstractController
 
         $this->addFlash('notice', 'Changes has been saved.');
 
-        return $this->redirectToRoute(self::ADMIN_TICKET_LABELS_ROUTE);
+        return $this->redirectToRoute(self::DASHBOARD_TICKET_LABELS_ROUTE);
     }
 
     #[Route('/delete/{id}', name: 'app_admin_ticket_label_delete', methods: 'POST')]
@@ -142,14 +142,14 @@ class IndexController extends AbstractController
         );
 
         if (!$ticketLabel) {
-            $this->addFlash('warning', 'User could not be found.');
-            return $this->redirectToRoute(self::ADMIN_TICKET_LABELS_ROUTE);
+            $this->addFlash('warning', 'Ticket-Label could not be found.');
+            return $this->redirectToRoute(self::DASHBOARD_TICKET_LABELS_ROUTE);
         }
 
         $this->ticketLabelsService->delete($ticketLabel);
 
         $this->addFlash('success', 'Ticket-Label has been deleted.');
 
-        return $this->redirectToRoute(self::ADMIN_TICKET_LABELS_ROUTE);
+        return $this->redirectToRoute(self::DASHBOARD_TICKET_LABELS_ROUTE);
     }
 }
