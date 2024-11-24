@@ -27,19 +27,20 @@
 
                         <td title="{{ row.createdAt|date }}">{{ timeAgo(row.createdAt) }}</td>
 
-                        <td class="d-flex">
+                        <td>
+                            <div class="d-flex">
+                                <form action="{{ path('app_dashboard_ticket_label_edit', {id:row.id}) }}" method="post">
+                                    <button class="btn small-btn btn-secondary mr-2" type="submit">
+                                        <span class="fa fa-pen fa-sm"></span>
+                                    </button>
+                                </form>
 
-                            <form action="{{ path('app_dashboard_ticket_label_edit', {id:row.id}) }}" method="post">
-                                <button class="btn small-btn btn-secondary mr-2" type="submit">
-                                    <span class="fa fa-pen fa-sm"></span>
-                                </button>
-                            </form>
-
-                            <form action="{{ path('app_dashboard_ticket_label_delete', {id:row.id}) }}" method="post">
-                                <button class="btn small-btn btn-danger" type="submit">
-                                    <span class="fa fa-trash-alt fa-sm"></span>
-                                </button>
-                            </form>
+                                <form action="{{ path('app_dashboard_ticket_label_delete', {id:row.id}) }}" method="post">
+                                    <button class="btn small-btn btn-danger" type="submit">
+                                        <span class="fa fa-trash-alt fa-sm"></span>
+                                    </button>
+                                </form>
+                            </div>
                         </td>
                     {% endif %}
 
