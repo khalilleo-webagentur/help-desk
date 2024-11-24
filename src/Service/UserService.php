@@ -50,6 +50,22 @@ final readonly class UserService
     /**
      * @return User[]
      */
+    public function getAllEmployees(): array
+    {
+        $employees = [];
+
+        foreach ($this->getAll() as $user) {
+            if (in_array('ROLE_SUPER_ADMIN', $user->getRoles(), true)) {
+                $employees[] = $user;
+            }
+        }
+
+        return $employees;
+    }
+
+    /**
+     * @return User[]
+     */
     public function getAll(): array
     {
         return $this->userRepository->findBy([], ['id' => 'DESC']);

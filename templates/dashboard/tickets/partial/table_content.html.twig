@@ -9,6 +9,7 @@
                 <th>{{ 'Type'|trans }}</th>
                 <th>{{ 'Label'|trans }}</th>
                 <th>{{ 'Title'|trans }}</th>
+                <th>{{ 'Assignee'|trans }}</th>
                 <th>{{ 'Updated'|trans }}</th>
                 <th>{{ 'Created'|trans }}</th>
                 <th>{{ 'Action'|trans }}</th>
@@ -36,6 +37,8 @@
                     </td>
 
                     <td>{{ row.title }}</td>
+
+                    <td>{{ row.assignee ? row.assignee.name : '---' }}</td>
 
                     <td title="{{ row.updatedAt|date }}">{{ timeAgo(row.updatedAt) }}</td>
 

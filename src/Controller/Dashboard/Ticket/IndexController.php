@@ -50,7 +50,7 @@ class IndexController extends AbstractDashboardController
 
         $ticketLabels = $this->ticketLabelsService->getAll();
 
-        $users = $this->userService->getAll();
+        $users = $this->userService->getAllEmployees();
 
         $projects = $isAdmin
             ? $this->projectService->getAll()
@@ -106,11 +106,13 @@ class IndexController extends AbstractDashboardController
             return $this->redirectToRoute(self::DASHBOARD_TICKETS_ROUTE);
         }
 
-        $assignedUser = null;
-        $assignee = $this->validateNumber($request->request->get('assignee'));
+        $assignee = $this->userService->getById(
+            $this->validateNumber($request->request->get('assignee'))
+        );
 
-        if ($assigneeUser = $this->userService->getById($assignee)) {
-            $assignedUser = $assigneeUser;
+        if (!$this->userService->isAdmin($assignee)) {
+            $this->addFlash('warning', 'Assignee not found.');
+            return $this->redirectToRoute(self::DASHBOARD_TICKETS_ROUTE);
         }
 
         $ticket = new Ticket();
@@ -120,7 +122,8 @@ class IndexController extends AbstractDashboardController
         $this->ticketService->save(
             $ticket
                 ->setTicketNo($ticketNo)
-                ->setUser($project->getCustomer())
+                ->setCustomer($project->getCustomer())
+                ->setAssignee($assignee)
                 ->setProject($project)
                 ->setType($ticketType)
                 ->setLabel($ticketLabel)
