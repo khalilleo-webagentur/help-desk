@@ -49,6 +49,9 @@ class Ticket
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $createdAt = null;
 
+    #[ORM\ManyToOne(inversedBy: 'tickets')]
+    private ?TicketStatus $status = null;
+
     public function __construct()
     {
         $this->setCreatedAt(new \DateTime());
@@ -175,6 +178,18 @@ class Ticket
     public function setType(?TicketType $type): static
     {
         $this->type = $type;
+
+        return $this;
+    }
+
+    public function getStatus(): ?TicketStatus
+    {
+        return $this->status;
+    }
+
+    public function setStatus(?TicketStatus $status): static
+    {
+        $this->status = $status;
 
         return $this;
     }

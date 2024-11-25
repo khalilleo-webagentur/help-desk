@@ -50,7 +50,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var Collection<int, UserSetting>
      */
-    #[ORM\OneToMany(targetEntity: UserSetting::class, mappedBy: 'user', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: UserSetting::class, mappedBy: 'user', orphanRemoval: false)]
     private Collection $userSettings;
 
     /**
@@ -62,13 +62,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var Collection<int, Project>
      */
-    #[ORM\OneToMany(targetEntity: Project::class, mappedBy: 'user', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: Project::class, mappedBy: 'user', orphanRemoval: false)]
     private Collection $projects;
 
     /**
      * @var Collection<int, Ticket>
      */
-    #[ORM\OneToMany(targetEntity: Ticket::class, mappedBy: 'customer', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: Ticket::class, mappedBy: 'customer', orphanRemoval: false)]
     private Collection $tickets;
 
     /**

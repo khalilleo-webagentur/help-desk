@@ -1,0 +1,57 @@
+{% extends 'dashboard/layout/base.html.twig' %}
+
+{% block title %} Dashboard :: Edit Ticket-Status Details {% endblock %}
+
+{% block body %}
+
+    <div class="content-wrapper">
+
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h4 class="m-0 text-dark">Edit Ticket-Status Details</h4>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="breadcrumb float-sm-right">
+                            <a href="{{ path('app_dashboard_ticket_status_index') }}" class="text-secondary">
+                                Close <span class="fa fa-window-close"></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <section class="content">
+            <div class="container-fluid bg-gradient-white">
+
+                <div class="row px-2 py-3">
+                    <div class="col-lg-6">
+                        <form action="{{ path('app_dashboard_ticket_status_store', {id:ticketStatus.id}) }}" method="post">
+
+                            <div class="mb-3">
+                                <label for="V9xO3aD7v" class="form-label">Name <span
+                                            class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="V9xO3aD7v" placeholder="Type name"
+                                       value="{{ ticketStatus.name }}" name="name">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="V9xO3aD7v" class="form-label">Color <span
+                                            class="text-danger">*</span></label>
+                                <input type="color" class="form-control" id="V9xO3aD7v" placeholder="Type color"
+                                       value="{{ ticketStatus.color }}" name="color">
+                            </div>
+
+                            {% include "dashboard/component/edit_save_btn.html.twig" %}
+
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </div>
+
+{% endblock %}

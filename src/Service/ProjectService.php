@@ -22,14 +22,14 @@ final readonly class ProjectService
         return $this->projectRepository->findOneBy(['id' => $id]);
     }
 
-    public function getByUserAndId(UserInterface $user, int $id): ?Project
+    public function getByCustomerAndId(UserInterface $user, int $id): ?Project
     {
-        return $this->projectRepository->findOneBy(['user' => $user, 'id' => $id]);
+        return $this->projectRepository->findOneBy(['customer' => $user, 'id' => $id]);
     }
 
-    public function getOneByUser(User $user): ?Project
+    public function getOneByCustomer(User $user): ?Project
     {
-        return $this->projectRepository->findOneBy(['user' => $user]);
+        return $this->projectRepository->findOneBy(['customer' => $user]);
     }
 
     public function getOneByTitle(string $title): ?Project
@@ -40,9 +40,9 @@ final readonly class ProjectService
     /**
      * @return Project[]
      */
-    public function getAllByUser(UserInterface $user): array
+    public function getAllByCustomer(UserInterface $user): array
     {
-        return $this->projectRepository->findBy(['user' => $user]);
+        return $this->projectRepository->findBy(['customer' => $user]);
     }
 
     /**

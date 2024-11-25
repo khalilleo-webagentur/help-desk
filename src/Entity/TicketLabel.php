@@ -35,7 +35,7 @@ class TicketLabel
     /**
      * @var Collection<int, Ticket>
      */
-    #[ORM\OneToMany(targetEntity: Ticket::class, mappedBy: 'label', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: Ticket::class, mappedBy: 'label', orphanRemoval: false)]
     private Collection $tickets;
 
     public function __construct()

@@ -10,6 +10,7 @@
                 <th>{{ 'Label'|trans }}</th>
                 <th>{{ 'Title'|trans }}</th>
                 <th>{{ 'Assignee'|trans }}</th>
+                <th>{{ 'Status'|trans }}</th>
                 <th>{{ 'Updated'|trans }}</th>
                 <th>{{ 'Created'|trans }}</th>
                 <th>{{ 'Action'|trans }}</th>
@@ -21,9 +22,13 @@
                     <td>{{ row.ticketNo }}</td>
 
                     <td>
-                        <a href="{{ path('app_dashboard_user_edit', {id:row.customer.id}) }}">
+                        {% if is_granted('ROLE_SUPER_ADMIN') %}
+                            <a href="{{ path('app_dashboard_user_edit', {id:row.customer.id}) }}">
+                                {{ row.customer.name }}
+                            </a>
+                        {% else %}
                             {{ row.customer.name }}
-                        </a>
+                        {% endif %}
                     </td>
 
                     <td>
@@ -39,6 +44,13 @@
                     <td>{{ row.title }}</td>
 
                     <td>{{ row.assignee ? row.assignee.name : '---' }}</td>
+
+                    <td>
+                        <span class="ticket-status" style="background: {{ row.status ? row.status.color : '#9d8900' }}"
+                            title=" {{ row.status ? row.status.description : 'Being Processed' }}">
+                             {{ row.status ? row.status.name : 'Open' }}
+                        </span>
+                    </td>
 
                     <td title="{{ row.updatedAt|date }}">{{ timeAgo(row.updatedAt) }}</td>
 

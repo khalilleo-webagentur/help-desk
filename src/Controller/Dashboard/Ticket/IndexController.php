@@ -9,6 +9,7 @@ use App\Entity\Ticket;
 use App\Service\ProjectService;
 use App\Service\TicketLabelsService;
 use App\Service\TicketService;
+use App\Service\TicketStatusService;
 use App\Service\TicketTypesService;
 use App\Service\UserService;
 use App\Traits\FormValidationTrait;
@@ -30,6 +31,7 @@ class IndexController extends AbstractDashboardController
         private readonly TicketTypesService $ticketTypesService,
         private readonly TicketLabelsService $ticketLabelsService,
         private readonly ProjectService  $projectService,
+        private readonly TicketStatusService  $ticketStatusService,
     ){
     }
 
@@ -54,7 +56,7 @@ class IndexController extends AbstractDashboardController
 
         $projects = $isAdmin
             ? $this->projectService->getAll()
-            : $this->projectService->getAllByUser($user);
+            : $this->projectService->getAllByCustomer($user);
 
         return $this->render('dashboard/tickets/index.html.twig', [
             'issues' => $issues,
@@ -85,7 +87,7 @@ class IndexController extends AbstractDashboardController
 
         $project = $this->userService->isAdmin($user)
             ? $this->projectService->getById($project)
-            : $this->projectService->getByUserAndId($user, $project);
+            : $this->projectService->getByCustomerAndId($user, $project);
 
         if (!$project) {
             $this->addFlash('warning', 'Project not found.');
@@ -110,7 +112,7 @@ class IndexController extends AbstractDashboardController
             $this->validateNumber($request->request->get('assignee'))
         );
 
-        if (!$this->userService->isAdmin($assignee)) {
+        if ($assignee && !$this->userService->isAdmin($assignee)) {
             $this->addFlash('warning', 'Assignee not found.');
             return $this->redirectToRoute(self::DASHBOARD_TICKETS_ROUTE);
         }

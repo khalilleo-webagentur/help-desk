@@ -71,8 +71,12 @@ final readonly class UserService
         return $this->userRepository->findBy([], ['id' => 'DESC']);
     }
 
-    public function isAdmin(UserInterface $user): bool
+    public function isAdmin(?UserInterface $user): bool
     {
+        if (null === $user) {
+            return false;
+        }
+
         return in_array('ROLE_SUPER_ADMIN', $user->getRoles());
     }
 

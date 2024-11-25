@@ -109,6 +109,14 @@ body {
     user-select: none;
 }
 
+.ticket-status {
+    color: #fff;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-size: 13px !important;
+ /*   user-select: none;*/
+}
+
 @keyframes fadein {
     from {
         opacity: 0;
