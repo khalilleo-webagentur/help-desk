@@ -19,7 +19,7 @@
             <tbody>
             {% for row in issues %}
                 <tr class="fs-14">
-                    <td>{{ row.ticketNo }}</td>
+                    <td>T-{{ row.ticketNo }}</td>
 
                     <td>
                         {% if is_granted('ROLE_SUPER_ADMIN') %}
@@ -57,7 +57,7 @@
                     <td title="{{ row.createdAt|date }}">{{ timeAgo(row.createdAt) }}</td>
 
                     <td class="d-flex">
-                        <form action="#">
+                        <form action="{{ path('app_dashboard_ticket_view', {id: row.id}) }}">
                             <button class="btn small-btn btn-primary mr-2" type="submit">
                                 <span class="fa fa-eye fa-sm"></span>
                             </button>

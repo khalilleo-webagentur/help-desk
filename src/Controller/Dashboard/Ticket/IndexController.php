@@ -76,7 +76,7 @@ class IndexController extends AbstractDashboardController
 
         $title = $this->validate($request->request->get('title'));
         $type = $this->validateNumber($request->request->get('type'));
-        $description = $this->validateTextarea($request->request->get('description'), true);
+        $description = $this->validateTextarea($request->request->get('content'), true);
         $project = $this->validateNumber($request->request->get('project'));
         $label = $this->validateNumber($request->request->get('label'));
 
@@ -136,5 +136,22 @@ class IndexController extends AbstractDashboardController
         $this->addFlash('success', 'New issue has been added.');
 
         return $this->redirectToRoute(self::DASHBOARD_TICKETS_ROUTE);
+    }
+
+    #[Route('/show/{id}', name: 'app_dashboard_ticket_view')]
+    public function view(?string $id): Response
+    {
+        $this->denyAccessUnlessGrantedRoleCustomer();
+
+        $issue = $this->ticketService->getById($this->validateNumber($id));
+
+        if (!$issue) {
+            $this->addFlash('warning', 'Issue could not be found.');
+            return $this->redirectToRoute(self::DASHBOARD_TICKETS_ROUTE);
+        }
+
+        return $this->render('dashboard/tickets/view.html.twig', [
+            'issue' => $issue,
+        ]);
     }
 }

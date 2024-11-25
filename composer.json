@@ -22,7 +22,6 @@
         "khalilleo-webagentur/browser-detect": "^1.0",
         "khalilleo-webagentur/monolog": "*",
         "khalilleo-webagentur/token-gen": "^1.0",
-        "michelf/php-markdown": "^2.0",
         "symfony/asset": "7.1.*",
         "symfony/console": "7.1.*",
         "symfony/dotenv": "7.1.*",
