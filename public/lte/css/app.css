@@ -111,10 +111,12 @@ body {
 
 .ticket-status {
     color: #fff;
-    padding: 2px 8px;
-    border-radius: 3px;
-    font-size: 13px !important;
- /*   user-select: none;*/
+    padding: 4px 10px 3px 10px;
+    border-radius: 50px;
+    font-size: 10px !important;
+    user-select: none;
+    text-transform: uppercase;
+    opacity: .8;
 }
 
 @keyframes fadein {
