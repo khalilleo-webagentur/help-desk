@@ -46,8 +46,9 @@
                     <td>{{ row.assignee ? row.assignee.name : '---' }}</td>
 
                     <td>
-                        <span class="ticket-status" style="background: {{ row.status ? row.status.color : '#9d8900' }}"
-                            title=" {{ row.status ? row.status.description : 'Being Processed' }}">
+                        <span class="ticket-status cursor-help"
+                              style="background: {{ row.status ? row.status.color : '#9d8900' }}"
+                              title=" {{ row.status ? row.status.description : 'Being Processed' }}">
                              {{ row.status ? row.status.name : 'Open' }}
                         </span>
                     </td>
@@ -63,13 +64,13 @@
                             </button>
                         </form>
 
-                        {% if is_granted('ROLE_SUPER_ADMIN') %}
-                            <form action="#">
-                                <button class="btn small-btn btn-outline-primary mr-2" type="submit">
-                                    <span class="fa fa-pen fa-sm"></span>
-                                </button>
-                            </form>
+                        <form action="{{ path('app_dashboard_ticket_edit', {id:row.id}) }}">
+                            <button class="btn small-btn btn-outline-primary mr-2" type="submit">
+                                <span class="fa fa-pen fa-sm"></span>
+                            </button>
+                        </form>
 
+                        {% if is_granted('ROLE_SUPER_ADMIN') %}
                             <form action="#" method="post">
                                 <button class="btn small-btn btn-outline-danger mr-2" type="submit">
                                     <span class="fa fa-trash-alt fa-sm"></span>

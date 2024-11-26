@@ -6,6 +6,7 @@ namespace App\Controller\Dashboard\Ticket;
 
 use App\Controller\Dashboard\AbstractDashboardController;
 use App\Entity\Ticket;
+use App\Service\MonologService;
 use App\Service\ProjectService;
 use App\Service\TicketLabelsService;
 use App\Service\TicketService;
@@ -26,13 +27,14 @@ class IndexController extends AbstractDashboardController
     private const DASHBOARD_TICKETS_ROUTE = 'app_dashboard_tickets_index';
 
     public function __construct(
-        private readonly UserService $userService,
-        private readonly TicketService $ticketService,
-        private readonly TicketTypesService $ticketTypesService,
+        private readonly UserService         $userService,
+        private readonly TicketService       $ticketService,
+        private readonly TicketTypesService  $ticketTypesService,
         private readonly TicketLabelsService $ticketLabelsService,
-        private readonly ProjectService  $projectService,
-        private readonly TicketStatusService  $ticketStatusService,
-    ){
+        private readonly ProjectService      $projectService,
+        private readonly TicketStatusService $ticketStatusService,
+        private readonly MonologService      $monologService,
+    ) {
     }
 
     #[Route('/home', name: 'app_dashboard_tickets_index')]
@@ -153,5 +155,103 @@ class IndexController extends AbstractDashboardController
         return $this->render('dashboard/tickets/view.html.twig', [
             'issue' => $issue,
         ]);
+    }
+
+    #[Route('/edit/{id}', name: 'app_dashboard_ticket_edit')]
+    public function edit(?string $id): Response
+    {
+        $this->denyAccessUnlessGrantedRoleCustomer();
+
+        $user = $this->getUser();
+
+        $isAdmin = $this->userService->isAdmin($user);
+
+        $issue = $this->ticketService->getById($this->validateNumber($id));
+
+        if (!$issue) {
+            $this->addFlash('warning', 'Issue could not be found.');
+            return $this->redirectToRoute(self::DASHBOARD_TICKETS_ROUTE);
+        }
+
+        $projects = $isAdmin
+            ? $this->projectService->getAll()
+            : $this->projectService->getAllByCustomer($user);
+
+        $users = $this->userService->getAllEmployees();
+
+        $statuses = $this->ticketStatusService->getAll();
+
+        return $this->render('dashboard/tickets/edit.html.twig', [
+            'issue' => $issue,
+            'projects' => $projects,
+            'assignees' => $users,
+            'statuses' => $statuses,
+        ]);
+    }
+
+    #[Route('/store/{no}', name: 'app_dashboard_ticket_store', methods: ['POST'])]
+    public function store(?string $no, Request $request): Response
+    {
+        $this->denyAccessUnlessGrantedRoleCustomer();
+
+        $user = $this->getUser();
+        $isAdmin = $this->userService->isAdmin($user);
+        $issueId = $this->validateNumber($request->request->get('id'));
+
+        $issue = $isAdmin
+            ? $this->ticketService->getById($issueId)
+            : $this->ticketService->getOneByCustomerAndId($user, $issueId);
+
+        if (!$issue) {
+            $this->addFlash('warning', 'Issue could not be found.');
+            return $this->redirectToRoute(self::DASHBOARD_TICKETS_ROUTE);
+        }
+
+        $projectId = $this->validateNumber($request->request->get('project'));
+
+        $project = $isAdmin
+            ? $this->projectService->getById($projectId)
+            : $this->projectService->getByCustomerAndId($user, $projectId);
+
+        if (!$project) {
+            $this->addFlash('warning', 'Project not found.');
+            return $this->redirectToRoute(self::DASHBOARD_TICKETS_ROUTE);
+        }
+
+        $title = $this->validateTextarea($request->request->get('title'), true);
+        $description = $this->validateTextarea($request->request->get('content'), true);
+
+        $assignee = $isAdmin
+            ? $this->userService->getById($this->validateNumber($request->request->get('assignee')))
+            : $issue->getAssignee();
+
+        $status = $isAdmin
+            ? $this->ticketStatusService->getById($this->validateNumber($request->request->get('status')))
+            : $issue->getStatus();
+
+        $this->monologService->logger->info(
+            sprintf(
+                '[title: %s, description: %s, status: %s] to [title: %s, description: %s, status: %s]',
+                $issue->getTitle(),
+                $issue->getDescription(),
+                $issue->getStatus() ? $issue->getStatus()->getName() : 'Open',
+                $title,
+                $description,
+                $status ? $status->getName() : 'Open'
+            )
+        );
+
+        $this->ticketService->save(
+            $issue
+                ->setTitle($title)
+                ->setDescription($description)
+                ->setAssignee($assignee)
+                ->setProject($project)
+                ->setStatus($status)
+        );
+
+        $this->addFlash('success', 'Issue has been saved.');
+
+        return $this->redirectToRoute(self::DASHBOARD_TICKETS_ROUTE);
     }
 }

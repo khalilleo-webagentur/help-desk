@@ -23,6 +23,11 @@ final readonly class TicketService
         return $this->ticketRepository->find($id);
     }
 
+    public function getOneByCustomerAndId(UserInterface $user, int $id): ?Ticket
+    {
+        return $this->ticketRepository->findOneBy(['customer' => $user, 'id' => $id]);
+    }
+
     public function getLatTicketNo(): int
     {
         $ticket = $this->ticketRepository->findOneBy([], ['createdAt' => 'DESC']);

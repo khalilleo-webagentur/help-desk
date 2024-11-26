@@ -1,6 +1,6 @@
 {% extends 'dashboard/layout/base.html.twig' %}
 
-{% block title %} Dashboard :: Edit Project Details {% endblock %}
+{% block title %} Dashboard :: Edit Issue Details {% endblock %}
 
 {% block body %}
 
@@ -10,11 +10,11 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-sm-6">
-                        <h4 class="m-0 text-dark">Edit Project Details</h4>
+                        <h4 class="m-0 text-dark">Edit Issue Details</h4>
                     </div>
                     <div class="col-sm-6">
                         <div class="breadcrumb float-sm-right">
-                            <a href="{{ path('app_dashboard_projects_index') }}" class="text-secondary">
+                            <a href="{{ path('app_dashboard_tickets_index') }}" class="text-secondary">
                                 Close <span class="fa fa-window-close"></span>
                             </a>
                         </div>
@@ -26,27 +26,124 @@
         <section class="content">
             <div class="container-fluid bg-gradient-white">
 
+                {% set isAdmin = is_granted('ROLE_SUPER_ADMIN') %}
+
                 <div class="row px-2 py-3">
-                    <div class="col-lg-6">
-                        <form action="{{ path('app_dashboard_project_store', {id:project.id}) }}" method="post">
+                    <div class="col-lg-12">
+                        <form action="{{ path('app_dashboard_ticket_store', {no:issue.ticketNo}) }}" method="post">
 
-                            <div class="mb-3">
-                                <label for="V9xO3aD7v" class="form-label">Title <span
-                                            class="text-danger">*</span></label>
-                                <input type="text" class="form-control" id="V9xO3aD7v" placeholder="Type title"
-                                       value="{{ project.title }}" name="title">
+                            <div class="row">
+                                <div class="col-lg-2">
+                                    <div class="mb-3">
+                                        <label for="V9xO3aD7v" class="form-label">Ticket-No <span
+                                                    class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="V9xO3aD7v"
+                                               placeholder="T-{{ issue.ticketNo }}"
+                                               value="T-{{ issue.ticketNo }}" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="mb-3">
+                                        <label for="V9xO3aD7v33" class="form-label">Type <span
+                                                    class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="V9xO3aD7v33"
+                                               placeholder="{{ issue.type.name }}"
+                                               value="{{ issue.type.name }}" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="mb-3">
+                                        <label for="V9xO3aD7v11" class="form-label">Customer <span
+                                                    class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="V9xO3aD7v11"
+                                               placeholder="{{ issue.customer.name }}"
+                                               value="{{ issue.customer.name }}" readonly>
+                                    </div>
+                                </div>
                             </div>
 
-                            <div class="mb-3">
-                                <label for="2hV9xO3aD7v" class="form-label">Description <span
-                                            class="text-danger">*</span></label>
-                                <textarea type="text" class="form-control" id="2hV9xO3aD7v"
-                                          rows="7"
-                                          placeholder="Type description"
-                                          name="description">{{ project.description }}</textarea>
+                            <div class="row">
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label for="iO7nM4yT4bG2sO00">
+                                            Project <span class="text-danger">*</span>
+                                        </label>
+                                        <select class="form-control" name="project" id="iO7nM4yT4bG2sO00" required>
+                                            {% for project in projects %}
+                                                <option value="{{ project.id }}" {{ project.title == issue.project.title ? 'selected' : '' }}>
+                                                    {{ project.title }}
+                                                </option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
 
-                            {% include "dashboard/component/edit_save_btn.html.twig" %}
+                            <div class="row">
+                                <div class="col-lg-10">
+                                    <div class="mb-3">
+                                        <label for="V9xO3aD7v22" class="form-label">Title <span
+                                                    class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="V9xO3aD7v22"
+                                               placeholder="{{ issue.title }}"
+                                               value="{{ issue.title }}" name="title" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-10">
+                                    <div class="mb-3">
+                                        <label for="V9xO3aD7v22" class="form-label">Description <span
+                                                    class="text-danger">*</span></label>
+                                        <div id="editor"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label for="iO7nM4yT4bG2sO44">
+                                            Assignee <span class="text-danger">*</span>
+                                        </label>
+                                        {% set hasAssignee = issue.assignee and issue.assignee.name %}
+                                        <select class="form-control" name="assignee" id="iO7nM4yT4bG2sO44" required
+                                                {{ not isAdmin ? 'disabled' : '' }}>
+                                            <option value="0">Unassigned</option>
+                                            {% for assignee in assignees %}
+                                                <option value="{{ assignee.id }}" {{ hasAssignee and assignee.name == issue.assignee.name ? 'selected' : '' }}>
+                                                    {{ assignee.name }}
+                                                </option>
+                                            {% endfor %}
+                                        </select>
+                                        <small class="text-secondary">{{ not isAdmin ? 'Assignee can only be changed by Admins.' }}</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label for="iO7nM4yT4bG2sO77">
+                                            Status <span class="text-danger">*</span>
+                                        </label>
+                                        <select class="form-control" name="status" id="iO7nM4yT4bG2sO77" required
+                                            {{ not isAdmin ? 'disabled' : '' }}>
+                                            {% set hasStatus = issue.status and issue.status.name %}
+                                            {% for status in statuses %}
+                                                <option value="{{ status.id }}" {{ hasStatus and status.name == issue.status.name ? 'selected' : '' }}>
+                                                    {{ status.name }}
+                                                </option>
+                                            {% endfor %}
+                                        </select>
+                                        <small class="text-secondary">{{ not isAdmin ? 'Status can only be changed by Admins.' }}</small>
+                                        <input type="hidden" name="id" value="{{ issue.id }}">
+                                    </div>
+                                </div>
+                            </div>
+
+                            {% include "dashboard/component/edit_save_btn.html.twig" with {id:"formSave"} %}
 
                         </form>
                     </div>
@@ -54,6 +151,11 @@
 
             </div>
         </section>
+
+        <script>
+            let editor = document.getElementById('editor');
+            editor.innerHTML = '{{ issue.description|raw }}'
+        </script>
     </div>
 
 {% endblock %}
