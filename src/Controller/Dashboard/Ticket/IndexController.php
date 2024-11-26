@@ -145,7 +145,15 @@ class IndexController extends AbstractDashboardController
     {
         $this->denyAccessUnlessGrantedRoleCustomer();
 
-        $issue = $this->ticketService->getById($this->validateNumber($id));
+        $user = $this->getUser();
+
+        $isAdmin = $this->userService->isAdmin($user);
+
+        $id = $this->validateNumber($id);
+
+        $issue = $isAdmin
+            ? $this->ticketService->getById($id)
+            : $this->ticketService->getOneByCustomerAndId($user, $id);
 
         if (!$issue) {
             $this->addFlash('warning', 'Issue could not be found.');
@@ -166,7 +174,11 @@ class IndexController extends AbstractDashboardController
 
         $isAdmin = $this->userService->isAdmin($user);
 
-        $issue = $this->ticketService->getById($this->validateNumber($id));
+        $id = $this->validateNumber($id);
+
+        $issue = $isAdmin
+            ? $this->ticketService->getById($this->validateNumber($id))
+            : $this->ticketService->getOneByCustomerAndId($user, $id);
 
         if (!$issue) {
             $this->addFlash('warning', 'Issue could not be found.');
