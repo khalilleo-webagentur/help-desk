@@ -70,7 +70,7 @@ class FixturesCommand extends Command
     private function addStatus(): void
     {
         $statuses = [
-            ['Open', 'Being Processed', '#f8e45c'],
+            ['Open', 'Being Processed', '#9d8900'],
             ['In Progress', 'We are working on this ticket', '#1c71d8'],
             ['Pending', 'Awaiting your Reply', '#e66100'],
             ['Resolved', 'This ticket has been resolved', '#2b8202'],

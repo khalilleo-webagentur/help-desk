@@ -231,7 +231,9 @@ class IndexController extends AbstractDashboardController
 
         $this->monologService->logger->info(
             sprintf(
-                '[title: %s, description: %s, status: %s] to [title: %s, description: %s, status: %s]',
+                'issueUpdated: T-%s by %s [title: %s, description: %s, status: %s] to [title: %s, description: %s, status: %s]',
+                $issue->getTicketNo(),
+                $user->getUserIdentifier(),
                 $issue->getTitle(),
                 $issue->getDescription(),
                 $issue->getStatus() ? $issue->getStatus()->getName() : 'Open',
