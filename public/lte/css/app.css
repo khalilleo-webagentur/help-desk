@@ -119,6 +119,10 @@ body {
     opacity: .8;
 }
 
+.form-control {
+    border: 1px solid #e3e3e3;
+}
+
 @keyframes fadein {
     from {
         opacity: 0;

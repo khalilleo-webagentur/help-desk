@@ -11,6 +11,8 @@
             </div>
         </div>
 
+        {% set _route = app.request.get('_route') %}
+
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
@@ -26,13 +28,13 @@
                 <li class="nav-header">CONTENTS</li>
 
                 {% if is_granted('ROLE_SUPER_ADMIN') %}
-                    <li class="nav-item">
+                    <li class="nav-item {{ _route == 'app_dashboard_users_index' ? 'menu-is-opening menu-open' : ''  }}">
                         <a href="{{ path('app_dashboard_users_index') }}" class="nav-link">
                             <i class="fas fa-users nav-icon"></i>
                             <p>Users</p>
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item {{ _route == 'app_dashboard_projects_index' ? 'menu-is-opening menu-open' : ''  }}">
                         <a href="{{ path('app_dashboard_projects_index') }}" class="nav-link">
                             <i class="fas fa-gem nav-icon"></i>
                             <p>Projects</p>
@@ -40,7 +42,14 @@
                     </li>
                 {% endif %}
 
-                <li class="nav-item has-treeview">
+                {% set isTicketTreeOpen =
+                    _route == 'app_dashboard_tickets_index' or
+                    _route == 'app_dashboard_ticket_types_index' or
+                    _route == 'app_dashboard_ticket_labels_index' or
+                    _route == 'app_dashboard_ticket_status_index'
+                %}
+
+                <li class="nav-item has-treeview {{ isTicketTreeOpen ? 'menu-is-opening menu-open' : ''  }}">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-ticket-alt"></i>
                         <p>
@@ -48,28 +57,28 @@
                             <i class="fas fa-angle-left right"></i>
                         </p>
                     </a>
-                    <ul class="nav nav-treeview">
+                    <ul class="nav nav-treeview {{ isTicketTreeOpen ? 'active' : ''  }}">
                         <li class="nav-item">
                             <a href="{{ path('app_dashboard_tickets_index') }}" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
+                                <i class="far nav-icon text-warning {{ _route == 'app_dashboard_tickets_index' ? 'fa-dot-circle' : 'fa-circle' }}"></i>
                                 <p>Issues</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ path('app_dashboard_ticket_types_index') }}" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
+                                <i class="far nav-icon text-warning  {{ _route == 'app_dashboard_ticket_types_index' ? 'fa-dot-circle' : 'fa-circle' }}"></i>
                                 <p>Types</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ path('app_dashboard_ticket_labels_index') }}" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
+                                <i class="far nav-icon text-warning {{ _route == 'app_dashboard_ticket_labels_index' ? 'fa-dot-circle' : 'fa-circle' }}"></i>
                                 <p>Labels</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ path('app_dashboard_ticket_status_index') }}" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
+                                <i class="far nav-icon text-warning {{ _route == 'app_dashboard_ticket_status_index' ? 'fa-dot-circle' : 'fa-circle' }}"></i>
                                 <p>Status</p>
                             </a>
                         </li>
@@ -88,7 +97,7 @@
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
                                 <a href="#" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
+                                    <i class="far fa-circle nav-icon text-warning"></i>
                                     <p>Overview</p>
                                 </a>
                             </li>
