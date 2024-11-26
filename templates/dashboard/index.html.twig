@@ -22,96 +22,73 @@
             </div>
         </div>
 
-        {% if is_granted('ROLE_SUPER_ADMIN') %}
-            <section class="content">
-                <div class="container-fluid">
+        <section class="content">
+            <div class="container-fluid">
 
-                    <div class="row">
-                        <div class="col-lg-3 col-6">
-                            <div class="small-box bg-info">
-                                <div class="inner">
-                                    <h3>150</h3>
-
-                                    <p>New Orders</p>
-                                </div>
-                                <div class="icon">
-                                    <i class="fa fa-user"></i>
-                                </div>
-                                <a href="#" class="small-box-footer">More info <i
-                                            class="fas fa-arrow-circle-right"></i></a>
+                <div class="row">
+                    <div class="col-lg-3 col-6">
+                        <div class="small-box bg-info">
+                            <div class="inner">
+                                <h3>{{ countIssues }}</h3>
+                                <p>Issues</p>
                             </div>
-                        </div>
-
-                        <div class="col-lg-3 col-6">
-                            <div class="small-box bg-success">
-                                <div class="inner">
-                                    <h3>53<sup style="font-size: 20px">%</sup></h3>
-
-                                    <p>Bounce Rate</p>
-                                </div>
-                                <div class="icon">
-                                    <i class="fa fa-grin-alt"></i>
-                                </div>
-                                <a href="#" class="small-box-footer">More info <i
-                                            class="fas fa-arrow-circle-right"></i></a>
+                            <div class="icon">
+                                <i class="fa fa-ticket-alt"></i>
                             </div>
-                        </div>
-
-                        <div class="col-lg-3 col-6">
-                            <div class="small-box bg-warning">
-                                <div class="inner">
-                                    <h3>44</h3>
-
-                                    <p>User Registrations</p>
-                                </div>
-                                <div class="icon">
-                                    <i class="fa fa-clipboard-list"></i>
-                                </div>
-                                <a href="#" class="small-box-footer">More info <i
-                                            class="fas fa-arrow-circle-right"></i></a>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-3 col-6">
-                            <div class="small-box bg-danger">
-                                <div class="inner">
-                                    <h3>65</h3>
-
-                                    <p>Unique Visitors</p>
-                                </div>
-                                <div class="icon">
-                                    <i class="fa fa-users-cog"></i>
-                                </div>
-                                <a href="#" class="small-box-footer">More info <i
-                                            class="fas fa-arrow-circle-right"></i></a>
-                            </div>
+                            <a href="{{ path('app_dashboard_tickets_index') }}" class="small-box-footer">More info <i
+                                        class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
 
-                    <div class="row">
-                        <section class="col-lg-7 connectedSortable"></section>
-                        <section class="col-lg-5 connectedSortable"></section>
+                    <div class="col-lg-3 col-6">
+                        <div class="small-box bg-success">
+                            <div class="inner">
+                                <h3>{{ countClosedIssues }}</h3>
+                                <p>Closed Issues</p>
+                            </div>
+                            <div class="icon">
+                                <i class="fa fa-check"></i>
+                            </div>
+                            <a href="{{ path('app_dashboard_tickets_index') }}" class="small-box-footer">More info <i
+                                        class="fas fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-6">
+                        <div class="small-box bg-warning">
+                            <div class="inner">
+                                <h3>{{ countIssuesInProgress }}</h3>
+                                <p>Issues In Progress</p>
+                            </div>
+                            <div class="icon">
+                                <i class="fa fa-cog"></i>
+                            </div>
+                            <a href="{{ path('app_dashboard_tickets_index') }}" class="small-box-footer">More info <i
+                                        class="fas fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-6">
+                        <div class="small-box bg-danger">
+                            <div class="inner">
+                                <h3>{{ countOpenIssues }}</h3>
+                                <p>Open Issues</p>
+                            </div>
+                            <div class="icon">
+                                <i class="fa fa-book-open"></i>
+                            </div>
+                            <a href="{{ path('app_dashboard_tickets_index') }}" class="small-box-footer">More info <i
+                                        class="fas fa-arrow-circle-right"></i></a>
+                        </div>
                     </div>
                 </div>
-            </section>
 
-        {% else %}
-            <section class="content">
-                <div class="container-fluid">
-
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <p>Anything here for customer ..</p>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <section class="col-lg-7 connectedSortable"></section>
-                        <section class="col-lg-5 connectedSortable"></section>
-                    </div>
+                <div class="row">
+                    <section class="col-lg-7 connectedSortable"></section>
+                    <section class="col-lg-5 connectedSortable"></section>
                 </div>
-            </section>
-        {% endif %}
+            </div>
+        </section>
 
     </div>
 
