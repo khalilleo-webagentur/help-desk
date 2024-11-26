@@ -12,8 +12,7 @@ final readonly class TicketStatusService
 {
     public function __construct(
         private TicketStatusRepository $ticketStatusRepository,
-    )
-    {
+    ) {
     }
 
     public function getById(int $id): ?TicketStatus

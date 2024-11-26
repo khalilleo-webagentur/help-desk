@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Controller\Dashboard;
 
+use App\Service\TicketService;
+use App\Service\TicketStatusService;
 use App\Service\UserService;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -13,6 +15,8 @@ class IndexController extends AbstractDashboardController
 {
     public function __construct(
         private readonly UserService $userService,
+        private readonly TicketService $ticketService,
+        private readonly TicketStatusService $ticketStatusService,
     ){
     }
 
@@ -25,10 +29,25 @@ class IndexController extends AbstractDashboardController
 
         $isAdmin = $this->userService->isAdmin($user);
 
-        $countIssues = $isAdmin ? 124 : 9;
-        $countClosedIssues = $isAdmin ? 124 : 9;
-        $countIssuesInProgress = $isAdmin ? 124 : 9;
-        $countOpenIssues = $isAdmin ? 124 : 9;
+        $countIssues = $isAdmin
+            ? $this->ticketService->countAll()
+            : $this->ticketService->countAllByUser($user);
+
+        $countClosedIssues = $isAdmin
+            ? $this->ticketService->countStatus(null)
+            : $this->ticketService->countStatusByUser($user, null);
+
+        $status = $this->ticketStatusService->getOneByName('In Progress');
+
+        $countIssuesInProgress = $isAdmin
+            ? $this->ticketService->countStatus($status)
+            : $this->ticketService->countStatusByUser($user, $status);
+
+        $status = $this->ticketStatusService->getOneByName('Resolved');
+
+        $countOpenIssues = $isAdmin
+            ? $this->ticketService->countStatus($status)
+            : $this->ticketService->countStatusByUser($user, $status);
 
         return $this->render('dashboard/index.html.twig', [
             'countIssues' => $countIssues,

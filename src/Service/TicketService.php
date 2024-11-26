@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Service;
 
 use App\Entity\Ticket;
+use App\Entity\TicketStatus;
 use App\Entity\User;
 use App\Repository\TicketRepository;
 use DateTime;
@@ -42,6 +43,26 @@ final readonly class TicketService
     public function getAll(): array
     {
         return $this->ticketRepository->findBy([], ['createdAt' => 'DESC']);
+    }
+
+    public function countAllByUser(UserInterface $user): int
+    {
+        return $this->ticketRepository->count(['customer' => $user]);
+    }
+
+    public function countAll(): int
+    {
+        return $this->ticketRepository->count();
+    }
+
+    public function countStatusByUser(UserInterface $user, ?TicketStatus $status): int
+    {
+        return $this->ticketRepository->count(['customer' => $user, 'status' => $status]);
+    }
+
+    public function countStatus(?TicketStatus $status): int
+    {
+        return $this->ticketRepository->count(['status' => $status]);
     }
 
     public function save(Ticket $model): Ticket
