@@ -58,20 +58,20 @@
 
                     <td class="d-flex">
                         <form action="{{ path('app_dashboard_ticket_view', {id: row.id}) }}">
-                            <button class="btn small-btn btn-primary mr-2" type="submit">
+                            <button class="btn small-btn btn-outline-secondary mr-2" type="submit">
                                 <span class="fa fa-eye fa-sm"></span>
                             </button>
                         </form>
 
                         {% if is_granted('ROLE_SUPER_ADMIN') %}
                             <form action="#">
-                                <button class="btn small-btn btn-secondary mr-2" type="submit">
+                                <button class="btn small-btn btn-outline-primary mr-2" type="submit">
                                     <span class="fa fa-pen fa-sm"></span>
                                 </button>
                             </form>
 
                             <form action="#" method="post">
-                                <button class="btn small-btn btn-danger mr-2" type="submit">
+                                <button class="btn small-btn btn-outline-danger mr-2" type="submit">
                                     <span class="fa fa-trash-alt fa-sm"></span>
                                 </button>
                             </form>

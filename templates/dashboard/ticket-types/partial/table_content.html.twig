@@ -24,13 +24,13 @@
                         <td>
                             <div class="d-flex">
                                 <form action="{{ path('app_dashboard_ticket_type_edit', {id:row.id}) }}" method="post">
-                                    <button class="btn small-btn btn-secondary mr-2" type="submit">
+                                    <button class="btn small-btn btn-outline-primary mr-2" type="submit">
                                         <span class="fa fa-pen fa-sm"></span>
                                     </button>
                                 </form>
 
                                 <form action="{{ path('app_dashboard_ticket_type_delete', {id:row.id}) }}" method="post">
-                                    <button class="btn small-btn btn-danger" type="submit">
+                                    <button class="btn small-btn btn-outline-danger" type="submit">
                                         <span class="fa fa-trash-alt fa-sm"></span>
                                     </button>
                                 </form>
