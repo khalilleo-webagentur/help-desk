@@ -41,7 +41,11 @@
                         <span class="ticket-label" style="color: {{ row.label.color }}">{{ row.label.name }}</span>
                     </td>
 
-                    <td>{{ row.title }}</td>
+                    <td>
+                        <span class="cursor-help" title="{{ row.title }}">
+                            {{ row.title|slice(0,35) ~ '..' }}
+                        </span>
+                    </td>
 
                     <td>{{ row.assignee ? row.assignee.name : '---' }}</td>
 
