@@ -4,6 +4,7 @@
             <thead>
             <tr class="fs-14">
                 <th>{{ 'Name'|trans }}</th>
+                <th>{{ 'Description'|trans }}</th>
                 {% if is_granted('ROLE_SUPER_ADMIN') %}
                     <th>{{ 'Updated'|trans }}</th>
                     <th>{{ 'Created'|trans }}</th>
@@ -15,6 +16,7 @@
             {% for row in ticketTypes %}
                 <tr class="fs-14">
                     <td>{{ row.name|capitalize }}</td>
+                    <td>{{ row.description ? row.description : '---' }}</td>
 
                     {% if is_granted('ROLE_SUPER_ADMIN') %}
                         <td title="{{ row.updatedAt|date }}">{{ timeAgo(row.updatedAt) }}</td>

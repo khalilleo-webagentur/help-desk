@@ -55,12 +55,15 @@ class IndexController extends AbstractDashboardController
             return $this->redirectToRoute(self::DASHBOARD_TICKET_STATUS_ROUTE);
         }
 
+        $description = $this->validate($request->request->get('description'));
+
         $newStatus = new TicketStatus();
 
         $this->ticketStatusService->save(
             $newStatus
                 ->setName($name)
                 ->setColor($color)
+                ->setDescription($description)
         );
 
         $this->addFlash('notice', 'New Ticket-Status has been added.');
@@ -114,10 +117,13 @@ class IndexController extends AbstractDashboardController
             return $this->redirectToRoute(self::DASHBOARD_TICKET_STATUS_ROUTE);
         }
 
+        $description = $this->validateTextarea($request->request->get('description'));
+
         $this->ticketStatusService->save(
             $ticketStatus
                 ->setName($name)
                 ->setColor($color)
+                ->setDescription($description)
         );
 
         $this->addFlash('notice', 'Changes has been saved.');

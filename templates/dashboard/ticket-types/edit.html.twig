@@ -28,13 +28,24 @@
 
                 <div class="row px-2 py-3">
                     <div class="col-lg-6">
-                        <form action="{{ path('app_dashboard_ticket_label_store', {id:ticketType.id}) }}" method="post">
+                        <form action="{{ path('app_dashboard_ticket_type_store', {id:ticketType.id}) }}" method="post">
 
                             <div class="mb-3">
                                 <label for="V9xO3aD7v" class="form-label">Name <span
                                             class="text-danger">*</span></label>
                                 <input type="text" class="form-control" id="V9xO3aD7v" placeholder="Type name"
                                        value="{{ ticketType.name }}" name="name">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="iO7nM4yT4bG2sO57" class="form-label">
+                                    Description <span class="text-danger">*</span>
+                                </label>
+                                <textarea type="text" class="form-control" id="iO7nM4yT4bG2sO57" placeholder="Type description"
+                                          name="description">{{ ticketType.description }}</textarea>
+                                <small class="text-secondary">
+                                    Description must not be greater than 7 words.
+                                </small>
                             </div>
 
                             {% include "dashboard/component/edit_save_btn.html.twig" %}

@@ -41,9 +41,12 @@
                                 <label for="2hV9xO3aD7v" class="form-label">Description <span
                                             class="text-danger">*</span></label>
                                 <textarea type="text" class="form-control" id="2hV9xO3aD7v"
-                                          rows="7"
+                                          rows="3"
                                           placeholder="Type description"
                                           name="description">{{ project.description }}</textarea>
+                                <small class="text-secondary">
+                                    Description must not be greater than 7 words.
+                                </small>
                             </div>
 
                             {% include "dashboard/component/edit_save_btn.html.twig" %}

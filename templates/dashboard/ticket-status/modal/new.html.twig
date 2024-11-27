@@ -4,7 +4,7 @@
         <form action="{{ path('app_dashboard_ticket_status_new') }}" method="post">
             <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
             <div class="modal-content">
-                <div class="modal-header bg-light">
+                <div class="modal-header">
                     <h5 class="modal-title" id="newStatusModalTitle">
                         New Label
                     </h5>
@@ -12,7 +12,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body bg-light">
                     <div class="mb-3">
                         <label for="iO7nM4yT4bG2sO5i" class="form-label">
                             Name <span class="text-danger">*</span>
@@ -20,7 +20,16 @@
                         <input type="text" class="form-control" id="iO7nM4yT4bG2sO5i" placeholder="Type status name" name="name"
                                required autofocus>
                     </div>
-
+                    <div class="mb-3">
+                        <label for="iO7nM4yT4bG2sO57" class="form-label">
+                            Description <span class="text-danger">*</span>
+                        </label>
+                        <textarea type="text" class="form-control" id="iO7nM4yT4bG2sO57" placeholder="Type description"
+                                  name="description"></textarea>
+                        <small class="text-secondary">
+                            Description must not be greater than 7 words.
+                        </small>
+                    </div>
                     <div class="mb-3">
                         <label for="iO7nM4yT4bG2sO56" class="form-label">
                             Color <span class="text-danger">*</span>

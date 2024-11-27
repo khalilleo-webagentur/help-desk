@@ -54,9 +54,15 @@ class IndexController extends AbstractDashboardController
             return $this->redirectToRoute(self::DASHBOARD_TICKET_TYPES_ROUTE);
         }
 
+        $description = $this->validateTextarea($request->request->get('description'));
+
         $newType = new TicketType();
 
-        $this->ticketTypesService->save($newType->setName($name));
+        $this->ticketTypesService->save(
+            $newType
+                ->setName($name)
+                ->setDescription($description)
+        );
 
         $this->addFlash('notice', 'New Type has been added.');
 
@@ -108,7 +114,13 @@ class IndexController extends AbstractDashboardController
             return $this->redirectToRoute(self::DASHBOARD_TICKET_TYPES_ROUTE);
         }
 
-        $this->ticketTypesService->save($ticketType->setName($name));
+        $description = $this->validateTextarea($request->request->get('description'));
+
+        $this->ticketTypesService->save(
+            $ticketType
+                ->setName($name)
+                ->setDescription($description)
+        );
 
         $this->addFlash('notice', 'Changes has been saved.');
 
