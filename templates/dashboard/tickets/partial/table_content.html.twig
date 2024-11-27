@@ -1,10 +1,13 @@
 {% if count(issues) > 0 %}
+    {% set isAdmin = is_granted('ROLE_SUPER_ADMIN') %}
     <div class="card-body table-responsive bg-white p-0 mb-3">
         <table class="table table-hover text-nowrap">
             <thead>
             <tr class="fs-14">
                 <th>ID</th>
+                {% if isAdmin %}
                 <th>{{ 'Customer'|trans }}</th>
+                {% endif %}
                 <th>{{ 'Project'|trans }}</th>
                 <th>{{ 'Type'|trans }}</th>
                 <th>{{ 'Label'|trans }}</th>
@@ -21,15 +24,13 @@
                 <tr class="fs-14">
                     <td>T-{{ row.ticketNo }}</td>
 
-                    <td>
-                        {% if is_granted('ROLE_SUPER_ADMIN') %}
+                    {% if isAdmin %}
+                        <td>
                             <a href="{{ path('app_dashboard_user_edit', {id:row.customer.id}) }}">
                                 {{ row.customer.name }}
                             </a>
-                        {% else %}
-                            {{ row.customer.name }}
-                        {% endif %}
-                    </td>
+                        </td>
+                    {% endif %}
 
                     <td>
                         {{ row.project.title }}
@@ -74,7 +75,7 @@
                             </button>
                         </form>
 
-                        {% if is_granted('ROLE_SUPER_ADMIN') %}
+                        {% if isAdmin %}
                             <form action="#" method="post">
                                 <button class="btn small-btn btn-outline-danger mr-2" type="submit">
                                     <span class="fa fa-trash-alt fa-sm"></span>

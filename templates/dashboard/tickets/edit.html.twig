@@ -63,23 +63,6 @@
                             </div>
 
                             <div class="row">
-                                <div class="col-lg-3">
-                                    <div class="form-group">
-                                        <label for="iO7nM4yT4bG2sO00">
-                                            Project <span class="text-danger">*</span>
-                                        </label>
-                                        <select class="form-control" name="project" id="iO7nM4yT4bG2sO00" required>
-                                            {% for project in projects %}
-                                                <option value="{{ project.id }}" {{ project.title == issue.project.title ? 'selected' : '' }}>
-                                                    {{ project.title }}
-                                                </option>
-                                            {% endfor %}
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
                                 <div class="col-lg-10">
                                     <div class="mb-3">
                                         <label for="V9xO3aD7v22" class="form-label">Title <span

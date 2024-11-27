@@ -74,21 +74,23 @@
                         <input type="hidden" name="description" class="qlEditor">
                     </div>
 
-                    <div class="row">
-                        <div class="col-lg-3">
-                            <div class="form-group">
-                                <label for="iO7nM4yT4bG2sO44">
-                                    Assignee
-                                </label>
-                                <select class="form-control" name="assignee" id="iO7nM4yT4bG2sO44">
-                                    <option value="0" selected>Unassigned</option>
-                                    {% for user in users %}
-                                        <option value="{{ user.id }}">{{ user.name }}</option>
-                                    {% endfor %}
-                                </select>
+                    {% if is_granted('ROLE_SUPER_ADMIN') %}
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label for="iO7nM4yT4bG2sO44">
+                                        Assignee
+                                    </label>
+                                    <select class="form-control" name="assignee" id="iO7nM4yT4bG2sO44">
+                                        <option value="0" selected>Unassigned</option>
+                                        {% for user in users %}
+                                            <option value="{{ user.id }}">{{ user.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    {% endif %}
 
                 </div>
                 <div class="modal-footer">

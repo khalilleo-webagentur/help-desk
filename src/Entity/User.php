@@ -77,6 +77,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Ticket::class, mappedBy: 'assignee')]
     private Collection $assigneeTickets;
 
+    /**
+     * @var Collection<int, TicketActivity>
+     */
+    #[ORM\OneToMany(targetEntity: TicketActivity::class, mappedBy: 'user')]
+    private Collection $ticketActivities;
+
     public function __construct()
     {
         $this->setCreatedAt(new DateTime());
@@ -85,6 +91,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->projects = new ArrayCollection();
         $this->tickets = new ArrayCollection();
         $this->assigneeTickets = new ArrayCollection();
+        $this->ticketActivities = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -363,6 +370,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($assigneeTicket->getAssignee() === $this) {
                 $assigneeTicket->setAssignee(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, TicketActivity>
+     */
+    public function getTicketActivities(): Collection
+    {
+        return $this->ticketActivities;
+    }
+
+    public function addTicketActivity(TicketActivity $ticketActivity): static
+    {
+        if (!$this->ticketActivities->contains($ticketActivity)) {
+            $this->ticketActivities->add($ticketActivity);
+            $ticketActivity->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTicketActivity(TicketActivity $ticketActivity): static
+    {
+        if ($this->ticketActivities->removeElement($ticketActivity)) {
+            // set the owning side to null (unless already changed)
+            if ($ticketActivity->getUser() === $this) {
+                $ticketActivity->setUser(null);
             }
         }
 

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\TicketRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -52,9 +54,16 @@ class Ticket
     #[ORM\ManyToOne(inversedBy: 'tickets')]
     private ?TicketStatus $status = null;
 
+    /**
+     * @var Collection<int, TicketActivity>
+     */
+    #[ORM\OneToMany(targetEntity: TicketActivity::class, mappedBy: 'ticket')]
+    private Collection $ticketActivities;
+
     public function __construct()
     {
         $this->setCreatedAt(new \DateTime());
+        $this->ticketActivities = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -190,6 +199,36 @@ class Ticket
     public function setStatus(?TicketStatus $status): static
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, TicketActivity>
+     */
+    public function getTicketActivities(): Collection
+    {
+        return $this->ticketActivities;
+    }
+
+    public function addTicketActivity(TicketActivity $ticketActivity): static
+    {
+        if (!$this->ticketActivities->contains($ticketActivity)) {
+            $this->ticketActivities->add($ticketActivity);
+            $ticketActivity->setTicket($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTicketActivity(TicketActivity $ticketActivity): static
+    {
+        if ($this->ticketActivities->removeElement($ticketActivity)) {
+            // set the owning side to null (unless already changed)
+            if ($ticketActivity->getTicket() === $this) {
+                $ticketActivity->setTicket(null);
+            }
+        }
 
         return $this;
     }

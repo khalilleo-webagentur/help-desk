@@ -8,6 +8,7 @@ use App\Controller\Dashboard\AbstractDashboardController;
 use App\Entity\Ticket;
 use App\Service\MonologService;
 use App\Service\ProjectService;
+use App\Service\TicketActivitiesService;
 use App\Service\TicketLabelsService;
 use App\Service\TicketService;
 use App\Service\TicketStatusService;
@@ -27,13 +28,14 @@ class IndexController extends AbstractDashboardController
     private const DASHBOARD_TICKETS_ROUTE = 'app_dashboard_tickets_index';
 
     public function __construct(
-        private readonly UserService         $userService,
-        private readonly TicketService       $ticketService,
-        private readonly TicketTypesService  $ticketTypesService,
-        private readonly TicketLabelsService $ticketLabelsService,
-        private readonly ProjectService      $projectService,
-        private readonly TicketStatusService $ticketStatusService,
-        private readonly MonologService      $monologService,
+        private readonly UserService             $userService,
+        private readonly TicketService           $ticketService,
+        private readonly TicketTypesService      $ticketTypesService,
+        private readonly TicketLabelsService     $ticketLabelsService,
+        private readonly ProjectService          $projectService,
+        private readonly TicketStatusService     $ticketStatusService,
+        private readonly TicketActivitiesService $ticketActivitiesService,
+        private readonly MonologService          $monologService,
     ) {
     }
 
@@ -135,6 +137,12 @@ class IndexController extends AbstractDashboardController
                 ->setDescription($description)
         );
 
+        $this->ticketActivitiesService->add(
+            $ticket,
+            $user,
+            sprintf('Issue T-%s added by %s', $ticket->getTicketNo(), $user->getName())
+        );
+
         $this->addFlash('success', 'New issue has been added.');
 
         return $this->redirectToRoute(self::DASHBOARD_TICKETS_ROUTE);
@@ -160,8 +168,11 @@ class IndexController extends AbstractDashboardController
             return $this->redirectToRoute(self::DASHBOARD_TICKETS_ROUTE);
         }
 
+        $ticketActivities = $this->ticketActivitiesService->getAllByTicket($issue);
+
         return $this->render('dashboard/tickets/view.html.twig', [
             'issue' => $issue,
+            'ticketActivities' => $ticketActivities,
         ]);
     }
 
@@ -177,7 +188,7 @@ class IndexController extends AbstractDashboardController
         $id = $this->validateNumber($id);
 
         $issue = $isAdmin
-            ? $this->ticketService->getById($this->validateNumber($id))
+            ? $this->ticketService->getById($id)
             : $this->ticketService->getOneByCustomerAndId($user, $id);
 
         if (!$issue) {
@@ -185,17 +196,12 @@ class IndexController extends AbstractDashboardController
             return $this->redirectToRoute(self::DASHBOARD_TICKETS_ROUTE);
         }
 
-        $projects = $isAdmin
-            ? $this->projectService->getAll()
-            : $this->projectService->getAllByCustomer($user);
-
         $users = $this->userService->getAllEmployees();
 
         $statuses = $this->ticketStatusService->getAll();
 
         return $this->render('dashboard/tickets/edit.html.twig', [
             'issue' => $issue,
-            'projects' => $projects,
             'assignees' => $users,
             'statuses' => $statuses,
         ]);
@@ -216,17 +222,6 @@ class IndexController extends AbstractDashboardController
 
         if (!$issue) {
             $this->addFlash('warning', 'Issue could not be found.');
-            return $this->redirectToRoute(self::DASHBOARD_TICKETS_ROUTE);
-        }
-
-        $projectId = $this->validateNumber($request->request->get('project'));
-
-        $project = $isAdmin
-            ? $this->projectService->getById($projectId)
-            : $this->projectService->getByCustomerAndId($user, $projectId);
-
-        if (!$project) {
-            $this->addFlash('warning', 'Project not found.');
             return $this->redirectToRoute(self::DASHBOARD_TICKETS_ROUTE);
         }
 
@@ -255,12 +250,41 @@ class IndexController extends AbstractDashboardController
             )
         );
 
+        if ($title !== $issue->getTitle()) {
+            $this->ticketActivitiesService->add(
+                $issue,
+                $user,
+                sprintf(
+                    '%s updated title of issue to "%s"', $user->getName(), $issue->getTitle()
+                )
+            );
+        }
+
+        if ($description !== $issue->getDescription()) {
+            $this->ticketActivitiesService->add(
+                $issue,
+                $user,
+                sprintf(
+                    '%s updated description of issue to "%s"', $user->getName(), $issue->getDescription()
+                )
+            );
+        }
+
+        if ($status->getName() !== $issue->getStatus()->getName()) {
+            $this->ticketActivitiesService->add(
+                $issue,
+                $user,
+                sprintf(
+                    '%s updated status of issue to "%s"', $user->getName(), $status->getName()
+                )
+            );
+        }
+
         $this->ticketService->save(
             $issue
                 ->setTitle($title)
                 ->setDescription($description)
                 ->setAssignee($assignee)
-                ->setProject($project)
                 ->setStatus($status)
         );
 

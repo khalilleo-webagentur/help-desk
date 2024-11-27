@@ -1,5 +1,5 @@
 p, td, td > *, a, form > span {
-    font-size: 15px !important;
+    font-size: 14px !important;
 }
 
 label, label:not(.form-check-label):not(.custom-file-label){
@@ -130,6 +130,16 @@ body {
 
 .form-control {
     border: 1px solid #e3e3e3;
+}
+
+@media (max-width: 868px) {
+    .md-text-center {
+        text-align: center !important;
+    }
+
+    .md-d-none {
+        display: none;
+    }
 }
 
 @keyframes fadein {
