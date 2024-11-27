@@ -35,7 +35,7 @@
                                     </button>
                                 </form>
 
-                                <form action="{{ path('app_dashboard_ticket_status_delete', {id:row.id}) }}" method="post">
+                                <form class="d-none" action="{{ path('app_dashboard_ticket_status_delete', {id:row.id}) }}" method="post">
                                     <button class="btn small-btn btn-outline-danger" type="submit">
                                         <span class="fa fa-trash-alt fa-sm"></span>
                                     </button>
