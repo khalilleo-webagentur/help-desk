@@ -1,7 +1,7 @@
 parameters:
 
-  app_name: "Help-Desk"
-  full_app_name: "Help-Desk"
+  app_name: "He!p-Desk"
+  full_app_name: "He!p-Desk"
   no_reply: "no-reply@khalilleo.com"
 
   webmaster_name: "Webmaster"
@@ -16,7 +16,7 @@ parameters:
   adress_city: 'Bietigheim-Bissingen'
   adress_country: 'Deutschland'
 
-  app_version: "1.0.2"
+  app_version: "1.0.7"
   
   app_author: "Khalilleo Teams"
   app_created: "2024-07-01"
