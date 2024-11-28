@@ -42,11 +42,11 @@
                     <div class="col-lg-12">
                         <ul class="nav nav-pills">
                             <li class="nav-item">
-                                <a class="nav-link rounded-pill {{ status == 'Open' ? 'active' : '' }}"
+                                <a class="nav-link rounded-pill {{ status == 'Open' or status == '' ? 'active' : '' }}"
                                    href="{{ path('app_dashboard_tickets_index', {status: 'Open'}) }}">Open</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link rounded-pill {{ status == 'In-Progress' ? 'active' : '' }}"
+                                <a class="nav-link rounded-pill {{ status == 'In Progress' ? 'active' : '' }}"
                                    href="{{ path('app_dashboard_tickets_index', {status: 'In-Progress'}) }}">In
                                     Progress</a>
                             </li>

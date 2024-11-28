@@ -29,31 +29,45 @@ class IndexController extends AbstractDashboardController
 
         $isAdmin = $this->userService->isAdmin($user);
 
+        // all of them
         $countIssues = $isAdmin
             ? $this->ticketService->countAll()
             : $this->ticketService->countAllByUser($user);
 
-        $countClosedIssues = $isAdmin
-            ? $this->ticketService->countStatus(null)
-            : $this->ticketService->countStatusByUser($user, null);
+        // only status open
+        $status = $this->ticketStatusService->getOneByName('Open');
 
+        $countOpenIssues = $isAdmin
+            ? $this->ticketService->countStatus($status)
+            : $this->ticketService->countStatusByUser($user, $status);
+
+        // only status closed
+        $status = $this->ticketStatusService->getOneByName('Closed');
+
+        $countClosedIssues = $isAdmin
+            ? $this->ticketService->countStatus($status)
+            : $this->ticketService->countStatusByUser($user, $status);
+
+        // only status resolved
+        $status = $this->ticketStatusService->getOneByName('Resolved');
+
+        $countResolvedIssues = $isAdmin
+            ? $this->ticketService->countStatus($status)
+            : $this->ticketService->countStatusByUser($user, $status);
+
+        // only status in progress
         $status = $this->ticketStatusService->getOneByName('In Progress');
 
         $countIssuesInProgress = $isAdmin
             ? $this->ticketService->countStatus($status)
             : $this->ticketService->countStatusByUser($user, $status);
 
-        $status = $this->ticketStatusService->getOneByName('Resolved');
-
-        $countOpenIssues = $isAdmin
-            ? $this->ticketService->countStatus($status)
-            : $this->ticketService->countStatusByUser($user, $status);
-
         return $this->render('dashboard/index.html.twig', [
             'countIssues' => $countIssues,
-            'countClosedIssues' => $countClosedIssues,
-            'countIssuesInProgress' => $countIssuesInProgress,
             'countOpenIssues' => $countOpenIssues,
+            'countClosedIssues' => $countClosedIssues + $countResolvedIssues,
+            'countIssuesInProgress' => $countIssuesInProgress,
+
         ]);
     }
 }

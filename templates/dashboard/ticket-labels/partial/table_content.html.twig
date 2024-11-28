@@ -17,7 +17,11 @@
             {% for row in ticketLabels %}
                 <tr class="fs-14">
                     <td>{{ row.name|capitalize }}</td>
-                    <td>{{ row.description ? row.description|slice(0, 35) ~ '..' : '---' }}</td>
+                    <td>
+                        <span class="cursor-help" title="{{ row.description }}">
+                            {{ row.description ? row.description|slice(0, 35) ~ '..' : '---' }}
+                        </span>
+                    </td>
                     <td style="color: {{ row.color }}">
                         <span class="fa fa-circle" style="color: {{ row.color }}"></span>
                     </td>

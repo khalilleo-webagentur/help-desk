@@ -20,8 +20,10 @@ final readonly class TicketStatusService
         return $this->ticketStatusRepository->find($id);
     }
 
-    public function getOneByName(string $name): ?TicketStatus
+    public function getOneByName(?string $name): ?TicketStatus
     {
+        if (empty($name)) {return null;}
+
         return $this->ticketStatusRepository->findOneBy(['name' => $name]);
     }
 

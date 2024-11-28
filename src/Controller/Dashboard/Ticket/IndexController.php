@@ -48,9 +48,9 @@ class IndexController extends AbstractDashboardController
 
         $isAdmin = $this->userService->isAdmin($user);
 
-        $status = $this->validate($status ?? 'Open');
+        $status = !empty($status) ? $this->validate(str_replace('-', ' ', $status)) : 'Open';
 
-        $ticketStatus = $this->ticketStatusService->getOneByName(str_replace('-', ' ', $status));
+        $ticketStatus = $this->ticketStatusService->getOneByName($status);
 
         $issues = $isAdmin
             ? $this->ticketService->getAllByStatus($ticketStatus)
@@ -129,6 +129,7 @@ class IndexController extends AbstractDashboardController
         $ticket = new Ticket();
 
         $ticketNo = $this->ticketService->getLatTicketNo();
+        $status = $this->ticketStatusService->getOneByName('Open');
 
         $this->ticketService->save(
             $ticket
@@ -138,6 +139,7 @@ class IndexController extends AbstractDashboardController
                 ->setProject($project)
                 ->setType($ticketType)
                 ->setLabel($ticketLabel)
+                ->setStatus($status)
                 ->setTitle($title)
                 ->setDescription($description)
         );
@@ -275,7 +277,7 @@ class IndexController extends AbstractDashboardController
             );
         }
 
-        if ($status->getName() !== $issue->getStatus()->getName()) {
+        if ($issue->getStatus() && ($status->getName() !== $issue->getStatus()->getName())) {
             $this->ticketActivitiesService->add(
                 $issue,
                 $user,

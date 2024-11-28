@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Command;
 
+use App\Entity\Project;
 use App\Entity\TicketLabel;
 use App\Entity\TicketStatus;
 use App\Entity\TicketType;
@@ -39,6 +40,7 @@ class FixturesCommand extends Command
     {
         $output->writeln('running ...');
 
+        $this->addProjects();
         $this->addType();
         $this->addStatus();
         $this->addLabels();
@@ -51,6 +53,11 @@ class FixturesCommand extends Command
     protected function configure(): void
     {
         //
+    }
+
+    private function addProjects(): void
+    {
+       // add projects manually ..
     }
 
     private function addType(): void

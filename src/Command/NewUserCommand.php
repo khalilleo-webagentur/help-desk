@@ -15,14 +15,14 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-// $ php bin/console app:new-dashboard
+// $ php bin/console app:new-user
 
 #[AsCommand(
-    name: 'app:new-dashboard',
-    description: 'Add demo dashboard for demonstration purposes.',
+    name: 'app:new-user',
+    description: 'Add new user.',
     hidden: false
 )]
-class NewAdminCommand extends Command
+class NewUserCommand extends Command
 {
     public const FAILURE = 0;
     public const SUCCESS = 1;
@@ -54,7 +54,7 @@ class NewAdminCommand extends Command
                     ->setName($faker->name())
                     ->setEmail($email)
                     ->setPassword($this->userService->encodePassword($email))
-                    ->setRoles(['ROLE_SUPER_ADMIN']) // ROLE_CUSTOMER, ROLE_SUPER_ADMIN, ROLE_USER
+                    ->setRoles(['ROLE_USER']) // ROLE_CUSTOMER, ROLE_SUPER_ADMIN, ROLE_USER
                     ->setIsVerified(true)
                     ->setToken($code)
             );

@@ -22,7 +22,11 @@
                         </a>
                     </td>
                     <td>{{ row.title }}</td>
-                    <td>{{ row.description ? row.description|slice(0, 35) ~ '..' : '---' }}</td>
+                    <td>
+                        <span class="cursor-help" title="{{ row.description }}">
+                            {{ row.description ? row.description|slice(0, 35) ~ '..' : '---' }}
+                        </span>
+                    </td>
 
                     <td title="{{ row.updatedAt|date }}">{{ timeAgo(row.updatedAt) }}</td>
 
