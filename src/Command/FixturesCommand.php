@@ -56,13 +56,16 @@ class FixturesCommand extends Command
     private function addType(): void
     {
         $types = [
-            'story',
-            'issue'
+            ['Tasks', 'A specific tasks which should not take more than 1 working day'],
+            ['Stories', 'Entail the most important project information'],
+            ['Epic', 'An Epic could present the topic to which a task belongs or represent a big project']
         ];
 
         foreach ($types as $type) {
             $newType = new TicketType();
-            $newType->setName($type);
+            $newType
+                ->setName($type[0])
+                ->setDescription($type[1]);
             $this->ticketTypesService->save($newType);
         }
     }
@@ -90,19 +93,19 @@ class FixturesCommand extends Command
     private function addLabels(): void
     {
         $labels = [
-           ['Feature', '#408E03'],
-           ['Bug', '#EA1010'],
-           ['Documentation', '#00738C'],
-           ['Support', '#0830F5'],
-           ['Code Review', '#8A48DE'],
-           ['Logic Change', '#C4390D'],
+           ['Feature', '#408E03', 'Change Request'],
+           ['Bug', '#EA1010', 'Any technical issue'],
+           ['Documentation', '#00738C', 'Software Documentation'],
+           ['Support', '#0830F5', 'Action not taking too much time'],
+           ['Logic Change', '#C4390D', 'Change existing logic'],
         ];
 
         foreach ($labels as $label) {
             $newLabel = new TicketLabel();
             $newLabel
                 ->setName($label[0])
-                ->setColor($label[1]);
+                ->setColor($label[1])
+                ->setDescription($label[2]);
             $this->ticketLabelsService->save($newLabel);
         }
     }
