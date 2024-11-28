@@ -40,14 +40,14 @@ final readonly class TicketService
     /**
      * @return Ticket[]
      */
-    public function getAllByCustomer(User|UserInterface $user): array
+    public function getAllByCustomerAndStatus(User|UserInterface $user, ?TicketStatus $status): array
     {
-        return $this->ticketRepository->findBy(['customer' => $user], ['createdAt' => 'DESC']);
+        return $this->ticketRepository->findBy(['customer' => $user, 'status' => $status], ['createdAt' => 'DESC']);
     }
 
-    public function getAll(): array
+    public function getAllByStatus(?TicketStatus $status): array
     {
-        return $this->ticketRepository->findBy([], ['createdAt' => 'DESC']);
+        return $this->ticketRepository->findBy(['status' => $status], ['createdAt' => 'DESC']);
     }
 
     public function countAllByUser(UserInterface $user): int

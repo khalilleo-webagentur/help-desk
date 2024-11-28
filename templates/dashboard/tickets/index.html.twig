@@ -13,10 +13,21 @@
                         <h5 class="m-0 text-dark mt-1">Tickets</h5>
                     </div>
                     <div class="col-6 mt-1">
-                        <div class="breadcrumb float-right">
-                            <button class="btn btn-outline-secondary"
+                        <div class=" float-right">
+                            <button class="btn btn-secondary btn-headers"
+                                    data-toggle="modal" data-target="#filterModal">
+                                <span class="fa fa-filter fa-sm"></span> <span class="ps-1 md-d-none">Filter</span>
+                            </button>
+
+                            <button class="btn btn-secondary btn-headers"
                                     data-toggle="modal" data-target="#newTicketModal">
-                                <span class="fa fa-plus fa-sm"></span> <span class="ps-1 md-d-none">Add new Ticket</span>
+                                <span class="fa fa-plus fa-sm"></span> <span
+                                        class="ps-1 md-d-none">Add new Ticket</span>
+                            </button>
+
+                            <button class="btn btn-secondary btn-headers"
+                                    data-toggle="modal" data-target="#infoModal">
+                                <span class="fa fa-info-circle fa-sm"></span>
                             </button>
                         </div>
                     </div>
@@ -26,6 +37,34 @@
 
         <section class="content">
             <div class="container-fluid">
+
+                <div class="row mb-3">
+                    <div class="col-lg-12">
+                        <ul class="nav nav-pills">
+                            <li class="nav-item">
+                                <a class="nav-link rounded-pill {{ status == 'Open' ? 'active' : '' }}"
+                                   href="{{ path('app_dashboard_tickets_index', {status: 'Open'}) }}">Open</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link rounded-pill {{ status == 'In-Progress' ? 'active' : '' }}"
+                                   href="{{ path('app_dashboard_tickets_index', {status: 'In-Progress'}) }}">In
+                                    Progress</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link rounded-pill {{ status == 'Pending' ? 'active' : '' }}"
+                                   href="{{ path('app_dashboard_tickets_index', {status: 'Pending'}) }}">Pending</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link rounded-pill {{ status == 'Resolved' ? 'active' : '' }}"
+                                   href="{{ path('app_dashboard_tickets_index', {status: 'Resolved'}) }}">Resolved</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link rounded-pill {{ status == 'Closed' ? 'active' : '' }}"
+                                   href="{{ path('app_dashboard_tickets_index', {status: 'Closed'}) }}">Closed</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
 
                 <div class="row">
                     <div class="col-lg-12">

@@ -39,8 +39,8 @@ class IndexController extends AbstractDashboardController
     ) {
     }
 
-    #[Route('/home', name: 'app_dashboard_tickets_index')]
-    public function index(): Response
+    #[Route('/status/{status?}', name: 'app_dashboard_tickets_index')]
+    public function index(?string $status): Response
     {
         $this->denyAccessUnlessGrantedRoleCustomer();
 
@@ -48,9 +48,13 @@ class IndexController extends AbstractDashboardController
 
         $isAdmin = $this->userService->isAdmin($user);
 
+        $status = $this->validate($status ?? 'Open');
+
+        $ticketStatus = $this->ticketStatusService->getOneByName(str_replace('-', ' ', $status));
+
         $issues = $isAdmin
-            ? $this->ticketService->getAll()
-            : $this->ticketService->getAllByCustomer($user);
+            ? $this->ticketService->getAllByStatus($ticketStatus)
+            : $this->ticketService->getAllByCustomerAndStatus($user, $ticketStatus);
 
         $ticketTypes = $this->ticketTypesService->getAll();
 
@@ -68,6 +72,7 @@ class IndexController extends AbstractDashboardController
             'ticketLabels' => $ticketLabels,
             'users' => $users,
             'projects' => $projects,
+            'status' => $status,
         ]);
     }
 

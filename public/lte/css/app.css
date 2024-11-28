@@ -132,6 +132,17 @@ body {
     border: 1px solid #e3e3e3;
 }
 
+.btn-headers {
+    padding: 4px 10px !important;
+    border-radius: 2px;
+    opacity: .7;
+    background-color: #fff;
+    letter-spacing: 0;
+    color: rgba(48, 48, 48, 0.94);
+    border: 1px solid #ccc;
+    margin-right: 2px;
+}
+
 @media (max-width: 868px) {
     .md-text-center {
         text-align: center !important;
