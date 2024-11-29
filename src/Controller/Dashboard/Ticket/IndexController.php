@@ -126,6 +126,10 @@ class IndexController extends AbstractDashboardController
             return $this->redirectToRoute(self::DASHBOARD_TICKETS_ROUTE);
         }
 
+        $attachment = $request->files->get('attachment');
+
+        // @ TODO save ..
+
         $ticket = new Ticket();
 
         $ticketNo = $this->ticketService->getLatTicketNo();

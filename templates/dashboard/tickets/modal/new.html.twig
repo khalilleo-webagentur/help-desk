@@ -1,7 +1,7 @@
 <div class="modal fade" id="newTicketModal" tabindex="-1" role="dialog" aria-labelledby="newTicketModalTitle"
      aria-hidden="true">
     <div class="modal-dialog modal-xl" role="document">
-        <form action="{{ path('app_dashboard_ticket_new') }}" method="post">
+        <form action="{{ path('app_dashboard_ticket_new') }}" method="post" enctype="multipart/form-data">
             <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
             <div class="modal-content">
                 <div class="modal-header">
@@ -93,9 +93,9 @@
                     {% endif %}
 
                     <div class="form-group mt-2">
-                        <label for="uploadFile">Attachment</label>
+                        <label for="attachment">Attachment</label>
                         {% include 'component/drag_and_drop.html.twig' with{
-                            id: 'uploadFile',
+                            id: 'attachment',
                             name: 'attachment'
                         } %}
                         <small class="text-secondary">This field is optional. Only images are allowed.</small>
@@ -103,7 +103,9 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-light" data-dismiss="modal"
+                            id="cancelFile">Cancel
+                    </button>
                     <button type="submit" class="btn btn-outline-primary" id="formSave">Create Issue</button>
                 </div>
             </div>
