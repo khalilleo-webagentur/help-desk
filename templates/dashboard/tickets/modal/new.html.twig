@@ -23,7 +23,7 @@
                                 <select class="form-control" name="project" id="iO7nM4yT4bG2sO00">
                                     <option value="0" selected disabled>Select Project</option>
                                     {% for project in projects %}
-                                        <option value="{{ project.id }}">{{ project.title }}</option>
+                                        <option value="{{ project.id }}">{{ project.title }} ({{ project.customer.name }})</option>
                                     {% endfor %}
                                 </select>
                             </div>
@@ -62,7 +62,7 @@
                         <input type="text" class="form-control" id="iO7nM4yT4bG2sO5i" placeholder="Type title" name="title"
                                required>
                         <small class="text-secondary">
-                            Title must not be greater than 10 words.
+                            Title must be less than 10 words.
                         </small>
                     </div>
 
@@ -91,6 +91,15 @@
                             </div>
                         </div>
                     {% endif %}
+
+                    <div class="form-group mt-2">
+                        <label for="uploadFile">Attachment</label>
+                        {% include 'component/drag_and_drop.html.twig' with{
+                            id: 'uploadFile',
+                            name: 'attachment'
+                        } %}
+                        <small class="text-secondary">This field is optional. Only images are allowed.</small>
+                    </div>
 
                 </div>
                 <div class="modal-footer">

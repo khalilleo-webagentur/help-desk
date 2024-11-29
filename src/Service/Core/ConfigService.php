@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Service;
+namespace App\Service\Core;
 
 use Exception;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -22,5 +22,6 @@ final class ConfigService
         } catch (Exception $e) {
             $this->monolog->logger->critical($e->getTraceAsString());
         }
+        return "";
     }
 }

@@ -6,7 +6,7 @@ namespace App\Mails\Admin;
 
 use App\Mails\AbstractMail;
 use App\Mails\MailInterface;
-use App\Service\ConfigService;
+use App\Service\Core\ConfigService;
 use App\Service\Dev\Mailer;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\MailerInterface;

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Service;
+namespace App\Service\Core;
 
 use Exception;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -14,7 +14,7 @@ final class FormSecurityCodeService
 
     public function __construct(
         private readonly SessionInterface $session,
-        private string $sessionName
+        private readonly string $sessionName
     ) {
     }
 

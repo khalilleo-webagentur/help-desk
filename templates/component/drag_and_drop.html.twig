@@ -1,0 +1,14 @@
+<div class="dropzone-wrapper">
+    <div class="dropzone-desc showFileNameAfterUpload">
+        <small class="fs-14">
+            <i class="fa fa-upload pe-1"></i> {{ 'Drag your file here or click to upload.'|trans }}
+        </small>
+    </div>
+    <input type="file"
+           id="{{ id }}"
+           name="{{ name is defined and name ? name : 'importFile' }}"
+           class="dropzone importFile"
+           accept="{{ accept is defined and accept ? accept : 'image/*' }}"
+            {{ required is defined and required ? 'required' : '' }}
+    >
+</div>

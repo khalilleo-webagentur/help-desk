@@ -29,8 +29,10 @@
                     <div class="col-lg-12">
 
                         {% if issue %}
-                            <small class="text-secondary">{{ issue.project.title }} <span class="text-light-50">|</span>
-                                T-{{ issue.ticketNo }}</small>
+                            <small class="text-secondary cursor-help" title="{{ issue.project.description }}">
+                                {{ issue.project.title }} <span class="text-light-50">|</span>
+                                T-{{ issue.ticketNo }}
+                            </small>
                             <h5 class="my-3">{{ issue.title }}</h5>
                             <div class="text-secondary">
                                 <p>{{ issue.description|raw }}</p>

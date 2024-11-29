@@ -6,7 +6,7 @@ namespace App\Controller\Dashboard\Ticket;
 
 use App\Controller\Dashboard\AbstractDashboardController;
 use App\Entity\Ticket;
-use App\Service\MonologService;
+use App\Service\Core\MonologService;
 use App\Service\ProjectService;
 use App\Service\TicketActivitiesService;
 use App\Service\TicketLabelsService;

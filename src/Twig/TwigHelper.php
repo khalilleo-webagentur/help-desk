@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Twig;
 
 use App\Entity\User;
-use App\Service\ConfigService;
+use App\Service\Core\ConfigService;
 use DateTime;
 use DateTimeInterface;
 use Exception;
