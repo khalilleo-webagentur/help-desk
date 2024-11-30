@@ -9,11 +9,11 @@
         <div class="content-header">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-sm-6">
+                    <div class="col-8">
                         <h4 class="m-0 text-dark">Issue Details</h4>
                     </div>
-                    <div class="col-sm-6">
-                        <div class="breadcrumb float-sm-right">
+                    <div class="col-4">
+                        <div class="float-right">
                             <a href="{{ path('app_dashboard_tickets_index') }}" class="text-secondary">
                                 Close <span class="fa fa-window-close"></span>
                             </a>
@@ -24,7 +24,7 @@
         </div>
 
         <section class="content">
-            <div class="container-fluid bg-gradient-white">
+            <div class="container-fluid area-section">
                 <div class="row px-3 py-3">
                     <div class="col-lg-12">
 
@@ -49,31 +49,39 @@
 
                     </div>
                 </div>
-
             </div>
 
             {% if count(attachments) > 0 %}
-                <div class="container-fluid bg-gradient-white my-4">
-                    <div class="row px-3 py-3">
-                        <div class="col">
-                             <h5>Attachments</h5>
-                            {% for attachment in attachments %}
-                                <form action="{{ path('app_dashboard_ticket_helper_show', {hash: hash(attachment.filename)}) }}" method="post">
-                                    <img class="img-thumbnail pointer"
-                                         src="{{ asset('uploads/attachment/' ~ attachment.filename) }}"
-                                         alt="{{ attachment.filename }}"
-                                         title="{{ attachment.filename }}"
-                                         onclick="this.closest('form').submit();">
-
-                                    <input type="hidden" name="tId" value="{{ attachment.ticket.id }}">
-                                </form>
-                            {% endfor %}
-                        </div>
+            <div class="container-fluid area-section">
+                <div class="row px-3 pt-3">
+                    <div class="col">
+                        <h5>Attachments</h5>
                     </div>
                 </div>
+                <div class="row row-cols-1 row-cols-lg-6 row-cols-xl-6 g-2 px-3 pb-3">
+                    {% for attachment in attachments %}
+                    <div class="col">
+                        <div class="py-1">
+                            <form action="#">
+                                <span class="fa fa-window-close text-danger pointer"></span>
+                            </form>
+                            <form action="{{ path('app_dashboard_ticket_helper_show', {hash: hash(attachment.filename)}) }}" method="post">
+                                <img class="img-thumbnail pointer"
+                                     src="{{ asset('uploads/attachment/' ~ attachment.filename) }}"
+                                     alt="{{ attachment.filename }}"
+                                     title="{{ attachment.filename }}"
+                                     onclick="this.closest('form').submit();">
+
+                                <input type="hidden" name="tId" value="{{ attachment.ticket.id }}">
+                            </form>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
             {% endif %}
 
-            <div class="container-fluid bg-gradient-white my-4 rounded-3">
+            <div class="container-fluid area-section">
                 <div class="row px-3 py-4">
                     <div class="col">
                         <h5>Comment</h5>
@@ -87,32 +95,21 @@
             </div>
 
             {% if count(ticketActivities) > 0 %}
-                <div class="container-fluid bg-gradient-white my-4">
+                <div class="container-fluid area-section mb-5">
                     <div class="row px-3 py-3">
                         <div class="col">
-                            <a class="text-secondary" data-toggle="collapse"
-                               href="#ticketActivitiesCollapse"
-                               aria-expanded="false"
-                               aria-controls="ticketActivitiesCollapse">
-                                <span style="color:#454545;margin-bottom: .5rem;font-family: inherit;font-weight: 500;line-height: 1.2;font-size: 20px">
-                                    Activities
-                                </span>
-                            </a>
-                            <div class="collapse" id="ticketActivitiesCollapse">
-                                <div class="card card-body shadow-none border-0 pb-0 mb-0">
-                                    <ul>
-                                        {% for ticketActivity in ticketActivities %}
-                                            <li class="fs-14 text-secondary mb-1"
-                                                style="border-bottom: 1px dashed rgba(220,220,220,0.67);">
-                                                {{ ticketActivity.message|raw }}
-                                                <span class="float-right">
+                            <h5>Activities</h5>
+                            <ul>
+                                {% for ticketActivity in ticketActivities %}
+                                    <li class="fs-14 text-secondary mb-1"
+                                        style="border-bottom: 1px dashed rgba(220,220,220,0.67);">
+                                        {{ ticketActivity.message|raw }}
+                                        <span class="float-right">
                                                 <span class="fa fa-clock text-light-50 opacity-50"></span> {{ timeAgo(ticketActivity.createdAt) }}
                                             </span>
-                                            </li>
-                                        {% endfor %}
-                                    </ul>
-                                </div>
-                            </div>
+                                    </li>
+                                {% endfor %}
+                            </ul>
                         </div>
                     </div>
                 </div>

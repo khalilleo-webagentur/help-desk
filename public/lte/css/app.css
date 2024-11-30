@@ -132,6 +132,7 @@ body {
     border: 1px solid #e3e3e3;
 }
 
+
 .btn-headers {
     padding: 4px 10px !important;
     border-radius: 2px;
@@ -144,11 +145,23 @@ body {
 }
 
 .img-thumbnail{
-    height: 70px;
+    height: 100%;
 }
 
 .img-thumbnail:hover {
-    height: 75px;
+    border: 1px solid #ccc;
+}
+
+.img-remove {
+    cursor: pointer;
+}
+
+.area-section {
+    border-radius: 10px;
+    background-color: #fff;
+    margin-bottom: 30px;
+    border: 1px solid #ece9e9;
+    opacity: .9;
 }
 
 @media (max-width: 868px) {

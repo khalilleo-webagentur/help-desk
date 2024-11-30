@@ -29,9 +29,14 @@ class HelperController extends AbstractDashboardController
     ) {
     }
 
-    #[Route('/image/{hash}', name: 'app_dashboard_ticket_helper_show', methods: 'POST')]
+    #[Route('/image/{hash}', name: 'app_dashboard_ticket_helper_show', methods: ['GET', 'POST'])]
     public function view(?string $hash, Request $request, FileHandlerService $fileHandlerService): Response
     {
+        if ($request->getMethod() === 'GET') {
+            $this->addFlash('notice', 'The file that you are looking for could not be found.');
+            return $this->redirectToRoute('app_home');
+        }
+
         $this->denyAccessUnlessGrantedRoleCustomer();
 
         $user = $this->getUser();
