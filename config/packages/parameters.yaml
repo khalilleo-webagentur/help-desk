@@ -21,3 +21,5 @@ parameters:
   app_author: "Khalilleo Teams"
   app_created: "2024-07-01"
   app_made_by: "khalilleo.com"
+
+  attachments: '%kernel.project_dir%/public/uploads/attachment'

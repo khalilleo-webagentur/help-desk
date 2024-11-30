@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Command;
 
-use App\Entity\Project;
 use App\Entity\TicketLabel;
 use App\Entity\TicketStatus;
 use App\Entity\TicketType;

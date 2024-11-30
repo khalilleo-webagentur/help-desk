@@ -143,6 +143,14 @@ body {
     margin-right: 2px;
 }
 
+.img-thumbnail{
+    height: 70px;
+}
+
+.img-thumbnail:hover {
+    height: 75px;
+}
+
 @media (max-width: 868px) {
     .md-text-center {
         text-align: center !important;

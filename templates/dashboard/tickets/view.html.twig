@@ -25,7 +25,7 @@
 
         <section class="content">
             <div class="container-fluid bg-gradient-white">
-                <div class="row px-2 py-3">
+                <div class="row px-3 py-3">
                     <div class="col-lg-12">
 
                         {% if issue %}
@@ -52,10 +52,31 @@
 
             </div>
 
-            <div class="container-fluid bg-gradient-white my-4">
-                <div class="row px-2 py-4">
+            {% if count(attachments) > 0 %}
+                <div class="container-fluid bg-gradient-white my-4">
+                    <div class="row px-3 py-3">
+                        <div class="col">
+                             <h5>Attachments</h5>
+                            {% for attachment in attachments %}
+                                <form action="{{ path('app_dashboard_ticket_helper_show', {hash: hash(attachment.filename)}) }}" method="post">
+                                    <img class="img-thumbnail pointer"
+                                         src="{{ asset('uploads/attachment/' ~ attachment.filename) }}"
+                                         alt="{{ attachment.filename }}"
+                                         title="{{ attachment.filename }}"
+                                         onclick="this.closest('form').submit();">
+
+                                    <input type="hidden" name="tId" value="{{ attachment.ticket.id }}">
+                                </form>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+
+            <div class="container-fluid bg-gradient-white my-4 rounded-3">
+                <div class="row px-3 py-4">
                     <div class="col">
-                        <label>Comment</label>
+                        <h5>Comment</h5>
                         <div id="editor"></div>
 
                         <div class="my-3">
@@ -66,14 +87,14 @@
             </div>
 
             {% if count(ticketActivities) > 0 %}
-                <div class="container-fluid bg-gradient-white my-3">
-                    <div class="row px-2 py-3">
+                <div class="container-fluid bg-gradient-white my-4">
+                    <div class="row px-3 py-3">
                         <div class="col">
                             <a class="text-secondary" data-toggle="collapse"
                                href="#ticketActivitiesCollapse"
                                aria-expanded="false"
                                aria-controls="ticketActivitiesCollapse">
-                                <span style="font-size: 18px">
+                                <span style="color:#454545;margin-bottom: .5rem;font-family: inherit;font-weight: 500;line-height: 1.2;font-size: 20px">
                                     Activities
                                 </span>
                             </a>

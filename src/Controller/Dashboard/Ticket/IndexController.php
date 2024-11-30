@@ -6,15 +6,18 @@ namespace App\Controller\Dashboard\Ticket;
 
 use App\Controller\Dashboard\AbstractDashboardController;
 use App\Entity\Ticket;
+use App\Service\Core\FileUploaderService;
 use App\Service\Core\MonologService;
 use App\Service\ProjectService;
 use App\Service\TicketActivitiesService;
+use App\Service\TicketAttachmentsService;
 use App\Service\TicketLabelsService;
 use App\Service\TicketService;
 use App\Service\TicketStatusService;
 use App\Service\TicketTypesService;
 use App\Service\UserService;
 use App\Traits\FormValidationTrait;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -35,6 +38,7 @@ class IndexController extends AbstractDashboardController
         private readonly ProjectService          $projectService,
         private readonly TicketStatusService     $ticketStatusService,
         private readonly TicketActivitiesService $ticketActivitiesService,
+        private readonly TicketAttachmentsService $ticketAttachmentsService,
         private readonly MonologService          $monologService,
     ) {
     }
@@ -77,7 +81,7 @@ class IndexController extends AbstractDashboardController
     }
 
     #[Route('/new', name: 'app_dashboard_ticket_new', methods: 'POST')]
-    public function new(Request $request): RedirectResponse
+    public function new(Request $request, FileUploaderService $fileUploaderService): RedirectResponse
     {
         $this->denyAccessUnlessGrantedRoleCustomer();
 
@@ -126,10 +130,6 @@ class IndexController extends AbstractDashboardController
             return $this->redirectToRoute(self::DASHBOARD_TICKETS_ROUTE);
         }
 
-        $attachment = $request->files->get('attachment');
-
-        // @ TODO save ..
-
         $ticket = new Ticket();
 
         $ticketNo = $this->ticketService->getLatTicketNo();
@@ -148,11 +148,18 @@ class IndexController extends AbstractDashboardController
                 ->setDescription($description)
         );
 
-        $this->ticketActivitiesService->add(
-            $ticket,
-            $user,
-            sprintf('Issue T-%s added by %s', $ticket->getTicketNo(), $user->getName())
-        );
+        /** @var UploadedFile $attachment */
+        $attachment = $request->files->get('attachment');
+        $size = $attachment ? $attachment->getSize() : 0;
+        $extension = $attachment ? $attachment->getClientOriginalExtension() : "";
+        $filename = $fileUploaderService->upload($attachment);
+
+        if ($filename && $size && $extension) {
+            $this->ticketAttachmentsService->create($ticket, $filename, $size, $extension);
+        }
+
+        $message = sprintf('Issue T-%s added by %s', $ticket->getTicketNo(), $user->getName());
+        $this->ticketActivitiesService->add($ticket, $user, $message);
 
         $this->addFlash('success', 'New issue has been added.');
 
@@ -181,9 +188,13 @@ class IndexController extends AbstractDashboardController
 
         $ticketActivities = $this->ticketActivitiesService->getAllByTicket($issue);
 
+        $attachments = $this->ticketAttachmentsService->getAllByTicket($issue);
+
         return $this->render('dashboard/tickets/view.html.twig', [
             'issue' => $issue,
             'ticketActivities' => $ticketActivities,
+            'dir' => $this->getParameter('attachments'),
+            'attachments' => $attachments,
         ]);
     }
 
