@@ -150,12 +150,15 @@ class IndexController extends AbstractDashboardController
 
         /** @var UploadedFile $attachment */
         $attachment = $request->files->get('attachment');
-        $size = $attachment ? $attachment->getSize() : 0;
-        $extension = $attachment ? $attachment->getClientOriginalExtension() : "";
-        $filename = $fileUploaderService->upload($attachment);
 
-        if ($filename && $size && $extension) {
-            $this->ticketAttachmentsService->create($ticket, $filename, $size, $extension);
+        if ($attachment) {
+            $size = $attachment->getSize();
+            $extension = $attachment->getClientOriginalExtension();
+            $filename = $fileUploaderService->upload($attachment);
+
+            if ($filename && $size && $extension) {
+                $this->ticketAttachmentsService->create($ticket, $filename, $size, $extension);
+            }
         }
 
         $message = sprintf('Issue T-%s added by %s', $ticket->getTicketNo(), $user->getName());
