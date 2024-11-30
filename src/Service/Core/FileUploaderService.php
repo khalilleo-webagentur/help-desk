@@ -45,4 +45,9 @@ final class FileUploaderService
 
         return $this;
     }
+
+    public function isExtensionAllowed(UploadedFile $file): bool
+    {
+        return in_array($file->getClientOriginalExtension(), ['jpg', 'png', 'jpeg', 'gif']);
+    }
 }

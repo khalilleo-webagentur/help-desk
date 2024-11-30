@@ -151,7 +151,7 @@ class IndexController extends AbstractDashboardController
         /** @var UploadedFile $attachment */
         $attachment = $request->files->get('attachment');
 
-        if ($attachment) {
+        if ($attachment && $fileUploaderService->isExtensionAllowed($attachment)) {
             $size = $attachment->getSize();
             $extension = $attachment->getClientOriginalExtension();
             $filename = $fileUploaderService->upload($attachment);
@@ -163,6 +163,8 @@ class IndexController extends AbstractDashboardController
 
         $message = sprintf('Issue T-%s added by %s', $ticket->getTicketNo(), $user->getName());
         $this->ticketActivitiesService->add($ticket, $user, $message);
+
+        // notify admins when customer add a new issue ..
 
         $this->addFlash('success', 'New issue has been added.');
 
