@@ -15,9 +15,9 @@ final readonly class TicketAttachmentsService
     ){
     }
 
-    public function getOneByTicket(Ticket $ticket): ?TicketAttachment
+    public function getOneByTicketAndId(Ticket $ticket, int $id): ?TicketAttachment
     {
-        return $this->ticketAttachmentRepository->findOneBy(['ticket' => $ticket]);
+        return $this->ticketAttachmentRepository->findOneBy(['ticket' => $ticket, 'id' => $id]);
     }
 
     /**
@@ -28,11 +28,13 @@ final readonly class TicketAttachmentsService
         return $this->ticketAttachmentRepository->findBy(['ticket' => $ticket]);
     }
 
-    public function create(Ticket $ticket, string $filename, int $size, string $extension): TicketAttachment
+    public function create(Ticket $ticket, string $originalFilename, string $filename, int $size, string $extension): TicketAttachment
     {
         $ticketAttachment = new TicketAttachment();
         $ticketAttachment
+            ->setFileNo(uniqid())
             ->setTicket($ticket)
+            ->setOriginalFileName($originalFilename)
             ->setFilename($filename)
             ->setSize($size)
             ->setExtension($extension);
@@ -48,5 +50,10 @@ final readonly class TicketAttachmentsService
             true
         );
         return $ticketAttachment;
+    }
+
+    public function delete(TicketAttachment $ticketAttachment): void
+    {
+        $this->ticketAttachmentRepository->remove($ticketAttachment, true);
     }
 }

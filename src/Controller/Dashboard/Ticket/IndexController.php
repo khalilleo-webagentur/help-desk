@@ -152,12 +152,13 @@ class IndexController extends AbstractDashboardController
         $attachment = $request->files->get('attachment');
 
         if ($attachment && $fileUploaderService->isExtensionAllowed($attachment)) {
+            $originalFilename = $attachment->getClientOriginalName();
             $size = $attachment->getSize();
             $extension = $attachment->getClientOriginalExtension();
             $filename = $fileUploaderService->upload($attachment);
 
             if ($filename && $size && $extension) {
-                $this->ticketAttachmentsService->create($ticket, $filename, $size, $extension);
+                $this->ticketAttachmentsService->create($ticket, $originalFilename, $filename, $size, $extension);
             }
         }
 

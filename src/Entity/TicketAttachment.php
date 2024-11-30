@@ -15,8 +15,14 @@ class TicketAttachment
     #[ORM\Column]
     private ?int $id = null;
 
+    #[ORM\Column(length: 100)]
+    private string $fileNo = "";
+
     #[ORM\Column(length: 255)]
     private string $filename = "";
+
+    #[ORM\Column(length: 255)]
+    private string $originalFileName = "";
 
     #[ORM\Column]
     private int $size = 0;
@@ -44,6 +50,18 @@ class TicketAttachment
         return $this->id;
     }
 
+    public function getFileNo(): ?string
+    {
+        return $this->fileNo;
+    }
+
+    public function setFileNo(string $fileNo): static
+    {
+        $this->fileNo = $fileNo;
+
+        return $this;
+    }
+
     public function getFilename(): string
     {
         return $this->filename;
@@ -52,6 +70,18 @@ class TicketAttachment
     public function setFilename(string $filename): static
     {
         $this->filename = $filename;
+
+        return $this;
+    }
+
+    public function getOriginalFileName(): ?string
+    {
+        return $this->originalFileName;
+    }
+
+    public function setOriginalFileName(string $originalFileName): static
+    {
+        $this->originalFileName = $originalFileName;
 
         return $this;
     }

@@ -48,6 +48,6 @@ final class FileUploaderService
 
     public function isExtensionAllowed(UploadedFile $file): bool
     {
-        return in_array($file->getClientOriginalExtension(), ['jpg', 'png', 'jpeg', 'gif']);
+        return in_array($file->getClientOriginalExtension(), ['jpg', 'png', 'jpeg', 'gif', 'csv', 'txt', 'md', 'pdf', 'doc', 'docx', 'xls', 'xlsx']);
     }
 }

@@ -1,0 +1,50 @@
+{% if count(attachments) > 0 %}
+    {% set isAdmin = is_granted('ROLE_SUPER_ADMIN') %}
+    <div class="card-body table-sm table-responsive bg-white p-0 by-3">
+        <table class="table table-hover text-nowrap">
+            <thead>
+            <tr class="fs-14">
+                <th>{{ 'ID'|trans }}</th>
+                <th>{{ 'Filename'|trans }}</th>
+                <th>{{ 'type'|trans }}</th>
+                <th>{{ 'Size'|trans }}</th>
+                <th>{{ 'Created'|trans }}</th>
+                <th>{{ 'Action'|trans }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for attachment in attachments %}
+                <tr class="fs-14">
+                    <td>{{ attachment.fileNo }}</td>
+                    <td>{{ attachment.originalFileName }}</td>
+                    <td>{{ attachment.extension|upper }}</td>
+                    <td>{{ formatSizeUnits(attachment.size) }}</td>
+
+                    <td title="{{ attachment.createdAt|date }}">{{ timeAgo(attachment.createdAt) }}</td>
+
+                    <td class="d-flex">
+                        <form action="{{ path('app_dashboard_ticket_helper_show', {hash: hash(attachment.filename)}) }}" method="post">
+                            <button class="btn small-btn btn-outline-secondary mr-2" type="submit">
+                                <span class="fa fa-eye fa-sm"></span>
+                                <input type="hidden" name="tId" value="{{ attachment.ticket.id }}">
+                                <input type="hidden" name="aId" value="{{ attachment.id }}">
+                            </button>
+                        </form>
+                        <form action="{{ path('app_dashboard_ticket_helper_delete_file', {hash: hash(attachment.filename)}) }}" method="post">
+                            <button class="btn small-btn btn-outline-danger mr-2" type="submit">
+                                <span class="fa fa-trash fa-sm"></span>
+                                <input type="hidden" name="tId" value="{{ attachment.ticket.id }}">
+                                <input type="hidden" name="aId" value="{{ attachment.id }}">
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% else %}
+    <small class="pl-3 text-secondary">
+        <span class="fa fa-info-circle fa-sm"></span> This issue has no attachments!
+    </small>
+{% endif %}

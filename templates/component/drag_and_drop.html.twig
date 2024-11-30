@@ -5,7 +5,7 @@
     <input type="file"
            id="{{ id }}"
            name="{{ name }}"
-           accept="{{ accept is defined and accept ? accept : 'image/*' }}"
+           accept="{{ accept is defined and accept ? accept : '.jpg, .png, .jpeg, .gif, .csv, .txt, .md, .pdf, .doc, .docx, .xls, .xlsx' }}"
             {{ required is defined and required ? 'required' : '' }}/>
 </div>
 <span id="remove">
