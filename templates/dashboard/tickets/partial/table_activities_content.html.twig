@@ -1,0 +1,25 @@
+{% if count(ticketActivities) > 0 %}
+    {% set isAdmin = is_granted('ROLE_SUPER_ADMIN') %}
+    <div class="card-body table-sm table-responsive bg-white p-0 by-3">
+        <table class="table table-hover text-nowrap">
+            <thead>
+            <tr class="fs-14">
+                <th>{{ 'Description'|trans }}</th>
+                <th>{{ 'Datetime'|trans }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for row in ticketActivities %}
+                <tr class="fs-14">
+                    <td>{{ row.message }}</td>
+                    <td title="{{ row.createdAt|date }}">{{ timeAgo(row.createdAt) }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% else %}
+    <small class="pl-3 text-secondary">
+        <span class="fa fa-info-circle fa-sm"></span> This issue has no activities!
+    </small>
+{% endif %}

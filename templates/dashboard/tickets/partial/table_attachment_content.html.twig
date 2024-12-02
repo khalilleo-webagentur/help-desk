@@ -16,7 +16,18 @@
             {% for attachment in attachments %}
                 <tr class="fs-14">
                     <td>{{ attachment.fileNo }}</td>
-                    <td>{{ attachment.originalFileName }}</td>
+                    <td>
+                        <form action="{{ path('app_dashboard_ticket_helper_show', {hash: hash(attachment.filename)}) }}"
+                            method="post">
+                            <span class="pointer text-primary"
+                                onclick="this.closest('form').submit();">{{ attachment.originalFileName }}
+                            </span>
+                            <div class="d-none">
+                                <input type="hidden" name="tId" value="{{ attachment.ticket.id }}">
+                                <input type="hidden" name="aId" value="{{ attachment.id }}">
+                            </div>
+                        </form>
+                    </td>
                     <td>{{ attachment.extension|upper }}</td>
                     <td>{{ formatSizeUnits(attachment.size) }}</td>
 

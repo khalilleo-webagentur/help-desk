@@ -68,11 +68,27 @@
                     </div>
                 </div>
                 {% if count(attachments) > 0 %}
-                    <div class="mb-3">
-                        {% include 'dashboard/tickets/partial/table_attachment_content.html.twig' %}
+                    <div class="row mb-3">
+                       <div class="col-12">
+                           {% include 'dashboard/tickets/partial/table_attachment_content.html.twig' %}
+                       </div>
                     </div>
                 {% endif %}
             </div>
+
+            {% if count(ticketActivities) > 0 and is_granted('ROLE_SUPER_ADMIN') %}
+                <div class="container-fluid area-section">
+                    <div class="row px-3 py-3">
+                        <div class="col">
+                            <h5 class="mb-3">Activities</h5>
+
+                            <div class="mb-3">
+                                {% include 'dashboard/tickets/partial/table_activities_content.html.twig' %}
+                            </div>
+                         </div>
+                    </div>
+                </div>
+            {% endif %}
 
             <div class="container-fluid area-section">
                 <div class="row px-3 py-4">
@@ -86,27 +102,6 @@
                     </div>
                 </div>
             </div>
-
-            {% if count(ticketActivities) > 0 and is_granted('ROLE_SUPER_ADMIN') %}
-                <div class="container-fluid area-section">
-                    <div class="row px-3 py-3">
-                        <div class="col">
-                            <h5>Activities</h5>
-                            <ul>
-                                {% for ticketActivity in ticketActivities %}
-                                    <li class="fs-14 text-secondary mb-1"
-                                        style="border-bottom: 1px dashed rgba(220,220,220,0.67);">
-                                        {{ ticketActivity.message|raw }}
-                                        <span class="float-right">
-                                               {{ timeAgo(ticketActivity.createdAt) }}  <span class="fa fa-clock text-light-50 opacity-50"></span>
-                                            </span>
-                                    </li>
-                                {% endfor %}
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            {% endif %}
 
         </section>
     </div>
