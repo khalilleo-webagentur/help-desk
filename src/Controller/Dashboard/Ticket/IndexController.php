@@ -11,6 +11,7 @@ use App\Service\Core\MonologService;
 use App\Service\ProjectService;
 use App\Service\TicketActivitiesService;
 use App\Service\TicketAttachmentsService;
+use App\Service\TicketCommentsService;
 use App\Service\TicketLabelsService;
 use App\Service\TicketService;
 use App\Service\TicketStatusService;
@@ -39,6 +40,7 @@ class IndexController extends AbstractDashboardController
         private readonly TicketStatusService     $ticketStatusService,
         private readonly TicketActivitiesService $ticketActivitiesService,
         private readonly TicketAttachmentsService $ticketAttachmentsService,
+        private readonly TicketCommentsService    $ticketCommentsService,
         private readonly MonologService          $monologService,
     ) {
     }
@@ -176,11 +178,8 @@ class IndexController extends AbstractDashboardController
     public function view(?string $id): Response
     {
         $this->denyAccessUnlessGrantedRoleCustomer();
-
         $user = $this->getUser();
-
         $isAdmin = $this->userService->isAdmin($user);
-
         $id = $this->validateNumber($id);
 
         $issue = $isAdmin
@@ -193,14 +192,30 @@ class IndexController extends AbstractDashboardController
         }
 
         $ticketActivities = $this->ticketActivitiesService->getAllByTicket($issue);
-
         $attachments = $this->ticketAttachmentsService->getAllByTicket($issue);
+
+        $comments = [];
+
+        foreach ($issue->getTicketComments() as $comment) {
+            $comments[] = [
+                'id' => $comment->getId(),
+                'description' => $comment->getDescription(),
+                'isSeen' => $comment->isSeen(),
+                'seenAt' => $comment->getSeenAt(),
+                'likeCounter' => $comment->getLikeCounter(),
+                'disLikeCounter' => $comment->getDisLikeCounter(),
+                'updatedAt' => $comment->getUpdatedAt(),
+                'createdAt' => $comment->getCreatedAt(),
+                'commentedByName' => $comment->getCommentedBy()->getValues()[0]->getName(),
+            ];
+        }
 
         return $this->render('dashboard/tickets/view.html.twig', [
             'issue' => $issue,
             'ticketActivities' => $ticketActivities,
             'dir' => $this->getParameter('attachments'),
             'attachments' => $attachments,
+            'comments' => $comments
         ]);
     }
 

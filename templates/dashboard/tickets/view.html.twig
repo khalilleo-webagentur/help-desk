@@ -91,14 +91,49 @@
             {% endif %}
 
             <div class="container-fluid area-section">
+
+                <div class="row pl-3 my-3">
+                    <div class="col">
+                        <h5>Comments</h5>
+                    </div>
+                </div>
+
+                {% if count(comments) > 0 %}
+                    {% for comment in comments %}
+                        <div class="row px-3 mb-3">
+                            <div class="col-12">
+                                <div class="row"  style="border-bottom: 1px dashed #ededed">
+                                    <div class="text-center">
+                                        <img class="mr-2" height="40px" width="40px" style="border-radius: 50px;"
+                                             src="{{ asset('lte/img/avatar-160x160.png') }}" alt="Avatar">
+                                    </div>
+                                   <div class="pl-2">
+                                       <h6>
+                                           {{ comment.commentedByName }}
+                                           <small class="ml-2 text-secondary">{{ timeAgo(comment.createdAt) }}</small>
+                                       </h6>
+                                       {{ comment.description|raw }}
+                                       <small class="text-secondary">
+                                           Reply <span class="px-2">.</span>
+                                           Like {{ comment.likeCounter }}<span class="px-2">.</span>
+                                           Dislike {{ comment.disLikeCounter }}
+                                       </small>
+                                   </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+
                 <div class="row px-3 py-4">
                     <div class="col">
-                        <h5>Comment</h5>
-                        <div id="editor"></div>
-
-                        <div class="my-3">
-                            <button class="btn btn-warning">Submit</button>
-                        </div>
+                        <form action="{{ path('app_dashboard_ticket_comment_new') }}" method="post">
+                            <div id="editor"></div>
+                            <div class="my-3">
+                                <button class="btn btn-warning" id="formSave">Submit</button>
+                                <input type="hidden" name="tId" value="{{ issue.id }}">
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

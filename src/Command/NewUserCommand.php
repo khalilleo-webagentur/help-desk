@@ -37,6 +37,8 @@ class NewUserCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        // $ php bin/console app:new-user
+
         $output->writeln('running ...');
 
         $faker = Factory::create();
