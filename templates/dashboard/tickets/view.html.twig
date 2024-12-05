@@ -102,7 +102,7 @@
                     {% for comment in comments %}
                         <div class="row px-3 mb-3">
                             <div class="col-12">
-                                <div class="row"  style="border-bottom: 1px dashed #ededed">
+                                <div class="row"  style="border-bottom: 1px dashed #dcdcdc">
                                     <div class="text-center">
                                         <img class="mr-2" height="40px" width="40px" style="border-radius: 50px;"
                                              src="{{ asset('lte/img/avatar-160x160.png') }}" alt="Avatar">
@@ -115,8 +115,8 @@
                                        {{ comment.description|raw }}
                                        <small class="text-secondary">
                                            Reply <span class="px-2">.</span>
-                                           Like {{ comment.likeCounter }}<span class="px-2">.</span>
-                                           Dislike {{ comment.disLikeCounter }}
+                                           Like {{ comment.likeCounter > 0 ? comment.likeCounter : '' }}<span class="px-2">.</span>
+                                           Dislike {{ comment.disLikeCounter > 0 ? comment.disLikeCounter : '' }}
                                        </small>
                                    </div>
                                 </div>
