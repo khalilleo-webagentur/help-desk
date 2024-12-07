@@ -4,24 +4,39 @@
             <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
         </li>
         <li class="nav-item d-none d-sm-inline-block">
-            <a href="{{path('app_home')}}" class="nav-link">Home</a>
+            <a href="{{ path('app_home') }}" class="nav-link">Home</a>
         </li>
         <li class="nav-item d-none d-sm-inline-block">
-            <a href="{{path('app_profile')}}" class="nav-link">Profile</a>
+            <a href="{{ path('app_profile') }}" class="nav-link">Profile</a>
         </li>
     </ul>
 
-    <form class="form-inline ml-3">
-        <div class="input-group input-group-sm">
-            <input class="form-control form-control-navbar" type="search" placeholder="Search"
-                aria-label="Search" disabled>
-            <div class="input-group-append">
-                <button class="btn btn-navbar" type="button">
-                    <i class="fas fa-search"></i>
-                </button>
+    {% if search is defined and search.searchable %}
+        <form class="form-inline ml-3" action="{{ path(search.path) }}" method="post">
+            <div class="input-group input-group-sm">
+                <input class="form-control form-control-navbar" type="search" placeholder="Search"
+                       aria-label="Search" name="keyword" required>
+                <div class="input-group-append">
+                    <button class="btn btn-navbar" type="submit">
+                        <i class="fas fa-search"></i>
+                    </button>
+                    <input type="hidden" name="backTo" value="{{ search.backTo }}">
+                </div>
             </div>
-        </div>
-    </form>
+        </form>
+    {% else %}
+        <form class="form-inline ml-3">
+            <div class="input-group input-group-sm">
+                <input class="form-control form-control-navbar" type="search" placeholder="Search"
+                       aria-label="Search" disabled readonly>
+                <div class="input-group-append">
+                    <button class="btn btn-navbar" type="button">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+    {% endif %}
 
     <ul class="navbar-nav ml-auto">
         <li class="mr-3 nav-item dropdown">

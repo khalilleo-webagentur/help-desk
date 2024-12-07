@@ -1,0 +1,93 @@
+{% if issue %}
+    {% set isAdmin = is_granted('ROLE_SUPER_ADMIN') %}
+    <div class="card-body table-responsive bg-white p-0 mb-3">
+        <table class="table table-hover text-nowrap">
+            <thead>
+            <tr class="fs-14">
+                <th>ID</th>
+                {% if isAdmin %}
+                <th>{{ 'Customer'|trans }}</th>
+                {% endif %}
+                <th>{{ 'Project'|trans }}</th>
+                <th>{{ 'Type'|trans }}</th>
+                <th>{{ 'Label'|trans }}</th>
+                <th>{{ 'Title'|trans }}</th>
+                <th>{{ 'Assignee'|trans }}</th>
+                <th>{{ 'Status'|trans }}</th>
+                <th>{{ 'Updated'|trans }}</th>
+                <th>{{ 'Created'|trans }}</th>
+                <th>{{ 'Action'|trans }}</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr class="fs-14">
+                    <td>T-{{ issue.ticketNo }}</td>
+
+                    {% if isAdmin %}
+                        <td>
+                            <a href="{{ path('app_dashboard_user_edit', {id:issue.customer.id}) }}">
+                                {{ issue.customer.name }}
+                            </a>
+                        </td>
+                    {% endif %}
+
+                    <td>
+                        {{ issue.project.title }}
+                    </td>
+
+                    <td>{{ issue.type.name }}</td>
+
+                    <td>
+                        <span class="ticket-label" style="color: {{ issue.label.color }}">{{ issue.label.name }}</span>
+                    </td>
+
+                    <td>
+                        <span class="cursor-help" title="{{ issue.title }}">
+                            {{ issue.title|slice(0,35) ~ '..' }}
+                        </span>
+                    </td>
+
+                    <td>{{ issue.assignee ? issue.assignee.name : '---' }}</td>
+
+                    <td>
+                        <span class="ticket-status cursor-help"
+                              style="background: {{ issue.status ? issue.status.color : '#9d8900' }}"
+                              title=" {{ issue.status ? issue.status.description : 'Being Processed' }}">
+                             {{ issue.status ? issue.status.name : 'Open' }}
+                        </span>
+                    </td>
+
+                    <td title="{{ issue.updatedAt|date }}">{{ timeAgo(issue.updatedAt) }}</td>
+
+                    <td title="{{ issue.createdAt|date }}">{{ timeAgo(issue.createdAt) }}</td>
+
+                    <td class="d-flex">
+                        <form action="{{ path('app_dashboard_ticket_view', {id: issue.id}) }}">
+                            <button class="btn small-btn btn-outline-secondary mr-2" type="submit">
+                                <span class="fa fa-eye fa-sm"></span>
+                            </button>
+                        </form>
+
+                        <form action="{{ path('app_dashboard_ticket_edit', {id:issue.id}) }}">
+                            <button class="btn small-btn btn-outline-primary mr-2" type="submit">
+                                <span class="fa fa-pen fa-sm"></span>
+                            </button>
+                        </form>
+
+                        {% if isAdmin %}
+                            <form class="d-none" action="#" method="post">
+                                <button class="btn small-btn btn-outline-danger mr-2" type="submit">
+                                    <span class="fa fa-trash-alt fa-sm"></span>
+                                </button>
+                            </form>
+                        {% endif %}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+{% else %}
+    <small class="pl-3 text-secondary">
+        <span class="fa fa-info-circle fa-sm"></span> No data has been found!
+    </small>
+{% endif %}

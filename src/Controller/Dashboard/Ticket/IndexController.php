@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Dashboard\Ticket;
 
 use App\Controller\Dashboard\AbstractDashboardController;
+use App\Controller\Dashboard\Dto\Search;
 use App\Entity\Ticket;
 use App\Service\Core\FileUploaderService;
 use App\Service\Core\MonologService;
@@ -30,6 +31,7 @@ class IndexController extends AbstractDashboardController
     use FormValidationTrait;
 
     private const DASHBOARD_TICKETS_ROUTE = 'app_dashboard_tickets_index';
+    private const SEARCH_ROUTE = 'app_dashboard_ticket_search';
 
     public function __construct(
         private readonly UserService             $userService,
@@ -79,6 +81,7 @@ class IndexController extends AbstractDashboardController
             'users' => $users,
             'projects' => $projects,
             'status' => $status,
+            'search' => new Search(true, self::SEARCH_ROUTE, self::DASHBOARD_TICKETS_ROUTE)
         ]);
     }
 
