@@ -156,6 +156,14 @@ body {
     cursor: pointer;
 }
 
+.text-decoration-underline {
+    text-decoration: underline !important;
+}
+
+.text-decoration-underline:hover {
+    text-decoration: none !important;
+}
+
 .area-section {
     border-radius: 10px;
     background-color: #fff;

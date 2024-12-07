@@ -64,7 +64,7 @@ class AttachmentController extends AbstractDashboardController
             $filename = $fileUploaderService->upload($attachment);
 
             if ($filename && $size && $extension) {
-                $this->ticketAttachmentsService->create($issue, $originalFilename, $filename, $size, $extension);
+                $this->ticketAttachmentsService->create($user, $issue, $originalFilename, $filename, $size, $extension);
 
                 $message = sprintf('Attachment %s added by %s', $originalFilename, $user->getName());
                 $this->ticketActivitiesService->add($issue, $user, $message);
@@ -143,6 +143,11 @@ class AttachmentController extends AbstractDashboardController
 
         if (!$attachment) {
             $this->addFlash('warning', 'Attachment could not be found.');
+            return $this->redirectToRoute(self::DASHBOARD_TICKETS_ROUTE);
+        }
+
+        if ($user->getId() !== $attachment->getUser()->getId()) {
+            $this->addFlash('warning', 'You have not enough permission to delete the Attachment from others.');
             return $this->redirectToRoute(self::DASHBOARD_TICKETS_ROUTE);
         }
 

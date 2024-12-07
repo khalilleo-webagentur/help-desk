@@ -6,7 +6,9 @@ namespace App\Service;
 
 use App\Entity\Ticket;
 use App\Entity\TicketAttachment;
+use App\Entity\User;
 use App\Repository\TicketAttachmentRepository;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 final readonly class TicketAttachmentsService
 {
@@ -28,16 +30,25 @@ final readonly class TicketAttachmentsService
         return $this->ticketAttachmentRepository->findBy(['ticket' => $ticket]);
     }
 
-    public function create(Ticket $ticket, string $originalFilename, string $filename, int $size, string $extension): TicketAttachment
+    public function create(
+        UserInterface|User $user,
+        Ticket $ticket,
+        string $originalFilename,
+        string $filename,
+        int $size,
+        string $extension
+    ): TicketAttachment
     {
         $ticketAttachment = new TicketAttachment();
         $ticketAttachment
+            ->setUser($user)
             ->setFileNo(uniqid())
             ->setTicket($ticket)
             ->setOriginalFileName($originalFilename)
             ->setFilename($filename)
             ->setSize($size)
             ->setExtension($extension);
+
         $this->save($ticketAttachment);
 
         return $ticketAttachment;

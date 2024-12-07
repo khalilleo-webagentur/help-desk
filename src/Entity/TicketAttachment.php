@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\TicketAttachmentRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: TicketAttachmentRepository::class)]
 #[ORM\Table(name: '`helpdesk_ticket_attachment`')]
@@ -39,6 +40,10 @@ class TicketAttachment
     #[ORM\ManyToOne(inversedBy: 'attachment')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Ticket $ticket = null;
+
+    #[ORM\ManyToOne(inversedBy: 'ticketAttachments')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null;
 
     public function __construct()
     {
@@ -142,6 +147,18 @@ class TicketAttachment
     public function setTicket(?Ticket $ticket): static
     {
         $this->ticket = $ticket;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(null|User|UserInterface $user): static
+    {
+        $this->user = $user;
 
         return $this;
     }

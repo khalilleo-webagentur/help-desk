@@ -56,7 +56,7 @@ class NewUserCommand extends Command
                     ->setName($faker->name())
                     ->setEmail($email)
                     ->setPassword($this->userService->encodePassword($email))
-                    ->setRoles(['ROLE_SUPER_ADMIN']) // ROLE_CUSTOMER, ROLE_SUPER_ADMIN, ROLE_USER
+                    ->setRoles(['ROLE_USER']) // ROLE_CUSTOMER, ROLE_SUPER_ADMIN, ROLE_USER
                     ->setIsVerified(true)
                     ->setToken($code)
             );

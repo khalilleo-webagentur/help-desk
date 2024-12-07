@@ -1,7 +1,7 @@
 {% if count(attachments) > 0 %}
     {% set isAdmin = is_granted('ROLE_SUPER_ADMIN') %}
-    <div class="card-body table-sm table-responsive bg-white p-0 by-3">
-        <table class="table table-hover text-nowrap">
+    <div class="card-body table-responsive bg-white p-0 by-3">
+        <table class="table table-hover table-sm text-nowrap">
             <thead>
             <tr class="fs-14">
                 <th>{{ 'ID'|trans }}</th>
@@ -37,7 +37,7 @@
                         <form class="mr-3"
                               action="{{ path('app_dashboard_ticket_helper_show', {hash: hash(attachment.filename)}) }}"
                               method="post">
-                            <p class="text-primary fs-15 pointer" onclick="this.closest('form').submit();">
+                            <p class="text-primary fs-15 pointer text-decoration-underline" onclick="this.closest('form').submit();">
                                 View
                             </p>
                             <input type="hidden" name="tId" value="{{ attachment.ticket.id }}">
@@ -45,7 +45,7 @@
                         </form>
                         <form action="{{ path('app_dashboard_ticket_helper_delete_file', {hash: hash(attachment.filename)}) }}"
                               method="post">
-                            <p class="text-danger fs-15 pointer" onclick="this.closest('form').submit();">
+                            <p class="text-danger fs-15 pointer text-decoration-underline" onclick="this.closest('form').submit();">
                                 Delete
                             </p>
                             <input type="hidden" name="tId" value="{{ attachment.ticket.id }}">

@@ -89,6 +89,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\ManyToMany(targetEntity: TicketComment::class, mappedBy: 'commentedBy')]
     private Collection $ticketComments;
 
+    /**
+     * @var Collection<int, TicketAttachment>
+     */
+    #[ORM\OneToMany(targetEntity: TicketAttachment::class, mappedBy: 'user')]
+    private Collection $ticketAttachments;
+
     public function __construct()
     {
         $this->setCreatedAt(new DateTime());
@@ -99,6 +105,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->assigneeTickets = new ArrayCollection();
         $this->ticketActivities = new ArrayCollection();
         $this->ticketComments = new ArrayCollection();
+        $this->ticketAttachments = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -435,6 +442,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if ($this->ticketComments->removeElement($ticketComment)) {
             $ticketComment->removeCommentedBy($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, TicketAttachment>
+     */
+    public function getTicketAttachments(): Collection
+    {
+        return $this->ticketAttachments;
+    }
+
+    public function addTicketAttachment(TicketAttachment $ticketAttachment): static
+    {
+        if (!$this->ticketAttachments->contains($ticketAttachment)) {
+            $this->ticketAttachments->add($ticketAttachment);
+            $ticketAttachment->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTicketAttachment(TicketAttachment $ticketAttachment): static
+    {
+        if ($this->ticketAttachments->removeElement($ticketAttachment)) {
+            // set the owning side to null (unless already changed)
+            if ($ticketAttachment->getUser() === $this) {
+                $ticketAttachment->setUser(null);
+            }
         }
 
         return $this;
