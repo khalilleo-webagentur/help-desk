@@ -38,8 +38,9 @@
                         <form class="mr-3"
                               action="{{ path('app_dashboard_ticket_helper_show', {hash: hash(attachment.filename)}) }}"
                               method="post">
-                            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-                            <p class="text-primary fs-15 pointer text-decoration-underline" onclick="this.closest('form').submit();">
+                            <input type="hidden" name="_csrf_token" value="{{ csrf_token(attachment.id) }}">
+                            <p class="text-primary fs-15 pointer text-decoration-underline"
+                               onclick="this.closest('form').submit();">
                                 View
                             </p>
                             <input type="hidden" name="tId" value="{{ attachment.ticket.id }}">
@@ -47,8 +48,9 @@
                         </form>
                         <form action="{{ path('app_dashboard_ticket_helper_delete_file', {hash: hash(attachment.filename)}) }}"
                               method="post">
-                            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-                            <p class="text-danger fs-15 pointer text-decoration-underline" onclick="this.closest('form').submit();">
+                            <input type="hidden" name="_csrf_token" value="{{ csrf_token(attachment.id) }}">
+                            <p class="text-danger fs-15 pointer text-decoration-underline"
+                               onclick="this.closest('form').submit();">
                                 Delete
                             </p>
                             <input type="hidden" name="tId" value="{{ attachment.ticket.id }}">
