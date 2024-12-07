@@ -74,6 +74,8 @@ class IndexController extends AbstractDashboardController
             ? $this->projectService->getAll()
             : $this->projectService->getAllByCustomer($user);
 
+        $dateTime = new \DateTime();
+
         return $this->render('dashboard/tickets/index.html.twig', [
             'issues' => $issues,
             'ticketTypes' => $ticketTypes,
@@ -81,7 +83,9 @@ class IndexController extends AbstractDashboardController
             'users' => $users,
             'projects' => $projects,
             'status' => $status,
-            'search' => new Search(true, self::SEARCH_ROUTE, self::DASHBOARD_TICKETS_ROUTE)
+            'search' => new Search(true, self::SEARCH_ROUTE, self::DASHBOARD_TICKETS_ROUTE),
+            'dateTimeFrom' => $dateTime->modify('-1 month')->format('Y-m-d H:i'),
+            'dateTimeTo' => (new \DateTime())->format('Y-m-d H:i'),
         ]);
     }
 
