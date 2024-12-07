@@ -6,6 +6,8 @@
 
     <div class="content-wrapper">
 
+        {% set isAdmin = is_granted('ROLE_SUPER_ADMIN') %}
+
         <div class="content-header">
             <div class="container-fluid">
                 <div class="row">
@@ -14,10 +16,13 @@
                     </div>
                     <div class="col-6 mt-1">
                         <div class=" float-right">
-                            <button class="btn btn-secondary btn-headers"
-                                    data-toggle="modal" data-target="#filterModal">
-                                <span class="fa fa-filter fa-sm"></span> <span class="ps-1 md-d-none">Filter</span>
-                            </button>
+
+                            {% if isAdmin %}
+                                <button class="btn btn-secondary btn-headers"
+                                        data-toggle="modal" data-target="#filterTicketModal">
+                                    <span class="fa fa-filter fa-sm"></span> <span class="ps-1 md-d-none">Filter</span>
+                                </button>
+                            {% endif %}
 
                             <button class="btn btn-secondary btn-headers"
                                     data-toggle="modal" data-target="#newTicketModal">
@@ -81,5 +86,9 @@
     </div>
 
     {% include 'dashboard/tickets/modal/new.html.twig' %}
+
+    {% if isAdmin %}
+        {% include 'dashboard/tickets/modal/filter.html.twig' %}
+    {% endif %}
 
 {% endblock %}

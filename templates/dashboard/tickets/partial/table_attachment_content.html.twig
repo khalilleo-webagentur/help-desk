@@ -18,9 +18,9 @@
                     <td>{{ attachment.fileNo }}</td>
                     <td>
                         <form action="{{ path('app_dashboard_ticket_helper_show', {hash: hash(attachment.filename)}) }}"
-                            method="post">
+                              method="post">
                             <span class="pointer text-primary"
-                                onclick="this.closest('form').submit();">{{ attachment.originalFileName }}
+                                  onclick="this.closest('form').submit();">{{ attachment.originalFileName }}
                             </span>
                             <div class="d-none">
                                 <input type="hidden" name="tId" value="{{ attachment.ticket.id }}">
@@ -34,19 +34,22 @@
                     <td title="{{ attachment.createdAt|date }}">{{ timeAgo(attachment.createdAt) }}</td>
 
                     <td class="d-flex">
-                        <form action="{{ path('app_dashboard_ticket_helper_show', {hash: hash(attachment.filename)}) }}" method="post">
-                            <button class="btn small-btn btn-outline-secondary mr-2" type="submit">
-                                <span class="fa fa-eye fa-sm"></span>
-                                <input type="hidden" name="tId" value="{{ attachment.ticket.id }}">
-                                <input type="hidden" name="aId" value="{{ attachment.id }}">
-                            </button>
+                        <form class="mr-3"
+                              action="{{ path('app_dashboard_ticket_helper_show', {hash: hash(attachment.filename)}) }}"
+                              method="post">
+                            <p class="text-primary fs-15 pointer" onclick="this.closest('form').submit();">
+                                View
+                            </p>
+                            <input type="hidden" name="tId" value="{{ attachment.ticket.id }}">
+                            <input type="hidden" name="aId" value="{{ attachment.id }}">
                         </form>
-                        <form action="{{ path('app_dashboard_ticket_helper_delete_file', {hash: hash(attachment.filename)}) }}" method="post">
-                            <button class="btn small-btn btn-outline-danger mr-2" type="submit">
-                                <span class="fa fa-trash fa-sm"></span>
-                                <input type="hidden" name="tId" value="{{ attachment.ticket.id }}">
-                                <input type="hidden" name="aId" value="{{ attachment.id }}">
-                            </button>
+                        <form action="{{ path('app_dashboard_ticket_helper_delete_file', {hash: hash(attachment.filename)}) }}"
+                              method="post">
+                            <p class="text-danger fs-15 pointer" onclick="this.closest('form').submit();">
+                                Delete
+                            </p>
+                            <input type="hidden" name="tId" value="{{ attachment.ticket.id }}">
+                            <input type="hidden" name="aId" value="{{ attachment.id }}">
                         </form>
                     </td>
                 </tr>
