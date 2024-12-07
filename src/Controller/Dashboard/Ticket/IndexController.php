@@ -279,6 +279,10 @@ class IndexController extends AbstractDashboardController
             ? $this->ticketStatusService->getById($this->validateNumber($request->request->get('status')))
             : $issue->getStatus();
 
+        $timeSpentInMinutes = $isAdmin
+            ? $this->validateNumber($request->request->get('minutes'))
+            : $issue->getTimeSpentInMinutes();
+
         $this->monologService->logger->info(
             sprintf(
                 'issueUpdated: T-%s by %s [title: %s, description: %s, status: %s] to [title: %s, description: %s, status: %s]',
@@ -292,6 +296,16 @@ class IndexController extends AbstractDashboardController
                 $status ? $status->getName() : 'Open'
             )
         );
+
+        if ($timeSpentInMinutes != $issue->getTimeSpentInMinutes()) {
+            $this->ticketActivitiesService->add(
+                $issue,
+                $user,
+                sprintf(
+                    '%s logged time spent of issue "%s" minutes', $user->getName(), $timeSpentInMinutes
+                )
+            );
+        }
 
         if ($title !== $issue->getTitle()) {
             $this->ticketActivitiesService->add(
@@ -329,6 +343,7 @@ class IndexController extends AbstractDashboardController
                 ->setDescription($description)
                 ->setAssignee($assignee)
                 ->setStatus($status)
+                ->setTimeSpentInMinutes($issue->getTimeSpentInMinutes() + $timeSpentInMinutes)
         );
 
         $this->addFlash('success', 'Issue has been saved.');

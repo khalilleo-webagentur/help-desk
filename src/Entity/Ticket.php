@@ -37,6 +37,9 @@ class Ticket
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
+    #[ORM\Column]
+    private int $timeSpentInMinutes = 0;
+
     #[ORM\ManyToOne(inversedBy: 'tickets')]
     #[ORM\JoinColumn(nullable: false)]
     private ?TicketLabel $label = null;
@@ -153,6 +156,18 @@ class Ticket
     public function setDescription(string $description): static
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getTimeSpentInMinutes(): int
+    {
+        return $this->timeSpentInMinutes;
+    }
+
+    public function setTimeSpentInMinutes(int $timeSpentInMinutes): static
+    {
+        $this->timeSpentInMinutes = $timeSpentInMinutes;
 
         return $this;
     }

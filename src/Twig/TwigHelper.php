@@ -22,6 +22,7 @@ class TwigHelper extends AbstractExtension
     public function getFunctions(): array
     {
         return [
+            new TwigFunction('convertToHoursMinutes', [$this, 'convertToHoursMinutes']),
             new TwigFunction('role', [$this, 'getRole']),
             new TwigFunction('isCustomer', [$this, 'isCustomer']),
             new TwigFunction('hash', [$this, 'hash']),
@@ -40,6 +41,19 @@ class TwigHelper extends AbstractExtension
             new TwigFunction('madeBy', [$this, 'getMadeBy']),
             new TwigFunction('version', [$this, 'getVersion']),
         ];
+    }
+
+    public function convertToHoursMinutes($time): string
+    {
+        if ($time < 1) {
+            return "";
+        }
+
+        $hours = floor($time / 60);
+        $hours = $hours > 0 ? $hours . ' hours ' : "";
+        $minutes = $time % 60 . ' minutes';
+
+        return $hours . $minutes;
     }
 
     public function getRole(?User $user): string

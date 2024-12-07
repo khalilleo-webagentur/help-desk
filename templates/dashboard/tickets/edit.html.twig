@@ -126,6 +126,18 @@
                                 </div>
                             </div>
 
+                            <div class="row">
+                                <div class="col-lg-3">
+                                    <div class="mb-3">
+                                        <label for="V9xO3aD7v78" class="form-label">Time Spent</label>
+                                        <input type="number" class="form-control" id="V9xO3aD7v78"
+                                               placeholder=""
+                                               value="" name="minutes">
+                                        <small>The value must be in minutes - Currently time spent is {{ issue.timeSpentInMinutes }}</small>
+                                    </div>
+                                </div>
+                            </div>
+
                             {% include "dashboard/component/edit_save_btn.html.twig" with {id:"formSave"} %}
 
                         </form>
