@@ -97,7 +97,7 @@
 
             <div class="container-fluid area-section">
 
-                <div class="row pl-3 my-3">
+                <div class="row pl-3 mt-3">
                     <div class="col">
                         <h5>Comments</h5>
                     </div>
@@ -105,9 +105,9 @@
 
                 {% if count(comments) > 0 %}
                     {% for comment in comments %}
-                        <div class="row px-3 mb-3">
+                        <div class="row px-3 my-3">
                             <div class="col-12">
-                                <div class="row"  style="border-bottom: 1px dashed #dcdcdc">
+                                <div class="row" style="border-bottom: 1px dashed #dcdcdc">
                                     <div class="text-center">
                                         <img class="mr-2" height="40px" width="40px" style="border-radius: 50px;"
                                              src="{{ asset('lte/img/avatar-160x160.png') }}" alt="Avatar">

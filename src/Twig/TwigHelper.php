@@ -46,7 +46,7 @@ class TwigHelper extends AbstractExtension
     public function convertToHoursMinutes($time): string
     {
         if ($time < 1) {
-            return "";
+            return '--';
         }
 
         $hours = floor($time / 60);
