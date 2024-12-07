@@ -39,6 +39,7 @@
 
                 <td>
                     <form action="{{ path('app_dashboard_user_edit', {id:row.id}) }}">
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
                         <button class="btn small-btn btn-outline-primary" type="submit">
                             <span class="fa fa-pen fa-sm"></span>
                         </button>

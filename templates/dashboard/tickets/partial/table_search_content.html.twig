@@ -63,12 +63,14 @@
 
                     <td class="d-flex">
                         <form action="{{ path('app_dashboard_ticket_view', {id: issue.id}) }}">
+                            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
                             <button class="btn small-btn btn-outline-secondary mr-2" type="submit">
                                 <span class="fa fa-eye fa-sm"></span>
                             </button>
                         </form>
 
                         <form action="{{ path('app_dashboard_ticket_edit', {id:issue.id}) }}">
+                            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
                             <button class="btn small-btn btn-outline-primary mr-2" type="submit">
                                 <span class="fa fa-pen fa-sm"></span>
                             </button>
@@ -76,6 +78,7 @@
 
                         {% if isAdmin %}
                             <form class="d-none" action="#" method="post">
+                                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
                                 <button class="btn small-btn btn-outline-danger mr-2" type="submit">
                                     <span class="fa fa-trash-alt fa-sm"></span>
                                 </button>

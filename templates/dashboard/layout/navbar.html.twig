@@ -13,6 +13,7 @@
 
     {% if search is defined and search.searchable %}
         <form class="form-inline ml-3" action="{{ path(search.path) }}" method="post">
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
             <div class="input-group input-group-sm">
                 <input class="form-control form-control-navbar" type="search" placeholder="Search"
                        aria-label="Search" name="keyword" required>

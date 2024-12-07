@@ -23,10 +23,10 @@
                 </p>
 
                 <form action="{{path('app_report_abuse_new')}}" method="post" class="px-2">
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
                     <div class="mb-3">
                         <label for="iMalicious" class="form-label text-white-50">Malicious Link</label>
                         <input type="text" class="form-control" id="iMalicious" placeholder="Paste link (required)"
-                            style="height: 46px; border-radius: 0;"
                             required name="iMaliciousLink" style="height: 46px; border-radius: 0;">
                     </div>
 

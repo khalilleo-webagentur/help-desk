@@ -42,12 +42,14 @@
                     <td class="d-flex">
 
                         <form action="{{ path('app_dashboard_project_edit', {id:row.id}) }}" method="post">
+                            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
                             <button class="btn small-btn btn-outline-primary mr-2" type="submit">
                                 <span class="fa fa-pen fa-sm"></span>
                             </button>
                         </form>
 
                         <form class="d-none" action="{{ path('app_dashboard_project_delete', {id:row.id}) }}" method="post">
+                            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
                             <button class="btn small-btn btn-outline-danger" type="submit">
                                 <span class="fa fa-trash-alt fa-sm"></span>
                             </button>

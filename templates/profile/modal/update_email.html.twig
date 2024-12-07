@@ -8,6 +8,7 @@
             </div>
 
             <form action="{{path('app_profile_personal_data_email_store')}}" method="post">
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
                 <div class="modal-body">
                     <div class="mb-3">
                         <label for="iEmail" class="form-label text-secondary">New Email:</label>

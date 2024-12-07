@@ -133,6 +133,7 @@
                 <div class="row px-3 py-4">
                     <div class="col">
                         <form action="{{ path('app_dashboard_ticket_comment_new') }}" method="post">
+                            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
                             <div id="editor"></div>
                             <div class="my-3">
                                 <button class="btn btn-warning" id="formSave">Submit</button>

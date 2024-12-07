@@ -63,21 +63,19 @@
             </div>
             <div class="col-lg-6">
                 <form action="{{path('app_contact_us_new')}}" method="post" class="px-2">
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
                     <div class="mb-3 mt-1">
                         <input type="text" class="form-control" id="iName" placeholder="Name *"
-                            style="height: 46px; border-radius: 0;"
                             required name="iName" style="height: 46px; border-radius: 0;">
                     </div>
 
                     <div class="mb-3">
                         <input type="email" class="form-control" id="iEmail" placeholder="Email *"
-                            style="height: 46px; border-radius: 0;"
                             required name="iEmail" style="height: 46px; border-radius: 0;">
                     </div>
 
                     <div class="mb-3">
                         <input type="text" class="form-control" id="iSubject" placeholder="Subject *"
-                            style="height: 46px; border-radius: 0;"
                             required name="iSubject" style="height: 46px; border-radius: 0;">
                     </div>
 
