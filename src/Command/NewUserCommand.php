@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace App\Command;
 
+use App\Entity\Company;
 use App\Entity\User;
 use App\Entity\UserSetting;
+use App\Service\CompanyService;
 use App\Service\TokenGeneratorService;
 use App\Service\UserService;
 use App\Service\UserSettingService;
@@ -28,10 +30,12 @@ class NewUserCommand extends Command
     public const SUCCESS = 1;
 
     public function __construct(
-        private readonly UserService $userService,
+        private readonly UserService           $userService,
         private readonly TokenGeneratorService $tokenGeneratorService,
-        private readonly UserSettingService $userSettingService
-    ) {
+        private readonly UserSettingService    $userSettingService,
+        private readonly CompanyService        $companyService,
+    )
+    {
         parent::__construct();
     }
 
@@ -47,18 +51,30 @@ class NewUserCommand extends Command
 
         if (!$this->userService->getByEmail($email)) {
 
+           /*$company = $this->companyService->save(
+                (new Company())
+                    ->setName('Khalilleo GmbH')
+                    ->setEmail($faker->safeEmail)
+                    ->setPhone($faker->phoneNumber)
+                    ->setStreet($faker->address)
+                    ->setCity($faker->city)
+                    ->setZip($faker->postcode)
+            );*/
+
             $user = new User();
 
             $code = $this->tokenGeneratorService->randomToken();
 
             $this->userService->save(
                 $user
+                   // ->setCompany($company)
                     ->setName($faker->name())
                     ->setEmail($email)
                     ->setPassword($this->userService->encodePassword($email))
-                    ->setRoles(['ROLE_USER']) // ROLE_CUSTOMER, ROLE_SUPER_ADMIN, ROLE_USER
+                    ->setRoles(['ROLE_SUPER_ADMIN']) // ROLE_CUSTOMER, ROLE_SUPER_ADMIN, ROLE_USER
                     ->setIsVerified(true)
                     ->setToken($code)
+                    ->setCompany($this->companyService->getByName('Khalilleo GmbH'))
             );
 
             $userSetting = new UserSetting();

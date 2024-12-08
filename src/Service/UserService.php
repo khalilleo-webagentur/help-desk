@@ -68,7 +68,7 @@ final readonly class UserService
      */
     public function getAll(): array
     {
-        return $this->userRepository->findBy([], ['name' => 'ASC']);
+        return $this->userRepository->findBy([], ['company' => 'ASC', 'name' => 'ASC']);
     }
 
     public function isAdmin(?UserInterface $user): bool

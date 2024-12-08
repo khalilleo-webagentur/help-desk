@@ -4,6 +4,7 @@
             <tr class="fs-14">
                 <th>#</th>
                 <th>{{ 'Name'|trans }}</th>
+                <th>{{ 'Company'|trans }}</th>
                 <th>{{ 'Email'|trans }}</th>
                 <th>{{ 'Token'|trans }}</th>
                 <th>{{ 'Role'|trans }}</th>
@@ -19,6 +20,11 @@
             <tr class="fs-14">
                 <td>{{ row.id }}</td>
                 <td>{{ row.name|capitalize }}</td>
+                <td>
+                    <a href="#">
+                        {{ row.company.name }}
+                    </a>
+                </td>
                 <td>{{ row.email }}</td>
                 <td>
                     {% if row.token %}
