@@ -1,0 +1,65 @@
+<div class="modal fade" id="newUserModal" tabindex="-1" role="dialog" aria-labelledby="newUserModalTitle"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form action="{{ path('app_dashboard_project_new') }}" method="post">
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="newUserModalTitle">
+                        New User
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body bg-light">
+
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="iO7nM4yT4bG2sO5i" class="form-label">
+                                    Name <span class="text-danger">*</span>
+                                </label>
+                                <input type="text" class="form-control" id="iO7nM4yT4bG2sO5i" placeholder="John Doe" name="name"
+                                       required>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="iO7nM4yT4bG2sO5iCompany" class="form-label">
+                                    Company <span class="text-danger">*</span>
+                                </label>
+                                <input type="text" class="form-control" id="iO7nM4yT4bG2sO5iCompany" placeholder="Example GmbH" name="company"
+                                       required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="iO7nM4yT4bG2sO5itt" class="form-label">
+                            E-mail <span class="text-danger">*</span>
+                        </label>
+                        <input type="email" class="form-control" id="iO7nM4yT4bG2sO5itt" placeholder="j.doe@example.com" name="email"
+                               required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="iO7nM4yT4bG2sO44">
+                            Role <span class="text-danger">*</span>
+                        </label>
+                        <select class="form-control" name="role" id="iO7nM4yT4bG2sO44">
+                            {% for key, role in roles %}
+                                <option value="{{ key }}">{{ role }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-outline-primary">Add User</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

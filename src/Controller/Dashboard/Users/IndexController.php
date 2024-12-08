@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Dashboard\Users;
 
 use App\Controller\Dashboard\AbstractDashboardController;
+use App\Helper\AppHelper;
 use App\Service\UserService;
 use App\Traits\FormValidationTrait;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -21,8 +22,7 @@ class IndexController extends AbstractDashboardController
 
     public function __construct(
         private readonly UserService $userService
-    )
-    {
+    ) {
     }
 
     #[Route('/home', name: 'app_dashboard_users_index')]
@@ -34,6 +34,7 @@ class IndexController extends AbstractDashboardController
 
         return $this->render('dashboard/users/index.html.twig', [
             'users' => $users,
+            'roles' => AppHelper::ROLES
         ]);
     }
 

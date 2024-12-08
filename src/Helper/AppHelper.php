@@ -6,5 +6,11 @@ namespace App\Helper;
 
 final class AppHelper
 {
-    public const DEFAULT_HOME_CARDSCOUNT = 9;
+    public const DEFAULT_HOME_CARDS_COUNT = 9;
+
+    public const ROLES = [
+        'USER' => 'User',
+        'CUSTOMER' => 'Customer',
+        'SUPER_ADMIN' => 'Super Admin',
+    ];
 }

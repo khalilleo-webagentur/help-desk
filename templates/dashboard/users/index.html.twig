@@ -9,11 +9,16 @@
     <div class="content-header">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-sm-6">
+                <div class="col-6 mt-1">
                     <h5 class="m-0 text-dark mt-1">Users</h5>
                 </div>
-                <div class="col-sm-6">
-                    <div class="breadcrumb float-sm-right"></div>
+                <div class="col-6 mt-1">
+                    <div class="breadcrumb float-right">
+                        <button class="btn btn-outline-secondary btn-headers"
+                                data-toggle="modal" data-target="#newUserModal">
+                            <span class="fa fa-plus fa-sm"></span> <span class="ps-1 md-d-none">Add User</span>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -35,5 +40,7 @@
         </div>
     </section>
 </div>
+
+    {% include 'dashboard/users/modal/new.html.twig' %}
 
 {% endblock %}
