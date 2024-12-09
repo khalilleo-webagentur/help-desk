@@ -4,43 +4,63 @@
 
 {% block body %}
 
-<div class="content-wrapper">
+    <div class="content-wrapper">
 
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-6 mt-1">
-                    <h5 class="m-0 text-dark mt-1">Users</h5>
-                </div>
-                <div class="col-6 mt-1">
-                    <div class="breadcrumb float-right">
-                        <button class="btn btn-outline-secondary btn-headers"
-                                data-toggle="modal" data-target="#newUserModal">
-                            <span class="fa fa-plus fa-sm"></span> <span class="ps-1 md-d-none">Add User</span>
-                        </button>
+        {% set isAdmin = is_granted('ROLE_SUPER_ADMIN') %}
+
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-6 mt-1">
+                        <h5 class="m-0 text-dark mt-1">Users</h5>
+                    </div>
+                    <div class="col-6 mt-1">
+                        <div class="breadcrumb float-right">
+                            {% if isAdmin %}
+                                <button class="btn btn-outline-secondary btn-headers mr-1"
+                                        data-toggle="modal" data-target="#filterModal">
+                                    <span class="fa fa-filter fa-sm"></span> <span class="ps-1 md-d-none">Filter</span>
+                                </button>
+                            {% endif %}
+                            {% if isAdmin or app.user.isTeamLeader %}
+                                <button class="btn btn-outline-secondary btn-headers mr-1"
+                                        data-toggle="modal" data-target="#newUserModal">
+                                    <span class="fa fa-plus fa-sm"></span> <span
+                                            class="ps-1 md-d-none">Add new User</span>
+                                </button>
+                            {% endif %}
+                            <button class="btn btn-secondary btn-headers mr-1"
+                                    data-toggle="modal" data-target="#infosModal">
+                                <span class="fa fa-info-circle fa-sm"></span>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <section class="content">
-        <div class="container-fluid">
+        <section class="content">
+            <div class="container-fluid">
 
-            <div class="row">
-                <div class="col-lg-12">
-                    {% include 'dashboard/users/partial/table_content.html.twig' %}
+                <div class="row">
+                    <div class="col-lg-12">
+                        {% include 'dashboard/users/partial/table_content.html.twig' %}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <section class="col-lg-7 connectedSortable"></section>
+                    <section class="col-lg-5 connectedSortable"></section>
                 </div>
             </div>
-
-            <div class="row">
-                <section class="col-lg-7 connectedSortable"></section>
-                <section class="col-lg-5 connectedSortable"></section>
-            </div>
-        </div>
-    </section>
-</div>
+        </section>
+    </div>
 
     {% include 'dashboard/users/modal/new.html.twig' %}
+    {% include 'dashboard/users/modal/infos.html.twig' %}
+
+    {% if isAdmin %}
+        {% include 'dashboard/users/modal/filter.html.twig' %}
+    {% endif %}
 
 {% endblock %}

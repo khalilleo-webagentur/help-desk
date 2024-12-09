@@ -1,7 +1,10 @@
 <div class="modal fade" id="newUserModal" tabindex="-1" role="dialog" aria-labelledby="newUserModalTitle"
      aria-hidden="true">
+
+    {% set isAdmin = is_granted('ROLE_SUPER_ADMIN') %}
+
     <div class="modal-dialog" role="document">
-        <form action="{{ path('app_dashboard_project_new') }}" method="post">
+        <form action="{{ path('app_dashboard_user_new') }}" method="post">
             <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
             <div class="modal-content">
                 <div class="modal-header">
@@ -14,44 +17,49 @@
                 </div>
                 <div class="modal-body bg-light">
 
+                    {% if isAdmin %}
+                        <p class="modal-info">
+                            The first customer added by Admin will have a Team-Leader position which has extra permission than others.
+                            The customer will have a customer role.
+                        </p>
+                    {% endif %}
+
                     <div class="row">
-                        <div class="col-lg-6">
+                        <div class="{{ isAdmin ? 'col-lg-6' : 'col-lg-12' }}">
                             <div class="form-group">
                                 <label for="iO7nM4yT4bG2sO5i" class="form-label">
                                     Name <span class="text-danger">*</span>
                                 </label>
-                                <input type="text" class="form-control" id="iO7nM4yT4bG2sO5i" placeholder="John Doe" name="name"
+                                <input type="text" class="form-control" id="iO7nM4yT4bG2sO5i" placeholder="John Doe"
+                                       name="name"
                                        required>
                             </div>
                         </div>
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <label for="iO7nM4yT4bG2sO5iCompany" class="form-label">
-                                    Company <span class="text-danger">*</span>
-                                </label>
-                                <input type="text" class="form-control" id="iO7nM4yT4bG2sO5iCompany" placeholder="Example GmbH" name="company"
-                                       required>
+
+                        {% if isAdmin %}
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label for="iO7nM4yT4bG2sO5iCompany" class="form-label">
+                                        Company <span class="text-danger">*</span>
+                                    </label>
+                                    <input type="text" class="form-control" id="iO7nM4yT4bG2sO5iCompany"
+                                           placeholder="Example GmbH" name="company"
+                                           required>
+                                </div>
                             </div>
-                        </div>
+                        {% endif %}
                     </div>
 
                     <div class="form-group">
                         <label for="iO7nM4yT4bG2sO5itt" class="form-label">
                             E-mail <span class="text-danger">*</span>
                         </label>
-                        <input type="email" class="form-control" id="iO7nM4yT4bG2sO5itt" placeholder="j.doe@example.com" name="email"
+                        <input type="email" class="form-control" id="iO7nM4yT4bG2sO5itt" placeholder="j.doe@example.com"
+                               name="email"
                                required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="iO7nM4yT4bG2sO44">
-                            Role <span class="text-danger">*</span>
-                        </label>
-                        <select class="form-control" name="role" id="iO7nM4yT4bG2sO44">
-                            {% for key, role in roles %}
-                                <option value="{{ key }}">{{ role }}</option>
-                            {% endfor %}
-                        </select>
+                        <small class="text-secondary">
+                            E-mail confirmation will not be sent. E-mail will be directly verified.
+                        </small>
                     </div>
 
                 </div>

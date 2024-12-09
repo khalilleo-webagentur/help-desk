@@ -1,30 +1,45 @@
 <div class="card-body table-responsive bg-white p-0 mb-3">
+
+    {% set isAdmin = is_granted('ROLE_SUPER_ADMIN') %}
+
     <table class="table table-hover text-nowrap">
         <thead>
             <tr class="fs-14">
                 <th>#</th>
                 <th>{{ 'Name'|trans }}</th>
-                <th>{{ 'Company'|trans }}</th>
+                {% if isAdmin %}
+                    <th>{{ 'Company'|trans }}</th>
+                {% endif %}
                 <th>{{ 'Email'|trans }}</th>
                 <th>{{ 'Token'|trans }}</th>
-                <th>{{ 'Role'|trans }}</th>
                 <th>{{ 'Verified'|trans }}</th>
                 <th>{{ 'Deleted'|trans }}</th>
                 <th>{{ 'Updated'|trans }}</th>
                 <th>{{ 'Created'|trans }}</th>
-                <th>{{ 'Action'|trans }}</th>
+                {% if isAdmin or app.user.isTeamLeader %}
+                    <th>{{ 'Action'|trans }}</th>
+                {% endif %}
             </tr>
         </thead>
         <tbody>
             {% for row in users %}
             <tr class="fs-14">
                 <td>{{ row.id }}</td>
-                <td>{{ row.name|capitalize }}</td>
-                <td>
-                    <a href="#">
-                        {{ row.company.name }}
-                    </a>
+                <td>{{ row.name|capitalize }}
+                    {% if isSuperAdmin(row) %}
+                        <span class="fa fa-user-tie text-success fa-sm cursor-help" title="Super Admin"></span>
+                    {% endif %}
+                    {% if row.isTeamLeader %}
+                        <span class="fa fa-user-tie text-warning fa-sm cursor-help" title="Team Leader"></span>
+                    {% endif %}
                 </td>
+                {% if isAdmin %}
+                    <td>
+                        <a href="#">
+                            {{ row.company.name }}
+                        </a>
+                    </td>
+                {% endif %}
                 <td>{{ row.email }}</td>
                 <td>
                     {% if row.token %}
@@ -33,24 +48,22 @@
                         ---
                     {% endif %}
                 </td>
-                <td>
-                    <span class="fs-13">{{ role(row) }}</span>
-                </td>
                 <td>{{ row.isVerified ? faThumbsUp() : faThumbsDown() }}</td>
                 <td>{{ row.isDeleted ? 'Yes' : 'No' }}</td>
 
                 <td title="{{ row.updatedAt|date }}">{{ timeAgo(row.updatedAt) }}</td>
 
                 <td title="{{ row.createdAt|date }}">{{ timeAgo(row.createdAt) }}</td>
-
-                <td>
-                    <form action="{{ path('app_dashboard_user_edit', {id:row.id}) }}">
-                        <input type="hidden" name="csrf" value="{{ hash(csrf_token(row.id)) }}">
-                        <button class="btn small-btn btn-outline-primary" type="submit">
-                            <span class="fa fa-pen fa-sm"></span>
-                        </button>
-                    </form>
-                </td>
+                {% if isAdmin or app.user.isTeamLeader %}
+                    <td>
+                        <form action="{{ path('app_dashboard_user_edit', {id:row.id}) }}">
+                            <input type="hidden" name="csrf" value="{{ hash(csrf_token(row.id)) }}">
+                            <button class="btn small-btn btn-outline-primary" type="submit">
+                                <span class="fa fa-pen fa-sm"></span>
+                            </button>
+                        </form>
+                    </td>
+                {% endif %}
             </tr>
             {% endfor %}
         </tbody>

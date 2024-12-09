@@ -36,6 +36,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $token = null;
 
     #[ORM\Column]
+    private bool $isTeamLeader = false;
+
+    #[ORM\Column]
     private bool $isVerified = false;
 
     #[ORM\Column]
@@ -170,6 +173,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setToken(?string $token): static
     {
         $this->token = $token;
+
+        return $this;
+    }
+
+    public function isTeamLeader(): bool
+    {
+        return $this->isTeamLeader;
+    }
+
+    public function setTeamLeader(bool $isTeamLeader): static
+    {
+        $this->isTeamLeader = $isTeamLeader;
 
         return $this;
     }

@@ -13,4 +13,7 @@ final class AppHelper
         'CUSTOMER' => 'Customer',
         'SUPER_ADMIN' => 'Super Admin',
     ];
+
+    public const ROLE_CUSTOMER = 'ROLE_CUSTOMER';
+    public const ROLE_SUPER_ADMIN = 'ROLE_SUPER_ADMIN';
 }

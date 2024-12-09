@@ -48,6 +48,18 @@ final readonly class UserService
     /**
      * @return User[]
      */
+    public function getAllOrAllByCompany(?Company $company): array
+    {
+        if ($company !== null) {
+            return $this->userRepository->findBy(['company' => $company]);
+        }
+
+        return $this->getAll();
+    }
+
+    /**
+     * @return User[]
+     */
     public function getAllCustomers(): array
     {
         $customers = [];

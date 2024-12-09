@@ -24,6 +24,7 @@ class TwigHelper extends AbstractExtension
         return [
             new TwigFunction('convertToHoursMinutes', [$this, 'convertToHoursMinutes']),
             new TwigFunction('role', [$this, 'getRole']),
+            new TwigFunction('isSuperAdmin', [$this, 'isSuperAdmin']),
             new TwigFunction('isCustomer', [$this, 'isCustomer']),
             new TwigFunction('hash', [$this, 'hash']),
             new TwigFunction('timeAgo', [$this, 'timeAgo']),
@@ -74,6 +75,11 @@ class TwigHelper extends AbstractExtension
     public function isCustomer(?User $user): bool
     {
         return $user && in_array('ROLE_CUSTOMER', $user->getRoles(), true);
+    }
+
+    public function isSuperAdmin(?User $user): bool
+    {
+        return $user && in_array('ROLE_SUPER_ADMIN', $user->getRoles(), true);
     }
 
     public function hash(string $text): string
@@ -185,12 +191,12 @@ class TwigHelper extends AbstractExtension
 
     public function circle(string $color): void
     {
-        echo "<span class='bi bi-circle-fill $color'></span>";
+        echo "<span class='bi bi-circle-fill fa fa-circle $color'></span>";
     }
 
     public function checkCircle(string $color): void
     {
-        echo "<span class='bi bi-check2-circle fs-6 $color'></span>";
+        echo "<span class='bi bi-check2-circle fa fa-check-circle fs-6 $color'></span>";
     }
 
     public function getThumbsUp(): void
