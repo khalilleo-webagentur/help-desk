@@ -60,12 +60,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private Collection $tempUsers;
 
     /**
-     * @var Collection<int, Project>
-     */
-    #[ORM\OneToMany(targetEntity: Project::class, mappedBy: 'user', orphanRemoval: false)]
-    private Collection $projects;
-
-    /**
      * @var Collection<int, Ticket>
      */
     #[ORM\OneToMany(targetEntity: Ticket::class, mappedBy: 'customer', orphanRemoval: false)]
@@ -104,7 +98,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->setCreatedAt(new DateTime());
         $this->userSettings = new ArrayCollection();
         $this->tempUsers = new ArrayCollection();
-        $this->projects = new ArrayCollection();
         $this->tickets = new ArrayCollection();
         $this->assigneeTickets = new ArrayCollection();
         $this->ticketActivities = new ArrayCollection();
@@ -298,36 +291,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($tempUser->getUser() === $this) {
                 $tempUser->setUser(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Project>
-     */
-    public function getProjects(): Collection
-    {
-        return $this->projects;
-    }
-
-    public function addProject(Project $project): static
-    {
-        if (!$this->projects->contains($project)) {
-            $this->projects->add($project);
-            $project->setCustomer($this);
-        }
-
-        return $this;
-    }
-
-    public function removeProject(Project $project): static
-    {
-        if ($this->projects->removeElement($project)) {
-            // set the owning side to null (unless already changed)
-            if ($project->getCustomer() === $this) {
-                $project->setCustomer(null);
             }
         }
 

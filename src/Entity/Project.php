@@ -23,10 +23,6 @@ class Project
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
-    #[ORM\ManyToOne(inversedBy: 'projects')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?User $customer = null;
-
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $updatedAt = null;
 
@@ -38,6 +34,10 @@ class Project
      */
     #[ORM\OneToMany(targetEntity: Ticket::class, mappedBy: 'project', orphanRemoval: false)]
     private Collection $tickets;
+
+    #[ORM\ManyToOne(inversedBy: 'projects')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Company $company = null;
 
     public function __construct()
     {
@@ -70,18 +70,6 @@ class Project
     public function setDescription(?string $description): static
     {
         $this->description = $description;
-
-        return $this;
-    }
-
-    public function getCustomer(): ?User
-    {
-        return $this->customer;
-    }
-
-    public function setCustomer(?User $customer): static
-    {
-        $this->customer = $customer;
 
         return $this;
     }
@@ -136,6 +124,18 @@ class Project
                 $ticket->setProject(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCompany(): ?Company
+    {
+        return $this->company;
+    }
+
+    public function setCompany(?Company $company): static
+    {
+        $this->company = $company;
 
         return $this;
     }

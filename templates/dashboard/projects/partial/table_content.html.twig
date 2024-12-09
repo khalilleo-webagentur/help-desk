@@ -9,7 +9,7 @@
                 {% if isAdmin %}
                     <th>ID</th>
                 {% endif %}
-                <th>{{ 'Customer'|trans }}</th>
+                <th>{{ 'Company'|trans }}</th>
                 <th>{{ 'Title'|trans }}</th>
                 <th>{{ 'Description'|trans }}</th>
                 <th>{{ 'Updated'|trans }}</th>
@@ -24,8 +24,8 @@
                         <td>{{ row.id }}</td>
                     {% endif %}
                     <td>
-                        <a href="{{ path('app_dashboard_user_edit', {id:row.customer.id}) }}">
-                            {{ row.customer.name }}
+                        <a href="#">
+                            {{ row.company.name }}
                         </a>
                     </td>
                     <td>{{ row.title }}</td>

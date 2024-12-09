@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Dashboard\Project;
 
 use App\Entity\Project;
+use App\Service\CompanyService;
 use App\Service\ProjectService;
 use App\Service\UserService;
 use App\Traits\FormValidationTrait;
@@ -24,8 +25,8 @@ class IndexController extends AbstractController
     public function __construct(
         private readonly UserService    $userService,
         private readonly ProjectService $projectService,
-    )
-    {
+        private readonly CompanyService $companyService,
+    ) {
     }
 
     #[Route('/home', name: 'app_dashboard_projects_index')]
@@ -35,11 +36,11 @@ class IndexController extends AbstractController
 
         $projects = $this->projectService->getAll();
 
-        $customers = $this->userService->getAllCustomers();
+        $companies = $this->companyService->getAll();
 
         return $this->render('dashboard/projects/index.html.twig', [
             'projects' => $projects,
-            'customers' => $customers,
+            'companies' => $companies,
         ]);
     }
 
@@ -60,12 +61,12 @@ class IndexController extends AbstractController
             return $this->redirectToRoute(self::DASHBOARD_PROJECTS_ROUTE);
         }
 
-        $customer = $this->userService->getById(
-            $this->validateNumber($request->request->get('customer'))
+        $company = $this->companyService->getById(
+            $this->validateNumber($request->request->get('company'))
         );
 
-        if (!$customer || !$this->userService->isCustomer($customer)) {
-            $this->addFlash('warning', 'Customer not found.');
+        if (!$company) {
+            $this->addFlash('warning', 'Company not found.');
             return $this->redirectToRoute(self::DASHBOARD_PROJECTS_ROUTE);
         }
 
@@ -76,7 +77,7 @@ class IndexController extends AbstractController
         $this->projectService->save(
             $project
                 ->setTitle($title)
-                ->setCustomer($customer)
+                ->setCompany($company)
                 ->setDescription($description)
         );
 

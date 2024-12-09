@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Service;
 
+use App\Entity\Company;
 use App\Entity\Project;
 use App\Entity\User;
 use App\Repository\ProjectRepository;
 use DateTime;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 final readonly class ProjectService
 {
@@ -22,9 +22,9 @@ final readonly class ProjectService
         return $this->projectRepository->findOneBy(['id' => $id]);
     }
 
-    public function getByCustomerAndId(UserInterface $user, int $id): ?Project
+    public function getByCompanyAndId(Company $company, int $id): ?Project
     {
-        return $this->projectRepository->findOneBy(['customer' => $user, 'id' => $id]);
+        return $this->projectRepository->findOneBy(['company' => $company, 'id' => $id]);
     }
 
     public function getOneByCustomer(User $user): ?Project
@@ -40,9 +40,9 @@ final readonly class ProjectService
     /**
      * @return Project[]
      */
-    public function getAllByCustomer(UserInterface $user): array
+    public function getAllByCompany(Company $company): array
     {
-        return $this->projectRepository->findBy(['customer' => $user]);
+        return $this->projectRepository->findBy(['company' => $company]);
     }
 
     /**

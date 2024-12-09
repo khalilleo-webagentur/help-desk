@@ -7,16 +7,29 @@ namespace App\Service;
 use App\Entity\Company;
 use App\Repository\CompanyRepository;
 
-final class CompanyService
+final readonly class CompanyService
 {
     public function __construct(
         private CompanyRepository $companyRepository,
     ) {
     }
 
+    public function getById(int $id): ?Company
+    {
+        return $this->companyRepository->find($id);
+    }
+
     public function getByName(string $name): ?Company
     {
         return $this->companyRepository->findOneBy(['name' => $name]);
+    }
+
+    /**
+     * @return Company[]
+     */
+    public function getAll(): array
+    {
+        return $this->companyRepository->findBy([], ['name' => 'ASC']);
     }
 
     public function save(Company $company): Company

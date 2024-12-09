@@ -23,7 +23,7 @@
                                 <select class="form-control" name="project" id="iO7nM4yT4bG2sO00">
                                     <option value="0" selected disabled>Select Project</option>
                                     {% for project in projects %}
-                                        <option value="{{ project.id }}">{{ project.title }} ({{ project.customer.name }})</option>
+                                        <option value="{{ project.id }}">{{ project.title }} ({{ project.company.name }})</option>
                                     {% endfor %}
                                 </select>
                             </div>
@@ -35,7 +35,7 @@
                                 <select class="form-control" name="project" id="iO7nM4yT4bG2sO00">
                                     <option value="0" selected disabled>Select Project</option>
                                     {% for project in projects %}
-                                        <option value="{{ project.id }}">{{ project.title }} ({{ project.customer.name }})</option>
+                                        <option value="{{ project.id }}">{{ project.title }} ({{ project.company.name }})</option>
                                     {% endfor %}
                                 </select>
                             </div>

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service;
 
+use App\Entity\Company;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use DateTime;
@@ -29,6 +30,19 @@ final readonly class UserService
     public function getByToken(string $token): ?User
     {
         return $this->userRepository->findOneBy(['token' => $token]);
+    }
+
+    public function getOneByCompany(Company $company): ?User
+    {
+        return $this->userRepository->findOneBy(['company' => $company]);
+    }
+
+    /**
+     * @return User[]
+     */
+    public function getAllByCompany(Company $company): array
+    {
+        return $this->userRepository->findBy(['company' => $company]);
     }
 
     /**

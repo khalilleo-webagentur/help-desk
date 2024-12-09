@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service;
 
+use App\Entity\Company;
 use App\Entity\Ticket;
 use App\Entity\TicketStatus;
 use App\Entity\User;
@@ -15,6 +16,7 @@ final readonly class TicketService
 {
     public function __construct(
         private TicketRepository $ticketRepository,
+        private UserService $userService,
     ) {
     }
 
@@ -50,9 +52,24 @@ final readonly class TicketService
     /**
      * @return Ticket[]
      */
-    public function getAllByCustomerAndStatus(User|UserInterface $user, ?TicketStatus $status): array
+    public function getAllByCompanyAndStatus(Company $company, ?TicketStatus $status): array
     {
-        return $this->ticketRepository->findBy(['customer' => $user, 'status' => $status], ['createdAt' => 'DESC']);
+        $issues = [];
+
+        foreach ($this->userService->getAllByCompany($company) as $user) {
+            $issue = $this->ticketRepository->findBy(['customer' => $user, 'status' => $status], ['createdAt' => 'DESC']);
+            if (null !== $issue) {
+                if (is_array($issue)) {
+                    foreach ($issue as $issueItem) {
+                        $issues[] = $issueItem;
+                    }
+                } else {
+                    $issues[] = $issue;
+                }
+            }
+        }
+
+        return $issues;
     }
 
     public function getAllByStatus(?TicketStatus $status): array

@@ -62,7 +62,7 @@ class IndexController extends AbstractDashboardController
 
         $issues = $isAdmin
             ? $this->ticketService->getAllByStatus($ticketStatus)
-            : $this->ticketService->getAllByCustomerAndStatus($user, $ticketStatus);
+            : $this->ticketService->getAllByCompanyAndStatus($user->getCompany(), $ticketStatus);
 
         $ticketTypes = $this->ticketTypesService->getAll();
 
@@ -72,7 +72,7 @@ class IndexController extends AbstractDashboardController
 
         $projects = $isAdmin
             ? $this->projectService->getAll()
-            : $this->projectService->getAllByCustomer($user);
+            : $this->projectService->getAllByCompany($user->getCompany());
 
         $dateTime = new \DateTime();
 
@@ -107,9 +107,11 @@ class IndexController extends AbstractDashboardController
             return $this->redirectToRoute(self::DASHBOARD_TICKETS_ROUTE);
         }
 
-        $project = $this->userService->isAdmin($user)
+        $isAdmin = $this->userService->isAdmin($user);
+
+        $project = $isAdmin
             ? $this->projectService->getById($project)
-            : $this->projectService->getByCustomerAndId($user, $project);
+            : $this->projectService->getByCompanyAndId($user->getCompany(), $project);
 
         if (!$project) {
             $this->addFlash('warning', 'Project not found.');
@@ -144,10 +146,14 @@ class IndexController extends AbstractDashboardController
         $ticketNo = $this->ticketService->getLatTicketNo();
         $status = $this->ticketStatusService->getOneByName('Open');
 
+        $customer = $isAdmin
+            ? $this->userService->getOneByCompany($project->getCompany())
+            : $user;
+
         $this->ticketService->save(
             $ticket
                 ->setTicketNo($ticketNo)
-                ->setCustomer($project->getCustomer())
+                ->setCustomer($customer)
                 ->setAssignee($assignee)
                 ->setProject($project)
                 ->setType($ticketType)
