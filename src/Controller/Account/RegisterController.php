@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace App\Controller\Account;
 
-use App\Entity\User;
-use App\Entity\UserSetting;
 use App\Mails\Account\AccountConfirmationMail;
+use App\Service\Core\MonologService;
 use App\Service\TokenGeneratorService;
 use App\Service\UserService;
 use App\Service\UserSettingService;
@@ -30,7 +29,8 @@ class RegisterController extends AbstractController
     public function __construct(
         private readonly UserService $userService,
         private readonly TokenGeneratorService $tokenGeneratorService,
-        private readonly UserSettingService $userSettingService
+        private readonly UserSettingService $userSettingService,
+        private readonly MonologService $monologService,
     ) {
     }
 
@@ -65,7 +65,11 @@ class RegisterController extends AbstractController
             return $this->redirectToRoute(self::AUTH_ROUTE);
         }
 
-        $token = $this->tokenGeneratorService->randomTokenForVerification();
+        $this->monologService->logger->info(
+            sprintf('A new user with name %s, email %s is Registered.', $name, $email),
+        );
+
+        /*$token = $this->tokenGeneratorService->randomTokenForVerification();
 
         $user = new User();
 
@@ -83,7 +87,9 @@ class RegisterController extends AbstractController
 
         $this->userSettingService->save($userSetting->setUser($user));
 
-        $this->addFlash('notice', 'An email was sent to your mailbox. Please follow instruction to get started.');
+        $this->addFlash('notice', 'An email was sent to your mailbox. Please follow instruction to get started.');*/
+
+        $this->addFlash('notice', 'Please contact us before you confirm your account.');
 
         return $this->redirectToRoute(self::HOME_ROUTE);
     }
