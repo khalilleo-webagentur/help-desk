@@ -83,18 +83,14 @@ class IndexController extends AbstractDashboardController
 
         $user = $this->getUser();
         $isAdmin = $this->userService->isAdmin($user);
-        $iCompany = $this->validate($request->request->get('company'));
+        $iCompany = $this->validateNumber($request->request->get('company'));
 
-        if ($isAdmin && !$iCompany) {
+        if ($isAdmin && $iCompany <= 0) {
             $this->addFlash('warning', 'Company is required.');
             return $this->redirectToRoute(self::ADMIN_USERS_ROUTE);
         }
 
-        $company = $isAdmin ? new Company() : $user->getCompany();
-
-        if ($isAdmin && $iCompany) {
-            $this->companyService->save($company->setName($iCompany));
-        }
+        $company = $isAdmin ? $this->companyService->getById($iCompany) : $user->getCompany();
 
         $token = $this->tokenGeneratorService->randomToken();
 

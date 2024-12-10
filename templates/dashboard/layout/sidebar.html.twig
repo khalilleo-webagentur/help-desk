@@ -28,6 +28,15 @@
 
                 <li class="nav-header">CONTENTS</li>
 
+                {% if isAdmin %}
+                    <li class="nav-item {{ _route == 'app_dashboard_companies_index' ? 'menu-is-opening menu-open' : ''  }}">
+                        <a href="{{ path('app_dashboard_companies_index') }}" class="nav-link">
+                            <i class="fas fa-building nav-icon"></i>
+                            <p>Companies</p>
+                        </a>
+                    </li>
+                {% endif %}
+
                 {% if isAdmin or app.user.isTeamLeader %}
                     <li class="nav-item {{ _route == 'app_dashboard_users_index' ? 'menu-is-opening menu-open' : ''  }}">
                         <a href="{{ path('app_dashboard_users_index') }}" class="nav-link">
@@ -40,7 +49,7 @@
                 {% if isAdmin %}
                     <li class="nav-item {{ _route == 'app_dashboard_projects_index' ? 'menu-is-opening menu-open' : ''  }}">
                         <a href="{{ path('app_dashboard_projects_index') }}" class="nav-link">
-                            <i class="fas fa-gem nav-icon"></i>
+                            <i class="fas fa-puzzle-piece nav-icon"></i>
                             <p>Projects</p>
                         </a>
                     </li>

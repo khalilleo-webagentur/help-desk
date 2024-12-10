@@ -41,6 +41,9 @@ class Company
     #[ORM\Column(length: 200, nullable: true)]
     private ?string $phone = null;
 
+    #[ORM\Column]
+    private bool $isDeleted = false;
+
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $updatedAt = null;
 
@@ -163,6 +166,18 @@ class Company
     public function setPhone(?string $phone): static
     {
         $this->phone = $phone;
+
+        return $this;
+    }
+
+    public function isDeleted(): bool
+    {
+        return $this->isDeleted;
+    }
+
+    public function setDeleted(bool $isDeleted): static
+    {
+        $this->isDeleted = $isDeleted;
 
         return $this;
     }

@@ -1,0 +1,92 @@
+{% extends 'dashboard/layout/base.html.twig' %}
+
+{% block title %} Dashboard :: Edit Company Details {% endblock %}
+
+{% block body %}
+
+    <div class="content-wrapper">
+
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-8">
+                        <h4 class="m-0 text-dark">Edit Company Details</h4>
+                    </div>
+                    <div class="col-4">
+                        <div class="float-right">
+                            <a href="{{ path('app_dashboard_companies_index') }}" class="text-secondary">
+                                Close <span class="fa fa-window-close"></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <section class="content">
+            <div class="container-fluid area-section">
+
+                <div class="row px-2 py-3">
+                    <div class="col-lg-6">
+                        <form action="{{ path('app_dashboard_company_store', {id:company.id}) }}" method="post">
+                            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                            <div class="mb-3">
+                                <label for="V9xO3aD7v" class="form-label">Name <span
+                                            class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="V9xO3aD7v" placeholder="{{ company.name }}"
+                                       value="{{ company.name }}" name="name">
+                            </div>
+                            <div class="mb-3">
+                                <label for="V9xO3aD7vfff" class="form-label">E-mail <span
+                                            class="text-danger">*</span></label>
+                                <input type="email" class="form-control" id="V9xO3aD7vfff"
+                                       placeholder="{{ company.email ?? 'Type email' }}"
+                                       value="{{ company.email }}" name="email">
+                            </div>
+                            <div class="mb-3">
+                                <label for="V9xO3aD7vd" class="form-label">Phone <span
+                                            class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="V9xO3aD7vd"
+                                       placeholder="{{ company.phone ?? 'Type phone' }}"
+                                       value="{{ company.phone }}" name="phone">
+                            </div>
+                            <div class="mb-3">
+                                <label for="V9xO3aD7vd" class="form-label">Street <span
+                                            class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="V9xO3aD7vd"
+                                       placeholder="{{ company.street ?? 'Type street' }}"
+                                       value="{{ company.street }}" name="street">
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <div class="mb-3">
+                                        <label for="V9xO3aD7vdZip" class="form-label">Zip <span
+                                                    class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="V9xO3aD7vdZip"
+                                               placeholder="{{ company.zip ?? 'Type zip' }}"
+                                               value="{{ company.zip }}" name="zip">
+                                    </div>
+                                </div>
+                                <div class="col-lg-8">
+                                    <div class="mb-3">
+                                        <label for="V9xO3aD7vdCity" class="form-label">City <span
+                                                    class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="V9xO3aD7vdCity"
+                                               placeholder="{{ company.city ?? 'Type city' }}"
+                                               value="{{ company.city }}" name="city">
+                                    </div>
+                                </div>
+                            </div>
+
+                            {% include "dashboard/component/edit_save_btn.html.twig" %}
+
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </div>
+
+{% endblock %}

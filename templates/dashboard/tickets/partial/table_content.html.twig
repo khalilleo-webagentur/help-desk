@@ -6,7 +6,8 @@
             <tr class="fs-14">
                 <th>ID</th>
                 {% if isAdmin %}
-                <th>{{ 'Customer'|trans }}</th>
+                    <th>{{ 'Company'|trans }}</th>
+                    <th>{{ 'By'|trans }}</th>
                 {% endif %}
                 <th>{{ 'Project'|trans }}</th>
                 <th>{{ 'Type'|trans }}</th>
@@ -26,6 +27,14 @@
                         <td>T-{{ row.ticketNo }}</td>
 
                         {% if isAdmin %}
+                            <td>
+                                <form action="{{ path('app_dashboard_company_edit', {id:row.customer.company.id}) }}" method="post">
+                                    <input type="hidden" name="csrf" value="{{ hash(csrf_token(row.customer.company.id)) }}">
+                                    <span class="text-primary pointer"
+                                          onclick="this.closest('form').submit();">{{ row.customer.company.name }}
+                                    </span>
+                                </form>
+                            </td>
                             <td>
                                 <a href="{{ path('app_dashboard_user_edit', {id:row.customer.id}) }}">
                                     {{ row.customer.name }}

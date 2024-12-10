@@ -1,4 +1,4 @@
-{% if count(projects) > 0 %}
+{% if count(companies) > 0 %}
 
     {% set isAdmin = is_granted('ROLE_SUPER_ADMIN') %}
 
@@ -9,35 +9,35 @@
                 {% if isAdmin %}
                     <th>ID</th>
                 {% endif %}
-                <th>{{ 'Company'|trans }}</th>
-                <th>{{ 'Title'|trans }}</th>
-                <th>{{ 'Description'|trans }}</th>
+                <th>{{ 'Name'|trans }}</th>
+                <th>{{ 'E-mail'|trans }}</th>
+                <th>{{ 'Phone'|trans }}</th>
+                <th>{{ 'Street'|trans }}</th>
+                <th>{{ 'Zip'|trans }}</th>
+                <th>{{ 'City'|trans }}</th>
                 <th>{{ 'Updated'|trans }}</th>
                 <th>{{ 'Created'|trans }}</th>
                 <th>{{ 'Action'|trans }}</th>
             </tr>
             </thead>
             <tbody>
-            {% for row in projects %}
+            {% for row in companies %}
                 <tr class="fs-14">
                     {% if isAdmin %}
                         <td>{{ row.id }}</td>
                     {% endif %}
                     <td>
                         <form action="{{ path('app_dashboard_company_edit', {id:row.id}) }}" method="post">
-                            <input type="hidden" name="csrf" value="{{ hash(csrf_token(row.company.id)) }}">
+                            <input type="hidden" name="csrf" value="{{ hash(csrf_token(row.id)) }}">
                             <span class="text-primary pointer"
-                                  onclick="this.closest('form').submit();">
-                                {{ row.company.name }}
-                            </span>
+                                onclick="this.closest('form').submit();">{{ row.name }}</span>
                         </form>
                     </td>
-                    <td>{{ row.title }}</td>
-                    <td>
-                        <span class="cursor-help" title="{{ row.description }}">
-                            {{ row.description ? row.description|slice(0, 35) ~ '..' : '---' }}
-                        </span>
-                    </td>
+                    <td>{{ row.email ? row.email : '---' }}</td>
+                    <td>{{ row.phone ? row.phone : '---' }}</td>
+                    <td>{{ row.street ? row.street : '---' }}</td>
+                    <td>{{ row.zip ? row.zip : '---' }}</td>
+                    <td>{{ row.city ? row.city : '---' }}</td>
 
                     <td title="{{ row.updatedAt|date }}">{{ timeAgo(row.updatedAt) }}</td>
 
@@ -45,14 +45,14 @@
 
                     <td class="d-flex">
 
-                        <form action="{{ path('app_dashboard_project_edit', {id:row.id}) }}" method="post">
+                        <form action="{{ path('app_dashboard_company_edit', {id:row.id}) }}" method="post">
                             <input type="hidden" name="csrf" value="{{ hash(csrf_token(row.id)) }}">
                             <button class="btn small-btn btn-outline-primary mr-2" type="submit">
                                 <span class="fa fa-pen fa-sm"></span>
                             </button>
                         </form>
 
-                        <form class="d-none" action="{{ path('app_dashboard_project_delete', {id:row.id}) }}" method="post">
+                        <form class="d-none" action="{{ path('app_dashboard_company_delete', {id:row.id}) }}" method="post">
                             <input type="hidden" name="csrf" value="{{ hash(csrf_token(row.id)) }}">
                             <button class="btn small-btn btn-outline-danger" type="submit">
                                 <span class="fa fa-trash-alt fa-sm"></span>

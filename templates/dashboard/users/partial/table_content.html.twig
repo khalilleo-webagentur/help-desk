@@ -35,9 +35,13 @@
                 </td>
                 {% if isAdmin %}
                     <td>
-                        <a href="#">
-                            {{ row.company.name }}
-                        </a>
+                        <form action="{{ path('app_dashboard_company_edit', {id:row.id}) }}" method="post">
+                            <input type="hidden" name="csrf" value="{{ hash(csrf_token(row.company.id)) }}">
+                            <span class="text-primary pointer"
+                                  onclick="this.closest('form').submit();">
+                                {{ row.company.name }}
+                            </span>
+                        </form>
                     </td>
                 {% endif %}
                 <td>{{ row.email }}</td>
