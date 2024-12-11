@@ -28,7 +28,7 @@ class IndexController extends AbstractDashboardController
         private readonly UserService           $userService,
         private readonly CompanyService        $companyService,
         private readonly TokenGeneratorService $tokenGeneratorService,
-    ){
+    ) {
     }
 
     #[Route('/home', name: 'app_dashboard_users_index')]
@@ -198,7 +198,7 @@ class IndexController extends AbstractDashboardController
 
         $iRole = $this->validate($request->request->get('4yt4bG2'));
         $role = $isAdmin && in_array($iRole, array_keys(AppHelper::ROLES), true)
-            ? ['ROLE_' .$iRole]
+            ? ['ROLE_' . $iRole]
             : $user->getRoles();
 
 

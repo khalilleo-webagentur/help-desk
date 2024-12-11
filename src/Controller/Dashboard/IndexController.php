@@ -14,10 +14,10 @@ use Symfony\Component\Routing\Attribute\Route;
 class IndexController extends AbstractDashboardController
 {
     public function __construct(
-        private readonly UserService $userService,
-        private readonly TicketService $ticketService,
+        private readonly UserService         $userService,
+        private readonly TicketService       $ticketService,
         private readonly TicketStatusService $ticketStatusService,
-    ){
+    ) {
     }
 
     #[Route('/home', name: 'app_dashboard_index')]

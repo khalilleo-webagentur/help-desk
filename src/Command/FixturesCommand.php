@@ -28,10 +28,11 @@ class FixturesCommand extends Command
     public const SUCCESS = 1;
 
     public function __construct(
-        private readonly TicketLabelsService  $ticketLabelsService,
+        private readonly TicketLabelsService $ticketLabelsService,
         private readonly TicketTypesService  $ticketTypesService,
         private readonly TicketStatusService $ticketStatusService,
-    ) {
+    )
+    {
         parent::__construct();
     }
 
@@ -56,7 +57,7 @@ class FixturesCommand extends Command
 
     private function addProjects(): void
     {
-       // add projects manually ..
+        // add projects manually ..
     }
 
     private function addType(): void
@@ -99,11 +100,11 @@ class FixturesCommand extends Command
     private function addLabels(): void
     {
         $labels = [
-           ['Feature', '#408E03', 'Change Request'],
-           ['Bug', '#EA1010', 'Any technical issue'],
-           ['Documentation', '#00738C', 'Software Documentation'],
-           ['Support', '#0830F5', 'Action not taking too much time'],
-           ['Logic Change', '#C4390D', 'Change existing logic'],
+            ['Feature', '#408E03', 'Change Request'],
+            ['Bug', '#EA1010', 'Any technical issue'],
+            ['Documentation', '#00738C', 'Software Documentation'],
+            ['Support', '#0830F5', 'Action not taking too much time'],
+            ['Logic Change', '#C4390D', 'Change existing logic'],
         ];
 
         foreach ($labels as $label) {

@@ -59,7 +59,7 @@ class TwigHelper extends AbstractExtension
 
     public function getRole(?User $user): string
     {
-        $role = $user instanceof User ? $user->getRoles()[0]: '';
+        $role = $user instanceof User ? $user->getRoles()[0] : '';
 
         if ($role === 'ROLE_CUSTOMER') {
             $role = 'CUSTOMER';

@@ -12,8 +12,7 @@ final readonly class TicketLabelsService
 {
     public function __construct(
         private TicketLabelRepository $ticketLabelRepository,
-    )
-    {
+    ) {
     }
 
     public function getById(int $id): ?TicketLabel

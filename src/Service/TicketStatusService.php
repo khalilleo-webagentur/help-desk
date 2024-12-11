@@ -22,7 +22,9 @@ final readonly class TicketStatusService
 
     public function getOneByName(?string $name): ?TicketStatus
     {
-        if (empty($name)) {return null;}
+        if (empty($name)) {
+            return null;
+        }
 
         return $this->ticketStatusRepository->findOneBy(['name' => $name]);
     }

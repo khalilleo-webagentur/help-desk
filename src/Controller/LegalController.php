@@ -32,7 +32,7 @@ class LegalController extends AbstractController
         $phonenumber = $this->configService->getParameter('phonenumber');
         $email = $this->configService->getParameter('legal_emal');
 
-        return $this->render('static/privacy-policy.html.twig',  [
+        return $this->render('static/privacy-policy.html.twig', [
             'street' => $street,
             'plz' => $plz,
             'city' => $city,

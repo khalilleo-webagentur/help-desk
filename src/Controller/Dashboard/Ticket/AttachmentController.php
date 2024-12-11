@@ -27,10 +27,10 @@ class AttachmentController extends AbstractDashboardController
     private const DASHBOARD_TICKETS_ROUTE = 'app_dashboard_tickets_index';
 
     public function __construct(
-        private readonly UserService             $userService,
-        private readonly TicketService           $ticketService,
+        private readonly UserService              $userService,
+        private readonly TicketService            $ticketService,
         private readonly TicketAttachmentsService $ticketAttachmentsService,
-        private readonly TicketActivitiesService $ticketActivitiesService,
+        private readonly TicketActivitiesService  $ticketActivitiesService,
     ) {
     }
 

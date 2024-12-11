@@ -22,7 +22,7 @@ class IndexController extends AbstractDashboardController
 
     public function __construct(
         private readonly TicketTypesService $ticketTypesService
-    ){
+    ) {
     }
 
     #[Route('/home', name: 'app_dashboard_ticket_types_index')]

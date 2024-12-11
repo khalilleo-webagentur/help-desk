@@ -7,7 +7,6 @@ namespace App\Service;
 use App\Entity\Company;
 use App\Entity\Ticket;
 use App\Entity\TicketStatus;
-use App\Entity\User;
 use App\Repository\TicketRepository;
 use DateTime;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -16,7 +15,7 @@ final readonly class TicketService
 {
     public function __construct(
         private TicketRepository $ticketRepository,
-        private UserService $userService,
+        private UserService      $userService,
     ) {
     }
 
@@ -46,7 +45,7 @@ final readonly class TicketService
 
         $now = new DateTime();
 
-        return $ticket && $ticket->getTicketNo() > 0 ? $ticket->getTicketNo() +1 : (int)($now->format('Y') . '001');
+        return $ticket && $ticket->getTicketNo() > 0 ? $ticket->getTicketNo() + 1 : (int)($now->format('Y') . '001');
     }
 
     /**

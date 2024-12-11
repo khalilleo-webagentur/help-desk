@@ -16,7 +16,7 @@ final class AccountConfirmationMail extends AbstractMail implements MailInterfac
 {
     public function __construct(
         private readonly MailerInterface $mailer,
-        private readonly ConfigService $configService
+        private readonly ConfigService   $configService
     ) {
     }
 

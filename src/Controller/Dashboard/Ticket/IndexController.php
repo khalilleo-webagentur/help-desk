@@ -34,16 +34,16 @@ class IndexController extends AbstractDashboardController
     private const SEARCH_ROUTE = 'app_dashboard_ticket_search';
 
     public function __construct(
-        private readonly UserService             $userService,
-        private readonly TicketService           $ticketService,
-        private readonly TicketTypesService      $ticketTypesService,
-        private readonly TicketLabelsService     $ticketLabelsService,
-        private readonly ProjectService          $projectService,
-        private readonly TicketStatusService     $ticketStatusService,
-        private readonly TicketActivitiesService $ticketActivitiesService,
+        private readonly UserService              $userService,
+        private readonly TicketService            $ticketService,
+        private readonly TicketTypesService       $ticketTypesService,
+        private readonly TicketLabelsService      $ticketLabelsService,
+        private readonly ProjectService           $projectService,
+        private readonly TicketStatusService      $ticketStatusService,
+        private readonly TicketActivitiesService  $ticketActivitiesService,
         private readonly TicketAttachmentsService $ticketAttachmentsService,
         private readonly TicketCommentsService    $ticketCommentsService,
-        private readonly MonologService          $monologService,
+        private readonly MonologService           $monologService,
     ) {
     }
 

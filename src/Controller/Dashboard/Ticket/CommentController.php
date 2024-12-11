@@ -23,9 +23,9 @@ class CommentController extends AbstractDashboardController
     private const DASHBOARD_TICKET_SHOW_ROUTE = 'app_dashboard_ticket_view';
 
     public function __construct(
-        private readonly UserService             $userService,
-        private readonly TicketService           $ticketService,
-        private readonly TicketCommentsService   $ticketCommentsService,
+        private readonly UserService           $userService,
+        private readonly TicketService         $ticketService,
+        private readonly TicketCommentsService $ticketCommentsService,
     ) {
     }
 

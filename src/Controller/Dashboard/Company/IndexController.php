@@ -28,7 +28,7 @@ class IndexController extends AbstractDashboardController
         private readonly ProjectService $projectService,
         private readonly CompanyService $companyService,
         private readonly MonologService $monologService,
-    ){
+    ) {
     }
 
     #[Route('/home', name: 'app_dashboard_companies_index')]
@@ -140,7 +140,7 @@ class IndexController extends AbstractDashboardController
             return $this->redirectToRoute(self::DASHBOARD_COMPANIES_ROUTE);
         }
 
-        $company =  $isAdmin
+        $company = $isAdmin
             ? $this->companyService->getById($this->validateNumber($id))
             : $currentUser->getCompany();
 

@@ -109,33 +109,33 @@ class TicketLabel
         return $this;
     }
 
-  /**
-   * @return Collection<int, Ticket>
-   */
-  public function getTickets(): Collection
-  {
-      return $this->tickets;
-  }
+    /**
+     * @return Collection<int, Ticket>
+     */
+    public function getTickets(): Collection
+    {
+        return $this->tickets;
+    }
 
-  public function addTicket(Ticket $ticket): static
-  {
-      if (!$this->tickets->contains($ticket)) {
-          $this->tickets->add($ticket);
-          $ticket->setLabel($this);
-      }
+    public function addTicket(Ticket $ticket): static
+    {
+        if (!$this->tickets->contains($ticket)) {
+            $this->tickets->add($ticket);
+            $ticket->setLabel($this);
+        }
 
-      return $this;
-  }
+        return $this;
+    }
 
-  public function removeTicket(Ticket $ticket): static
-  {
-      if ($this->tickets->removeElement($ticket)) {
-          // set the owning side to null (unless already changed)
-          if ($ticket->getLabel() === $this) {
-              $ticket->setLabel(null);
-          }
-      }
+    public function removeTicket(Ticket $ticket): static
+    {
+        if ($this->tickets->removeElement($ticket)) {
+            // set the owning side to null (unless already changed)
+            if ($ticket->getLabel() === $this) {
+                $ticket->setLabel(null);
+            }
+        }
 
-      return $this;
-  }
+        return $this;
+    }
 }

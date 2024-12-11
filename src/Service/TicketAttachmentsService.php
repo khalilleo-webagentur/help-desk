@@ -14,7 +14,7 @@ final readonly class TicketAttachmentsService
 {
     public function __construct(
         private TicketAttachmentRepository $ticketAttachmentRepository,
-    ){
+    ) {
     }
 
     public function getOneByTicketAndId(Ticket $ticket, int $id): ?TicketAttachment
@@ -32,11 +32,11 @@ final readonly class TicketAttachmentsService
 
     public function create(
         UserInterface|User $user,
-        Ticket $ticket,
-        string $originalFilename,
-        string $filename,
-        int $size,
-        string $extension
+        Ticket             $ticket,
+        string             $originalFilename,
+        string             $filename,
+        int                $size,
+        string             $extension
     ): TicketAttachment
     {
         $ticketAttachment = new TicketAttachment();
