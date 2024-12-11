@@ -1,6 +1,8 @@
 {% extends 'dashboard/layout/base.html.twig' %}
 
-{% block title %} Dashboard Companies {% endblock %}
+{% set isAdmin = is_granted('ROLE_SUPER_ADMIN')  %}
+
+{% block title %} Dashboard {{ isAdmin ? 'Companies' : 'Company' }} {% endblock %}
 
 {% block body %}
 
@@ -10,14 +12,18 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-6 mt-1">
-                        <h5 class="m-0 text-dark mt-1">Companies</h5>
+                        <h5 class="m-0 text-dark mt-1">
+                            {{ isAdmin ? 'Companies' : 'Company' }}
+                        </h5>
                     </div>
                     <div class="col-6 mt-1">
                         <div class="breadcrumb float-right">
-                            <button class="btn btn-outline-secondary btn-headers"
-                                    data-toggle="modal" data-target="#newCompanyModal">
-                                <span class="fa fa-plus fa-sm"></span> <span class="ps-1 md-d-none">Add new Company</span>
-                            </button>
+                            {% if isAdmin %}
+                                <button class="btn btn-outline-secondary btn-headers"
+                                        data-toggle="modal" data-target="#newCompanyModal">
+                                    <span class="fa fa-plus fa-sm"></span> <span class="ps-1 md-d-none">Add new Company</span>
+                                </button>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -41,6 +47,8 @@
         </section>
     </div>
 
-    {% include 'dashboard/companies/modal/new.html.twig' %}
+    {% if isAdmin %}
+        {% include 'dashboard/companies/modal/new.html.twig' %}
+    {% endif %}
 
 {% endblock %}

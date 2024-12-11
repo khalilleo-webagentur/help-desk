@@ -28,11 +28,11 @@
 
                 <li class="nav-header">CONTENTS</li>
 
-                {% if isAdmin %}
+                {% if isAdmin or app.user.isTeamLeader %}
                     <li class="nav-item {{ _route == 'app_dashboard_companies_index' ? 'menu-is-opening menu-open' : ''  }}">
                         <a href="{{ path('app_dashboard_companies_index') }}" class="nav-link">
                             <i class="fas fa-building nav-icon"></i>
-                            <p>Companies</p>
+                            <p>{{ isAdmin ? 'Companies' : 'Company' }}</p>
                         </a>
                     </li>
                 {% endif %}

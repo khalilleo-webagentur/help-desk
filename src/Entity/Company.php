@@ -235,4 +235,18 @@ class Company
 
         return $this;
     }
+
+    public function toArray(): array
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'email' => $this->email,
+            'phone' => $this->phone,
+            'street' => $this->street,
+            'zip' => $this->zip,
+            'city' => $this->city,
+            'isDeleted' => $this->isDeleted
+        ];
+    }
 }

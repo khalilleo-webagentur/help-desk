@@ -4,19 +4,20 @@ declare(strict_types=1);
 
 namespace App\Controller\Dashboard\Company;
 
+use App\Controller\Dashboard\AbstractDashboardController;
 use App\Entity\Company;
 use App\Service\CompanyService;
+use App\Service\Core\MonologService;
 use App\Service\ProjectService;
 use App\Service\UserService;
 use App\Traits\FormValidationTrait;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/dashboard/company/7tt8i7jjv67nm7wy')]
-class IndexController extends AbstractController
+class IndexController extends AbstractDashboardController
 {
     use FormValidationTrait;
 
@@ -26,16 +27,26 @@ class IndexController extends AbstractController
         private readonly UserService    $userService,
         private readonly ProjectService $projectService,
         private readonly CompanyService $companyService,
-    )
-    {
+        private readonly MonologService $monologService,
+    ){
     }
 
     #[Route('/home', name: 'app_dashboard_companies_index')]
     public function index(): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
+        $this->denyAccessUnlessGrantedRoleCustomer();
 
-        $companies = $this->companyService->getAll();
+        $currentUser = $this->getUser();
+
+        $isAdmin = $this->userService->isAdmin($currentUser);
+
+        if (!$isAdmin && !$currentUser->isTeamLeader()) {
+            return $this->redirectToRoute(self::DASHBOARD_COMPANIES_ROUTE);
+        }
+
+        $companies = $isAdmin
+            ? $this->companyService->getAll()
+            : [$currentUser->getCompany()];
 
         return $this->render('dashboard/companies/index.html.twig', [
             'companies' => $companies,
@@ -85,7 +96,15 @@ class IndexController extends AbstractController
     #[Route('/edit/{id}', name: 'app_dashboard_company_edit')]
     public function edit(?string $id): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
+        $this->denyAccessUnlessGrantedRoleCustomer();
+
+        $currentUser = $this->getUser();
+
+        $isAdmin = $this->userService->isAdmin($currentUser);
+
+        if (!$isAdmin && !$currentUser->isTeamLeader()) {
+            return $this->redirectToRoute(self::DASHBOARD_COMPANIES_ROUTE);
+        }
 
         $company = $this->companyService->getById(
             $this->validateNumber($id)
@@ -97,14 +116,22 @@ class IndexController extends AbstractController
         }
 
         return $this->render('dashboard/companies/edit.html.twig', [
-            'company' => $company,
+            'company' => $isAdmin ? $company : $currentUser->getCompany(),
         ]);
     }
 
     #[Route('/store/{id}', name: 'app_dashboard_company_store', methods: 'POST')]
     public function store(?string $id, Request $request): RedirectResponse
     {
-        $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
+        $this->denyAccessUnlessGrantedRoleCustomer();
+
+        $currentUser = $this->getUser();
+
+        $isAdmin = $this->userService->isAdmin($currentUser);
+
+        if (!$isAdmin && !$currentUser->isTeamLeader()) {
+            return $this->redirectToRoute(self::DASHBOARD_COMPANIES_ROUTE);
+        }
 
         $name = $this->validate($request->request->get('name'));
 
@@ -113,9 +140,9 @@ class IndexController extends AbstractController
             return $this->redirectToRoute(self::DASHBOARD_COMPANIES_ROUTE);
         }
 
-        $company = $this->companyService->getById(
-            $this->validateNumber($id)
-        );
+        $company =  $isAdmin
+            ? $this->companyService->getById($this->validateNumber($id))
+            : $currentUser->getCompany();
 
         if (!$company) {
             $this->addFlash('warning', 'Company could not be found.');
@@ -133,7 +160,13 @@ class IndexController extends AbstractController
         $zip = $this->validate($request->request->get('zip'));
         $city = $this->validate($request->request->get('city'));
 
-        $this->companyService->save(
+        if ($currentUser->isTeamLeader()) {
+            $this->monologService->logger->info(
+                sprintf('Old company details %s', json_encode($company->toArray()))
+            );
+        }
+
+        $company = $this->companyService->save(
             $company
                 ->setName($name)
                 ->setEmail($email)
@@ -142,6 +175,12 @@ class IndexController extends AbstractController
                 ->setZip($zip)
                 ->setCity($city)
         );
+
+        if ($currentUser->isTeamLeader()) {
+            $this->monologService->logger->info(
+                sprintf('New company details %s', json_encode($company->toArray()))
+            );
+        }
 
         $this->addFlash('notice', 'Changes has been saved.');
 
