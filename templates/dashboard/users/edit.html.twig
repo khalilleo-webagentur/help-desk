@@ -92,6 +92,18 @@
                                 </div>
                             </div>
 
+                            {% if isAdmin %}
+                                <div class="mb-3">
+                                    <div class="form-group form-check">
+                                        <input type="checkbox" class="form-check-input" id="7lN3isTeamLeader"
+                                               name="7lN3isT"
+                                                {{ user.isTeamLeader ? 'checked' : '' }}>
+                                        <label class="form-check-label text-secondary" for="7lN3isTeamLeader">
+                                            is Team-Leader (currently each company has only one Team-Leader. If this checked it means that the user is a Team-Leader.)
+                                        </label>
+                                    </div>
+                                </div>
+                            {% endif %}
 
                             {% include "dashboard/component/edit_save_btn.html.twig" %}
 

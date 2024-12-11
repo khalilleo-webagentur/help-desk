@@ -204,7 +204,12 @@ class IndexController extends AbstractDashboardController
             ? ['ROLE_' .$iRole]
             : $user->getRoles();
 
-        if ($isAdmin)
+
+        $isTeamLeader = $this->validateCheckbox($request->request->get('7lN3isT'));
+
+        if ($isAdmin && $isTeamLeader) {
+            $this->userService->changeUserPositionToTeamLeader($user);
+        }
 
         $this->userService->save(
             $user

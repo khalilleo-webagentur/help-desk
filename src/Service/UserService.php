@@ -111,6 +111,20 @@ final readonly class UserService
         return in_array('ROLE_CUSTOMER', $user->getRoles());
     }
 
+    public function changeUserPositionToTeamLeader(UserInterface $targetUser): void
+    {
+        foreach ($this->getAllByCompany($targetUser->getCompany()) as $user) {
+
+            $user->setTeamLeader(false);
+
+            if ($user->getId() === $targetUser->getId()) {
+                $user->setTeamLeader(true);
+            }
+
+            $this->save($user);
+        }
+    }
+
     public function save(User $model): ?User
     {
         $this->userRepository->save($model->setUpdatedAt(new DateTime()), true);
