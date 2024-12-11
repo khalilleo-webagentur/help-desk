@@ -18,12 +18,13 @@
                         <div class="col-lg-4">
                             <div class="form-group">
                                 <label for="iO7nM4yT4bG2sO00">
-                                    Project  <span class="text-danger">*</span>
+                                    Project <span class="text-danger">*</span>
                                 </label>
                                 <select class="form-control" name="project" id="iO7nM4yT4bG2sO00">
                                     <option value="0" selected disabled>Select Project</option>
                                     {% for project in projects %}
-                                        <option value="{{ project.id }}">{{ project.company.name }} - {{ project.title }}</option>
+                                        <option value="{{ project.id }}">{{ project.company.name }}
+                                            - {{ project.title }}</option>
                                     {% endfor %}
                                 </select>
                             </div>
@@ -31,7 +32,7 @@
                         <div class="col-lg-4">
                             <div class="form-group">
                                 <label for="iO7nM4yT4bG2sO22">
-                                    Type  <span class="text-danger">*</span>
+                                    Type <span class="text-danger">*</span>
                                 </label>
                                 <select class="form-control" name="type" id="iO7nM4yT4bG2sO22">
                                     {% for type in ticketTypes %}
@@ -43,7 +44,7 @@
                         <div class="col-lg-4">
                             <div class="form-group">
                                 <label for="iO7nM4yT4bG2sO55">
-                                    Labels  <span class="text-danger">*</span>
+                                    Labels <span class="text-danger">*</span>
                                 </label>
                                 <select class="form-control" name="label" id="iO7nM4yT4bG2sO55">
                                     <option value="0" selected disabled>Select Label</option>
@@ -59,7 +60,8 @@
                         <label for="iO7nM4yT4bG2sO5i" class="form-label">
                             Title <span class="text-danger">*</span>
                         </label>
-                        <input type="text" class="form-control" id="iO7nM4yT4bG2sO5i" placeholder="Type title" name="title"
+                        <input type="text" class="form-control" id="iO7nM4yT4bG2sO5i" placeholder="Type title"
+                               name="title"
                                required>
                         <small class="text-secondary">
                             Title must be less than 10 words.

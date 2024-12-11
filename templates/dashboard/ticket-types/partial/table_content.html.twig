@@ -41,7 +41,9 @@
                                     </button>
                                 </form>
 
-                                <form class="d-none" action="{{ path('app_dashboard_ticket_type_delete', {id:row.id}) }}" method="post">
+                                <form class="d-none"
+                                      action="{{ path('app_dashboard_ticket_type_delete', {id:row.id}) }}"
+                                      method="post">
                                     <input type="hidden" name="csrf" value="{{ hash(csrf_token(row.id)) }}">
                                     <button class="btn small-btn btn-outline-danger" type="submit">
                                         <span class="fa fa-trash-alt fa-sm"></span>

@@ -30,7 +30,7 @@
                         <form action="{{ path('app_dashboard_company_edit', {id:row.id}) }}" method="post">
                             <input type="hidden" name="csrf" value="{{ hash(csrf_token(row.id)) }}">
                             <span class="text-primary pointer"
-                                onclick="this.closest('form').submit();">{{ row.name }}</span>
+                                  onclick="this.closest('form').submit();">{{ row.name }}</span>
                         </form>
                     </td>
                     <td>{{ row.email ? row.email : '---' }}</td>
@@ -52,7 +52,8 @@
                             </button>
                         </form>
 
-                        <form class="d-none" action="{{ path('app_dashboard_company_delete', {id:row.id}) }}" method="post">
+                        <form class="d-none" action="{{ path('app_dashboard_company_delete', {id:row.id}) }}"
+                              method="post">
                             <input type="hidden" name="csrf" value="{{ hash(csrf_token(row.id)) }}">
                             <button class="btn small-btn btn-outline-danger" type="submit">
                                 <span class="fa fa-trash-alt fa-sm"></span>

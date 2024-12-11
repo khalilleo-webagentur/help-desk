@@ -112,7 +112,7 @@
                                             Status <span class="text-danger">*</span>
                                         </label>
                                         <select class="form-control" name="status" id="iO7nM4yT4bG2sO77" required
-                                            {{ not isAdmin ? 'disabled' : '' }}>
+                                                {{ not isAdmin ? 'disabled' : '' }}>
                                             {% set hasStatus = issue.status and issue.status.name %}
                                             {% for status in statuses %}
                                                 <option value="{{ status.id }}" {{ hasStatus and status.name == issue.status.name ? 'selected' : '' }}>
@@ -134,7 +134,8 @@
                                             <input type="number" class="form-control" id="V9xO3aD7v78"
                                                    placeholder=""
                                                    value="" name="minutes">
-                                            <small>The value must be in minutes - Currently time spent is {{ issue.timeSpentInMinutes }}</small>
+                                            <small>The value must be in minutes - Currently time spent
+                                                is {{ issue.timeSpentInMinutes }}</small>
                                         </div>
                                     </div>
                                 </div>

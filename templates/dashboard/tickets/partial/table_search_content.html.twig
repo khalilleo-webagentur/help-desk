@@ -6,7 +6,7 @@
             <tr class="fs-14">
                 <th>ID</th>
                 {% if isAdmin %}
-                <th>{{ 'Customer'|trans }}</th>
+                    <th>{{ 'Customer'|trans }}</th>
                 {% endif %}
                 <th>{{ 'Project'|trans }}</th>
                 <th>{{ 'Type'|trans }}</th>
@@ -20,72 +20,72 @@
             </tr>
             </thead>
             <tbody>
-                <tr class="fs-14">
-                    <td>T-{{ issue.ticketNo }}</td>
+            <tr class="fs-14">
+                <td>T-{{ issue.ticketNo }}</td>
 
-                    {% if isAdmin %}
-                        <td>
-                            <a href="{{ path('app_dashboard_user_edit', {id:issue.customer.id}) }}">
-                                {{ issue.customer.name }}
-                            </a>
-                        </td>
-                    {% endif %}
-
+                {% if isAdmin %}
                     <td>
-                        {{ issue.project.title }}
+                        <a href="{{ path('app_dashboard_user_edit', {id:issue.customer.id}) }}">
+                            {{ issue.customer.name }}
+                        </a>
                     </td>
+                {% endif %}
 
-                    <td>{{ issue.type.name }}</td>
+                <td>
+                    {{ issue.project.title }}
+                </td>
 
-                    <td>
-                        <span class="ticket-label" style="color: {{ issue.label.color }}">{{ issue.label.name }}</span>
-                    </td>
+                <td>{{ issue.type.name }}</td>
 
-                    <td>
+                <td>
+                    <span class="ticket-label" style="color: {{ issue.label.color }}">{{ issue.label.name }}</span>
+                </td>
+
+                <td>
                         <span class="cursor-help" title="{{ issue.title }}">
                             {{ issue.title|slice(0,35) ~ '..' }}
                         </span>
-                    </td>
+                </td>
 
-                    <td>{{ issue.assignee ? issue.assignee.name : '---' }}</td>
+                <td>{{ issue.assignee ? issue.assignee.name : '---' }}</td>
 
-                    <td>
+                <td>
                         <span class="ticket-status cursor-help"
                               style="background: {{ issue.status ? issue.status.color : '#9d8900' }}"
                               title=" {{ issue.status ? issue.status.description : 'Being Processed' }}">
                              {{ issue.status ? issue.status.name : 'Open' }}
                         </span>
-                    </td>
+                </td>
 
-                    <td title="{{ issue.updatedAt|date }}">{{ timeAgo(issue.updatedAt) }}</td>
+                <td title="{{ issue.updatedAt|date }}">{{ timeAgo(issue.updatedAt) }}</td>
 
-                    <td title="{{ issue.createdAt|date }}">{{ timeAgo(issue.createdAt) }}</td>
+                <td title="{{ issue.createdAt|date }}">{{ timeAgo(issue.createdAt) }}</td>
 
-                    <td class="d-flex">
-                        <form action="{{ path('app_dashboard_ticket_view', {id: issue.id}) }}">
+                <td class="d-flex">
+                    <form action="{{ path('app_dashboard_ticket_view', {id: issue.id}) }}">
+                        <input type="hidden" name="csrf" value="{{ hash(csrf_token(issue.id)) }}">
+                        <button class="btn small-btn btn-outline-secondary mr-2" type="submit">
+                            <span class="fa fa-eye fa-sm"></span>
+                        </button>
+                    </form>
+
+                    <form action="{{ path('app_dashboard_ticket_edit', {id:issue.id}) }}">
+                        <input type="hidden" name="csrf" value="{{ hash(csrf_token(issue.id)) }}">
+                        <button class="btn small-btn btn-outline-primary mr-2" type="submit">
+                            <span class="fa fa-pen fa-sm"></span>
+                        </button>
+                    </form>
+
+                    {% if isAdmin %}
+                        <form class="d-none" action="#" method="post">
                             <input type="hidden" name="csrf" value="{{ hash(csrf_token(issue.id)) }}">
-                            <button class="btn small-btn btn-outline-secondary mr-2" type="submit">
-                                <span class="fa fa-eye fa-sm"></span>
+                            <button class="btn small-btn btn-outline-danger mr-2" type="submit">
+                                <span class="fa fa-trash-alt fa-sm"></span>
                             </button>
                         </form>
-
-                        <form action="{{ path('app_dashboard_ticket_edit', {id:issue.id}) }}">
-                            <input type="hidden" name="csrf" value="{{ hash(csrf_token(issue.id)) }}">
-                            <button class="btn small-btn btn-outline-primary mr-2" type="submit">
-                                <span class="fa fa-pen fa-sm"></span>
-                            </button>
-                        </form>
-
-                        {% if isAdmin %}
-                            <form class="d-none" action="#" method="post">
-                                <input type="hidden" name="csrf" value="{{ hash(csrf_token(issue.id)) }}">
-                                <button class="btn small-btn btn-outline-danger mr-2" type="submit">
-                                    <span class="fa fa-trash-alt fa-sm"></span>
-                                </button>
-                            </form>
-                        {% endif %}
-                    </td>
-                </tr>
+                    {% endif %}
+                </td>
+            </tr>
             </tbody>
         </table>
     </div>

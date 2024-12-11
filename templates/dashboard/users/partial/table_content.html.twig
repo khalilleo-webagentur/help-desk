@@ -4,25 +4,25 @@
 
     <table class="table table-hover text-nowrap">
         <thead>
-            <tr class="fs-14">
-                <th>#</th>
-                <th>{{ 'Name'|trans }}</th>
-                {% if isAdmin %}
-                    <th>{{ 'Company'|trans }}</th>
-                {% endif %}
-                <th>{{ 'Email'|trans }}</th>
-                <th>{{ 'Token'|trans }}</th>
-                <th>{{ 'Verified'|trans }}</th>
-                <th>{{ 'Deleted'|trans }}</th>
-                <th>{{ 'Updated'|trans }}</th>
-                <th>{{ 'Created'|trans }}</th>
-                {% if isAdmin or app.user.isTeamLeader %}
-                    <th>{{ 'Action'|trans }}</th>
-                {% endif %}
-            </tr>
+        <tr class="fs-14">
+            <th>#</th>
+            <th>{{ 'Name'|trans }}</th>
+            {% if isAdmin %}
+                <th>{{ 'Company'|trans }}</th>
+            {% endif %}
+            <th>{{ 'Email'|trans }}</th>
+            <th>{{ 'Token'|trans }}</th>
+            <th>{{ 'Verified'|trans }}</th>
+            <th>{{ 'Deleted'|trans }}</th>
+            <th>{{ 'Updated'|trans }}</th>
+            <th>{{ 'Created'|trans }}</th>
+            {% if isAdmin or app.user.isTeamLeader %}
+                <th>{{ 'Action'|trans }}</th>
+            {% endif %}
+        </tr>
         </thead>
         <tbody>
-            {% for row in users %}
+        {% for row in users %}
             <tr class="fs-14">
                 <td>{{ row.id }}</td>
                 <td>{{ row.name|capitalize }}
@@ -69,7 +69,7 @@
                     </td>
                 {% endif %}
             </tr>
-            {% endfor %}
+        {% endfor %}
         </tbody>
     </table>
 </div>

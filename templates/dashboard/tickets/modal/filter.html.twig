@@ -23,7 +23,9 @@
                                 <select class="form-control" name="project" id="iO7nM4yT4bG2sO00">
                                     <option value="0" selected disabled>Select Project</option>
                                     {% for project in projects %}
-                                        <option value="{{ project.id }}">{{ project.title }} ({{ project.company.name }})</option>
+                                        <option value="{{ project.id }}">{{ project.title }} ({{ project.company.name }}
+                                            )
+                                        </option>
                                     {% endfor %}
                                 </select>
                             </div>
@@ -35,7 +37,9 @@
                                 <select class="form-control" name="project" id="iO7nM4yT4bG2sO00">
                                     <option value="0" selected disabled>Select Project</option>
                                     {% for project in projects %}
-                                        <option value="{{ project.id }}">{{ project.title }} ({{ project.company.name }})</option>
+                                        <option value="{{ project.id }}">{{ project.title }} ({{ project.company.name }}
+                                            )
+                                        </option>
                                     {% endfor %}
                                 </select>
                             </div>
@@ -53,39 +57,39 @@
                         </div>
                     </div>
 
-                        <div class="row">
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label for="iO7nM4yT4bG2sO55">Labels</label>
-                                    <select class="form-control" name="label" id="iO7nM4yT4bG2sO55">
-                                        <option value="0" selected disabled>Select Label</option>
-                                        {% for label in ticketLabels %}
-                                            <option value="{{ label.id }}">{{ label.name }}</option>
-                                        {% endfor %}
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label for="iO7nM4yT4bG2sO44">
-                                        Assignee
-                                    </label>
-                                    <select class="form-control" name="assignee" id="iO7nM4yT4bG2sO44">
-                                        <option value="0" selected>Unassigned</option>
-                                        {% for user in users %}
-                                            <option value="{{ user.id }}">{{ user.name }}</option>
-                                        {% endfor %}
-                                    </select>
-                                </div>
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label for="iO7nM4yT4bG2sO55">Labels</label>
+                                <select class="form-control" name="label" id="iO7nM4yT4bG2sO55">
+                                    <option value="0" selected disabled>Select Label</option>
+                                    {% for label in ticketLabels %}
+                                        <option value="{{ label.id }}">{{ label.name }}</option>
+                                    {% endfor %}
+                                </select>
                             </div>
                         </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label for="iO7nM4yT4bG2sO44">
+                                    Assignee
+                                </label>
+                                <select class="form-control" name="assignee" id="iO7nM4yT4bG2sO44">
+                                    <option value="0" selected>Unassigned</option>
+                                    {% for user in users %}
+                                        <option value="{{ user.id }}">{{ user.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
 
                     <div class="row">
                         <div class="col-lg-3">
-                        <div class="mb-3">
-                                    <label for="V9xO3aD7v78Ticket" class="form-label">Ticket-No</label>
-                                    <input type="text" class="form-control" id="V9xO3aD7v78Ticket"
-                                    placeholder="Ticket no" name="no">
+                            <div class="mb-3">
+                                <label for="V9xO3aD7v78Ticket" class="form-label">Ticket-No</label>
+                                <input type="text" class="form-control" id="V9xO3aD7v78Ticket"
+                                       placeholder="Ticket no" name="no">
                             </div>
                         </div>
                         <div class="col-lg-3">

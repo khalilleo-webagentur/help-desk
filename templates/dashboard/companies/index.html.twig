@@ -1,6 +1,6 @@
 {% extends 'dashboard/layout/base.html.twig' %}
 
-{% set isAdmin = is_granted('ROLE_SUPER_ADMIN')  %}
+{% set isAdmin = is_granted('ROLE_SUPER_ADMIN') %}
 
 {% block title %} Dashboard {{ isAdmin ? 'Companies' : 'Company' }} {% endblock %}
 
@@ -21,7 +21,8 @@
                             {% if isAdmin %}
                                 <button class="btn btn-outline-secondary btn-headers"
                                         data-toggle="modal" data-target="#newCompanyModal">
-                                    <span class="fa fa-plus fa-sm"></span> <span class="ps-1 md-d-none">Add new Company</span>
+                                    <span class="fa fa-plus fa-sm"></span> <span
+                                            class="ps-1 md-d-none">Add new Company</span>
                                 </button>
                             {% endif %}
                         </div>

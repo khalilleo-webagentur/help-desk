@@ -44,7 +44,8 @@
                                 <p class="mb-1"><b>Assignee: </b>
                                     <span>{{ issue.assignee ? issue.assignee.name : 'unassigned' }}</span></p>
                                 {% if isAdmin %}
-                                    <p class="mb-1"><b>Spent Time: </b> <span>{{ convertToHoursMinutes(issue.timeSpentInMinutes) }}</span></p>
+                                    <p class="mb-1"><b>Spent Time: </b>
+                                        <span>{{ convertToHoursMinutes(issue.timeSpentInMinutes) }}</span></p>
                                 {% endif %}
                                 <p class="mb-1"><b>Modified at: </b> <span>{{ issue.updatedAt|date }}</span></p>
                                 <p><b>Created at: </b> <span>{{ issue.createdAt|date }}</span></p>
@@ -74,9 +75,9 @@
                 </div>
                 {% if count(attachments) > 0 %}
                     <div class="row mb-3">
-                       <div class="col-12">
-                           {% include 'dashboard/tickets/partial/table_attachment_content.html.twig' %}
-                       </div>
+                        <div class="col-12">
+                            {% include 'dashboard/tickets/partial/table_attachment_content.html.twig' %}
+                        </div>
                     </div>
                 {% endif %}
             </div>
@@ -90,7 +91,7 @@
                             <div class="mb-3">
                                 {% include 'dashboard/tickets/partial/table_activities_content.html.twig' %}
                             </div>
-                         </div>
+                        </div>
                     </div>
                 </div>
             {% endif %}
@@ -112,18 +113,19 @@
                                         <img class="mr-2" height="40px" width="40px" style="border-radius: 50px;"
                                              src="{{ asset('lte/img/avatar-160x160.png') }}" alt="Avatar">
                                     </div>
-                                   <div class="pl-2">
-                                       <h6>
-                                           {{ comment.commentedByName }}
-                                           <small class="ml-2 text-secondary">{{ timeAgo(comment.createdAt) }}</small>
-                                       </h6>
-                                       {{ comment.description|raw }}
-                                       <small class="text-secondary">
-                                           Reply <span class="px-2">.</span>
-                                           Like {{ comment.likeCounter > 0 ? comment.likeCounter : '' }}<span class="px-2">.</span>
-                                           Dislike {{ comment.disLikeCounter > 0 ? comment.disLikeCounter : '' }}
-                                       </small>
-                                   </div>
+                                    <div class="pl-2">
+                                        <h6>
+                                            {{ comment.commentedByName }}
+                                            <small class="ml-2 text-secondary">{{ timeAgo(comment.createdAt) }}</small>
+                                        </h6>
+                                        {{ comment.description|raw }}
+                                        <small class="text-secondary">
+                                            Reply <span class="px-2">.</span>
+                                            Like {{ comment.likeCounter > 0 ? comment.likeCounter : '' }}<span
+                                                    class="px-2">.</span>
+                                            Dislike {{ comment.disLikeCounter > 0 ? comment.disLikeCounter : '' }}
+                                        </small>
+                                    </div>
                                 </div>
                             </div>
                         </div>
