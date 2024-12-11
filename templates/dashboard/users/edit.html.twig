@@ -4,78 +4,102 @@
 
 {% block body %}
 
-<div class="content-wrapper">
+    <div class="content-wrapper">
 
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-8">
-                    <h4 class="m-0 text-dark">Edit User Details</h4>
-                </div>
-                <div class="col-4">
-                    <div class="float-right">
-                        <a href="{{path('app_dashboard_users_index')}}" class="text-secondary">
-                            Close <span class="fa fa-window-close"></span>
-                        </a>
+        {% set isAdmin = is_granted('ROLE_SUPER_ADMIN') %}
+
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-8">
+                        <h4 class="m-0 text-dark">Edit User Details</h4>
+                    </div>
+                    <div class="col-4">
+                        <div class="float-right">
+                            <a href="{{ path('app_dashboard_users_index') }}" class="text-secondary">
+                                Close <span class="fa fa-window-close"></span>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <section class="content">
+            <div class="container-fluid area-section">
+                <div class="row px-2 py-3">
+                    <div class="col-lg-6">
+                        <form action="{{ path('app_dashboard_user_store', {id:user.id}) }}" method="post">
+                            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                            <div class="row">
+                                <div class="mb-1 {{ isAdmin ? 'col-lg-6' : 'col-lg-12' }}">
+                                    <div class="form-group">
+                                        <label for="V9xO3aD7v" class="form-label">Name <span
+                                                    class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="V9xO3aD7v" placeholder="Type name"
+                                               value="{{ user.name }}" name="name">
+                                    </div>
+                                </div>
+                                {% if isAdmin %}
+                                    <div class="mb-1 col-lg-6">
+                                        <div class="form-group">
+                                            <label for="iO7nM4yT4bG2sO00">Role</label>
+                                            <select class="form-control" name="4yt4bG2" id="iO7nM4yT4bG2sO00">
+                                                <option value="0" selected disabled>Select Role</option>
+                                                {% for key, role in roles %}
+                                                    <option value="{{ key }}" {{ user.roles[0] == 'ROLE_' ~ key ? 'selected' : '' }}>
+                                                        {{ role }}
+                                                    </option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            <div class="form-group">
+                                <label for="2hV9xO3aD7v" class="form-label">Email <span
+                                            class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="2hV9xO3aD7v" placeholder="Type email"
+                                       value="{{ user.email }}" name="email">
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label for="4jX2hV9xO3aD7v" class="form-label">Verification-Token</label>
+                                <input type="text" class="form-control" id="4jX2hV9xO3aD7v" placeholder="Type token"
+                                       value="{{ user.token }}" name="token">
+                            </div>
+
+                            <div class="mb-3">
+                                <div class="form-group form-check">
+                                    <input type="checkbox" class="form-check-input" id="4lN3jG3gE9oB3o"
+                                           name="isVerified"
+                                            {{ user.isVerified ? 'checked' : '' }}>
+                                    <label class="form-check-label text-secondary" for="4lN3jG3gE9oB3o">
+                                        is Account being verified
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <div class="form-group form-check">
+                                    <input type="checkbox" class="form-check-input" id="7lN3jG3gE9oB3Do"
+                                           name="isDeleted"
+                                            {{ user.isDeleted ? 'checked' : '' }}>
+                                    <label class="form-check-label text-secondary" for="7lN3jG3gE9oB3Do">
+                                        is Account being deleted
+                                    </label>
+                                </div>
+                            </div>
+
+
+                            {% include "dashboard/component/edit_save_btn.html.twig" %}
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
-
-    <section class="content">
-        <div class="container-fluid area-section">
-            <div class="row px-2 py-3">
-                <div class="col-lg-6">
-                    <form action="{{path('app_dashboard_user_store', {id:user.id})}}" method="post">
-                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-                    <div class="row">
-                        <div class="mb-3 col-lg-6">
-                            <label for="V9xO3aD7v" class="form-label">Name <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="V9xO3aD7v" placeholder="Type name"
-                                value="{{user.name}}" name="name">
-                        </div>
-                        <div class="mb-3 col-lg-6">
-                            <label for="2hV9xO3aD7v" class="form-label">Email <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="2hV9xO3aD7v" placeholder="Type email"
-                                value="{{user.email}}" name="email">
-                        </div>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="4jX2hV9xO3aD7v" class="form-label">Verification-Token</label>
-                        <input type="text" class="form-control" id="4jX2hV9xO3aD7v" placeholder="Type token"
-                            value="{{user.token}}" name="token">
-                    </div>
-
-                        <div class="mb-3">
-                            <div class="form-group form-check">
-                                <input type="checkbox" class="form-check-input" id="4lN3jG3gE9oB3o" name="isVerified"
-                                    {{user.isVerified ? 'checked' : '' }}>
-                                <label class="form-check-label text-secondary" for="4lN3jG3gE9oB3o">
-                                    is Account being verified
-                                </label>
-                            </div>
-                        </div>
-
-                        <div class="mb-3">
-                            <div class="form-group form-check">
-                                <input type="checkbox" class="form-check-input" id="7lN3jG3gE9oB3Do" name="isDeleted"
-                                    {{user.isDeleted ? 'checked' : '' }}>
-                                <label class="form-check-label text-secondary" for="7lN3jG3gE9oB3Do">
-                                    is Account being deleted
-                                </label>
-                            </div>
-                        </div>
-
-                       
-                        {% include "dashboard/component/edit_save_btn.html.twig" %}
-                        
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
-</div>
 
 {% endblock %}

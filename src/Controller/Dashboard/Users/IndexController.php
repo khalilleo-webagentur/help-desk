@@ -141,6 +141,7 @@ class IndexController extends AbstractDashboardController
 
         return $this->render('dashboard/users/edit.html.twig', [
             'user' => $targetUser,
+            'roles' => $isAdmin ? AppHelper::ROLES : [],
         ]);
     }
 
@@ -198,6 +199,13 @@ class IndexController extends AbstractDashboardController
             $token = null;
         }
 
+        $iRole = $this->validate($request->request->get('4yt4bG2'));
+        $role = $isAdmin && in_array($iRole, array_keys(AppHelper::ROLES), true)
+            ? ['ROLE_' .$iRole]
+            : $user->getRoles();
+
+        if ($isAdmin)
+
         $this->userService->save(
             $user
                 ->setName($name)
@@ -205,6 +213,7 @@ class IndexController extends AbstractDashboardController
                 ->setPassword($this->userService->encodePassword($email))
                 ->setToken($token)
                 ->setIsVerified($isVerified)
+                ->setRoles($role)
                 ->setDeleted($isDeleted)
         );
 
