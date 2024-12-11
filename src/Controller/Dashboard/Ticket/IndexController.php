@@ -334,7 +334,12 @@ class IndexController extends AbstractDashboardController
             $this->ticketActivitiesService->add(
                 $issue,
                 $user,
-                sprintf('%s updated description of issue "', $user->getName())
+                sprintf(
+                    '%s updated description of issue form: [%s] to [%s]',
+                    $user->getName(),
+                    strip_tags($issue->getDescription()),
+                    strip_tags($description)
+                )
             );
         }
 

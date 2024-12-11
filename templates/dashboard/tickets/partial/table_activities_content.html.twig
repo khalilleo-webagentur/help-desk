@@ -11,7 +11,11 @@
             <tbody>
             {% for row in ticketActivities %}
                 <tr class="fs-14">
-                    <td>{{ row.message }}</td>
+                    <td>
+                        <span title="{{ row.message }}">
+                            {{ row.message|slice(0, 50) ~ '..' }}
+                        </span>
+                    </td>
                     <td title="{{ row.createdAt|date }}">{{ timeAgo(row.createdAt) }}</td>
                 </tr>
             {% endfor %}
