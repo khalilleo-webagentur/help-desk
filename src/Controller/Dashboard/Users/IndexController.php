@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Controller\Dashboard\Users;
 
 use App\Controller\Dashboard\AbstractDashboardController;
-use App\Entity\Company;
 use App\Entity\User;
 use App\Helper\AppHelper;
 use App\Service\CompanyService;
@@ -166,12 +165,15 @@ class IndexController extends AbstractDashboardController
             return $this->redirectToRoute(self::ADMIN_USERS_ROUTE);
         }
 
-        $user = $this->userService->getById(
-            $this->validateNumber($id)
-        );
+        $user = $this->userService->getById($this->validateNumber($id));
 
         if (!$user) {
             $this->addFlash('warning', 'User could not be found.');
+            return $this->redirectToRoute(self::ADMIN_USERS_ROUTE);
+        }
+
+        if (!$isAdmin && $this->userService->isAdmin($user)) {
+            $this->addFlash('warning', 'You don not have enough permission to update admin details. E-0003');
             return $this->redirectToRoute(self::ADMIN_USERS_ROUTE);
         }
 
@@ -187,11 +189,6 @@ class IndexController extends AbstractDashboardController
 
         $isVerified = $this->validateCheckbox($request->request->get('isVerified'));
         $token = $this->validate($request->request->get('token'));
-
-        if (!$isVerified) {
-            $token = null;
-        }
-
         $isDeleted = $this->validateCheckbox($request->request->get('isDeleted'));
 
         if ($isDeleted) {
@@ -217,7 +214,7 @@ class IndexController extends AbstractDashboardController
                 ->setEmail($email)
                 ->setPassword($this->userService->encodePassword($email))
                 ->setToken($token)
-                ->setIsVerified($isVerified)
+                ->setIsVerified($isAdmin ? $isVerified : $user->isVerified())
                 ->setRoles($role)
                 ->setDeleted($isDeleted)
         );
