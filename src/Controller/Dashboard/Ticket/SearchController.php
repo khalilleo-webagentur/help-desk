@@ -25,7 +25,7 @@ class SearchController extends AbstractDashboardController
     }
 
     #[Route('/q', name: 'app_dashboard_ticket_search', methods: ['GET', 'POST'])]
-    public function new(Request $request): RedirectResponse|Response
+    public function index(Request $request): RedirectResponse|Response
     {
         $this->denyAccessUnlessGrantedRoleCustomer();
         $user = $this->getUser();

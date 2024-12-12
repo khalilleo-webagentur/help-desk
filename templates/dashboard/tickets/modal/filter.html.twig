@@ -1,7 +1,7 @@
 <div class="modal fade" id="filterTicketModal" tabindex="-1" role="dialog" aria-labelledby="filterTicketModalTitle"
      aria-hidden="true">
-    <div class="modal-dialog modal-xl" role="document">
-        <form action="#" method="post" enctype="multipart/form-data">
+    <div class="modal-dialog modal-lg" role="document">
+        <form action="{{ path('app_dashboard_ticket_filter') }}" method="post">
             <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
             <div class="modal-content">
                 <div class="modal-header">
@@ -15,16 +15,29 @@
                 <div class="modal-body bg-light">
 
                     <div class="row">
+
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label for="iO7n2sO22">Company <span class="text-danger">*</span></label>
+                                <select class="form-control" name="iO7n2sO22" id="iO7n2sO22">
+                                    <option value="0" disabled selected>Select Company</option>
+                                    {% for company in companies %}
+                                        <option value="{{ company.id }}">{{ company.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+
                         <div class="col-lg-4">
                             <div class="form-group">
                                 <label for="iO7nM4yT4bG2sO00">
                                     Project <span class="text-danger">*</span>
                                 </label>
-                                <select class="form-control" name="project" id="iO7nM4yT4bG2sO00">
-                                    <option value="0" selected disabled>Select Project</option>
+                                <select class="form-control" name="4yT4bG2sO" id="iO7nM4yT4bG2sO00">
+                                    <option value="0" disabled selected>Select Project</option>
                                     {% for project in projects %}
-                                        <option value="{{ project.id }}">{{ project.title }} ({{ project.company.name }}
-                                            )
+                                        <option value="{{ project.id }}">
+                                            {{ project.title }} ({{ project.company.name }})
                                         </option>
                                     {% endfor %}
                                 </select>
@@ -33,24 +46,11 @@
 
                         <div class="col-lg-4">
                             <div class="form-group">
-                                <label for="iO7nM4yT4bG2sO00">Customer</label>
-                                <select class="form-control" name="project" id="iO7nM4yT4bG2sO00">
-                                    <option value="0" selected disabled>Select Project</option>
-                                    {% for project in projects %}
-                                        <option value="{{ project.id }}">{{ project.title }} ({{ project.company.name }}
-                                            )
-                                        </option>
-                                    {% endfor %}
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label for="iO7nM4yT4bG2sO22">Type</label>
-                                <select class="form-control" name="type" id="iO7nM4yT4bG2sO22">
-                                    {% for type in ticketTypes %}
-                                        <option value="{{ type.id }}">{{ type.name }}</option>
+                                <label for="iO7nM4yT4bG2sO55">Labels</label>
+                                <select class="form-control" name="nM4yT4" id="iO7nM4yT4bG2sO55">
+                                    <option value="0" disabled selected>Select Label</option>
+                                    {% for label in ticketLabels %}
+                                        <option value="{{ label.id }}">{{ label.name }}</option>
                                     {% endfor %}
                                 </select>
                             </div>
@@ -60,26 +60,33 @@
                     <div class="row">
                         <div class="col-lg-4">
                             <div class="form-group">
-                                <label for="iO7nM4yT4bG2sO55">Labels</label>
-                                <select class="form-control" name="label" id="iO7nM4yT4bG2sO55">
-                                    <option value="0" selected disabled>Select Label</option>
-                                    {% for label in ticketLabels %}
-                                        <option value="{{ label.id }}">{{ label.name }}</option>
+                                <label for="iO7nM4yT4bG2sO44">
+                                    Status
+                                </label>
+                                <select class="form-control" name="iO7nM4yT4" id="iO7nM4yT4bG2sO44">
+                                    <option value="0" disabled selected>Select status</option>
+                                    {% for status in statuses %}
+                                        <option value="{{ status.id }}">{{ status.name }}</option>
                                     {% endfor %}
                                 </select>
                             </div>
                         </div>
                         <div class="col-lg-4">
                             <div class="form-group">
-                                <label for="iO7nM4yT4bG2sO44">
-                                    Assignee
-                                </label>
-                                <select class="form-control" name="assignee" id="iO7nM4yT4bG2sO44">
-                                    <option value="0" selected>Unassigned</option>
-                                    {% for user in users %}
-                                        <option value="{{ user.id }}">{{ user.name }}</option>
-                                    {% endfor %}
-                                </select>
+                                <div class="mb-3">
+                                    <label for="V9xO" class="form-label">Issue By</label>
+                                    <input type="text" class="form-control" id="V9xO"
+                                           placeholder="Name" name="V9xO">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <div class="mb-3">
+                                    <label for="m79xO" class="form-label">Assignee</label>
+                                    <input type="text" class="form-control" id="m79xO"
+                                           placeholder="Name" name="m79xzO">
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -89,7 +96,7 @@
                             <div class="mb-3">
                                 <label for="V9xO3aD7v78Ticket" class="form-label">Ticket-No</label>
                                 <input type="text" class="form-control" id="V9xO3aD7v78Ticket"
-                                       placeholder="Ticket no" name="no">
+                                       placeholder="Ticket no" name="3aD7v78Tic">
                             </div>
                         </div>
                         <div class="col-lg-3">
@@ -97,25 +104,22 @@
                                 <label for="V9xO3aD7v78Title" class="form-label">Title</label>
                                 <input type="text" class="form-control" id="V9xO3aD7v78Title"
                                        placeholder="Title keyword"
-                                       value="" name="title">
+                                       name="aD7v78Ti">
                             </div>
                         </div>
-                    </div>
-
-                    <div class="row">
                         <div class="col-lg-3">
                             <div class="mb-3">
                                 <label for="V9xO3aD7v78dateTimeFrom" class="form-label">Date from</label>
-                                <input type="text" class="form-control" id="V9xO3aD7v78dateTimeFrom"
-                                       placeholder="{{ dateTimeFrom }}" name="from" value="{{ dateTimeFrom }}">
+                                <input type="text" class="form-control datetimeSelectorFrom" id="V9xO3aD7v78dateTimeFrom"
+                                       placeholder="{{ dateTimeFrom }}" name="D7v78dateT" value="{{ dateTimeFrom }}">
                             </div>
                         </div>
                         <div class="col-lg-3">
                             <div class="mb-3">
                                 <label for="V9xO3aD7v78dateTimeTo" class="form-label">Date to</label>
-                                <input type="text" class="form-control" id="V9xO3aD7v78dateTimeTo"
+                                <input type="text" class="form-control datetimeSelectorTo" id="V9xO3aD7v78dateTimeTo"
                                        placeholder="{{ dateTimeTo }}"
-                                       value="{{ dateTimeTo }}" name="to">
+                                       value="{{ dateTimeTo }}" name="vv78dateT">
                             </div>
                         </div>
                     </div>

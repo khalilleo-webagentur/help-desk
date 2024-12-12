@@ -97,6 +97,14 @@ final readonly class UserService
         return $this->userRepository->findBy([], ['company' => 'ASC', 'name' => 'ASC']);
     }
 
+    /**
+     * @return User[]
+     */
+    public function getAllTeamLeadersWithinACompany(Company $company): array
+    {
+        return $this->userRepository->findBy(['company' => $company, 'isTeamLeader' => true], ['company' => 'ASC', 'name' => 'ASC']);
+    }
+
     public function isAdmin(?UserInterface $user): bool
     {
         if (null === $user) {
@@ -111,11 +119,13 @@ final readonly class UserService
         return in_array('ROLE_CUSTOMER', $user->getRoles());
     }
 
-    public function changeUserPositionToTeamLeader(UserInterface $targetUser): void
+    public function changeUserPositionToTeamLeader(UserInterface|User $targetUser): void
     {
         foreach ($this->getAllByCompany($targetUser->getCompany()) as $user) {
 
-            $user->setTeamLeader(false);
+            if ($user->isTeamLeader()) {
+                $user->setTeamLeader(false);
+            }
 
             if ($user->getId() === $targetUser->getId()) {
                 $user->setTeamLeader(true);

@@ -7,6 +7,7 @@ namespace App\Controller\Dashboard\Ticket;
 use App\Controller\Dashboard\AbstractDashboardController;
 use App\Controller\Dashboard\Dto\Search;
 use App\Entity\Ticket;
+use App\Service\CompanyService;
 use App\Service\Core\FileUploaderService;
 use App\Service\Core\MonologService;
 use App\Service\ProjectService;
@@ -19,6 +20,7 @@ use App\Service\TicketStatusService;
 use App\Service\TicketTypesService;
 use App\Service\UserService;
 use App\Traits\FormValidationTrait;
+use DateTime;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -43,6 +45,7 @@ class IndexController extends AbstractDashboardController
         private readonly TicketActivitiesService  $ticketActivitiesService,
         private readonly TicketAttachmentsService $ticketAttachmentsService,
         private readonly TicketCommentsService    $ticketCommentsService,
+        private readonly CompanyService           $companyService,
         private readonly MonologService           $monologService,
     ) {
     }
@@ -74,7 +77,10 @@ class IndexController extends AbstractDashboardController
             ? $this->projectService->getAll()
             : $this->projectService->getAllByCompany($user->getCompany());
 
-        $dateTime = new \DateTime();
+        $companies = $isAdmin ? $this->companyService->getAll() : [];
+        $statuses = $isAdmin ? $this->ticketStatusService->getAll() : [];
+
+        $dateTime = new DateTime();
 
         return $this->render('dashboard/tickets/index.html.twig', [
             'issues' => $issues,
@@ -84,8 +90,10 @@ class IndexController extends AbstractDashboardController
             'projects' => $projects,
             'status' => $status,
             'search' => new Search(true, self::SEARCH_ROUTE, self::DASHBOARD_TICKETS_ROUTE),
-            'dateTimeFrom' => $dateTime->modify('-1 month')->format('Y-m-d H:i'),
-            'dateTimeTo' => (new \DateTime())->format('Y-m-d H:i'),
+            'companies' => $companies,
+            'statuses' => $statuses,
+            'dateTimeFrom' => $dateTime->modify('-1 month')->format('Y-m-d'),
+            'dateTimeTo' => (new DateTime())->format('Y-m-d'),
         ]);
     }
 
