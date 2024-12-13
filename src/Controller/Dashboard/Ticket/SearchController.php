@@ -45,7 +45,7 @@ class SearchController extends AbstractDashboardController
 
         return $this->render('dashboard/tickets/search.html.twig', [
             'ticketNo' => $ticketNo,
-            'issue' => $issue
+            'issues' => [$issue]
         ]);
     }
 }
