@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Service;
 
 use App\Entity\Company;
+use App\Entity\Project;
 use App\Entity\Ticket;
 use App\Entity\TicketStatus;
 use App\Repository\TicketRepository;
@@ -34,9 +35,18 @@ final readonly class TicketService
         return $this->ticketRepository->findOneBy(['customer' => $user, 'ticketNo' => $no]);
     }
 
+    /**
+     * @deprecated
+     * @use TicketService::getOneByProjectAndId()
+     */
     public function getOneByCustomerAndId(UserInterface $user, int $id): ?Ticket
     {
         return $this->ticketRepository->findOneBy(['customer' => $user, 'id' => $id]);
+    }
+
+    public function getOneByProjectAndId(Project $project, int $id): ?Ticket
+    {
+        return $this->ticketRepository->findOneBy(['project' => $project, 'id' => $id]);
     }
 
     public function getLatTicketNo(): int

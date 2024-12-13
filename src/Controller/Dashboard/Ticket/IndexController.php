@@ -196,16 +196,24 @@ class IndexController extends AbstractDashboardController
     }
 
     #[Route('/show/{id}', name: 'app_dashboard_ticket_view')]
-    public function view(?string $id): Response
+    public function view(?string $id, Request $request): Response
     {
         $this->denyAccessUnlessGrantedRoleCustomer();
         $user = $this->getUser();
         $isAdmin = $this->userService->isAdmin($user);
         $id = $this->validateNumber($id);
+        $projectId = $this->validateNumber($request->get('pid'));
+
+        $project = $this->projectService->getById($projectId);
+
+        if (!$project) {
+            $this->addFlash('warning', 'Issue could not be found.');
+            return $this->redirectToRoute(self::DASHBOARD_TICKETS_ROUTE);
+        }
 
         $issue = $isAdmin
             ? $this->ticketService->getById($id)
-            : $this->ticketService->getOneByCustomerAndId($user, $id);
+            : $this->ticketService->getOneByProjectAndId($project, $id);
 
         if (!$issue) {
             $this->addFlash('warning', 'Issue could not be found.');
@@ -241,9 +249,18 @@ class IndexController extends AbstractDashboardController
     }
 
     #[Route('/edit/{id}', name: 'app_dashboard_ticket_edit')]
-    public function edit(?string $id): Response
+    public function edit(?string $id, Request $request): Response
     {
         $this->denyAccessUnlessGrantedRoleCustomer();
+
+        $projectId = $this->validateNumber($request->get('pid'));
+
+        $project = $this->projectService->getById($projectId);
+
+        if (!$project) {
+            $this->addFlash('warning', 'Issue could not be found.');
+            return $this->redirectToRoute(self::DASHBOARD_TICKETS_ROUTE);
+        }
 
         $user = $this->getUser();
 
@@ -253,7 +270,7 @@ class IndexController extends AbstractDashboardController
 
         $issue = $isAdmin
             ? $this->ticketService->getById($id)
-            : $this->ticketService->getOneByCustomerAndId($user, $id);
+            : $this->ticketService->getOneByProjectAndId($project, $id);
 
         if (!$issue) {
             $this->addFlash('warning', 'Issue could not be found.');
@@ -276,13 +293,22 @@ class IndexController extends AbstractDashboardController
     {
         $this->denyAccessUnlessGrantedRoleCustomer();
 
+        $projectId = $this->validateNumber($request->get('pid'));
+
+        $project = $this->projectService->getById($projectId);
+
+        if (!$project) {
+            $this->addFlash('warning', 'Issue could not be found.');
+            return $this->redirectToRoute(self::DASHBOARD_TICKETS_ROUTE);
+        }
+
         $user = $this->getUser();
         $isAdmin = $this->userService->isAdmin($user);
         $issueId = $this->validateNumber($request->request->get('id'));
 
         $issue = $isAdmin
             ? $this->ticketService->getById($issueId)
-            : $this->ticketService->getOneByCustomerAndId($user, $issueId);
+            : $this->ticketService->getOneByProjectAndId($project, $issueId);
 
         if (!$issue) {
             $this->addFlash('warning', 'Issue could not be found.');

@@ -84,6 +84,7 @@
                             <input type="hidden" name="csrf" value="{{ hash(csrf_token(row.id)) }}">
                             <button class="btn small-btn btn-outline-secondary mr-2" type="submit">
                                 <span class="fa fa-eye fa-sm"></span>
+                                <input type="hidden" name="pid" value="{{ row.project.id }}">
                             </button>
                         </form>
 
@@ -91,6 +92,7 @@
                             <input type="hidden" name="csrf" value="{{ hash(csrf_token(row.id)) }}">
                             <button class="btn small-btn btn-outline-primary mr-2" type="submit">
                                 <span class="fa fa-pen fa-sm"></span>
+                                <input type="hidden" name="pid" value="{{ row.project.id }}">
                             </button>
                         </form>
 
