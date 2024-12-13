@@ -30,11 +30,6 @@ final readonly class TicketService
         return $this->ticketRepository->findOneBy(['ticketNo' => $no]);
     }
 
-    public function getOneByCustomerAndTicketNo(UserInterface $user, int $no): ?Ticket
-    {
-        return $this->ticketRepository->findOneBy(['customer' => $user, 'ticketNo' => $no]);
-    }
-
     /**
      * @deprecated
      * @use TicketService::getOneByProjectAndId()

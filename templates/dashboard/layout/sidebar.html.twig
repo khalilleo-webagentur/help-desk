@@ -7,7 +7,9 @@
                 <img src="{{ asset('lte/img/avatar-160x160.png') }}" class="img-circle" alt="User Image">
             </div>
             <div class="info">
-                <a href="{{ path('app_profile') }}" class="d-block">{{ app.user.name|capitalize }}</a>
+                <a href="{{ path('app_profile') }}" class="d-block">
+                    {{ app.user.name|capitalize }}
+                </a>
             </div>
         </div>
 
@@ -21,7 +23,7 @@
                     <a href="{{ path('app_dashboard_index') }}" class="nav-link">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>
-                            Dashboard
+                            {{ app.user.company.name }}
                         </p>
                     </a>
                 </li>

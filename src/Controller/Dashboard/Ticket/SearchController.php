@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Dashboard\Ticket;
 
 use App\Controller\Dashboard\AbstractDashboardController;
+use App\Service\ProjectService;
 use App\Service\TicketService;
 use App\Service\UserService;
 use App\Traits\FormValidationTrait;
@@ -19,8 +20,9 @@ class SearchController extends AbstractDashboardController
     use FormValidationTrait;
 
     public function __construct(
-        private readonly UserService   $userService,
-        private readonly TicketService $ticketService,
+        private readonly UserService    $userService,
+        private readonly TicketService  $ticketService,
+        private readonly ProjectService $projectService,
     ) {
     }
 
@@ -29,17 +31,31 @@ class SearchController extends AbstractDashboardController
     {
         $this->denyAccessUnlessGrantedRoleCustomer();
         $user = $this->getUser();
-        $isAdmin = $this->userService->isAdmin($user);
 
         $ticketNo = $this->validateNumber($request->request->get('keyword'));
         $backToRoute = $this->redirectToRoute($request->request->get('backTo'));
 
-        $issue = $isAdmin
-            ? $this->ticketService->getByTicketNo($ticketNo)
-            : $this->ticketService->getOneByCustomerAndTicketNo($user, $ticketNo);
+        $issue = $this->ticketService->getByTicketNo($ticketNo);
 
         if (!$issue) {
             $this->addFlash('warning', 'Issue could not be found.');
+            return $backToRoute;
+        }
+
+        $isAdmin = $this->userService->isAdmin($user);
+        $canViewIssue = false;
+
+        if (!$isAdmin) {
+            foreach ($this->projectService->getAllByCompany($user->getCompany()) as $project) {
+                if ($project->getId() === $issue->getProject()->getId()) {
+                    $canViewIssue = true;
+                    break;
+                }
+            }
+        }
+
+        if (false === $canViewIssue && !$isAdmin) {
+            $this->addFlash('warning', 'Issue could not be found. E-0004');
             return $backToRoute;
         }
 
