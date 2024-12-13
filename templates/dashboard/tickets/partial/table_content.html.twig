@@ -7,8 +7,8 @@
                 <th>ID</th>
                 {% if isAdmin %}
                     <th>{{ 'Company'|trans }}</th>
-                    <th>{{ 'By'|trans }}</th>
                 {% endif %}
+                <th>{{ 'By'|trans }}</th>
                 <th>{{ 'Project'|trans }}</th>
                 <th>{{ 'Type'|trans }}</th>
                 <th>{{ 'Label'|trans }}</th>
@@ -37,11 +37,16 @@
                                     </span>
                             </form>
                         </td>
+                    {% endif %}
+
+                    {% if app.user.isTeamLeader %}
                         <td>
                             <a href="{{ path('app_dashboard_user_edit', {id:row.customer.id}) }}">
                                 {{ row.customer.name }}
                             </a>
                         </td>
+                    {% else %}
+                        <td>{{ row.customer.name }}</td>
                     {% endif %}
 
                     <td>
