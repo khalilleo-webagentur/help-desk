@@ -63,7 +63,7 @@ class IndexController extends AbstractDashboardController
 
         $ticketStatus = $this->ticketStatusService->getOneByName($status);
 
-        $issues = $isAdmin
+        $issues = $isAdmin || $user->isNinja()
             ? $this->ticketService->getAllByStatus($ticketStatus)
             : $this->ticketService->getAllByCompanyAndStatus($user->getCompany(), $ticketStatus);
 
@@ -71,14 +71,13 @@ class IndexController extends AbstractDashboardController
 
         $ticketLabels = $this->ticketLabelsService->getAll();
 
-        $users = $this->userService->getAllEmployees();
-
-        $projects = $isAdmin
+        $projects = $isAdmin || $user->isNinja()
             ? $this->projectService->getAll()
             : $this->projectService->getAllByCompany($user->getCompany());
 
         $companies = $isAdmin ? $this->companyService->getAll() : [];
         $statuses = $isAdmin ? $this->ticketStatusService->getAll() : [];
+        $assigners = $this->userService->getAllByCompany($user->getCompany());
 
         $dateTime = new DateTime();
 
@@ -86,9 +85,10 @@ class IndexController extends AbstractDashboardController
             'issues' => $issues,
             'ticketTypes' => $ticketTypes,
             'ticketLabels' => $ticketLabels,
-            'users' => $users,
+           // 'users' => $users,
             'projects' => $projects,
             'status' => $status,
+            'assigners' => $assigners,
             'search' => new Search(true, self::SEARCH_ROUTE, self::DASHBOARD_TICKETS_ROUTE),
             'companies' => $companies,
             'statuses' => $statuses,
@@ -117,7 +117,7 @@ class IndexController extends AbstractDashboardController
 
         $isAdmin = $this->userService->isAdmin($user);
 
-        $project = $isAdmin
+        $project = $isAdmin || $user->isNinja()
             ? $this->projectService->getById($project)
             : $this->projectService->getByCompanyAndId($user->getCompany(), $project);
 
@@ -144,7 +144,7 @@ class IndexController extends AbstractDashboardController
             $this->validateNumber($request->request->get('assignee'))
         );
 
-        if ($assignee && !$this->userService->isAdmin($assignee)) {
+        if ($assignee && !$this->userService->isAdmin($assignee) && !$user->isNinja()) {
             $this->addFlash('warning', 'Assignee not found.');
             return $this->redirectToRoute(self::DASHBOARD_TICKETS_ROUTE);
         }
@@ -306,7 +306,7 @@ class IndexController extends AbstractDashboardController
         $isAdmin = $this->userService->isAdmin($user);
         $issueId = $this->validateNumber($request->request->get('id'));
 
-        $issue = $isAdmin
+        $issue = $isAdmin || $user->isNinja()
             ? $this->ticketService->getById($issueId)
             : $this->ticketService->getOneByProjectAndId($project, $issueId);
 
@@ -318,15 +318,15 @@ class IndexController extends AbstractDashboardController
         $title = $this->validateTextarea($request->request->get('title'), true);
         $description = $this->validateTextarea($request->request->get('content'), true);
 
-        $assignee = $isAdmin
+        $assignee = $isAdmin || $user->isNinja()
             ? $this->userService->getById($this->validateNumber($request->request->get('assignee')))
             : $issue->getAssignee();
 
-        $status = $isAdmin
+        $status = $isAdmin || $user->isNinja()
             ? $this->ticketStatusService->getById($this->validateNumber($request->request->get('status')))
             : $issue->getStatus();
 
-        $timeSpentInMinutes = $isAdmin
+        $timeSpentInMinutes = $isAdmin || $user->isNinja()
             ? $this->validateNumber($request->request->get('minutes'))
             : $issue->getTimeSpentInMinutes();
 

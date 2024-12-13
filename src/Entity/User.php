@@ -36,6 +36,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $token = null;
 
     #[ORM\Column]
+    private bool $ninja = false;
+
+    #[ORM\Column]
     private bool $isTeamLeader = false;
 
     #[ORM\Column]
@@ -173,6 +176,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setToken(?string $token): static
     {
         $this->token = $token;
+
+        return $this;
+    }
+
+    public function isNinja(): bool
+    {
+        return $this->ninja;
+    }
+
+    public function setNinja(bool $ninja): static
+    {
+        $this->ninja = $ninja;
 
         return $this;
     }

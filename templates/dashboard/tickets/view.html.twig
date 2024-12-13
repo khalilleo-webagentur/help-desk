@@ -43,7 +43,7 @@
                                 <p class="mb-1"><b>Label: </b> <span>{{ issue.label.name }}</span></p>
                                 <p class="mb-1"><b>Assignee: </b>
                                     <span>{{ issue.assignee ? issue.assignee.name : 'unassigned' }}</span></p>
-                                {% if isAdmin %}
+                                {% if isAdmin or app.user.ninja %}
                                     <p class="mb-1"><b>Spent Time: </b>
                                         <span>{{ convertToHoursMinutes(issue.timeSpentInMinutes) }}</span></p>
                                 {% endif %}

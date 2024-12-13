@@ -32,6 +32,9 @@
                     {% if row.isTeamLeader %}
                         <span class="fa fa-user-tie text-warning fa-sm cursor-help" title="Team Leader"></span>
                     {% endif %}
+                    {% if row.ninja %}
+                        <span class="fa fa-user-ninja text-info fa-sm cursor-help" title="Employee"></span>
+                    {% endif %}
                 </td>
                 {% if isAdmin %}
                     <td>

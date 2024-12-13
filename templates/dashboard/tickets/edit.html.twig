@@ -93,7 +93,7 @@
                                         </label>
                                         {% set hasAssignee = issue.assignee and issue.assignee.name %}
                                         <select class="form-control" name="assignee" id="iO7nM4yT4bG2sO44" required
-                                                {{ not isAdmin ? 'disabled' : '' }}>
+                                                {{ isAdmin or app.user.ninja ? '' : 'disabled' }}>
                                             <option value="0">Unassigned</option>
                                             {% for assignee in assignees %}
                                                 <option value="{{ assignee.id }}" {{ hasAssignee and assignee.name == issue.assignee.name ? 'selected' : '' }}>
@@ -113,7 +113,7 @@
                                             Status <span class="text-danger">*</span>
                                         </label>
                                         <select class="form-control" name="status" id="iO7nM4yT4bG2sO77" required
-                                                {{ not isAdmin ? 'disabled' : '' }}>
+                                                {{ isAdmin or app.user.ninja ? '' : 'disabled' }}>
                                             {% set hasStatus = issue.status and issue.status.name %}
                                             {% for status in statuses %}
                                                 <option value="{{ status.id }}" {{ hasStatus and status.name == issue.status.name ? 'selected' : '' }}>
@@ -127,7 +127,7 @@
                                 </div>
                             </div>
 
-                            {% if isAdmin %}
+                            {% if isAdmin or app.user.isNinja %}
                                 <div class="row">
                                     <div class="col-lg-3">
                                         <div class="mb-3">
