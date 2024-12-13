@@ -174,7 +174,13 @@ body {
 }
 
 .form-control:disabled, .form-control[readonly] {
-    background-color: #fff !important;
+    background-color: rgba(246, 244, 244, 0.55) !important;
+}
+
+.form-control:disabled:focus, .form-control:focus[readonly] {
+    border: 1px solid #f89797 !important;
+    background-color: rgba(250, 223, 223, 0.49) !important;
+    cursor: not-allowed;
 }
 
 @media (max-width: 868px) {
@@ -238,7 +244,7 @@ body {
 
 .modal-info {
     border-left: 3px solid #1e4eac;
-    padding: 8px 10px;
+    padding: 14px 14px;
     background: #e5eaf782;
     color: #1e4eac;
     font-size: 14px !important;
@@ -251,7 +257,7 @@ body {
 
 .modal-warning {
     border-left: 3px solid #95720c;
-    padding: 8px 10px;
+    padding: 14px 14px;
     background: #f2efe4;
     color: #95720c;
     font-size: 14px !important;
@@ -264,7 +270,7 @@ body {
 
 .modal-danger{
     border-left: 3px solid #f70404;
-    padding: 8px 10px;
+    padding: 14px 14px;
     background: #ffc5c554;
     color: #f70404;
     font-size: 14px !important;
