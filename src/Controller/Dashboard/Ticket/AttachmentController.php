@@ -7,6 +7,7 @@ namespace App\Controller\Dashboard\Ticket;
 use App\Controller\Dashboard\AbstractDashboardController;
 use App\Service\Core\FileHandlerService;
 use App\Service\Core\FileUploaderService;
+use App\Service\ProjectService;
 use App\Service\TicketActivitiesService;
 use App\Service\TicketAttachmentsService;
 use App\Service\TicketService;
@@ -31,6 +32,7 @@ class AttachmentController extends AbstractDashboardController
         private readonly TicketService            $ticketService,
         private readonly TicketAttachmentsService $ticketAttachmentsService,
         private readonly TicketActivitiesService  $ticketActivitiesService,
+        private readonly ProjectService           $projectService,
     ) {
     }
 
@@ -45,9 +47,18 @@ class AttachmentController extends AbstractDashboardController
 
         $id = $this->validateNumber($request->request->get('tId'));
 
+        $projectId = $this->validateNumber($request->get('pid'));
+
+        $project = $this->projectService->getById($projectId);
+
+        if (!$project) {
+            $this->addFlash('warning', 'Issue could not be found.');
+            return $this->redirectToRoute(self::DASHBOARD_TICKETS_ROUTE);
+        }
+
         $issue = $isAdmin
             ? $this->ticketService->getById($id)
-            : $this->ticketService->getOneByCustomerAndId($user, $id);
+            : $this->ticketService->getOneByProjectAndId($project, $id);
 
         if (!$issue) {
             $this->addFlash('warning', 'Issue could not be found.');
