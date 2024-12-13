@@ -208,6 +208,8 @@ class IndexController extends AbstractDashboardController
             $this->userService->changeUserPositionToTeamLeader($user);
         }
 
+        $isEmployee = $this->validateCheckbox($request->request->get('7lN3isTNin'));
+
         $this->userService->save(
             $user
                 ->setName($name)
@@ -215,6 +217,7 @@ class IndexController extends AbstractDashboardController
                 ->setPassword($this->userService->encodePassword($email))
                 ->setToken($token)
                 ->setIsVerified($isAdmin ? $isVerified : $user->isVerified())
+                ->setNinja($isAdmin ? $isEmployee : false)
                 ->setRoles($role)
                 ->setDeleted($isDeleted)
         );

@@ -104,6 +104,16 @@
                                         </label>
                                     </div>
                                 </div>
+                                <div class="mb-3">
+                                    <div class="form-group form-check">
+                                        <input type="checkbox" class="form-check-input" id="7lN3isTNin"
+                                               name="7lN3isTNin"
+                                                {{ user.isNinja ? 'checked' : '' }}>
+                                        <label class="form-check-label text-secondary" for="7lN3isTNin">
+                                            is Employee (Ninja)
+                                        </label>
+                                    </div>
+                                </div>
                             {% endif %}
 
                             {% include "dashboard/component/edit_save_btn.html.twig" %}

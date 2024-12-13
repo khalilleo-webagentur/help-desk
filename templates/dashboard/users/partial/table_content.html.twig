@@ -25,7 +25,7 @@
         {% for row in users %}
             <tr class="fs-14">
                 <td>{{ row.id }}</td>
-                <td>{{ row.name|capitalize }}
+                <td>{{ row.name }}
                     {% if isSuperAdmin(row) %}
                         <span class="fa fa-user-tie text-success fa-sm cursor-help" title="Super Admin"></span>
                     {% endif %}

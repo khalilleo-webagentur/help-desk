@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Command;
 
+use App\Entity\Company;
 use App\Entity\User;
 use App\Entity\UserSetting;
 use App\Service\CompanyService;
@@ -50,7 +51,7 @@ class NewUserCommand extends Command
 
         if (!$this->userService->getByEmail($email)) {
 
-            /*$company = $this->companyService->save(
+          /* $company = $this->companyService->save(
                  (new Company())
                      ->setName('Khalilleo GmbH')
                      ->setEmail($faker->safeEmail)
@@ -66,14 +67,16 @@ class NewUserCommand extends Command
 
             $this->userService->save(
                 $user
-                    // ->setCompany($company)
+                   // ->setCompany($company)
                     ->setName($faker->name())
                     ->setEmail($email)
                     ->setPassword($this->userService->encodePassword($email))
                     ->setRoles(['ROLE_SUPER_ADMIN']) // ROLE_CUSTOMER, ROLE_SUPER_ADMIN, ROLE_USER
                     ->setIsVerified(true)
                     ->setToken($code)
-                    ->setCompany($this->companyService->getByName('Khalilleo GmbH'))
+                   // ->setTeamLeader(true)
+                   // ->setNinja(true)
+                   ->setCompany($this->companyService->getByName('Khalilleo GmbH'))
             );
 
             $userSetting = new UserSetting();
