@@ -22,6 +22,7 @@ class IndexController extends AbstractDashboardController
     use FormValidationTrait;
 
     private const DASHBOARD_COMPANIES_ROUTE = 'app_dashboard_companies_index';
+    private const DASHBOARD_TICKETS_ROUTE = 'app_dashboard_tickets_index';
 
     public function __construct(
         private readonly UserService    $userService,
@@ -41,7 +42,7 @@ class IndexController extends AbstractDashboardController
         $isAdmin = $this->userService->isAdmin($currentUser);
 
         if (!$isAdmin && !$currentUser->isTeamLeader()) {
-            return $this->redirectToRoute(self::DASHBOARD_COMPANIES_ROUTE);
+            return $this->redirectToRoute(self::DASHBOARD_TICKETS_ROUTE);
         }
 
         $companies = $isAdmin

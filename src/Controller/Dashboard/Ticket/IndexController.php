@@ -85,7 +85,6 @@ class IndexController extends AbstractDashboardController
             'issues' => $issues,
             'ticketTypes' => $ticketTypes,
             'ticketLabels' => $ticketLabels,
-           // 'users' => $users,
             'projects' => $projects,
             'status' => $status,
             'assigners' => $assigners,

@@ -32,13 +32,17 @@
                     <div class="col-lg-12">
 
                         {% if issue %}
-                            <small class="text-secondary cursor-help" title="{{ issue.project.description }}">
-                                {{ issue.project.title }} <span class="text-light-50">|</span>
+                            <small class="text-info small">
+                                {{ issue.customer.company.name }}  <span class="text-light-50">|</span>
+                                <span class="cursor-help" title="{{ issue.project.description }}">
+                                    {{ issue.project.title }} <span class="text-light-50">|</span>
+                                </span>
                                 T-{{ issue.ticketNo }}
                             </small>
                             <h5 class="my-3">{{ issue.title }}</h5>
                             <div class="text-secondary">
                                 <p>{{ issue.description|raw }}</p>
+                                <p class="mb-1"><b>Issue by: </b> <span>{{ issue.customer.name }}</span></p>
                                 <p class="mb-1"><b>Type: </b> <span>{{ issue.type.name }}</span></p>
                                 <p class="mb-1"><b>Label: </b> <span>{{ issue.label.name }}</span></p>
                                 <p class="mb-1"><b>Assignee: </b>
@@ -47,8 +51,16 @@
                                     <p class="mb-1"><b>Spent Time: </b>
                                         <span>{{ convertToHoursMinutes(issue.timeSpentInMinutes) }}</span></p>
                                 {% endif %}
-                                <p class="mb-1"><b>Modified at: </b> <span>{{ issue.updatedAt|date }}</span></p>
-                                <p><b>Created at: </b> <span>{{ issue.createdAt|date }}</span></p>
+                                <p class="mb-1">
+                                    <b>Modified at: </b>
+                                    <span title="{{ issue.updatedAt|date }}">{{ timeAgo(issue.updatedAt) }}</span>
+                                </p>
+                                <p>
+                                    <b>Created at: </b>
+                                    <span title="{{ issue.createdAt|date }}">
+                                        {{ timeAgo(issue.createdAt) }}
+                                    </span>
+                                </p>
                             </div>
                         {% else %}
                             <p>Data could not be found!</p>
@@ -140,6 +152,7 @@
                             <div class="my-3">
                                 <button class="btn btn-warning" id="formSave">Submit</button>
                                 <input type="hidden" name="tId" value="{{ issue.id }}">
+                                <input type="hidden" name="pId" value="{{ issue.project.id }}">
                             </div>
                         </form>
                     </div>

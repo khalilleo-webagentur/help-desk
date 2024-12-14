@@ -6,6 +6,7 @@ namespace App\Controller\Dashboard\Ticket;
 
 use App\Controller\Dashboard\AbstractDashboardController;
 use App\Entity\TicketComment;
+use App\Service\ProjectService;
 use App\Service\TicketCommentsService;
 use App\Service\TicketService;
 use App\Service\UserService;
@@ -26,6 +27,7 @@ class CommentController extends AbstractDashboardController
         private readonly UserService           $userService,
         private readonly TicketService         $ticketService,
         private readonly TicketCommentsService $ticketCommentsService,
+        private readonly ProjectService        $projectService,
     ) {
     }
 
@@ -34,19 +36,34 @@ class CommentController extends AbstractDashboardController
     {
         $this->denyAccessUnlessGrantedRoleCustomer();
         $user = $this->getUser();
+
+
+        $project = $this->projectService->getById(
+            $this->validateNumber($request->request->get('pId'))
+        );
+
+        if (!$project) {
+            $this->addFlash('warning', 'Issue could not be found. E-0005');
+            return $this->redirectToRoute(self::DASHBOARD_TICKETS_ROUTE);
+        }
+
         $isAdmin = $this->userService->isAdmin($user);
         $ticketId = $this->validateNumber($request->request->get('tId'));
 
         $issue = $isAdmin
             ? $this->ticketService->getById($ticketId)
-            : $this->ticketService->getOneByCustomerAndId($user, $ticketId);
+            : $this->ticketService->getOneByProjectAndId($project, $ticketId);
 
         if (!$issue) {
             $this->addFlash('warning', 'Issue could not be found.');
             return $this->redirectToRoute(self::DASHBOARD_TICKETS_ROUTE);
         }
 
-        $backToRoute = $this->redirectToRoute(self::DASHBOARD_TICKET_SHOW_ROUTE, ['id' => $ticketId]);
+        $backToRoute = $this->redirectToRoute(self::DASHBOARD_TICKET_SHOW_ROUTE, [
+            'id' => $issue->getId(),
+            'pid' => $issue->getProject()->getId()
+        ]);
+
         $description = $this->validateTextarea($request->request->get('content'), true);
 
         if (!$description) {
