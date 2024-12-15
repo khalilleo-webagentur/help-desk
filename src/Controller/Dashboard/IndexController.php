@@ -27,7 +27,7 @@ class IndexController extends AbstractDashboardController
 
         $user = $this->getUser();
 
-        $isAdmin = $this->userService->isAdmin($user);
+        $isAdmin = $this->userService->isAdmin($user) || $user->isNinja();
 
         // all of them
         $countIssues = $isAdmin
@@ -67,7 +67,6 @@ class IndexController extends AbstractDashboardController
             'countOpenIssues' => $countOpenIssues,
             'countClosedIssues' => $countClosedIssues + $countResolvedIssues,
             'countIssuesInProgress' => $countIssuesInProgress,
-
         ]);
     }
 }
