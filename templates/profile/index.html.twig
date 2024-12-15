@@ -25,7 +25,7 @@
                             <div class="col-10">
                                 <p class="float-end small md-d-none">
                                     {% if is_granted('ROLE_SUPER_ADMIN') or is_granted('ROLE_CUSTOMER') %}
-                                        <a href="{{ path('app_dashboard_index') }}" class="text-decoration-none">
+                                        <a href="{{ path('app_dashboard_index') }}" class="text-decoration-none d-color">
                                             Help-desk <span class="bi bi-arrow-right"></span>
                                         </a>
                                     {% endif %}
@@ -45,7 +45,7 @@
                             <div class="card h-100 d-border">
                                 <div class="card-body"  data-bs-toggle="modal" data-bs-target="#usernameModal">
                                     <h6 class="card-title text-secondary mb-0 py-2">
-                                        Change Username
+                                        Username
                                     </h6>
                                     <small class="text-secondary">
                                         Update your username.
@@ -58,7 +58,7 @@
                             <div class="card h-100 d-border">
                                 <div class="card-body" data-bs-toggle="modal" data-bs-target="#emailModal">
                                     <h6 class="card-title text-secondary mb-0 py-2">
-                                        Change Email
+                                        E-mail address
                                     </h6>
                                     <small class="text-secondary">
                                         Update your account E-mail.
@@ -71,7 +71,7 @@
                             <div class="card h-100 d-border">
                                 <div class="card-body" data-bs-toggle="modal" data-bs-target="#exportModal">
                                     <h6 class="card-title text-secondary mb-0 py-2">
-                                        Download Personal Data.
+                                        Personal Data
                                     </h6>
                                     <small class="text-secondary">
                                         Export your data as JSON.
@@ -84,7 +84,7 @@
                             <div class="card h-100 d-border">
                                 <div class="card-body" data-bs-toggle="modal" data-bs-target="#deleteModal">
                                     <h6 class="card-title text-secondary mb-0 py-2">
-                                        Delete Account
+                                        Delete Request
                                     </h6>
                                     <small class="text-secondary">
                                         Request account deletion.
@@ -100,8 +100,8 @@
 
                 <p class="text-secondary pb-5 mb-5">
                     If you have any questions about your account, please use the
-                    <a href="{{ path('app_contact_us_index') }}" class="text-decoration-none">contact form</a> or
-                    <a href="mailto::{{ email }}" class="text-decoration-none">email us</a> directly.
+                    <a href="{{ path('app_contact_us_index') }}" class="text-decoration-none d-color">contact form</a> or
+                    <a href="mailto::{{ email }}" class="text-decoration-none d-color">email us</a> directly.
                 </p>
             </div>
         </div>

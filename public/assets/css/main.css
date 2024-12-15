@@ -67,7 +67,7 @@ input[type="color"]:focus,
     color: #cecece !important;
 }
 
-.d-color, .m-color , .text-primary, a {
+.d-color, .m-color , .text-primary{
     color: rgb(141, 1, 191) !important
 }
 
