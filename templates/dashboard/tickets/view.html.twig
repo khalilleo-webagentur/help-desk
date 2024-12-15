@@ -49,6 +49,7 @@
                                     <span>{{ issue.assignee ? issue.assignee.name : 'unassigned' }}</span></p>
                                 {% if isAdmin or app.user.ninja %}
                                     <p class="mb-1"><b>Spent Time: </b>
+                                        <span class="fa fa-clock text-warning fa-sm"></span>
                                         <span>{{ convertToHoursMinutes(issue.timeSpentInMinutes) }}</span></p>
                                 {% endif %}
                                 <p class="mb-1">
