@@ -85,8 +85,8 @@ class IndexController extends AbstractDashboardController
             return $this->redirectToRoute(self::ADMIN_USERS_ROUTE);
         }
 
-        $user = $this->getUser();
-        $isAdmin = $this->userService->isAdmin($user);
+        $currentUser = $this->getUser();
+        $isAdmin = $this->userService->isAdmin($currentUser);
         $iCompany = $this->validateNumber($request->request->get('company'));
 
         if ($isAdmin && $iCompany <= 0) {
@@ -94,7 +94,7 @@ class IndexController extends AbstractDashboardController
             return $this->redirectToRoute(self::ADMIN_USERS_ROUTE);
         }
 
-        $company = $isAdmin ? $this->companyService->getById($iCompany) : $user->getCompany();
+        $company = $isAdmin ? $this->companyService->getById($iCompany) : $currentUser->getCompany();
 
         $isTeamLeader = $isAdmin && count($this->userService->getAllTeamLeadersWithinACompany($company)) === 0;
 
@@ -112,6 +112,7 @@ class IndexController extends AbstractDashboardController
                 ->setRoles([AppHelper::ROLE_CUSTOMER])
                 ->setIsVerified(true)
                 ->setTeamLeader($isTeamLeader)
+                ->setNinja(true === $currentUser->isNinja())
         );
 
         $companyId = $this->validateNumber($request->request->get('p7x5a8e9'));
