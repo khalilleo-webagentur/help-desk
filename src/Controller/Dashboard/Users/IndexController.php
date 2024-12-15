@@ -51,12 +51,17 @@ class IndexController extends AbstractDashboardController
             ? $this->userService->getAllOrAllByCompany($company)
             : $this->userService->getAllByCompany($user->getCompany());
 
+        if ($isAdmin && $company) {
+            $this->companyService->updateIsSelected($company);
+        }
+
         $companies = $this->companyService->getAll();
 
         return $this->render('dashboard/users/index.html.twig', [
             'users' => $users,
             'roles' => $isAdmin ? AppHelper::ROLES : [],
             'companies' => $isAdmin ? $companies : [],
+            'selectedCompanyId' => $company ? $company->getId() : 0,
         ]);
     }
 
@@ -228,8 +233,10 @@ class IndexController extends AbstractDashboardController
                 ->setDeleted($isDeleted)
         );
 
+        $companyId = $this->validate($request->request->get('iO7nm4yt4bG2sOm'));
+
         $this->addFlash('notice', 'Changes has been saved.');
 
-        return $this->redirectToRoute(self::ADMIN_USERS_ROUTE);
+        return $this->redirectToRoute(self::ADMIN_USERS_ROUTE, ['iO7nm4yt4bG2sOm' => $companyId]);
     }
 }

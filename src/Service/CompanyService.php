@@ -32,6 +32,16 @@ final readonly class CompanyService
         return $this->companyRepository->findBy([], ['name' => 'ASC']);
     }
 
+    public function updateIsSelected(Company $company): Company
+    {
+        foreach ($this->getAll() as $row) {
+            $this->save($row->setSelected(false));
+        }
+
+        return $this->save($company->setSelected(true));
+    }
+
+
     public function save(Company $company): Company
     {
         $this->companyRepository->save($company->setUpdatedAt(new \DateTime()), true);

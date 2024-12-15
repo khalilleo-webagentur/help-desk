@@ -42,6 +42,9 @@ class Company
     private ?string $phone = null;
 
     #[ORM\Column]
+    private bool $isSelected = false;
+
+    #[ORM\Column]
     private bool $isDeleted = false;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
@@ -173,6 +176,18 @@ class Company
     public function isDeleted(): bool
     {
         return $this->isDeleted;
+    }
+
+    public function isSelected(): bool
+    {
+        return $this->isSelected;
+    }
+
+    public function setSelected(bool $isSelected): static
+    {
+        $this->isSelected = $isSelected;
+
+        return $this;
     }
 
     public function setDeleted(bool $isDeleted): static

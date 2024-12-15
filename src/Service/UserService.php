@@ -13,7 +13,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 final readonly class UserService
 {
     public function __construct(
-        private UserRepository $userRepository,
+        private UserRepository $userRepository
     ) {
     }
 
