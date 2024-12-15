@@ -2,21 +2,19 @@ parameters:
 
   app_name: "He!p-Desk"
   full_app_name: "He!p-Desk"
-  no_reply: "no-reply@khalilleo.com"
+  no_reply: "no-reply@helpdesk.khalilleo.com"
 
-  webmaster_name: "Webmaster"
-  webmaster_email: "support@khalilleo.com"
+  webmasterName: "Webmaster"
+  webmasterEmail: "support@khalilleo.com"
+  phoneNumber: '(+49) 0163/616-5396'
+  infoEmail: 'info@khalilleo.com'
+  legalEmail: 'legal@khalilleo.com'
+  addressStreet: 'Paul-Gerhardt-Str. 7'
+  addressPlz: '74321'
+  addressCity: 'Bietigheim-Bissingen'
+  addressCountry: 'Deutschland'
 
-  phonenumber: '(+49) 0163/616-5396'
-  info_emal: 'info@khalilleo.com'
-  legal_emal: 'legal@khalilleo.com'
-
-  address_street: 'Paul-Gerhardt-Str. 7'
-  adress_plz: '74321'
-  adress_city: 'Bietigheim-Bissingen'
-  adress_country: 'Deutschland'
-
-  app_version: "1.0.7"
+  app_version: "1.2.1"
   
   app_author: "Khalilleo Teams"
   app_created: "2024-07-01"

@@ -16,28 +16,22 @@ class LegalController extends AbstractController
     ) {
     }
 
-    #[Route('/imprint/u6p2c2c5i7m4g5q0', name: 'app_legal_imprint')]
-    public function imprint(): Response
-    {
-        return $this->render('static/imprint.html.twig');
-    }
-
     #[Route('/privacy-policy/y7l0q6k9e1o1z3r5', name: 'app_legal_privacy_policy')]
     public function privacyPolicy(): Response
     {
-        $street = $this->configService->getParameter('address_street');
-        $plz = $this->configService->getParameter('adress_plz');
-        $city = $this->configService->getParameter('adress_city');
-        $country = $this->configService->getParameter('adress_country');
-        $phonenumber = $this->configService->getParameter('phonenumber');
-        $email = $this->configService->getParameter('legal_emal');
+        $street = $this->configService->getParameter('addressStreet');
+        $plz = $this->configService->getParameter('addressPlz');
+        $city = $this->configService->getParameter('addressCity');
+        $country = $this->configService->getParameter('addressCountry');
+        $phoneNumber = $this->configService->getParameter('phoneNumber');
+        $email = $this->configService->getParameter('legalEmail');
 
         return $this->render('static/privacy-policy.html.twig', [
             'street' => $street,
             'plz' => $plz,
             'city' => $city,
             'country' => $country,
-            'phonenumber' => $phonenumber,
+            'phoneNumber' => $phoneNumber,
             'email' => $email,
         ]);
     }
