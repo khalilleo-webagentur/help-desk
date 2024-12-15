@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/dashboard/ticket/search/4fo473g146sn47xk')]
+#[Route('/dashboard/ticket/search/p8k0w6u3q8w9l2x4')]
 class SearchController extends AbstractDashboardController
 {
     use FormValidationTrait;

@@ -10,7 +10,7 @@ use App\Service\UserService;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('dashboard/o3o4v1v3a1g8h2q2')]
+#[Route('dashboard/i4a7y5t7i2q4w5x2')]
 class IndexController extends AbstractDashboardController
 {
     public function __construct(

@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class IndexController extends AbstractController
 {
-    #[Route('/profile/u8k8s5b5n0i6d9a0', name: 'app_profile')]
+    #[Route('/profile/e4p3w8t8n9u9d4s8', name: 'app_profile')]
     public function index(Request $request): Response
     {
         if (!$this->getUser()) {

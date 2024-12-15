@@ -27,7 +27,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/dashboard/tickets/81o8i3h1v6lnp7xa')]
+#[Route('/dashboard/tickets/d7l6j0l5u9s2n8j8')]
 class IndexController extends AbstractDashboardController
 {
     use FormValidationTrait;

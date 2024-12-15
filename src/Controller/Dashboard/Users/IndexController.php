@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('dashboard/users/c2o5i0p7v6s5p4w5')]
+#[Route('dashboard/users/x9z3a4c5d9b8f0s3')]
 class IndexController extends AbstractDashboardController
 {
     use FormValidationTrait;
@@ -44,7 +44,7 @@ class IndexController extends AbstractDashboardController
         }
 
         $company = $this->companyService->getById($this->validateNumber(
-            $request->get('iO7nm4yt4bG2sOm')
+            $request->get('p7x5a8e9')
         ));
 
         $users = $isAdmin
@@ -114,11 +114,11 @@ class IndexController extends AbstractDashboardController
                 ->setTeamLeader($isTeamLeader)
         );
 
-        $companyId = $this->validateNumber($request->request->get('iO7nm4yt4bG2sOm'));
+        $companyId = $this->validateNumber($request->request->get('p7x5a8e9'));
 
         $this->addFlash('success', 'User has been added.');
 
-        return $this->redirectToRoute(self::ADMIN_USERS_ROUTE, ['iO7nm4yt4bG2sOm' => $companyId]);
+        return $this->redirectToRoute(self::ADMIN_USERS_ROUTE, ['p7x5a8e9' => $companyId]);
     }
 
     #[Route('/edit/{id}', name: 'app_dashboard_user_edit')]
@@ -217,13 +217,13 @@ class IndexController extends AbstractDashboardController
             : $user->getRoles();
 
 
-        $isTeamLeader = $this->validateCheckbox($request->request->get('7lN3isT'));
+        $isTeamLeader = $this->validateCheckbox($request->request->get('x3h1r9u2'));
 
         if ($isAdmin) {
             $this->userService->changeUserPositionToTeamLeader($user, $isTeamLeader);
         }
 
-        $isEmployee = $this->validateCheckbox($request->request->get('7lN3isTNin'));
+        $isEmployee = $this->validateCheckbox($request->request->get('c1z3n6t4'));
 
         $this->userService->save(
             $user
@@ -237,10 +237,10 @@ class IndexController extends AbstractDashboardController
                 ->setDeleted($isDeleted)
         );
 
-        $companyId = $this->validate($request->request->get('iO7nm4yt4bG2sOm'));
+        $companyId = $this->validate($request->request->get('p7x5a8e9'));
 
         $this->addFlash('notice', 'Changes has been saved.');
 
-        return $this->redirectToRoute(self::ADMIN_USERS_ROUTE, ['iO7nm4yt4bG2sOm' => $companyId]);
+        return $this->redirectToRoute(self::ADMIN_USERS_ROUTE, ['p7x5a8e9' => $companyId]);
     }
 }

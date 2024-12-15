@@ -34,7 +34,7 @@ class RegisterController extends AbstractController
     ) {
     }
 
-    #[Route('/sign-up/q6u3f4y8e7j3z7y6', name: 'app_register')]
+    #[Route('/sign-up/y0b7p3d9a9h2e2i2', name: 'app_register')]
     public function index(): Response
     {
         if ($this->getUser()) {
@@ -44,7 +44,7 @@ class RegisterController extends AbstractController
         return $this->render('account/register.html.twig');
     }
 
-    #[Route('/register/i9z2x4x4r2k3z3v6', name: 'app_register_new', methods: 'POST')]
+    #[Route('/register/o2m7d5p9o6d0f6g5', name: 'app_register_new', methods: 'POST')]
     public function new(Request $request, AccountConfirmationMail $accountConfirmationMail): RedirectResponse
     {
         if ($this->getUser()) {
