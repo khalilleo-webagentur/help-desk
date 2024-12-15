@@ -191,8 +191,14 @@ class IndexController extends AbstractDashboardController
         $token = $this->validate($request->request->get('token'));
         $isDeleted = $this->validateCheckbox($request->request->get('isDeleted'));
 
+        $verified = ($isAdmin
+                || $currentUser->isTeamLeader())
+                && !in_array(AppHelper::ROLE_SUPER_ADMIN, $user->getRoles(), true
+        ) ? $isVerified
+          : $user->isVerified();
+
         if ($isDeleted) {
-            $isVerified = false;
+            $verified = false;
             $token = null;
         }
 
@@ -216,7 +222,7 @@ class IndexController extends AbstractDashboardController
                 ->setEmail($email)
                 ->setPassword($this->userService->encodePassword($email))
                 ->setToken($token)
-                ->setIsVerified($isAdmin ? $isVerified : $user->isVerified())
+                ->setIsVerified($verified)
                 ->setNinja($isAdmin ? $isEmployee : false)
                 ->setRoles($role)
                 ->setDeleted($isDeleted)
