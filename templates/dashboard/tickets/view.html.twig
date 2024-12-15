@@ -32,7 +32,7 @@
                     <div class="col-lg-12">
 
                         {% if issue %}
-                            <small class="text-info small">
+                            <small class="text-secondary small">
                                 {{ issue.customer.company.name }}  <span class="text-light-50">|</span>
                                 <span class="cursor-help" title="{{ issue.project.description }}">
                                     {{ issue.project.title }} <span class="text-light-50">|</span>
@@ -131,12 +131,12 @@
                                             <small class="ml-2 text-secondary">{{ timeAgo(comment.createdAt) }}</small>
                                         </h6>
                                         {{ comment.description|raw }}
-                                        <small class="text-secondary">
+                                      {#  <small class="text-secondary">
                                             Reply <span class="px-2">.</span>
                                             Like {{ comment.likeCounter > 0 ? comment.likeCounter : '' }}<span
                                                     class="px-2">.</span>
                                             Dislike {{ comment.disLikeCounter > 0 ? comment.disLikeCounter : '' }}
-                                        </small>
+                                        </small>#}
                                     </div>
                                 </div>
                             </div>
@@ -150,7 +150,9 @@
                             <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
                             <div id="editor"></div>
                             <div class="my-3">
-                                <button class="btn btn-warning" id="formSave">Submit</button>
+                                <button class="btn btn-primary" id="formSave">
+                                    <span class="fa fa-check fa-sm pr-1"></span> Add Comment
+                                </button>
                                 <input type="hidden" name="tId" value="{{ issue.id }}">
                                 <input type="hidden" name="pId" value="{{ issue.project.id }}">
                             </div>
