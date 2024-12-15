@@ -96,6 +96,8 @@ class IndexController extends AbstractDashboardController
 
         $company = $isAdmin ? $this->companyService->getById($iCompany) : $user->getCompany();
 
+        $isTeamLeader = $isAdmin && count($this->userService->getAllTeamLeadersWithinACompany($company)) === 0;
+
         $token = $this->tokenGeneratorService->randomToken();
 
         $user = new User();
@@ -109,12 +111,14 @@ class IndexController extends AbstractDashboardController
                 ->setToken($token)
                 ->setRoles([AppHelper::ROLE_CUSTOMER])
                 ->setIsVerified(true)
-                ->setTeamLeader($isAdmin) //
+                ->setTeamLeader($isTeamLeader)
         );
+
+        $companyId = $this->validateNumber($request->request->get('iO7nm4yt4bG2sOm'));
 
         $this->addFlash('success', 'User has been added.');
 
-        return $this->redirectToRoute(self::ADMIN_USERS_ROUTE);
+        return $this->redirectToRoute(self::ADMIN_USERS_ROUTE, ['iO7nm4yt4bG2sOm' => $companyId]);
     }
 
     #[Route('/edit/{id}', name: 'app_dashboard_user_edit')]
@@ -215,8 +219,8 @@ class IndexController extends AbstractDashboardController
 
         $isTeamLeader = $this->validateCheckbox($request->request->get('7lN3isT'));
 
-        if ($isAdmin && $isTeamLeader) {
-            $this->userService->changeUserPositionToTeamLeader($user);
+        if ($isAdmin) {
+            $this->userService->changeUserPositionToTeamLeader($user, $isTeamLeader);
         }
 
         $isEmployee = $this->validateCheckbox($request->request->get('7lN3isTNin'));

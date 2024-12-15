@@ -25,7 +25,7 @@
                                     Company <span class="text-danger">*</span>
                                 </label>
                                 <select class="form-control" name="iO7nm4yt4bG2sOm" id="iO7nM4yT4bG2sO00">
-                                    <option value="0" selected disabled>All companies</option>
+                                    <option value="0" selected>All companies</option>
                                     {% for company in companies %}
                                         <option value="{{ company.id }}" {{ company.isSelected ? 'selected' : '' }}>
                                             {{ company.name }}
