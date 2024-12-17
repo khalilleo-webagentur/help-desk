@@ -122,6 +122,14 @@ input[type="color"]:focus,
     cursor: pointer;
 }
 
+.action-icon {
+    color: #d1d0d0;
+}
+
+.action-icon:hover {
+    color: #aeaeae;
+}
+
 @media (max-width: 868px) {
     .md-text-center {
         text-align: center !important;
