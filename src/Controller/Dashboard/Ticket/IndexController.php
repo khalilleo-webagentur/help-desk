@@ -59,7 +59,7 @@ class IndexController extends AbstractDashboardController
 
         $isAdmin = $this->userService->isAdmin($user);
 
-        $status = !empty($status) ? $this->validate(str_replace('-', ' ', $status)) : 'Open';
+        $status = !empty($status) ? $this->validate(str_replace('-', ' ', $status)) : '';
 
         $ticketStatus = $this->ticketStatusService->getOneByName($status);
 

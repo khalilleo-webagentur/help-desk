@@ -61,7 +61,9 @@ final readonly class TicketService
         $issues = [];
 
         foreach ($this->userService->getAllByCompany($company) as $user) {
-            $issue = $this->ticketRepository->findBy(['customer' => $user, 'status' => $status], ['createdAt' => 'DESC']);
+            $issue = $status !== null
+                ? $this->ticketRepository->findBy(['customer' => $user, 'status' => $status], ['createdAt' => 'DESC'])
+                : $this->ticketRepository->findBy(['customer' => $user], ['createdAt' => 'DESC']);
             if (null !== $issue) {
                 if (is_array($issue)) {
                     foreach ($issue as $issueItem) {
