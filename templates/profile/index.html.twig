@@ -29,9 +29,10 @@
                                         </a>
                                     {% endif %}
                                 </p>
-                                <p class="text-secondary pt-3">Username: {{ app.user.name }}</p>
-                                <p class="text-secondary">Email: {{ app.user.email }}</p>
-                                <p class="text-secondary">Created: {{ app.user.createdAt|date('d.m.Y') }}</p>
+                                <p class="text-secondary pt-3">{{ app.user.name }}</p>
+                                <p class="text-secondary">{{ app.user.email }}</p>
+                                <p class="text-secondary">{{ app.user.company.name }}</p>
+                                <p class="text-secondary">Account created {{ app.user.createdAt|date('d.m.Y') }}</p>
                             </div>
                         </div>
 
