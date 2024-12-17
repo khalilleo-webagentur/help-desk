@@ -32,12 +32,23 @@
                     <div class="col-lg-12">
 
                         {% if issue %}
+
                             <small class="text-secondary small">
-                                {{ issue.customer.company.name }}  <span class="text-light-50">|</span>
+                                {{ issue.customer.company.name }} <span class="text-light-50">|</span>
                                 <span class="cursor-help" title="{{ issue.project.description }}">
                                     {{ issue.project.title }} <span class="text-light-50">|</span>
                                 </span>
                                 T-{{ issue.ticketNo }}
+                                <div class="float-right">
+                                    <form action="{{ path('app_dashboard_ticket_edit', {id:issue.id}) }}">
+                                        <input type="hidden" name="csrf" value="{{ hash(csrf_token(issue.id)) }}">
+                                        <span class="text-primary pointer text-decoration-underline"
+                                              onclick="this.closest('form').submit();">
+                                            Edit issue <span class="fa fa-edit fa-sm ps-1"></span>
+                                        </span>
+                                        <input type="hidden" name="pid" value="{{ issue.project.id }}">
+                                    </form>
+                                </div>
                             </small>
                             <h5 class="my-3">{{ issue.title }}</h5>
                             <div class="text-secondary">
@@ -132,12 +143,12 @@
                                             <small class="ml-2 text-secondary">{{ timeAgo(comment.createdAt) }}</small>
                                         </h6>
                                         {{ comment.description|raw }}
-                                      {#  <small class="text-secondary">
+                                        {#  <small class="text-secondary">
                                             Reply <span class="px-2">.</span>
                                             Like {{ comment.likeCounter > 0 ? comment.likeCounter : '' }}<span
                                                     class="px-2">.</span>
                                             Dislike {{ comment.disLikeCounter > 0 ? comment.disLikeCounter : '' }}
-                                        </small>#}
+                                        </small> #}
                                     </div>
                                 </div>
                             </div>
