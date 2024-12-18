@@ -80,7 +80,9 @@ final readonly class TicketService
 
     public function getAllByStatus(?TicketStatus $status): array
     {
-        return $this->ticketRepository->findBy(['status' => $status], ['createdAt' => 'DESC']);
+        return null !== $status
+            ? $this->ticketRepository->findBy(['status' => $status], ['createdAt' => 'DESC'])
+            : $this->ticketRepository->findBy([], ['createdAt' => 'DESC']);
     }
 
     public function countAllByUser(UserInterface $user): int
