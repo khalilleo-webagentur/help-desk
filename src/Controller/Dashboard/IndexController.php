@@ -28,39 +28,40 @@ class IndexController extends AbstractDashboardController
         $user = $this->getUser();
 
         $isAdmin = $this->userService->isAdmin($user) || $user->isNinja();
+        $company = $user->getCompany();
 
         // all of them
         $countIssues = $isAdmin
             ? $this->ticketService->countAll()
-            : $this->ticketService->countAllByUser($user);
+            : $this->ticketService->countAllByCompany($company);
 
         // only status open
         $status = $this->ticketStatusService->getOneByName('Open');
 
         $countOpenIssues = $isAdmin
             ? $this->ticketService->countStatus($status)
-            : $this->ticketService->countStatusByUser($user, $status);
+            : $this->ticketService->countAllByCompanyAndStatus($company, $status);
 
         // only status closed
         $status = $this->ticketStatusService->getOneByName('Closed');
 
         $countClosedIssues = $isAdmin
             ? $this->ticketService->countStatus($status)
-            : $this->ticketService->countStatusByUser($user, $status);
+            : $this->ticketService->countAllByCompanyAndStatus($company, $status);
 
         // only status resolved
         $status = $this->ticketStatusService->getOneByName('Resolved');
 
         $countResolvedIssues = $isAdmin
             ? $this->ticketService->countStatus($status)
-            : $this->ticketService->countStatusByUser($user, $status);
+            : $this->ticketService->countAllByCompanyAndStatus($company, $status);
 
         // only status in progress
         $status = $this->ticketStatusService->getOneByName('In Progress');
 
         $countIssuesInProgress = $isAdmin
             ? $this->ticketService->countStatus($status)
-            : $this->ticketService->countStatusByUser($user, $status);
+            : $this->ticketService->countAllByCompanyAndStatus($company, $status);
 
         return $this->render('dashboard/index.html.twig', [
             'countIssues' => $countIssues,

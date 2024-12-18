@@ -90,6 +90,24 @@ final readonly class TicketService
         return $this->ticketRepository->count(['customer' => $user]);
     }
 
+    /**
+     * @return Ticket[]
+     */
+    public function getAllByCompany(Company $company): array
+    {
+        return $this->ticketRepository->findAllByCompany($company);
+    }
+
+    public function countAllByCompany(Company $company): int
+    {
+        return count($this->getAllByCompany($company));
+    }
+
+    public function countAllByCompanyAndStatus(Company $company, TicketStatus $status): int
+    {
+        return count($this->ticketRepository->findAllByCompanyAndStatus($company, $status));
+    }
+
     public function countAll(): int
     {
         return $this->ticketRepository->count();
