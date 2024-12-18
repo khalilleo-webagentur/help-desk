@@ -11,8 +11,8 @@
                 <th>{{ 'Company'|trans }}</th>
             {% endif %}
             <th>{{ 'Email'|trans }}</th>
-            <th>{{ 'Token'|trans }}</th>
             <th>{{ 'Verified'|trans }}</th>
+            <th>{{ 'Token'|trans }}</th>
             <th>{{ 'Deleted'|trans }}</th>
             <th>{{ 'Updated'|trans }}</th>
             <th>{{ 'Created'|trans }}</th>
@@ -48,6 +48,7 @@
                     </td>
                 {% endif %}
                 <td>{{ row.email }}</td>
+                <td>{{ row.isVerified ? faThumbsUp() : faThumbsDown() }}</td>
                 <td>
                     {% if row.token %}
                         <span class="text-danger">{{ row.token }}</span>
@@ -55,8 +56,7 @@
                         ---
                     {% endif %}
                 </td>
-                <td>{{ row.isVerified ? faThumbsUp() : faThumbsDown() }}</td>
-                <td>{{ row.isDeleted ? 'Yes' : 'No' }}</td>
+                <td>{{ row.isDeleted ? circle('text-danger') : circle('text-light-50') }}</td>
 
                 <td title="{{ row.updatedAt|date }}">{{ timeAgo(row.updatedAt) }}</td>
 
