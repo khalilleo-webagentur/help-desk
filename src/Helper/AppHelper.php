@@ -6,7 +6,11 @@ namespace App\Helper;
 
 final class AppHelper
 {
-    public const DEFAULT_HOME_CARDS_COUNT = 9;
+    public const STATUS_OPEN = 'Open';
+    public const STATUS_IN_PROGRESS = 'In Progress';
+    public const STATUS_PENDING = 'Pending';
+    public const STATUS_RESOLVED = 'Resolved';
+    public const STATUS_CLOSED = 'Closed';
 
     public const ROLES = [
         'USER' => 'User',

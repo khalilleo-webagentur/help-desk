@@ -51,25 +51,34 @@
                                    href="{{ path('app_dashboard_tickets_index', {status: ''}) }}">All</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link {{ status == 'Open' ? 'active-tab' : 'tab' }}"
-                                   href="{{ path('app_dashboard_tickets_index', {status: 'Open'}) }}">Open</a>
+                                <a class="nav-link {{ status == statusOpen ? 'active-tab' : 'tab' }}"
+                                   href="{{ path('app_dashboard_tickets_index', {status: statusOpen}) }}">
+                                    {{ statusOpen }}
+                                </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link {{ status == 'In Progress' ? 'active-tab' : 'tab' }}"
-                                   href="{{ path('app_dashboard_tickets_index', {status: 'In-Progress'}) }}">In
-                                    Progress</a>
+                                <a class="nav-link {{ status == statusInProgress ? 'active-tab' : 'tab' }}"
+                                   href="{{ path('app_dashboard_tickets_index', {status: statusInProgress}) }}">
+                                    {{ statusInProgress }}
+                                </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link {{ status == 'Pending' ? 'active-tab' : 'tab' }}"
-                                   href="{{ path('app_dashboard_tickets_index', {status: 'Pending'}) }}">Pending</a>
+                                <a class="nav-link {{ status == statusPending ? 'active-tab' : 'tab' }}"
+                                   href="{{ path('app_dashboard_tickets_index', {status: statusPending}) }}">
+                                    {{ statusPending }}
+                                </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link {{ status == 'Resolved' ? 'active-tab' : 'tab' }}"
-                                   href="{{ path('app_dashboard_tickets_index', {status: 'Resolved'}) }}">Resolved</a>
+                                <a class="nav-link {{ status == statusResolved ? 'active-tab' : 'tab' }}"
+                                   href="{{ path('app_dashboard_tickets_index', {status: statusResolved}) }}">
+                                    {{ statusResolved }}
+                                </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link {{ status == 'Closed' ? 'active-tab' : 'tab' }}"
-                                   href="{{ path('app_dashboard_tickets_index', {status: 'Closed'}) }}">Closed</a>
+                                <a class="nav-link {{ status == statusClosed ? 'active-tab' : 'tab' }}"
+                                   href="{{ path('app_dashboard_tickets_index', {status: statusClosed}) }}">
+                                    {{ statusClosed }}
+                                </a>
                             </li>
                         </ul>
                     </div>

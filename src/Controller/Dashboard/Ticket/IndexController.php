@@ -7,6 +7,7 @@ namespace App\Controller\Dashboard\Ticket;
 use App\Controller\Dashboard\AbstractDashboardController;
 use App\Controller\Dashboard\Dto\Search;
 use App\Entity\Ticket;
+use App\Helper\AppHelper;
 use App\Service\CompanyService;
 use App\Service\Core\FileUploaderService;
 use App\Service\Core\MonologService;
@@ -93,6 +94,11 @@ class IndexController extends AbstractDashboardController
             'statuses' => $statuses,
             'dateTimeFrom' => $dateTime->modify('-1 month')->format('Y-m-d'),
             'dateTimeTo' => (new DateTime())->format('Y-m-d'),
+            'statusOpen' => AppHelper::STATUS_OPEN,
+            'statusInProgress' => AppHelper::STATUS_IN_PROGRESS,
+            'statusPending' => AppHelper::STATUS_PENDING,
+            'statusResolved' => AppHelper::STATUS_RESOLVED,
+            'statusClosed' => AppHelper::STATUS_CLOSED,
         ]);
     }
 
@@ -151,7 +157,7 @@ class IndexController extends AbstractDashboardController
         $ticket = new Ticket();
 
         $ticketNo = $this->ticketService->getLatTicketNo();
-        $status = $this->ticketStatusService->getOneByName('Open');
+        $status = $this->ticketStatusService->getOneByName(AppHelper::STATUS_OPEN);
 
         $customer = $isAdmin
             ? $this->userService->getOneByCompany($project->getCompany())
@@ -336,10 +342,10 @@ class IndexController extends AbstractDashboardController
                 $user->getUserIdentifier(),
                 $issue->getTitle(),
                 $issue->getDescription(),
-                $issue->getStatus() ? $issue->getStatus()->getName() : 'Open',
+                $issue->getStatus() ? $issue->getStatus()->getName() : AppHelper::STATUS_OPEN,
                 $title,
                 $description,
-                $status ? $status->getName() : 'Open'
+                $status ? $status->getName() : AppHelper::STATUS_OPEN
             )
         );
 

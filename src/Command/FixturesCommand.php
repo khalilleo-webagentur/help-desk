@@ -7,6 +7,7 @@ namespace App\Command;
 use App\Entity\TicketLabel;
 use App\Entity\TicketStatus;
 use App\Entity\TicketType;
+use App\Helper\AppHelper;
 use App\Service\TicketLabelsService;
 use App\Service\TicketStatusService;
 use App\Service\TicketTypesService;
@@ -80,11 +81,11 @@ class FixturesCommand extends Command
     private function addStatus(): void
     {
         $statuses = [
-            ['Open', 'Being Processed', '#9d8900'],
-            ['In Progress', 'We are working on this ticket', '#1c71d8'],
-            ['Pending', 'Awaiting your Reply', '#e66100'],
-            ['Resolved', 'This ticket has been resolved', '#2b8202'],
-            ['Closed', 'This ticket has been closed', '#c01c28'],
+            [AppHelper::STATUS_OPEN, 'Being Processed', '#9d8900'],
+            [AppHelper::STATUS_IN_PROGRESS, 'We are working on this ticket', '#1c71d8'],
+            [AppHelper::STATUS_PENDING, 'Awaiting your Reply', '#e66100'],
+            [AppHelper::STATUS_RESOLVED, 'This ticket has been resolved', '#2b8202'],
+            [AppHelper::STATUS_CLOSED, 'This ticket has been closed', '#c01c28'],
         ];
 
         foreach ($statuses as $status) {
