@@ -4,7 +4,7 @@
 
 {% block body %}
 
-    {% set isAdmin = is_granted('ROLE_SUPER_ADMIN') %}
+    {% set isAdmin = is_granted('ROLE_SUPER_ADMIN') or app.user.isNinja %}
 
     <div class="content-wrapper">
 
@@ -42,7 +42,7 @@
                                 <div class="float-right">
                                     <form action="{{ path('app_dashboard_ticket_edit', {id:issue.id}) }}">
                                         <input type="hidden" name="csrf" value="{{ hash(csrf_token(issue.id)) }}">
-                                        <span class="text-primary pointer text-decoration-underline"
+                                        <span class="text-info pointer text-decoration-underline"
                                               onclick="this.closest('form').submit();">
                                             Edit issue <span class="fa fa-edit fa-sm ps-1"></span>
                                         </span>
@@ -54,16 +54,29 @@
                             <div class="text-secondary">
                                 <p>{{ issue.description|raw }}</p>
                                 <p class="mb-1"><b>Issue by: </b> <span>{{ issue.customer.name }}</span></p>
+                                <p class="mb-1">
+                                    <b>Status: </b>
+                                    <span class="ticket-status"
+                                          style="background: {{ issue.status ? issue.status.color : '#9d8900' }}">
+                                         {{ issue.status ? issue.status.name : 'Open' }}
+                                    </span>
+                                    {% if isAdmin %}
+                                        <span class="ml-1 fs-13 text-info pointer text-decoration-underline"
+                                              data-toggle="modal" data-target="#changeStatusModal">
+                                               change <span class="fa fa-edit fa-sm text-info"></span>
+                                        </span>
+                                    {% endif %}
+                                </p>
                                 <p class="mb-1"><b>Type: </b> <span>{{ issue.type.name }}</span></p>
                                 <p class="mb-1"><b>Label: </b> <span>{{ issue.label.name }}</span></p>
                                 <p class="mb-1"><b>Assignee: </b>
                                     <span>{{ issue.assignee ? issue.assignee.name : 'unassigned' }}</span></p>
-                                {% if isAdmin or app.user.ninja %}
+                                {% if isAdmin %}
                                     <p class="mb-1"><b>Spent Time: </b>
                                         <span>{{ issue.timeSpentInMinutes > 0 ? convertToHoursMinutes(issue.timeSpentInMinutes) : '00:00' }}</span>
-                                        <span class="ml-1 fs-13 text-secondary pointer text-decoration-underline"
+                                        <span class="ml-1 fs-13 text-info pointer text-decoration-underline"
                                             data-toggle="modal" data-target="#logTimeModal">
-                                           Log spent Time <span class="fa fa-clock fa-sm text-light-50"></span>
+                                           log time <span class="fa fa-clock fa-sm text-info"></span>
                                         </span>
                                     </p>
                                 {% endif %}
@@ -180,7 +193,11 @@
         </section>
     </div>
 
-    {% include 'dashboard/tickets/modal/log_time.html.twig' %}
+    {% if isAdmin %}
+        {% include 'dashboard/tickets/modal/log_time.html.twig' %}
+        {% include 'dashboard/tickets/modal/change_status.html.twig' %}
+    {% endif %}
+
     {% include 'dashboard/tickets/modal/upload.html.twig' with{ticketId: issue.id} %}
 
 {% endblock %}

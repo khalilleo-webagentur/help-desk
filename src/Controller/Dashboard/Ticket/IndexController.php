@@ -244,10 +244,13 @@ class IndexController extends AbstractDashboardController
             ];
         }
 
+        $statuses = $isAdmin ? $this->ticketStatusService->getAll() : [];
+
         return $this->render('dashboard/tickets/view.html.twig', [
             'issue' => $issue,
             'ticketActivities' => $ticketActivities,
             'dir' => $this->getParameter('attachments'),
+            'statuses' => $statuses,
             'attachments' => $attachments,
             'comments' => $comments
         ]);

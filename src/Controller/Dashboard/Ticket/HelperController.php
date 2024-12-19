@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace App\Controller\Dashboard\Ticket;
 
 use App\Controller\Dashboard\AbstractDashboardController;
+use App\Entity\TicketStatus;
 use App\Service\TicketActivitiesService;
 use App\Service\TicketService;
+use App\Service\TicketStatusService;
 use App\Traits\FormValidationTrait;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,12 +24,13 @@ class HelperController extends AbstractDashboardController
 
     public function __construct(
         private readonly TicketService           $ticketService,
+        private readonly TicketStatusService     $ticketStatusService,
         private readonly TicketActivitiesService $ticketActivitiesService,
     ) {
     }
 
     #[Route('/store-ticket/{id}', name: 'app_dashboard_ticket_log_time_store', methods: 'POST')]
-    public function index(?string $id, Request $request): RedirectResponse
+    public function logTime(?string $id, Request $request): RedirectResponse
     {
         $this->denyAccessUnlessGrantedRoleCustomer();
 
@@ -62,6 +65,53 @@ class HelperController extends AbstractDashboardController
         $this->ticketActivitiesService->add($issue, $user, $message);
 
         $this->addFlash('success', 'Time is being logged.');
+
+        return $this->redirectToRoute(self::DASHBOARD_TICKET_VIEW_ROUTE, [
+            'id' => $ticketId,
+            'pid' => $projectId
+        ]);
+    }
+
+    #[Route('/store-status/{id}', name: 'app_dashboard_ticket_store_issue_status', methods: 'POST')]
+    public function changeStatus(?string $id, Request $request): RedirectResponse
+    {
+        $this->denyAccessUnlessGrantedRoleCustomer();
+
+        $statusId = $this->validateNumber($request->request->get('MliO7nMi'));
+        $projectId = $this->validateNumber($request->get('pid'));
+
+        if ($statusId <= 0) {
+            $this->addFlash('warning', 'Status ID must be greater than zero.');
+            return $this->redirectToRoute(self::DASHBOARD_TICKETS_ROUTE);
+        }
+
+        if ($projectId <= 0) {
+            $this->addFlash('warning', 'Project ID must be greater than zero.');
+            return $this->redirectToRoute(self::DASHBOARD_TICKET_VIEW_ROUTE);
+        }
+
+        $ticketId = $this->validateNumber($id);
+
+        $issue = $this->ticketService->getById($ticketId);
+
+        if (!$issue) {
+            $this->addFlash('warning', 'Ticket not found.');
+            return $this->redirectToRoute(self::DASHBOARD_TICKET_VIEW_ROUTE);
+        }
+
+        $status = $this->ticketStatusService->getById($statusId);
+
+        $this->ticketService->save($issue->setStatus($status));
+
+        $user = $this->getUser();
+        $message = sprintf('%s updated status of issue to "%s"', $user->getName(), $status->getName());
+        $this->ticketActivitiesService->add(
+            $issue,
+            $user,
+            $message
+        );
+
+        $this->addFlash('success', 'Status is being updated.');
 
         return $this->redirectToRoute(self::DASHBOARD_TICKET_VIEW_ROUTE, [
             'id' => $ticketId,
