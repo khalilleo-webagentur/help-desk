@@ -54,7 +54,7 @@
                                 </div>
                                 <div class="col-lg-2">
                                     <div class="mb-3">
-                                        <label for="V9xO3aD7v11" class="form-label">Issue by <span
+                                        <label for="V9xO3aD7v11" class="form-label">Issue crated by <span
                                                     class="text-danger">*</span></label>
                                         <input type="text" class="form-control" id="V9xO3aD7v11"
                                                placeholder="{{ issue.customer.name }}"
@@ -150,22 +150,6 @@
 
             </div>
 
-            <div class="container-fluid area-section">
-                <div class="row px-3 py-3">
-                    <div class="col-6">
-                        <h5 class="pt-2">Attachments</h5>
-                    </div>
-                    <div class="col-6">
-                        <div class="text-right pt-1">
-                            <button class="btn btn-secondary btn-headers"
-                                    data-toggle="modal" data-target="#newAttachmentModal">
-                                <span class="fa fa-upload fa-sm"></span> <span
-                                        class="ps-1 md-d-none">Add new Attachment</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </section>
 
         <script>
@@ -173,7 +157,5 @@
             editor.innerHTML = '{{ issue.description|raw }}'
         </script>
     </div>
-
-    {% include 'dashboard/tickets/modal/upload.html.twig' with{ticketId: issue.id} %}
 
 {% endblock %}

@@ -51,9 +51,9 @@ class IndexController extends AbstractDashboardController
             ? $this->userService->getAllOrAllByCompany($company)
             : $this->userService->getAllByCompany($user->getCompany());
 
-        if ($isAdmin && $company) {
-            $this->companyService->updateIsSelected($company);
-        }
+        $isAdmin && $company
+            ? $this->companyService->updateIsSelected($company)
+            : $this->companyService->updateIsSelected(null);
 
         $companies = $this->companyService->getAll();
 

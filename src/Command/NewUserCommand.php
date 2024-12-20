@@ -21,7 +21,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 #[AsCommand(
     name: 'app:new-user',
-    description: 'Add new user.',
+    description: 'Add user.',
     hidden: false
 )]
 class NewUserCommand extends Command

@@ -8,12 +8,11 @@
                 {% if isAdmin %}
                     <th>{{ 'Company'|trans }}</th>
                 {% endif %}
-                <th>{{ 'By'|trans }}</th>
+                <th>{{ 'Created By'|trans }}</th>
                 <th>{{ 'Project'|trans }}</th>
-                <th>{{ 'Type'|trans }}</th>
                 <th>{{ 'Label'|trans }}</th>
-                <th>{{ 'Title'|trans }}</th>
                 <th>{{ 'Assignee'|trans }}</th>
+                <th>{{ 'Title'|trans }}</th>
                 <th>{{ 'Status'|trans }}</th>
                 <th>{{ 'Updated'|trans }}</th>
                 <th>{{ 'Created'|trans }}</th>
@@ -53,19 +52,18 @@
                         {{ row.project.title }}
                     </td>
 
-                    <td>{{ row.type.name }}</td>
-
                     <td>
                         <span class="ticket-label" style="color: {{ row.label.color }}">{{ row.label.name }}</span>
                     </td>
+
+
+                    <td>{{ row.assignee ? row.assignee.name : '---' }}</td>
 
                     <td>
                         <span class="cursor-help" title="{{ row.title }}">
                             {{ row.title|slice(0,35) ~ '..' }}
                         </span>
                     </td>
-
-                    <td>{{ row.assignee ? row.assignee.name : '---' }}</td>
 
                     <td>
                         <span class="ticket-status cursor-help"

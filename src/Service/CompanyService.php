@@ -32,13 +32,17 @@ final readonly class CompanyService
         return $this->companyRepository->findBy([], ['name' => 'ASC']);
     }
 
-    public function updateIsSelected(Company $company): Company
+    public function updateIsSelected(?Company $company): ?Company
     {
         foreach ($this->getAll() as $row) {
             $this->save($row->setSelected(false));
         }
 
-        return $this->save($company->setSelected(true));
+        if ($company instanceof Company) {
+            return $this->save($company->setSelected(true));
+        }
+
+        return null;
     }
 
 
