@@ -30,13 +30,21 @@
                     <div class="col-lg-6">
                         <form action="{{ path('app_dashboard_project_store', {id:project.id}) }}" method="post">
                             <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+                            <div class="mb-3">
+                                <label for="vV9xO3aD7v" class="form-label">
+                                    Company <span class="text-danger">*</span>
+                                </label>
+                                <input type="text" class="form-control" id="vV9xO3aD7v"
+                                       placeholder="{{ project.company.name }}"
+                                       value="{{ project.company.name }}" disabled>
+                            </div>
                             <div class="mb-3">
                                 <label for="V9xO3aD7v" class="form-label">Title <span
                                             class="text-danger">*</span></label>
                                 <input type="text" class="form-control" id="V9xO3aD7v" placeholder="Type title"
                                        value="{{ project.title }}" name="title">
                             </div>
-
                             <div class="mb-3">
                                 <label for="2hV9xO3aD7v" class="form-label">Description <span
                                             class="text-danger">*</span></label>
