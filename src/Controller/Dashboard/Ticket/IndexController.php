@@ -61,7 +61,7 @@ class IndexController extends AbstractDashboardController
 
         $isAdmin = $this->userService->isAdmin($user);
 
-        $status = !empty($status) ? mb_strtoupper($this->validate($status)) : 'all';
+        $status = !empty($status) ? mb_strtoupper($this->validate($status)) : AppHelper::STATUS_OPEN;
 
         $ticketStatus = $this->ticketStatusService->getOneByName($status);
 
