@@ -4,7 +4,7 @@
 
 {% block body %}
 
-    {% set isAdmin = is_granted('ROLE_SUPER_ADMIN') or app.user.isNinja %}
+    {% set isAdminOrEmloyee = is_granted('ROLE_SUPER_ADMIN') or app.user.isNinja %}
 
     <div class="content-wrapper">
 
@@ -60,7 +60,7 @@
                                           style="background: {{ issue.status ? issue.status.color : '#9d8900' }}">
                                          {{ issue.status ? issue.status.name : 'Open' }}
                                     </span>
-                                    {% if isAdmin %}
+                                    {% if isAdminOrEmloyee %}
                                         <span class="ml-1 fs-13 text-info pointer text-decoration-underline"
                                               data-toggle="modal" data-target="#changeStatusModal">
                                                Edit <span class="fa fa-edit fa-sm text-info"></span>
@@ -71,7 +71,7 @@
                                 <p class="mb-1"><b>Label: </b> <span>{{ issue.label.name }}</span></p>
                                 <p class="mb-1"><b>Assignee: </b>
                                     <span>{{ issue.assignee ? issue.assignee.name : 'unassigned' }}</span></p>
-                                {% if isAdmin %}
+                                {% if isAdminOrEmloyee %}
                                     <p class="mb-1"><b>Spent Time: </b>
                                         <span>{{ issue.timeSpentInMinutes > 0 ? convertToHoursMinutes(issue.timeSpentInMinutes) : '00:00' }}</span>
                                         <span class="ml-1 fs-13 text-info pointer text-decoration-underline"
@@ -123,7 +123,7 @@
                 {% endif %}
             </div>
 
-            {% if count(ticketActivities) > 0 and isAdmin %}
+            {% if count(ticketActivities) > 0 and isAdminOrEmloyee %}
                 <div class="container-fluid area-section">
                     <div class="row px-3 py-3">
                         <div class="col">
@@ -193,7 +193,7 @@
         </section>
     </div>
 
-    {% if isAdmin %}
+    {% if isAdminOrEmloyee %}
         {% include 'dashboard/tickets/modal/log_time.html.twig' %}
         {% include 'dashboard/tickets/modal/change_status.html.twig' %}
     {% endif %}

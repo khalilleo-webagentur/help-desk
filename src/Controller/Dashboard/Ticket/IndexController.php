@@ -59,13 +59,13 @@ class IndexController extends AbstractDashboardController
 
         $user = $this->getUser();
 
-        $isAdmin = $this->userService->isAdmin($user);
+        $isAdmin = $this->userService->isAdmin($user) || $user->isNinja();
 
         $status = !empty($status) ? mb_strtoupper($this->validate($status)) : AppHelper::STATUS_OPEN;
 
         $ticketStatus = $this->ticketStatusService->getOneByName($status);
 
-        $issues = $isAdmin || $user->isNinja()
+        $issues = $isAdmin
             ? $this->ticketService->getAllByStatus($ticketStatus)
             : $this->ticketService->getAllByCompanyAndStatus($user->getCompany(), $ticketStatus);
 
@@ -73,7 +73,7 @@ class IndexController extends AbstractDashboardController
 
         $ticketLabels = $this->ticketLabelsService->getAll();
 
-        $projects = $isAdmin || $user->isNinja()
+        $projects = $isAdmin
             ? $this->projectService->getAll()
             : $this->projectService->getAllByCompany($user->getCompany());
 
@@ -204,7 +204,7 @@ class IndexController extends AbstractDashboardController
     {
         $this->denyAccessUnlessGrantedRoleCustomer();
         $user = $this->getUser();
-        $isAdmin = $this->userService->isAdmin($user);
+        $isAdmin = $this->userService->isAdmin($user) || $user->isNinja();
         $id = $this->validateNumber($id);
         $projectId = $this->validateNumber($request->get('pid'));
 
