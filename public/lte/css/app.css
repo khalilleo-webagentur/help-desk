@@ -7,7 +7,7 @@ p, td, td > *, a, form > span {
     color: #ffffff;
 }
 
-label, label:not(.form-check-label):not(.custom-file-label){
+label, label:not(.form-check-label):not(.custom-file-label) {
     margin-bottom: 0;
     font-weight: 500;
 }
@@ -34,7 +34,7 @@ label, label:not(.form-check-label):not(.custom-file-label){
     font-size: 14px !important;
 }
 
-.btn-outline-secondary{
+.btn-outline-secondary {
     text-transform: capitalize;
     border-radius: 3px;
     padding: 6px 10px;
@@ -150,7 +150,7 @@ body {
     margin-right: 2px;
 }
 
-.img-thumbnail{
+.img-thumbnail {
     height: 100%;
 }
 
@@ -191,7 +191,6 @@ body {
 .tab {
     color: #454545 !important;
     border-radius: 0 !important;
-    padding-bottom: 3px !important;
 }
 
 .active-tab {
@@ -200,6 +199,20 @@ body {
     border-bottom: 2px solid #268bf6 !important;
     border-radius: 0 !important;
     padding-bottom: 3px !important;
+}
+
+.tab-badge {
+    background-color: #e4e1e1;
+    display: inline-block !important;
+    padding: .25em .4em !important;
+    font-size: 75% !important;
+    font-weight: 700 !important;
+    line-height: 1 !important;
+    text-align: center !important;
+    white-space: nowrap !important;
+    vertical-align: baseline !important;
+    border-radius: .25rem !important;
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out !important;
 }
 
 @media (max-width: 868px) {
@@ -287,7 +300,7 @@ body {
     margin-bottom: 10px;
 }
 
-.modal-danger{
+.modal-danger {
     border-left: 3px solid #f70404;
     padding: 14px 14px;
     background: #ffc5c554;

@@ -11,6 +11,7 @@ use App\Helper\AppHelper;
 use App\Service\CompanyService;
 use App\Service\Core\FileUploaderService;
 use App\Service\Core\MonologService;
+use App\Service\Helper\TicketStatusHelper;
 use App\Service\ProjectService;
 use App\Service\TicketActivitiesService;
 use App\Service\TicketAttachmentsService;
@@ -52,7 +53,7 @@ class IndexController extends AbstractDashboardController
     }
 
     #[Route('/status/{status?}', name: 'app_dashboard_tickets_index')]
-    public function index(?string $status): Response
+    public function index(?string $status, TicketStatusHelper $ticketStatusHelper): Response
     {
         $this->denyAccessUnlessGrantedRoleCustomer();
 
@@ -60,7 +61,7 @@ class IndexController extends AbstractDashboardController
 
         $isAdmin = $this->userService->isAdmin($user);
 
-        $status = !empty($status) ? $this->validate(str_replace('-', ' ', $status)) : '';
+        $status = !empty($status) ? mb_strtoupper($this->validate($status)) : 'all';
 
         $ticketStatus = $this->ticketStatusService->getOneByName($status);
 
@@ -82,6 +83,8 @@ class IndexController extends AbstractDashboardController
 
         $dateTime = new DateTime();
 
+        $tabs = $ticketStatusHelper->getTabs($user);
+
         return $this->render('dashboard/tickets/index.html.twig', [
             'issues' => $issues,
             'ticketTypes' => $ticketTypes,
@@ -94,11 +97,7 @@ class IndexController extends AbstractDashboardController
             'statuses' => $statuses,
             'dateTimeFrom' => $dateTime->modify('-1 month')->format('Y-m-d'),
             'dateTimeTo' => (new DateTime())->format('Y-m-d'),
-            'statusOpen' => AppHelper::STATUS_OPEN,
-            'statusInProgress' => AppHelper::STATUS_IN_PROGRESS,
-            'statusPending' => AppHelper::STATUS_PENDING,
-            'statusResolved' => AppHelper::STATUS_RESOLVED,
-            'statusClosed' => AppHelper::STATUS_CLOSED,
+            'tabs' => $tabs,
         ]);
     }
 
