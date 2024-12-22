@@ -22,7 +22,7 @@
                             {% set hasStatus = issue.status and issue.status.name %}
                             {% for status in statuses %}
                                 <option value="{{ status.id }}" {{ hasStatus and status.name == issue.status.name ? 'selected' : '' }}>
-                                    {{ status.name }}
+                                    {{ status.name|capitalize }}
                                 </option>
                             {% endfor %}
                         </select>
