@@ -63,7 +63,7 @@
                                     {% if isAdmin %}
                                         <span class="ml-1 fs-13 text-info pointer text-decoration-underline"
                                               data-toggle="modal" data-target="#changeStatusModal">
-                                               change <span class="fa fa-edit fa-sm text-info"></span>
+                                               Edit <span class="fa fa-edit fa-sm text-info"></span>
                                         </span>
                                     {% endif %}
                                 </p>
@@ -76,7 +76,7 @@
                                         <span>{{ issue.timeSpentInMinutes > 0 ? convertToHoursMinutes(issue.timeSpentInMinutes) : '00:00' }}</span>
                                         <span class="ml-1 fs-13 text-info pointer text-decoration-underline"
                                             data-toggle="modal" data-target="#logTimeModal">
-                                           log time <span class="fa fa-clock fa-sm text-info"></span>
+                                           Log time <span class="fa fa-clock fa-sm text-info"></span>
                                         </span>
                                     </p>
                                 {% endif %}

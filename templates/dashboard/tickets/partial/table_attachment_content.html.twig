@@ -25,6 +25,7 @@
                             </span>
                             <div class="d-none">
                                 <input type="hidden" name="tId" value="{{ attachment.ticket.id }}">
+                                <input type="hidden" name="pid" value="{{ attachment.ticket.project.id }}">
                                 <input type="hidden" name="aId" value="{{ attachment.id }}">
                             </div>
                         </form>
@@ -35,25 +36,15 @@
                     <td title="{{ attachment.createdAt|date }}">{{ timeAgo(attachment.createdAt) }}</td>
 
                     <td class="d-flex">
-                        <form class="mr-3"
-                              action="{{ path('app_dashboard_ticket_helper_show', {hash: hash(attachment.filename)}) }}"
-                              method="post">
-                            <input type="hidden" name="csrf" value="{{ hash(csrf_token(attachment.id)) }}">
-                            <p class="text-primary fs-15 pointer text-decoration-underline"
-                               onclick="this.closest('form').submit();">
-                                View
-                            </p>
-                            <input type="hidden" name="tId" value="{{ attachment.ticket.id }}">
-                            <input type="hidden" name="aId" value="{{ attachment.id }}">
-                        </form>
                         <form action="{{ path('app_dashboard_ticket_helper_delete_file', {hash: hash(attachment.filename)}) }}"
                               method="post">
                             <input type="hidden" name="csrf" value="{{ hash(csrf_token(attachment.id)) }}">
-                            <p class="text-danger fs-15 pointer text-decoration-underline"
+                            <p class="text-danger fs-15 pointer"
                                onclick="this.closest('form').submit();">
                                 Delete
                             </p>
                             <input type="hidden" name="tId" value="{{ attachment.ticket.id }}">
+                            <input type="hidden" name="pid" value="{{ attachment.ticket.project.id }}">
                             <input type="hidden" name="aId" value="{{ attachment.id }}">
                         </form>
                     </td>

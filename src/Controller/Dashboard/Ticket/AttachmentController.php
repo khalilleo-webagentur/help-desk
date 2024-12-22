@@ -97,6 +97,15 @@ class AttachmentController extends AbstractDashboardController
 
         $this->denyAccessUnlessGrantedRoleCustomer();
 
+        $projectId = $this->validateNumber($request->get('pid'));
+
+        $project = $this->projectService->getById($projectId);
+
+        if (!$project) {
+            $this->addFlash('warning', 'Issue could not be found.');
+            return $this->redirectToRoute(self::DASHBOARD_TICKETS_ROUTE);
+        }
+
         $user = $this->getUser();
 
         $isAdmin = $this->userService->isAdmin($user);
@@ -105,7 +114,7 @@ class AttachmentController extends AbstractDashboardController
 
         $issue = $isAdmin
             ? $this->ticketService->getById($id)
-            : $this->ticketService->getOneByCustomerAndId($user, $id);
+            : $this->ticketService->getOneByProjectAndId($project, $id);
 
         if (!$issue) {
             $this->addFlash('warning', 'Issue could not be found.');
