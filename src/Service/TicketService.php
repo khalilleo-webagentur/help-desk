@@ -10,6 +10,7 @@ use App\Entity\Ticket;
 use App\Entity\TicketStatus;
 use App\Repository\TicketRepository;
 use DateTime;
+use DateTimeInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 final readonly class TicketService
@@ -17,7 +18,7 @@ final readonly class TicketService
     public function __construct(
         private TicketRepository $ticketRepository,
         private UserService      $userService,
-    ) {
+    ){
     }
 
     public function getById(int $id): ?Ticket
@@ -50,7 +51,20 @@ final readonly class TicketService
 
         $now = new DateTime();
 
-        return $ticket && $ticket->getTicketNo() > 0 ? $ticket->getTicketNo() + 1 : (int)($now->format('Y') . '001');
+        if ($ticket && $ticket->getTicketNo() > 0) {
+
+            $lastTicketYear = substr((string)$ticket->getTicketNo(), 0, 4);
+
+            $now = new DateTime();
+
+            if ($now->format('Y') > $lastTicketYear) {
+                return (int)str_replace($lastTicketYear, $now->format('Y'), (string)$ticket->getTicketNo());
+            }
+        }
+
+        return $ticket && $ticket->getTicketNo() > 0
+            ? $ticket->getTicketNo() + 1
+            : (int)($now->format('Y') . '001');
     }
 
     /**
@@ -106,6 +120,36 @@ final readonly class TicketService
     public function countAllByCompanyAndStatus(Company $company, TicketStatus $status): int
     {
         return count($this->ticketRepository->findAllByCompanyAndStatus($company, $status));
+    }
+
+    /**
+     * @return Ticket[]
+     */
+    public function getAllByCriteria(
+        ?int              $projectId,
+        ?int              $statusId,
+        ?int              $labelId,
+        ?int              $companyId,
+        ?string           $issueCreatedBy,
+        ?string           $issueAssignedTo,
+        ?int              $issueNo,
+        ?string           $issueTitle,
+        DateTimeInterface $issueDateFrom,
+        DateTimeInterface $issueDateTo
+    ): array
+    {
+        return $this->ticketRepository->findAllByCriteria(
+            $projectId,
+            $statusId,
+            $labelId,
+            $companyId,
+            $issueCreatedBy,
+            $issueAssignedTo,
+            $issueNo,
+            $issueTitle,
+            $issueDateFrom,
+            $issueDateTo
+        );
     }
 
     public function countAll(): int

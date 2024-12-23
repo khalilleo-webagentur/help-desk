@@ -6,7 +6,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="filterTicketModalTitle">
-                        Filter
+                        Filter Issues
                     </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -66,7 +66,7 @@
                                 <select class="form-control" name="v4b6v7u1" id="iO7nM4yT4bG2sO44">
                                     <option value="0" disabled selected>Select status</option>
                                     {% for status in statuses %}
-                                        <option value="{{ status.id }}">{{ status.name }}</option>
+                                        <option value="{{ status.id }}">{{ status.name|capitalize }}</option>
                                     {% endfor %}
                                 </select>
                             </div>
@@ -74,7 +74,7 @@
                         <div class="col-lg-4">
                             <div class="form-group">
                                 <div class="mb-3">
-                                    <label for="k4j0e2k9" class="form-label">Issue By</label>
+                                    <label for="k4j0e2k9" class="form-label">Issue created By</label>
                                     <input type="text" class="form-control" id="k4j0e2k9"
                                            placeholder="Name" name="k4j0e2k9">
                                 </div>
@@ -110,7 +110,8 @@
                         <div class="col-lg-3">
                             <div class="mb-3">
                                 <label for="V9xO3aD7v78dateTimeFrom" class="form-label">Date from</label>
-                                <input type="text" class="form-control datetimeSelectorFrom" id="V9xO3aD7v78dateTimeFrom"
+                                <input type="text" class="form-control datetimeSelectorFrom"
+                                       id="V9xO3aD7v78dateTimeFrom"
                                        placeholder="{{ dateTimeFrom }}" name="o2o0b4t1"
                                        style="background: #fff !important;"
                                        value="{{ dateTimeFrom }}">
