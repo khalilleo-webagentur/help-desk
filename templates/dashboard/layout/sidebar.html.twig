@@ -59,6 +59,7 @@
 
                 {% set isTicketTreeOpen =
                     _route == 'app_dashboard_tickets_index' or
+                    _route == 'app_dashboard_ticket_priorities_index' or
                     _route == 'app_dashboard_ticket_types_index' or
                     _route == 'app_dashboard_ticket_labels_index' or
                     _route == 'app_dashboard_ticket_status_index' %}
@@ -76,6 +77,12 @@
                             <a href="{{ path('app_dashboard_tickets_index') }}" class="nav-link">
                                 <i class="far nav-icon text-warning {{ _route == 'app_dashboard_tickets_index' ? 'fa-dot-circle' : 'fa-circle' }}"></i>
                                 <p>Issues</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ path('app_dashboard_ticket_priorities_index') }}" class="nav-link">
+                                <i class="far nav-icon text-warning {{ _route == 'app_dashboard_ticket_priorities_index' ? 'fa-dot-circle' : 'fa-circle' }}"></i>
+                                <p>Priorities</p>
                             </a>
                         </li>
                         <li class="nav-item">

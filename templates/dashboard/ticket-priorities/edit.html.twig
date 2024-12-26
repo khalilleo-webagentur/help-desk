@@ -1,0 +1,70 @@
+{% extends 'dashboard/layout/base.html.twig' %}
+
+{% block title %} Dashboard :: Edit Ticket-Priority Details {% endblock %}
+
+{% block body %}
+
+    <div class="content-wrapper">
+
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-8">
+                        <h4 class="m-0 text-dark">Edit Ticket-Priority Details</h4>
+                    </div>
+                    <div class="col-4">
+                        <div class="float-right">
+                            <a href="{{ path('app_dashboard_ticket_priorities_index') }}" class="text-secondary">
+                                Close <span class="fa fa-window-close"></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <section class="content">
+            <div class="container-fluid area-section">
+
+                <div class="row px-2 py-3">
+                    <div class="col-lg-6">
+                        <form action="{{ path('app_dashboard_ticket_priority_store', {id:ticketPriority.id}) }}"
+                              method="post">
+                            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                            <div class="mb-3">
+                                <label for="V9xO3aD7v" class="form-label">Name <span
+                                            class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="V9xO3aD7v" placeholder="Type name"
+                                       value="{{ ticketPriority.name }}" name="name">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="2hV9xO3aD7v" class="form-label">Description <span
+                                            class="text-danger">*</span></label>
+                                <textarea type="text" class="form-control" id="2hV9xO3aD7v"
+                                          placeholder="Type description"
+                                          rows="3"
+                                          name="description">{{ ticketPriority.description }}</textarea>
+                                <small class="text-secondary">
+                                    Description must be less than 10 words.
+                                </small>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="V9xO3aD7v" class="form-label">Color <span
+                                            class="text-danger">*</span></label>
+                                <input type="color" class="form-control" id="V9xO3aD7v" placeholder="Type color"
+                                       value="{{ ticketPriority.textColor }}" name="color">
+                            </div>
+
+                            {% include "dashboard/component/edit_save_btn.html.twig" %}
+
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </div>
+
+{% endblock %}

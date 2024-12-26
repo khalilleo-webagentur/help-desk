@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace App\Command;
 
 use App\Entity\TicketLabel;
+use App\Entity\TicketPriority;
 use App\Entity\TicketStatus;
 use App\Entity\TicketType;
 use App\Helper\AppHelper;
 use App\Service\TicketLabelsService;
+use App\Service\TicketPriorityService;
 use App\Service\TicketStatusService;
 use App\Service\TicketTypesService;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -29,6 +31,7 @@ class FixturesCommand extends Command
     public const SUCCESS = 1;
 
     public function __construct(
+        private readonly TicketPriorityService $ticketPriorityService,
         private readonly TicketLabelsService $ticketLabelsService,
         private readonly TicketTypesService  $ticketTypesService,
         private readonly TicketStatusService $ticketStatusService,
@@ -42,6 +45,7 @@ class FixturesCommand extends Command
         $output->writeln('running ...');
 
         $this->addProjects();
+        $this->addPriorities();
         $this->addType();
         $this->addStatus();
         $this->addLabels();
@@ -59,6 +63,25 @@ class FixturesCommand extends Command
     private function addProjects(): void
     {
         // add projects manually ..
+    }
+
+    private function addPriorities(): void
+    {
+        $priorities = [
+            ['Urgent', 'is reserved for critical issues that require immediate attention', 'red'],
+            ['High', 'is reserved for critical issues that require attention', 'orange'],
+            ['Medium', 'are important but not as time-sensitive as high-priority ones', 'green'],
+            ['Low', ' is typically assigned to non-urgent inquiries, general questions or feature requests', 'blue']
+        ];
+
+        foreach ($priorities as $priority) {
+            $newPriority = new TicketPriority();
+            $newPriority
+                ->setName($priority[0])
+                ->setDescription($priority[1])
+                ->setTextColor($priority[2]);
+            $this->ticketPriorityService->save($newPriority);
+        }
     }
 
     private function addType(): void

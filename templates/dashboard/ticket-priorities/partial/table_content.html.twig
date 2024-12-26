@@ -1,0 +1,71 @@
+{% if count(ticketPriorities) > 0 %}
+
+    {% set isAdmin = is_granted('ROLE_SUPER_ADMIN') %}
+
+    <div class="card-body table-responsive bg-white p-0 mb-3">
+        <table class="table table-hover text-nowrap">
+            <thead>
+            <tr class="fs-14">
+                {% if isAdmin %}
+                    <th>ID</th>
+                {% endif %}
+                <th>{{ 'Name'|trans }}</th>
+                <th>{{ 'Description'|trans }}</th>
+                <th>{{ 'Color'|trans }}</th>
+                {% if isAdmin %}
+                    <th>{{ 'Updated'|trans }}</th>
+                    <th>{{ 'Created'|trans }}</th>
+                    <th>{{ 'Action'|trans }}</th>
+                {% endif %}
+            </tr>
+            </thead>
+            <tbody>
+            {% for row in ticketPriorities %}
+                <tr class="fs-14">
+                    {% if isAdmin %}
+                        <td>{{ row.id }}</td>
+                    {% endif %}
+                    <td>{{ row.name|capitalize }}</td>
+                    <td>
+                        <span class="cursor-help" title="{{ row.description }}">
+                            {{ row.description ? row.description|slice(0, 45) ~ '..' : '---' }}
+                        </span>
+                    </td>
+                    <td style="color: {{ row.textColor }}">
+                        <span class="fa fa-circle" style="color: {{ row.textColor }}"></span>
+                    </td>
+
+                    {% if isAdmin %}
+                        <td title="{{ row.updatedAt|date }}">{{ timeAgo(row.updatedAt) }}</td>
+
+                        <td title="{{ row.createdAt|date }}">{{ timeAgo(row.createdAt) }}</td>
+
+                        <td>
+                            <div class="d-flex">
+                                <form action="{{ path('app_dashboard_ticket_priority_edit', {id:row.id}) }}" method="post">
+                                    <input type="hidden" name="csrf" value="{{ hash(csrf_token(row.id)) }}">
+                                    <button class="btn small-btn btn-outline-primary mr-2" type="submit">
+                                        <span class="fa fa-pen fa-sm"></span>
+                                    </button>
+                                </form>
+
+                                <form class="d-none"
+                                      action="{{ path('app_dashboard_ticket_priority_delete', {id:row.id}) }}"
+                                      method="post">
+                                    <input type="hidden" name="csrf" value="{{ hash(csrf_token(row.id)) }}">
+                                    <button class="btn small-btn btn-outline-danger" type="submit">
+                                        <span class="fa fa-trash-alt fa-sm"></span>
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    {% endif %}
+
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% else %}
+    <small>No data has been found.</small>
+{% endif %}
