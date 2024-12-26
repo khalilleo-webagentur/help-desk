@@ -29,7 +29,7 @@ final readonly class TicketPriorityService
      */
     public function getAll(): array
     {
-        return $this->ticketPriorityRepository->findAll();
+        return $this->ticketPriorityRepository->findBy([], ['id' => 'DESC']);
     }
 
     public function save(TicketPriority $ticketPriority): TicketPriority

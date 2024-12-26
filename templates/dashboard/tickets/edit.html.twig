@@ -88,6 +88,23 @@
                             <div class="row">
                                 <div class="col-lg-3">
                                     <div class="form-group">
+                                        <label for="887nM4yT4bG2sO44">
+                                            Priority <span class="text-danger">*</span>
+                                        </label>
+                                        <select class="form-control" name="priority" id="887nM4yT4bG2sO44" required>
+                                            {% for priority in ticketPriorities %}
+                                                <option value="{{ priority.id }}" {{ priority.name == issue.priority.name ? 'selected' : '' }}>
+                                                    {{ priority.name }}
+                                                </option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-3">
+                                    <div class="form-group">
                                         <label for="iO7nM4yT4bG2sO44">
                                             Assignee <span class="text-danger">*</span>
                                         </label>

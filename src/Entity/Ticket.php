@@ -75,6 +75,10 @@ class Ticket
     #[ORM\OneToMany(targetEntity: TicketComment::class, mappedBy: 'ticket')]
     private Collection $ticketComments;
 
+    #[ORM\ManyToOne(inversedBy: 'tickets')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?TicketPriority $priority = null;
+
     public function __construct()
     {
         $this->setCreatedAt(new \DateTime());
@@ -318,6 +322,18 @@ class Ticket
                 $ticketComment->setTicket(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPriority(): ?TicketPriority
+    {
+        return $this->priority;
+    }
+
+    public function setPriority(?TicketPriority $priority): static
+    {
+        $this->priority = $priority;
 
         return $this;
     }

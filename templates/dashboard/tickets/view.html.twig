@@ -53,7 +53,11 @@
                             <h5 class="my-3">{{ issue.title }}</h5>
                             <div class="text-secondary">
                                 <p>{{ issue.description|raw }}</p>
-                                <p class="mb-1"><b>Issue by: </b> <span>{{ issue.customer.name }}</span></p>
+                                <p class="mb-1"><b>Issue created by: </b> <span>{{ issue.customer.name }}</span></p>
+                                <p class="mb-1">
+                                    <b>Priority: </b>
+                                    <span class="fa fa-circle fa-sm" style="color: {{ issue.priority.textColor }}"></span>
+                                    <span>{{ issue.priority.name }}</span></p>
                                 <p class="mb-1">
                                     <b>Status: </b>
                                     <span class="ticket-status"

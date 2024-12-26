@@ -17,6 +17,7 @@ use App\Service\TicketActivitiesService;
 use App\Service\TicketAttachmentsService;
 use App\Service\TicketCommentsService;
 use App\Service\TicketLabelsService;
+use App\Service\TicketPriorityService;
 use App\Service\TicketService;
 use App\Service\TicketStatusService;
 use App\Service\TicketTypesService;
@@ -47,6 +48,7 @@ class IndexController extends AbstractDashboardController
         private readonly TicketActivitiesService  $ticketActivitiesService,
         private readonly TicketAttachmentsService $ticketAttachmentsService,
         private readonly TicketCommentsService    $ticketCommentsService,
+        private readonly TicketPriorityService    $ticketPriorityService,
         private readonly CompanyService           $companyService,
         private readonly MonologService           $monologService,
     ) {
@@ -85,6 +87,8 @@ class IndexController extends AbstractDashboardController
 
         $tabs = $ticketStatusHelper->getTabs($user);
 
+        $ticketPriorities = $this->ticketPriorityService->getAll();
+
         return $this->render('dashboard/tickets/index.html.twig', [
             'issues' => $issues,
             'ticketTypes' => $ticketTypes,
@@ -98,6 +102,7 @@ class IndexController extends AbstractDashboardController
             'dateTimeFrom' => $dateTime->modify('-1 month')->format('Y-m-d'),
             'dateTimeTo' => (new DateTime())->format('Y-m-d'),
             'tabs' => $tabs,
+            'ticketPriorities' => $ticketPriorities,
         ]);
     }
 
@@ -161,6 +166,14 @@ class IndexController extends AbstractDashboardController
         $customer = $isAdmin
             ? $this->userService->getOneByCompany($project->getCompany())
             : $user;
+        
+        $priority = $this->validateNumber($request->request->get('priority'));
+        
+        $ticketPriority = $this->ticketPriorityService->getById($priority);
+        
+        if (!$ticketPriority) {
+            $ticketPriority = $this->ticketPriorityService->getOneByName(AppHelper::PRIORITY_LOW);
+        }
 
         $this->ticketService->save(
             $ticket
@@ -171,6 +184,7 @@ class IndexController extends AbstractDashboardController
                 ->setType($ticketType)
                 ->setLabel($ticketLabel)
                 ->setStatus($status)
+                ->setPriority($ticketPriority)
                 ->setTitle($title)
                 ->setDescription($description)
         );
@@ -288,10 +302,13 @@ class IndexController extends AbstractDashboardController
 
         $statuses = $this->ticketStatusService->getAll();
 
+        $ticketPriorities = $this->ticketPriorityService->getAll();
+
         return $this->render('dashboard/tickets/edit.html.twig', [
             'issue' => $issue,
             'assignees' => $users,
             'statuses' => $statuses,
+            'ticketPriorities' => $ticketPriorities,
         ]);
     }
 
@@ -394,12 +411,21 @@ class IndexController extends AbstractDashboardController
             );
         }
 
+        $priority = $this->ticketPriorityService->getById(
+            $this->validateNumber($request->request->get('priority'))
+        );
+
+        if (!$priority) {
+            $priority = $this->ticketPriorityService->getOneByName(AppHelper::PRIORITY_LOW);
+        }
+
         $this->ticketService->save(
             $issue
                 ->setTitle($title)
                 ->setDescription($description)
                 ->setAssignee($assignee)
                 ->setStatus($status)
+                ->setPriority($priority)
                 ->setTimeSpentInMinutes($issue->getTimeSpentInMinutes() + $timeSpentInMinutes)
         );
 

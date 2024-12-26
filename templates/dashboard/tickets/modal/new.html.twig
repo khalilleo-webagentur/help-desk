@@ -15,7 +15,7 @@
                 <div class="modal-body bg-light">
 
                     <div class="row">
-                        <div class="col-lg-4">
+                        <div class="col-lg-3">
                             <div class="form-group">
                                 <label for="iO7nM4yT4bG2sO00">
                                     Project <span class="text-danger">*</span>
@@ -29,7 +29,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-lg-4">
+                        <div class="col-lg-3">
                             <div class="form-group">
                                 <label for="iO7nM4yT4bG2sO22">
                                     Type <span class="text-danger">*</span>
@@ -41,15 +41,27 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-lg-4">
+                        <div class="col-lg-3">
                             <div class="form-group">
                                 <label for="iO7nM4yT4bG2sO55">
-                                    Labels <span class="text-danger">*</span>
+                                    Label <span class="text-danger">*</span>
                                 </label>
                                 <select class="form-control" name="label" id="iO7nM4yT4bG2sO55">
                                     <option value="0" selected disabled>Select Label</option>
                                     {% for label in ticketLabels %}
                                         <option value="{{ label.id }}">{{ label.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label for="9O7nM4yT4bG2sO55">
+                                    Priority <span class="text-danger">*</span>
+                                </label>
+                                <select class="form-control" name="priority" id="9O7nM4yT4bG2sO55">
+                                    {% for row in ticketPriorities %}
+                                        <option value="{{ row.id }}">{{ row.name }}</option>
                                     {% endfor %}
                                 </select>
                             </div>

@@ -68,10 +68,10 @@ class FixturesCommand extends Command
     private function addPriorities(): void
     {
         $priorities = [
-            ['Urgent', 'is reserved for critical issues that require immediate attention', 'red'],
-            ['High', 'is reserved for critical issues that require attention', 'orange'],
-            ['Medium', 'are important but not as time-sensitive as high-priority ones', 'green'],
-            ['Low', ' is typically assigned to non-urgent inquiries, general questions or feature requests', 'blue']
+            [AppHelper::PRIORITY_URGENT, 'is reserved for critical issues that require immediate attention', 'red'],
+            [AppHelper::PRIORITY_HIGH, 'is reserved for critical issues that require attention', 'orange'],
+            [AppHelper::PRIORITY_MEDIUM, 'are important but not as time-sensitive as high-priority ones', 'green'],
+            [AppHelper::PRIORITY_LOW, ' is typically assigned to non-urgent inquiries, general questions or feature requests', 'blue']
         ];
 
         foreach ($priorities as $priority) {

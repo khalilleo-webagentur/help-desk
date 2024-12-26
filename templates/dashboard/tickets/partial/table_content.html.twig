@@ -11,6 +11,7 @@
                 <th>{{ 'Created By'|trans }}</th>
                 <th>{{ 'Project'|trans }}</th>
                 <th>{{ 'Label'|trans }}</th>
+                <th>{{ 'Priority'|trans }}</th>
                 <th>{{ 'Assignee'|trans }}</th>
                 <th>{{ 'Title'|trans }}</th>
                 <th>{{ 'Status'|trans }}</th>
@@ -54,6 +55,11 @@
 
                     <td>
                         <span class="ticket-label" style="color: {{ row.label.color }}">{{ row.label.name }}</span>
+                    </td>
+
+                    <td>
+                        <span class="fa fa-circle fa-sm" style="color: {{ row.priority.textColor }}"></span>
+                        {{ row.priority.name }}
                     </td>
 
 
