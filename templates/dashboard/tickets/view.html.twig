@@ -68,7 +68,12 @@
                                     {% endif %}
                                 </p>
                                 <p class="mb-1"><b>Type: </b> <span>{{ issue.type.name }}</span></p>
-                                <p class="mb-1"><b>Label: </b> <span>{{ issue.label.name }}</span></p>
+                                <p class="mb-1">
+                                    <b>Label: </b>
+                                    <span class="ticket-label" style="color: {{ issue.label.color }}">
+                                        {{ issue.label.name }}
+                                    </span>
+                                </p>
                                 <p class="mb-1"><b>Assignee: </b>
                                     <span>{{ issue.assignee ? issue.assignee.name : 'unassigned' }}</span></p>
                                 {% if isAdminOrEmloyee %}
