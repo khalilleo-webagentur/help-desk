@@ -36,8 +36,9 @@
                             <div class="icon">
                                 <i class="fa fa-ticket-alt"></i>
                             </div>
-                            <a href="{{ path('app_dashboard_tickets_index') }}" class="small-box-footer">More info <i
-                                        class="fas fa-arrow-circle-right"></i></a>
+                            <a href="{{ path('app_dashboard_tickets_index', {status: 'all'}) }}" class="small-box-footer">
+                                More info <i class="fas fa-arrow-circle-right"></i>
+                            </a>
                         </div>
                     </div>
 
