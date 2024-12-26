@@ -406,7 +406,7 @@ class IndexController extends AbstractDashboardController
                 $issue,
                 $user,
                 sprintf(
-                    '%s updated status of issue to "%s"', $user->getName(), $status->getName()
+                    '%s updated status of issue to "%s"', $user->getName(), strtolower($status->getName())
                 )
             );
         }

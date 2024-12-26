@@ -44,7 +44,7 @@
                                         <input type="hidden" name="csrf" value="{{ hash(csrf_token(issue.id)) }}">
                                         <span class="text-info pointer text-decoration-underline"
                                               onclick="this.closest('form').submit();">
-                                            Edit issue <span class="fa fa-edit fa-sm ps-1"></span>
+                                            Edit <span class="md-d-none">issue</span> <span class="fa fa-edit fa-sm ps-1"></span>
                                         </span>
                                         <input type="hidden" name="pid" value="{{ issue.project.id }}">
                                     </form>
