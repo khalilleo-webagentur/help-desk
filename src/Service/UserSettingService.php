@@ -8,17 +8,25 @@ use App\Entity\User;
 use App\Entity\UserSetting;
 use App\Repository\UserSettingRepository;
 use DateTime;
+use Symfony\Component\Security\Core\User\UserInterface;
 
-final class UserSettingService
+final readonly class UserSettingService
 {
     public function __construct(
-        private readonly UserSettingRepository $userSettingRepository,
+        private UserSettingRepository $userSettingRepository,
     ) {
     }
 
     public function getOneByUser(User $user): ?UserSetting
     {
         return $this->userSettingRepository->findOneBy(['user' => $user]);
+    }
+
+    public function notifyCustomerOnTicketStatusClosed(UserInterface|User $user): bool
+    {
+        $setting = $this->getOneByUser($user);
+
+        return $setting && $setting->notifyCloseTicket();
     }
 
     public function save(UserSetting $model): UserSetting

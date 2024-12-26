@@ -123,41 +123,9 @@
                                 </div>
                             </div>
 
-                            <div class="row">
-                                <div class="col-lg-3">
-                                    <div class="form-group">
-                                        <label for="iO7nM4yT4bG2sO77">
-                                            Status <span class="text-danger">*</span>
-                                        </label>
-                                        <select class="form-control" name="status" id="iO7nM4yT4bG2sO77" required
-                                                {{ isAdmin or app.user.ninja ? '' : 'disabled' }}>
-                                            {% set hasStatus = issue.status and issue.status.name %}
-                                            {% for status in statuses %}
-                                                <option value="{{ status.id }}" {{ hasStatus and status.name == issue.status.name ? 'selected' : '' }}>
-                                                    {{ status.name|capitalize }}
-                                                </option>
-                                            {% endfor %}
-                                        </select>
-                                        <small class="text-secondary">{{ not isAdmin ? 'Status can only be changed by Admins.' }}</small>
-                                        <input type="hidden" name="id" value="{{ issue.id }}">
-                                    </div>
-                                </div>
+                            <div class="d-none">
+                                <input type="hidden" name="id" value="{{ issue.id }}">
                             </div>
-
-                            {% if isAdmin or app.user.isNinja %}
-                                <div class="row">
-                                    <div class="col-lg-3">
-                                        <div class="mb-3">
-                                            <label for="V9xO3aD7v78" class="form-label">Time Spent</label>
-                                            <input type="number" class="form-control" id="V9xO3aD7v78"
-                                                   placeholder=""
-                                                   value="" name="minutes">
-                                            <small>The value must be in minutes - Time spent
-                                                is {{ convertToHoursMinutes(issue.timeSpentInMinutes) }}</small>
-                                        </div>
-                                    </div>
-                                </div>
-                            {% endif %}
 
                             {% include "dashboard/component/edit_save_btn.html.twig" with {id:"formSave"} %}
 

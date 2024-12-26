@@ -40,7 +40,7 @@
     {% endif %}
 
     <ul class="navbar-nav ml-auto">
-        <li class="mr-3 nav-item dropdown">
+       {# <li class="mr-3 nav-item dropdown">
             <a class="nav-link" data-toggle="dropdown" href="#">
                 <i class="far fa-bell"></i>
                 <span class="badge badge-warning navbar-badge">15</span>
@@ -60,11 +60,14 @@
                 <div class="dropdown-divider"></div>
                 <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
             </div>
-        </li>
+        </li>#}
     </ul>
 
     <a href="#" class="nav-link" title="{{ 'Logout'|trans }}">
-        <i class="fa fa-power-off text-secondary" data-toggle="modal" data-target="#LogoutModalCenter"></i>
+        <span data-toggle="modal" data-target="#LogoutModalCenter" class="text-secondary">
+            <span class="md-d-none">Logout</span>
+            <i class="fa fa-power-off text-secondary fa-sm"></i>
+        </span>
     </a>
 </nav>
 

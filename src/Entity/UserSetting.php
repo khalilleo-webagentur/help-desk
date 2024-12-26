@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Helper\AppHelper;
 use App\Repository\UserSettingRepository;
 use DateTime;
 use Doctrine\DBAL\Types\Types;
@@ -19,6 +20,9 @@ class UserSetting
     #[ORM\ManyToOne(inversedBy: 'userSettings')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
+
+    #[ORM\Column]
+    private bool $notifyCloseTicket = AppHelper::NOTIFY_CUSTOMER_ON_TICKET_STATUS_CLOSED;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $updatedAt = null;
@@ -44,6 +48,18 @@ class UserSetting
     public function setUser(?User $user): static
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function notifyCloseTicket(): bool
+    {
+        return $this->notifyCloseTicket;
+    }
+
+    public function setNotifyCloseTicket(bool $notifyCloseTicket): static
+    {
+        $this->notifyCloseTicket = $notifyCloseTicket;
 
         return $this;
     }

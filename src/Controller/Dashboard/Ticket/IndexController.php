@@ -346,37 +346,18 @@ class IndexController extends AbstractDashboardController
             ? $this->userService->getById($this->validateNumber($request->request->get('assignee')))
             : $issue->getAssignee();
 
-        $status = $isAdmin || $user->isNinja()
-            ? $this->ticketStatusService->getById($this->validateNumber($request->request->get('status')))
-            : $issue->getStatus();
-
-        $timeSpentInMinutes = $isAdmin || $user->isNinja()
-            ? $this->validateNumber($request->request->get('minutes'))
-            : $issue->getTimeSpentInMinutes();
-
         $this->monologService->logger->info(
             sprintf(
-                'issueUpdated: T-%s by %s [title: %s, description: %s, status: %s] to [title: %s, description: %s, status: %s]',
+                'issueUpdated: T-%s by %s [title: %s, description: %s, status: %s] to [title: %s, description: %s]',
                 $issue->getTicketNo(),
                 $user->getUserIdentifier(),
                 $issue->getTitle(),
                 $issue->getDescription(),
                 $issue->getStatus() ? $issue->getStatus()->getName() : AppHelper::STATUS_OPEN,
                 $title,
-                $description,
-                $status ? $status->getName() : AppHelper::STATUS_OPEN
+                $description
             )
         );
-
-        if ($timeSpentInMinutes != $issue->getTimeSpentInMinutes()) {
-            $this->ticketActivitiesService->add(
-                $issue,
-                $user,
-                sprintf(
-                    '%s logged time spent of issue "%s" minutes', $user->getName(), $timeSpentInMinutes
-                )
-            );
-        }
 
         if ($title !== $issue->getTitle()) {
             $this->ticketActivitiesService->add(
@@ -401,16 +382,6 @@ class IndexController extends AbstractDashboardController
             );
         }
 
-        if ($issue->getStatus() && ($status->getName() !== $issue->getStatus()->getName())) {
-            $this->ticketActivitiesService->add(
-                $issue,
-                $user,
-                sprintf(
-                    '%s updated status of issue to "%s"', $user->getName(), strtolower($status->getName())
-                )
-            );
-        }
-
         $priority = $this->ticketPriorityService->getById(
             $this->validateNumber($request->request->get('priority'))
         );
@@ -424,9 +395,7 @@ class IndexController extends AbstractDashboardController
                 ->setTitle($title)
                 ->setDescription($description)
                 ->setAssignee($assignee)
-                ->setStatus($status)
                 ->setPriority($priority)
-                ->setTimeSpentInMinutes($issue->getTimeSpentInMinutes() + $timeSpentInMinutes)
         );
 
         $this->addFlash('success', 'Issue has been saved.');

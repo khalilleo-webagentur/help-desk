@@ -8,13 +8,15 @@
             <tr class="fs-14">
                 {% if isAdmin %}
                     <th>ID</th>
+                    <th>{{ 'Company'|trans }}</th>
                 {% endif %}
-                <th>{{ 'Company'|trans }}</th>
                 <th>{{ 'Title'|trans }}</th>
                 <th>{{ 'Description'|trans }}</th>
-                <th>{{ 'Updated'|trans }}</th>
-                <th>{{ 'Created'|trans }}</th>
-                <th>{{ 'Action'|trans }}</th>
+                {% if isAdmin %}
+                    <th>{{ 'Updated'|trans }}</th>
+                    <th>{{ 'Created'|trans }}</th>
+                    <th>{{ 'Action'|trans }}</th>
+                {% endif %}
             </tr>
             </thead>
             <tbody>
@@ -22,16 +24,16 @@
                 <tr class="fs-14">
                     {% if isAdmin %}
                         <td>{{ row.id }}</td>
-                    {% endif %}
-                    <td>
-                        <form action="{{ path('app_dashboard_company_edit', {id:row.id}) }}" method="post">
-                            <input type="hidden" name="csrf" value="{{ hash(csrf_token(row.company.id)) }}">
-                            <span class="text-primary pointer"
-                                  onclick="this.closest('form').submit();">
+                        <td>
+                            <form action="{{ path('app_dashboard_company_edit', {id:row.id}) }}" method="post">
+                                <input type="hidden" name="csrf" value="{{ hash(csrf_token(row.company.id)) }}">
+                                <span class="text-primary pointer"
+                                      onclick="this.closest('form').submit();">
                                 {{ row.company.name }}
                             </span>
-                        </form>
-                    </td>
+                            </form>
+                        </td>
+                    {% endif %}
                     <td>{{ row.title }}</td>
                     <td>
                         <span class="cursor-help" title="{{ row.description }}">
@@ -39,27 +41,29 @@
                         </span>
                     </td>
 
-                    <td title="{{ row.updatedAt|date }}">{{ timeAgo(row.updatedAt) }}</td>
+                    {% if isAdmin %}
+                        <td title="{{ row.updatedAt|date }}">{{ timeAgo(row.updatedAt) }}</td>
 
-                    <td title="{{ row.createdAt|date }}">{{ timeAgo(row.createdAt) }}</td>
+                        <td title="{{ row.createdAt|date }}">{{ timeAgo(row.createdAt) }}</td>
 
-                    <td class="d-flex">
+                        <td class="d-flex">
 
-                        <form action="{{ path('app_dashboard_project_edit', {id:row.id}) }}" method="post">
-                            <input type="hidden" name="csrf" value="{{ hash(csrf_token(row.id)) }}">
-                            <button class="btn small-btn btn-outline-primary mr-2" type="submit">
-                                <span class="fa fa-pen fa-sm"></span>
-                            </button>
-                        </form>
+                            <form action="{{ path('app_dashboard_project_edit', {id:row.id}) }}" method="post">
+                                <input type="hidden" name="csrf" value="{{ hash(csrf_token(row.id)) }}">
+                                <button class="btn small-btn btn-outline-primary mr-2" type="submit">
+                                    <span class="fa fa-pen fa-sm"></span>
+                                </button>
+                            </form>
 
-                        <form class="d-none" action="{{ path('app_dashboard_project_delete', {id:row.id}) }}"
-                              method="post">
-                            <input type="hidden" name="csrf" value="{{ hash(csrf_token(row.id)) }}">
-                            <button class="btn small-btn btn-outline-danger" type="submit">
-                                <span class="fa fa-trash-alt fa-sm"></span>
-                            </button>
-                        </form>
-                    </td>
+                            <form class="d-none" action="{{ path('app_dashboard_project_delete', {id:row.id}) }}"
+                                  method="post">
+                                <input type="hidden" name="csrf" value="{{ hash(csrf_token(row.id)) }}">
+                                <button class="btn small-btn btn-outline-danger" type="submit">
+                                    <span class="fa fa-trash-alt fa-sm"></span>
+                                </button>
+                            </form>
+                        </td>
+                    {% endif %}
                 </tr>
             {% endfor %}
             </tbody>

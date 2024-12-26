@@ -40,19 +40,19 @@
                 {% endif %}
 
                 {% if isAdmin or app.user.isTeamLeader %}
-                    <li class="nav-item {{ _route == 'app_dashboard_users_index' ? 'menu-is-opening menu-open' : '' }}">
-                        <a href="{{ path('app_dashboard_users_index') }}" class="nav-link">
-                            <i class="fas fa-user-alt nav-icon"></i>
-                            <p>Users</p>
-                        </a>
-                    </li>
-                {% endif %}
-
-                {% if isAdmin %}
                     <li class="nav-item {{ _route == 'app_dashboard_projects_index' ? 'menu-is-opening menu-open' : '' }}">
                         <a href="{{ path('app_dashboard_projects_index') }}" class="nav-link">
                             <i class="fas fa-puzzle-piece nav-icon"></i>
                             <p>Projects</p>
+                        </a>
+                    </li>
+                {% endif %}
+
+                {% if isAdmin or app.user.isTeamLeader %}
+                    <li class="nav-item {{ _route == 'app_dashboard_users_index' ? 'menu-is-opening menu-open' : '' }}">
+                        <a href="{{ path('app_dashboard_users_index') }}" class="nav-link">
+                            <i class="fas fa-user-alt nav-icon"></i>
+                            <p>Users</p>
                         </a>
                     </li>
                 {% endif %}
@@ -131,21 +131,21 @@
                             <p>Newsletter</p>
                         </a>
                     </li>
-                {% endif %}
 
-                <li class="nav-header">EXTRA</li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-file"></i>
-                        <p>Documentation</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-file"></i>
-                        <p>Logs</p>
-                    </a>
-                </li>
+                    <li class="nav-header">EXTRA</li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-file"></i>
+                            <p>Documentation</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-file"></i>
+                            <p>Logs</p>
+                        </a>
+                    </li>
+                {% endif %}
             </ul>
         </nav>
     </div>

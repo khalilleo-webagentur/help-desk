@@ -13,8 +13,11 @@
             <div class="modal-body bg-light">
                 <ul>
                     <li>Search term is only Ticket-no without "T-"</li>
-                    <li>Pagination is not implemented yet</li>
-                    <li>Filter is not implemented yet</li>
+
+                    {% if is_granted('ROLE_SUPER_ADMIN') %}
+                        <li>Pagination is not implemented yet</li>
+                        <li>Filter is not implemented yet</li>
+                    {% endif %}
                 </ul>
             </div>
             <div class="modal-footer">

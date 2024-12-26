@@ -4,23 +4,24 @@ declare(strict_types=1);
 
 namespace App\Controller\Dashboard\Project;
 
+use App\Controller\Dashboard\AbstractDashboardController;
 use App\Entity\Project;
 use App\Service\CompanyService;
 use App\Service\ProjectService;
 use App\Service\UserService;
 use App\Traits\FormValidationTrait;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/dashboard/project/e3c0s6h4z5k7x5r1')]
-class IndexController extends AbstractController
+class IndexController extends AbstractDashboardController
 {
     use FormValidationTrait;
 
     private const DASHBOARD_PROJECTS_ROUTE = 'app_dashboard_projects_index';
+    private const DASHBOARD_TICKETS_ROUTE = 'app_dashboard_tickets_index';
 
     public function __construct(
         private readonly UserService    $userService,
@@ -32,11 +33,21 @@ class IndexController extends AbstractController
     #[Route('/home', name: 'app_dashboard_projects_index')]
     public function index(): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
+        $this->denyAccessUnlessGrantedRoleCustomer();
 
-        $projects = $this->projectService->getAll();
+        $user = $this->getUser();
 
-        $companies = $this->companyService->getAll();
+        $isAdmin = $this->userService->isAdmin($user);
+
+        if (!$isAdmin && !$user->isTeamLeader()) {
+            return $this->redirectToRoute(self::DASHBOARD_TICKETS_ROUTE);
+        }
+
+        $projects = $isAdmin
+            ? $this->projectService->getAll()
+            : $this->projectService->getAllByCompany($user->getCompany());
+
+        $companies = $isAdmin ? $this->companyService->getAll() : [];
 
         return $this->render('dashboard/projects/index.html.twig', [
             'projects' => $projects,

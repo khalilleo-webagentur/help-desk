@@ -6,6 +6,9 @@ namespace App\Helper;
 
 final class AppHelper
 {
+    // General Configs
+    public const NOTIFY_CUSTOMER_ON_TICKET_STATUS_CLOSED = true;
+
     // Ticket-Status
     public const STATUS_ALL = 'ALL';
     public const STATUS_OPEN = 'OPEN';
