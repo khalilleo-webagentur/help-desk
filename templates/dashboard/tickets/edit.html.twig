@@ -32,38 +32,16 @@
                     <div class="col-lg-12">
                         <form action="{{ path('app_dashboard_ticket_store', {no:issue.ticketNo}) }}" method="post">
                             <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-                            <div class="row">
-                                <div class="col-lg-2">
-                                    <div class="mb-3">
-                                        <label for="V9xO3aD7v" class="form-label">Ticket-No <span
-                                                    class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" id="V9xO3aD7v"
-                                               placeholder="T-{{ issue.ticketNo }}"
-                                               value="T-{{ issue.ticketNo }}" readonly>
-                                        <input type="hidden" name="pid" value="{{ issue.project.id }}">
-                                    </div>
-                                </div>
-                                <div class="col-lg-2">
-                                    <div class="mb-3">
-                                        <label for="V9xO3aD7v33" class="form-label">Type <span
-                                                    class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" id="V9xO3aD7v33"
-                                               placeholder="{{ issue.type.name }}"
-                                               value="{{ issue.type.name }}" readonly>
-                                    </div>
-                                </div>
-                                <div class="col-lg-2">
-                                    <div class="mb-3">
-                                        <label for="V9xO3aD7v11" class="form-label">Issue crated by <span
-                                                    class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" id="V9xO3aD7v11"
-                                               placeholder="{{ issue.customer.name }}"
-                                               value="{{ issue.customer.name }}" readonly>
-                                    </div>
-                                </div>
-                            </div>
 
-                            <div class="row">
+                            <small class="text-secondary small">
+                                {{ issue.customer.company.name }} <span class="text-light-50">|</span>
+                                {{ issue.project.title }} <span class="text-light-50">|</span>
+                                T-{{ issue.ticketNo }}
+                                <span class="text-light-50">|</span>
+                                by {{ issue.customer.name }}
+                            </small>
+
+                            <div class="row mt-2">
                                 <div class="col-lg-10">
                                     <div class="mb-3">
                                         <label for="V9xO3aD7v22" class="form-label">Title <span
@@ -81,23 +59,6 @@
                                         <label for="V9xO3aD7v22" class="form-label">Description <span
                                                     class="text-danger">*</span></label>
                                         <div id="editor"></div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-lg-3">
-                                    <div class="form-group">
-                                        <label for="887nM4yT4bG2sO44">
-                                            Priority <span class="text-danger">*</span>
-                                        </label>
-                                        <select class="form-control" name="priority" id="887nM4yT4bG2sO44" required>
-                                            {% for priority in ticketPriorities %}
-                                                <option value="{{ priority.id }}" {{ priority.name == issue.priority.name ? 'selected' : '' }}>
-                                                    {{ priority.name }}
-                                                </option>
-                                            {% endfor %}
-                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -125,6 +86,7 @@
 
                             <div class="d-none">
                                 <input type="hidden" name="id" value="{{ issue.id }}">
+                                <input type="hidden" name="pid" value="{{ issue.project.id }}">
                             </div>
 
                             {% include "dashboard/component/edit_save_btn.html.twig" with {id:"formSave"} %}

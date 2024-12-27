@@ -4,7 +4,7 @@
 
 {% block body %}
 
-    {% set isAdminOrEmloyee = is_granted('ROLE_SUPER_ADMIN') or app.user.isNinja %}
+    {% set isAdminOrEmployee = is_granted('ROLE_SUPER_ADMIN') or app.user.isNinja %}
 
     <div class="content-wrapper">
 
@@ -39,54 +39,86 @@
                                     {{ issue.project.title }} <span class="text-light-50">|</span>
                                 </span>
                                 T-{{ issue.ticketNo }}
-                                <div class="float-right">
-                                    <form action="{{ path('app_dashboard_ticket_edit', {id:issue.id}) }}">
-                                        <input type="hidden" name="csrf" value="{{ hash(csrf_token(issue.id)) }}">
-                                        <span class="text-info pointer text-decoration-underline"
-                                              onclick="this.closest('form').submit();">
-                                            Edit <span class="md-d-none">issue</span> <span class="fa fa-edit fa-sm ps-1"></span>
-                                        </span>
-                                        <input type="hidden" name="pid" value="{{ issue.project.id }}">
-                                    </form>
+                                <div class="float-right mr-1">
+                                    <a class="text-info" data-toggle="dropdown" href="#" aria-expanded="false">
+                                        <span class="md-d-none">Menu</span> <i class="fa fa-ellipsis-h fa-sm"></i>
+                                    </a>
+                                    <div class="dropdown-menu">
+
+                                        <form class="dropdown-item pointer"
+                                              action="{{ path('app_dashboard_ticket_edit', {id:issue.id}) }}"
+                                              method="post">
+                                            <input type="hidden" name="_csrf_token"
+                                                   value="{{ hash(csrf_token(issue.id)) }}">
+                                            <span onclick="this.closest('form').submit();">
+                                                  <span class="fa fa-edit text-secondary fa-sm pr-2"></span>
+                                            <span class="font-size-14">Edit issue</span>
+                                            <input type="hidden" name="pid" value="{{ issue.project.id }}">
+                                            </span>
+                                        </form>
+
+                                        {% if isAdminOrEmployee %}
+                                            <form class="dropdown-item pointer" action="#"
+                                                  data-toggle="modal" data-target="#logTimeModal">
+                                                <span class="fa fa-clock text-secondary fa-sm pr-2"></span>
+                                                <span class="font-size-14">Add spent time</span>
+                                            </form>
+                                            <form class="dropdown-item pointer" action="#"
+                                                  data-toggle="modal" data-target="#changeStatusModal">
+                                                <span class="fa fa-edit text-secondary fa-sm pr-2"></span>
+                                                <span class="font-size-14">Edit Status</span>
+                                            </form>
+                                            <form class="dropdown-item pointer" action="#"
+                                                  data-toggle="modal" data-target="#assigneeModal">
+                                                <span class="fa fa-user-edit text-secondary fa-sm pr-2"></span>
+                                                <span class="font-size-14">Edit Assignee</span>
+                                            </form>
+                                        {% endif %}
+
+                                        <form class="dropdown-item pointer" action="#"
+                                              data-toggle="modal" data-target="#priorityModal">
+                                            <span class="fa fa-edit text-secondary fa-sm pr-2"></span>
+                                            <span class="font-size-14">Edit Priority</span>
+                                        </form>
+                                        <form class="dropdown-item pointer" action="#"
+                                              data-toggle="modal" data-target="#newAttachmentModal">
+                                            <span class="fa fa-upload text-secondary fa-sm pr-2"></span>
+                                            <span class="font-size-14">Upload Attachment</span>
+                                        </form>
+
+                                    </div>
+
                                 </div>
                             </small>
                             <h5 class="my-3">{{ issue.title }}</h5>
                             <div class="text-secondary">
                                 <p>{{ issue.description|raw }}</p>
-                                <p class="mb-1"><b>Issue created by: </b> <span>{{ issue.customer.name }}</span></p>
-                                <p class="mb-1">
-                                    <b>Priority: </b>
-                                    <span class="fa fa-circle fa-sm" style="color: {{ issue.priority.textColor }}"></span>
-                                    <span>{{ issue.priority.name }}</span></p>
-                                <p class="mb-1">
-                                    <b>Status: </b>
-                                    <span class="ticket-status"
-                                          style="background: {{ issue.status ? issue.status.color : '#9d8900' }}">
-                                         {{ issue.status ? issue.status.name : 'Open' }}
-                                    </span>
-                                    {% if isAdminOrEmloyee %}
-                                        <span class="ml-1 fs-13 text-info pointer text-decoration-underline"
-                                              data-toggle="modal" data-target="#changeStatusModal">
-                                               Edit <span class="fa fa-edit fa-sm text-info"></span>
-                                        </span>
-                                    {% endif %}
-                                </p>
                                 <p class="mb-1"><b>Type: </b> <span>{{ issue.type.name }}</span></p>
+                                <p class="mb-1"><b>Issue created by: </b> <span>{{ issue.customer.name }}</span></p>
                                 <p class="mb-1">
                                     <b>Label: </b>
                                     <span class="ticket-label" style="color: {{ issue.label.color }}">
                                         {{ issue.label.name }}
                                     </span>
                                 </p>
+                                <p class="mb-1">
+                                    <b>Priority: </b>
+                                    <span class="fa fa-circle fa-sm"
+                                          style="color: {{ issue.priority.textColor }}"></span>
+                                    <span>{{ issue.priority.name }}</span>
+                                </p>
+                                <p class="mb-1">
+                                    <b>Status: </b>
+                                    <span class="ticket-status"
+                                          style="background: {{ issue.status ? issue.status.color : '#9d8900' }}">
+                                         {{ issue.status ? issue.status.name : 'Open' }}
+                                    </span>
+                                </p>
                                 <p class="mb-1"><b>Assignee: </b>
                                     <span>{{ issue.assignee ? issue.assignee.name : 'unassigned' }}</span></p>
-                                {% if isAdminOrEmloyee %}
+                                {% if isAdminOrEmployee %}
                                     <p class="mb-1"><b>Spent Time: </b>
                                         <span>{{ issue.timeSpentInMinutes > 0 ? convertToHoursMinutes(issue.timeSpentInMinutes) : '00:00' }}</span>
-                                        <span class="ml-1 fs-13 text-info pointer text-decoration-underline"
-                                            data-toggle="modal" data-target="#logTimeModal">
-                                           Log time <span class="fa fa-clock fa-sm text-info"></span>
-                                        </span>
                                     </p>
                                 {% endif %}
                                 <p class="mb-1">
@@ -108,31 +140,18 @@
                 </div>
             </div>
 
-            <div class="container-fluid area-section">
-                <div class="row px-3 py-3">
-                    <div class="col-6">
-                        <h5>Attachments</h5>
-                    </div>
-                    <div class="col-6">
-                        <div class="text-right">
-                            <button class="btn btn-secondary btn-headers"
-                                    data-toggle="modal" data-target="#newAttachmentModal">
-                                <span class="fa fa-upload fa-sm"></span> <span
-                                        class="ps-1 md-d-none">Add Attachment</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                {% if count(attachments) > 0 %}
+            {% if count(attachments) > 0 %}
+                <div class="container-fluid area-section">
                     <div class="row mb-3">
                         <div class="col-12">
+                            <h5 class="px-3 pt-3 pb-2">Attachments</h5>
                             {% include 'dashboard/tickets/partial/table_attachment_content.html.twig' %}
                         </div>
                     </div>
-                {% endif %}
-            </div>
+                </div>
+            {% endif %}
 
-            {% if count(ticketActivities) > 0 and isAdminOrEmloyee %}
+            {% if count(ticketActivities) > 0 and is_granted('ROLE_SUPER_ADMIN') %}
                 <div class="container-fluid area-section">
                     <div class="row px-3 py-3">
                         <div class="col">
@@ -202,11 +221,13 @@
         </section>
     </div>
 
-    {% if isAdminOrEmloyee %}
+    {% if isAdminOrEmployee %}
         {% include 'dashboard/tickets/modal/log_time.html.twig' %}
         {% include 'dashboard/tickets/modal/change_status.html.twig' %}
+        {% include 'dashboard/tickets/modal/change_assignee.html.twig' %}
     {% endif %}
 
+    {% include 'dashboard/tickets/modal/change_priority.html.twig' %}
     {% include 'dashboard/tickets/modal/upload.html.twig' with{ticketId: issue.id} %}
 
 {% endblock %}

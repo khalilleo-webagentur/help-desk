@@ -258,6 +258,8 @@ class IndexController extends AbstractDashboardController
         }
 
         $statuses = $isAdmin ? $this->ticketStatusService->getAll() : [];
+        $assigners = $this->userService->getAllByCompany($user->getCompany());
+        $priorities = $this->ticketPriorityService->getAll();
 
         return $this->render('dashboard/tickets/view.html.twig', [
             'issue' => $issue,
@@ -265,7 +267,9 @@ class IndexController extends AbstractDashboardController
             'dir' => $this->getParameter('attachments'),
             'statuses' => $statuses,
             'attachments' => $attachments,
-            'comments' => $comments
+            'comments' => $comments,
+            'assigners' => $assigners,
+            'priorities' => $priorities
         ]);
     }
 
@@ -300,15 +304,9 @@ class IndexController extends AbstractDashboardController
 
         $users = $this->userService->getAllEmployees();
 
-        $statuses = $this->ticketStatusService->getAll();
-
-        $ticketPriorities = $this->ticketPriorityService->getAll();
-
         return $this->render('dashboard/tickets/edit.html.twig', [
             'issue' => $issue,
             'assignees' => $users,
-            'statuses' => $statuses,
-            'ticketPriorities' => $ticketPriorities,
         ]);
     }
 
@@ -382,20 +380,11 @@ class IndexController extends AbstractDashboardController
             );
         }
 
-        $priority = $this->ticketPriorityService->getById(
-            $this->validateNumber($request->request->get('priority'))
-        );
-
-        if (!$priority) {
-            $priority = $this->ticketPriorityService->getOneByName(AppHelper::PRIORITY_LOW);
-        }
-
         $this->ticketService->save(
             $issue
                 ->setTitle($title)
                 ->setDescription($description)
                 ->setAssignee($assignee)
-                ->setPriority($priority)
         );
 
         $this->addFlash('success', 'Issue has been saved.');
