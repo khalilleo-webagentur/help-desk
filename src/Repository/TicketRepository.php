@@ -86,6 +86,7 @@ class TicketRepository extends ServiceEntityRepository
     public function findAllByCriteria(
         ?int              $projectId,
         ?int              $statusId,
+        ?int              $priorityId,
         ?int              $labelId,
         ?int              $companyId,
         ?string           $issueCreatedBy,
@@ -134,6 +135,12 @@ class TicketRepository extends ServiceEntityRepository
             $qb->join('t1.assignee', 't8')
                 ->andWhere('t8.name LIKE :issueAssignedTo')
                 ->setParameter('issueAssignedTo', '%' . $issueAssignedTo . '%');
+        }
+
+        if ($priorityId > 0) {
+            $qb->join('t1.priority', 't9');
+            $qb->andWhere('t9.id = :priorityId')
+                ->setParameter('priorityId', $priorityId);
         }
 
         if ($issueNo > 0) {

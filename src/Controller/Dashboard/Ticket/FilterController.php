@@ -37,6 +37,7 @@ class FilterController extends AbstractDashboardController
         $projectId = $this->validateNumber($request->request->get('i5x5y0k6'));
         $labelId = $this->validateNumber($request->request->get('k8b7d6z0'));
         $statusId = $this->validateNumber($request->request->get('v4b6v7u1'));
+        $priorityId = $this->validateNumber($request->request->get('pT4bG2sO'));
         $issueCreatedBy = $this->validate($request->request->get('k4j0e2k9'));
         $issueAssignedTo = $this->validate($request->request->get('n7m2r3m5'));
         $ticketNo = $this->validateNumber($request->request->get('f6a0f1i8'));
@@ -58,6 +59,7 @@ class FilterController extends AbstractDashboardController
         $issues = $this->ticketService->getAllByCriteria(
             $projectId,
             $statusId,
+            $priorityId,
             $labelId,
             $companyId,
             $issueCreatedBy,

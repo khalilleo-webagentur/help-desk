@@ -73,11 +73,15 @@
                         </div>
                         <div class="col-lg-4">
                             <div class="form-group">
-                                <div class="mb-3">
-                                    <label for="k4j0e2k9" class="form-label">Issue created By</label>
-                                    <input type="text" class="form-control" id="k4j0e2k9"
-                                           placeholder="Name" name="k4j0e2k9">
-                                </div>
+                                <label for="PP7nM4yT4bG2sO44">Priority</label>
+                                <select class="form-control" name="pT4bG2sO" id="PP7nM4yT4bG2sO44">
+                                    <option value="0">Select priority</option>
+                                    {% for priority in ticketPriorities %}
+                                        <option value="{{ priority.id }}">
+                                            {{ priority.name }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
                             </div>
                         </div>
                         <div class="col-lg-4">
@@ -92,14 +96,23 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-lg-3">
+                        <div class="col-lg-4">
                             <div class="mb-3">
                                 <label for="V9xO3aD7v78Ticket" class="form-label">Ticket-No</label>
                                 <input type="text" class="form-control" id="V9xO3aD7v78Ticket"
                                        placeholder="Ticket no" name="f6a0f1i8">
                             </div>
                         </div>
-                        <div class="col-lg-3">
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <div class="mb-3">
+                                    <label for="k4j0e2k9" class="form-label">Issue created By</label>
+                                    <input type="text" class="form-control" id="k4j0e2k9"
+                                           placeholder="Name" name="k4j0e2k9">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
                             <div class="mb-3">
                                 <label for="V9xO3aD7v78Title" class="form-label">Title</label>
                                 <input type="text" class="form-control" id="V9xO3aD7v78Title"
@@ -107,7 +120,10 @@
                                        name="e2j0m2m5">
                             </div>
                         </div>
-                        <div class="col-lg-3">
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-4">
                             <div class="mb-3">
                                 <label for="V9xO3aD7v78dateTimeFrom" class="form-label">Date from</label>
                                 <input type="text" class="form-control datetimeSelectorFrom"
@@ -117,7 +133,7 @@
                                        value="{{ dateTimeFrom }}">
                             </div>
                         </div>
-                        <div class="col-lg-3">
+                        <div class="col-lg-4">
                             <div class="mb-3">
                                 <label for="V9xO3aD7v78dateTimeTo" class="form-label">Date to</label>
                                 <input type="text" class="form-control datetimeSelectorTo" id="V9xO3aD7v78dateTimeTo"

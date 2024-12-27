@@ -128,6 +128,7 @@ final readonly class TicketService
     public function getAllByCriteria(
         ?int              $projectId,
         ?int              $statusId,
+        ?int              $priorityId,
         ?int              $labelId,
         ?int              $companyId,
         ?string           $issueCreatedBy,
@@ -141,6 +142,7 @@ final readonly class TicketService
         return $this->ticketRepository->findAllByCriteria(
             $projectId,
             $statusId,
+            $priorityId,
             $labelId,
             $companyId,
             $issueCreatedBy,
