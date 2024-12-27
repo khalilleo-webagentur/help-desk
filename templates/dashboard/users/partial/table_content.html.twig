@@ -63,13 +63,19 @@
                 <td title="{{ row.createdAt|date }}">{{ timeAgo(row.createdAt) }}</td>
                 {% if isAdmin or app.user.isTeamLeader %}
                     <td>
-                        <form action="{{ path('app_dashboard_user_edit', {id:row.id}) }}">
-                            <input type="hidden" name="csrf" value="{{ hash(csrf_token(row.id)) }}">
-                            <button class="btn small-btn btn-outline-primary" type="submit">
-                                <span class="fa fa-pen fa-sm"></span>
-                                <input type="hidden" name="p7x5a8e9" value="{{ selectedCompanyId }}">
-                            </button>
-                        </form>
+                        <a class="text-secondary" data-toggle="dropdown" href="#" aria-expanded="false">
+                            <i class="fa fa-ellipsis-h fa-sm"></i>
+                        </a>
+                        <div class="dropdown-menu">
+                            <form class="dropdown-item pointer" action="{{ path('app_dashboard_user_edit', {id:row.id}) }}" method="post">
+                                <input type="hidden" name="csrf" value="{{ hash(csrf_token(row.id)) }}">
+                                <span onclick="this.closest('form').submit();">
+                                    <span class="fa fa-edit text-secondary fa-sm pr-2"></span>
+                                        <span class="font-size-14">Edit</span>
+                                        <input type="hidden" name="p7x5a8e9" value="{{ selectedCompanyId }}">
+                                    </span>
+                            </form>
+                        </div>
                     </td>
                 {% endif %}
             </tr>

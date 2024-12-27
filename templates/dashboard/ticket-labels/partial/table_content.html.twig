@@ -41,21 +41,17 @@
                         <td title="{{ row.createdAt|date }}">{{ timeAgo(row.createdAt) }}</td>
 
                         <td>
-                            <div class="d-flex">
-                                <form action="{{ path('app_dashboard_ticket_label_edit', {id:row.id}) }}" method="post">
+                            <a class="text-secondary" data-toggle="dropdown" href="#" aria-expanded="false">
+                                <i class="fa fa-ellipsis-h fa-sm"></i>
+                            </a>
+                            <div class="dropdown-menu">
+                                <form class="dropdown-item pointer"
+                                      action="{{ path('app_dashboard_ticket_label_edit', {id:row.id}) }}" method="post">
                                     <input type="hidden" name="csrf" value="{{ hash(csrf_token(row.id)) }}">
-                                    <button class="btn small-btn btn-outline-primary mr-2" type="submit">
-                                        <span class="fa fa-pen fa-sm"></span>
-                                    </button>
-                                </form>
-
-                                <form class="d-none"
-                                      action="{{ path('app_dashboard_ticket_label_delete', {id:row.id}) }}"
-                                      method="post">
-                                    <input type="hidden" name="csrf" value="{{ hash(csrf_token(row.id)) }}">
-                                    <button class="btn small-btn btn-outline-danger" type="submit">
-                                        <span class="fa fa-trash-alt fa-sm"></span>
-                                    </button>
+                                    <span onclick="this.closest('form').submit();">
+                                        <span class="fa fa-edit text-secondary fa-sm pr-2"></span>
+                                        <span class="font-size-14">Edit</span>
+                                    </span>
                                 </form>
                             </div>
                         </td>
