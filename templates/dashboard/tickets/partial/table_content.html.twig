@@ -89,19 +89,19 @@
                         </a>
                         <div class="dropdown-menu">
                             <form class="dropdown-item pointer"
-                                  action="{{ path('app_dashboard_ticket_edit', {id:row.id}) }}" method="post">
-                                <input type="hidden" name="csrf" value="{{ hash(csrf_token(row.id)) }}">
-                                <span onclick="this.closest('form').submit();">
-                                    <span class="fa fa-edit fa-sm pr-1"></span>
-                                        <span>Edit</span>
-                                        <input type="hidden" name="pid" value="{{ row.project.id }}">
-                                    </span>
-                            </form>
-                            <form class="dropdown-item pointer"
                                   action="{{ path('app_dashboard_ticket_view', {id: row.id}) }}" method="post">
                                 <input type="hidden" name="csrf" value="{{ hash(csrf_token(row.id)) }}">
                                 <span onclick="this.closest('form').submit();">
                                     <span class="fa fa-eye fa-sm pr-1"></span>
+                                        <span>View</span>
+                                        <input type="hidden" name="pid" value="{{ row.project.id }}">
+                                    </span>
+                            </form>
+                            <form class="dropdown-item pointer"
+                                  action="{{ path('app_dashboard_ticket_edit', {id:row.id}) }}" method="post">
+                                <input type="hidden" name="csrf" value="{{ hash(csrf_token(row.id)) }}">
+                                <span onclick="this.closest('form').submit();">
+                                    <span class="fa fa-edit fa-sm pr-1"></span>
                                         <span>Edit</span>
                                         <input type="hidden" name="pid" value="{{ row.project.id }}">
                                     </span>
