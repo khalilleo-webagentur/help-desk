@@ -5,7 +5,9 @@
     <table class="table table-hover text-nowrap">
         <thead>
         <tr class="fs-14">
-            <th>#</th>
+            {% if isAdmin %}
+                <th>#</th>
+            {% endif %}
             <th>{{ 'Name'|trans }}</th>
             {% if isAdmin %}
                 <th>{{ 'Company'|trans }}</th>
@@ -24,7 +26,9 @@
         <tbody>
         {% for row in users %}
             <tr class="fs-14">
-                <td>{{ row.id }}</td>
+                {% if isAdmin %}
+                    <td>{{ row.id }}</td>
+                {% endif %}
                 <td>{{ row.name }}
                     {% if isSuperAdmin(row) %}
                         <span class="fa fa-user-tie text-success fa-sm cursor-help" title="Super Admin"></span>

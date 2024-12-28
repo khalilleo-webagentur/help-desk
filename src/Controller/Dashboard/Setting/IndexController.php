@@ -41,15 +41,15 @@ class IndexController extends AbstractDashboardController
     {
         $this->denyAccessUnlessGrantedRoleCustomer();
 
-        $config = !$this->validateCheckbox($request->request->get('c1z3n6t4'));
-
         $user = $this->getUser();
 
         $setting = $this->userSettingService->getOneByUser($user);
 
-        $this->userSettingService->save($setting->setNotifyCloseTicket($config));
-
-        $this>$this->addFlash('success', 'Setting has been updated');
+        if ($setting) {
+            $config = true === $this->validateCheckbox($request->request->get('c1z3n6t4'));
+            $this->userSettingService->save($setting->setNotifyCloseTicket($config));
+            $this>$this->addFlash('success', 'Setting has been updated');
+        }
 
         return $this->redirectToRoute(self::DASHBOARD_SETTINGS_ROUTE);
     }
