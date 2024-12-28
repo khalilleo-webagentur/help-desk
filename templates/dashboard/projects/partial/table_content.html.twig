@@ -55,8 +55,8 @@
                                       action="{{ path('app_dashboard_project_edit', {id:row.id}) }}" method="post">
                                     <input type="hidden" name="csrf" value="{{ hash(csrf_token(row.id)) }}">
                                     <span onclick="this.closest('form').submit();">
-                                        <span class="fa fa-edit text-secondary fa-sm pr-2"></span>
-                                        <span class="font-size-14">Edit</span>
+                                        <span class="fa fa-edit fa-sm pr-1"></span>
+                                        <span>Edit</span>
                                     </span>
                                 </form>
 
@@ -65,8 +65,8 @@
                                       method="post">
                                     <input type="hidden" name="csrf" value="{{ hash(csrf_token(row.id)) }}">
                                     <span onclick="this.closest('form').submit();">
-                                        <span class="fa fa-trash text-secondary fa-sm pr-2"></span>
-                                        <span class="font-size-14">Delete</span>
+                                        <span class="ffa fa-trash fa-sm pr-1"></span>
+                                        <span>Delete</span>
                                     </span>
                                 </form>
                             </div>
