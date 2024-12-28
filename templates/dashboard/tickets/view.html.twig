@@ -47,14 +47,12 @@
 
                                         <form class="dropdown-item pointer menu-text-color"
                                               action="{{ path('app_dashboard_ticket_edit', {id:issue.id}) }}"
+                                              onclick="this.closest('form').submit();"
                                               method="post">
-                                            <input type="hidden" name="_csrf_token"
-                                                   value="{{ hash(csrf_token(issue.id)) }}">
-                                            <span onclick="this.closest('form').submit();">
-                                                  <span class="fa fa-edit fa-sm pr-2"></span>
+                                            <input type="hidden" name="_csrf_token" value="{{ hash(csrf_token(issue.id)) }}">
+                                            <span class="fa fa-edit fa-sm pr-2"></span>
                                             <span class="font-size-14">Edit issue</span>
                                             <input type="hidden" name="pid" value="{{ issue.project.id }}">
-                                            </span>
                                         </form>
 
                                         {% if isAdminOrEmployee %}
