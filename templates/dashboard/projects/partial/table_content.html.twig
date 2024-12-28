@@ -52,9 +52,10 @@
                             </a>
                             <div class="dropdown-menu">
                                 <form class="dropdown-item pointer"
+                                      onclick="this.closest('form').submit();"
                                       action="{{ path('app_dashboard_project_edit', {id:row.id}) }}" method="post">
                                     <input type="hidden" name="csrf" value="{{ hash(csrf_token(row.id)) }}">
-                                    <span onclick="this.closest('form').submit();">
+                                    <span>
                                         <span class="fa fa-edit fa-sm pr-1"></span>
                                         <span>Edit</span>
                                     </span>
@@ -62,9 +63,10 @@
 
                                 <form class="dropdown-item pointer d-none"
                                       action="{{ path('app_dashboard_project_delete', {id:row.id}) }}"
+                                      onclick="this.closest('form').submit();"
                                       method="post">
                                     <input type="hidden" name="csrf" value="{{ hash(csrf_token(row.id)) }}">
-                                    <span onclick="this.closest('form').submit();">
+                                    <span>
                                         <span class="ffa fa-trash fa-sm pr-1"></span>
                                         <span>Delete</span>
                                     </span>

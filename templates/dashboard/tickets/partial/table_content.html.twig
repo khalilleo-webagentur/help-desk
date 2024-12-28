@@ -89,22 +89,25 @@
                         </a>
                         <div class="dropdown-menu">
                             <form class="dropdown-item pointer"
+                                  onclick="this.closest('form').submit();"
                                   action="{{ path('app_dashboard_ticket_view', {id: row.id}) }}" method="post">
                                 <input type="hidden" name="csrf" value="{{ hash(csrf_token(row.id)) }}">
-                                <span onclick="this.closest('form').submit();">
+                                <span>
                                     <span class="fa fa-eye fa-sm pr-1"></span>
-                                        <span>View</span>
-                                        <input type="hidden" name="pid" value="{{ row.project.id }}">
-                                    </span>
+                                    <span>View</span>
+                                    <input type="hidden" name="pid" value="{{ row.project.id }}">
+                                </span>
                             </form>
                             <form class="dropdown-item pointer"
-                                  action="{{ path('app_dashboard_ticket_edit', {id:row.id}) }}" method="post">
+                                  action="{{ path('app_dashboard_ticket_edit', {id:row.id}) }}"
+                                  onclick="this.closest('form').submit();"
+                                  method="post">
                                 <input type="hidden" name="csrf" value="{{ hash(csrf_token(row.id)) }}">
-                                <span onclick="this.closest('form').submit();">
+                                <span>
                                     <span class="fa fa-edit fa-sm pr-1"></span>
-                                        <span>Edit</span>
-                                        <input type="hidden" name="pid" value="{{ row.project.id }}">
-                                    </span>
+                                    <span>Edit</span>
+                                    <input type="hidden" name="pid" value="{{ row.project.id }}">
+                                </span>
                             </form>
                         </div>
                     </td>
