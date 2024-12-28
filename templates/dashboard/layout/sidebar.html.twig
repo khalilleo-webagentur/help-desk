@@ -124,14 +124,24 @@
                             </li>
                         </ul>
                     </li>
-
                     <li class="nav-item">
                         <a href="#" class="nav-link">
                             <i class="fas fa-newspaper nav-icon"></i>
                             <p>Newsletter</p>
                         </a>
                     </li>
+                {% endif %}
 
+                <li class="nav-header">SETTINGS</li>
+
+                <li class="nav-item {{ _route == 'app_dashboard_settings_index' ? 'menu-is-opening menu-open' : '' }}">
+                    <a href="{{ path('app_dashboard_settings_index') }}" class="nav-link">
+                        <i class="fas fa-cog nav-icon"></i>
+                        <p>Settings</p>
+                    </a>
+                </li>
+
+                {% if isAdmin %}
                     <li class="nav-header">EXTRA</li>
                     <li class="nav-item">
                         <a href="#" class="nav-link">

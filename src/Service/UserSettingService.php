@@ -17,7 +17,7 @@ final readonly class UserSettingService
     ) {
     }
 
-    public function getOneByUser(User $user): ?UserSetting
+    public function getOneByUser(User|UserInterface $user): ?UserSetting
     {
         return $this->userSettingRepository->findOneBy(['user' => $user]);
     }

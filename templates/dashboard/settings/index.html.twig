@@ -1,0 +1,46 @@
+{% extends 'dashboard/layout/base.html.twig' %}
+
+{% block title %} Dashboard Settings {% endblock %}
+
+{% block body %}
+
+    <div class="content-wrapper">
+
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-6 mt-1">
+                        <h5 class="m-0 text-dark mt-1">Settings</h5>
+                    </div>
+                    <div class="col-6 mt-1">
+                        <div class="breadcrumb float-right"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <section class="content">
+            <div class="container-fluid area-section">
+
+                <div class="row px-3 py-3">
+                    <div class="col-lg-12">
+                        <h5>Ticket-Status Notifications</h5>
+                        <p class="text-secondary">An E-mail wil be sent directly to you if the status of ticket updated to Resolved or to Closed.</p>
+
+                        <form action="{{ path('app_dashboard_settings_store') }}" method="post">
+                            <div class="form-group form-check mt-3" onclick="this.closest('form').submit();">
+                                <input type="checkbox" class="form-check-input" id="c1z3n6t4" name="c1z3n6t4"
+                                        {{ notifyCustomerOnTicketStatusClosed ? 'checked' : '' }}>
+                                <label class="form-check-label" for="c1z3n6t4">
+                                    Let me know if a Ticket status is being changed to resolved or closed
+                                </label>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+{% endblock %}
