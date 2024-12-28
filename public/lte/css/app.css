@@ -90,6 +90,10 @@ label, label:not(.form-check-label):not(.custom-file-label) {
     color: #ccc;
 }
 
+.menu-text-color {
+    color: #8a8a8a;
+}
+
 .cursor-help {
     cursor: help;
 }

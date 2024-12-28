@@ -88,7 +88,7 @@
                             <i class="fa fa-ellipsis-h fa-sm"></i>
                         </a>
                         <div class="dropdown-menu">
-                            <form class="dropdown-item pointer"
+                            <form class="dropdown-item pointer menu-text-color"
                                   onclick="this.closest('form').submit();"
                                   action="{{ path('app_dashboard_ticket_view', {id: row.id}) }}" method="post">
                                 <input type="hidden" name="csrf" value="{{ hash(csrf_token(row.id)) }}">
@@ -98,7 +98,7 @@
                                     <input type="hidden" name="pid" value="{{ row.project.id }}">
                                 </span>
                             </form>
-                            <form class="dropdown-item pointer"
+                            <form class="dropdown-item pointer menu-text-color"
                                   action="{{ path('app_dashboard_ticket_edit', {id:row.id}) }}"
                                   onclick="this.closest('form').submit();"
                                   method="post">

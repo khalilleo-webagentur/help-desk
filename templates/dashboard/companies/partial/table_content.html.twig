@@ -48,7 +48,7 @@
                             <i class="fa fa-ellipsis-h fa-sm"></i>
                         </a>
                         <div class="dropdown-menu">
-                            <form class="dropdown-item pointer"
+                            <form class="dropdown-item pointer menu-text-color"
                                   action="{{ path('app_dashboard_company_edit', {id:row.id}) }}" method="post"
                                   onclick="this.closest('form').submit();">
                                 <input type="hidden" name="csrf" value="{{ hash(csrf_token(row.id)) }}">
@@ -57,13 +57,13 @@
                                     <span>Edit</span>
                                 </span>
                             </form>
-                            <form class="dropdown-item pointer d-none"
+                            <form class="dropdown-item pointer d-none menu-text-color"
                                   action="{{ path('app_dashboard_company_delete', {id:row.id}) }}"
                                   onclick="this.closest('form').submit();"
                                   method="post">
                                 <input type="hidden" name="csrf" value="{{ hash(csrf_token(row.id)) }}">
                                 <span>
-                                    <span class="fa fa-trash fa-sm pr-1"></span>
+                                    <span class="fa fa-trash fa-sm pr-1 text-light-50"></span>
                                     <span>Delete</span>
                                 </span>
                             </form>
