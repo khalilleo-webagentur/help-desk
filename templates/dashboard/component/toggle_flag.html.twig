@@ -1,0 +1,23 @@
+{% if actionRoute is defined and actionRoute %}
+    {% if flag is defined and flag %}
+        <form action="{{ path(actionRoute) }}"
+              method="post"
+              title="{{ title is defined and title ? title : 'Config' }}">
+            <img src="{{ asset('lte/img/toggle2-on.svg') }}" class="pointer"
+                 onclick="this.closest('form').submit();"
+                 alt="on">
+            <input type="hidden" name="config" value="on">
+            <input type="hidden" name="path" value="{{ app.request.get('_route') }}">
+        </form>
+    {% else %}
+        <form action="{{ path(actionRoute) }}"
+              method="post"
+              title="{{ title is defined and title ? title : 'Config' }}">
+            <img src="{{ asset('lte/img/toggle2-off.svg') }}" class="pointer"
+                 onclick="this.closest('form').submit();"
+                 alt="off">
+            <input type="hidden" name="config" value="off">
+            <input type="hidden" name="path" value="{{ app.request.get('_route') }}">
+        </form>
+    {% endif %}
+{% endif %}

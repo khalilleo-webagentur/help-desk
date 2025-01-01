@@ -25,21 +25,36 @@
                 <div class="row px-3 py-3">
                     <div class="col-lg-12">
                         <h5>Ticket-Status Notifications</h5>
-                        <p class="text-secondary">An E-mail will be sent to you directly if the status of ticket updated to Resolved or to Closed.</p>
+                        <p class="text-secondary"></p>
 
                         <form action="{{ path('app_dashboard_settings_store') }}" method="post">
                             <div class="form-group form-check mt-3" onclick="this.closest('form').submit();">
-                                <input type="checkbox" class="form-check-input" id="c1z3n6t4" name="c1z3n6t4"
+                                <input type="checkbox" class="form-check-input" id="c1z3n6t4" name="config"
                                         {{ notifyCustomerOnTicketStatusClosed ? 'checked' : '' }}>
                                 <label class="form-check-label fs-15" for="c1z3n6t4">
                                     Let me know if a Ticket status is being changed to resolved or closed
                                 </label>
+                                <span class="d-none">
+                                    <input type="hidden" name="path" value="{{ app.request.get('_route') }}">
+                                </span>
                             </div>
                         </form>
 
                     </div>
                 </div>
             </div>
+
+            {% if is_granted('ROLE_SUPER_ADMIN') %}
+                <div class="container-fluid area-section">
+                    <div class="row px-3 py-3">
+                        <div class="col-lg-12">
+                            <h5>Users Settings Overview</h5>
+                            {% include 'dashboard/settings/partial/table_content.html.twig' %}
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+
         </section>
     </div>
 

@@ -22,6 +22,14 @@ final readonly class UserSettingService
         return $this->userSettingRepository->findOneBy(['user' => $user]);
     }
 
+    /**
+     * @return UserSetting[]
+     */
+    public function getAll(): array
+    {
+        return $this->userSettingRepository->findAll();
+    }
+
     public function notifyCustomerOnTicketStatusClosed(UserInterface|User $user): bool
     {
         $setting = $this->getOneByUser($user);

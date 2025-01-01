@@ -29,14 +29,17 @@ class IndexController extends AbstractDashboardController
     {
         $this->denyAccessUnlessGrantedRoleCustomer();
 
+        $settings = $this->userSettingService->getAll();
+
         $notifyCustomerOnTicketStatusClosed = $this->userSettingService->notifyCustomerOnTicketStatusClosed($this->getUser());
 
         return $this->render('dashboard/settings/index.html.twig', [
+            'settings' => $settings,
             'notifyCustomerOnTicketStatusClosed' => $notifyCustomerOnTicketStatusClosed,
         ]);
     }
 
-    #[Route('/store', name: 'app_dashboard_settings_store', methods: ['POST'])]
+    #[Route('/store', name: 'app_dashboard_settings_store', methods: 'POST')]
     public function store(Request $request): RedirectResponse
     {
         $this->denyAccessUnlessGrantedRoleCustomer();
@@ -46,11 +49,12 @@ class IndexController extends AbstractDashboardController
         $setting = $this->userSettingService->getOneByUser($user);
 
         if ($setting) {
-            $config = !$this->validateCheckbox($request->request->get('c1z3n6t4'));
-            $this->userSettingService->save($setting->setNotifyCloseTicket($config));
+            $this->userSettingService->save($setting->setNotifyCloseTicket(
+                $request->request->get('config') === 'on'
+            ));
             $this>$this->addFlash('success', 'Setting has been updated');
         }
 
-        return $this->redirectToRoute(self::DASHBOARD_SETTINGS_ROUTE);
+        return $this->redirectToRoute($request->request->get('path'));
     }
 }
