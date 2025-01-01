@@ -175,4 +175,9 @@ final readonly class TicketService
 
         return $model;
     }
+
+    public function delete(Ticket $ticket): void
+    {
+        $this->ticketRepository->remove($ticket, true);
+    }
 }

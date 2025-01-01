@@ -37,6 +37,7 @@ class IndexController extends AbstractDashboardController
 
     private const DASHBOARD_TICKETS_ROUTE = 'app_dashboard_tickets_index';
     private const SEARCH_ROUTE = 'app_dashboard_ticket_search';
+    private const DASHBOARD_TICKET_VIEW_ROUTE = 'app_dashboard_ticket_view';
 
     public function __construct(
         private readonly UserService              $userService,
@@ -388,6 +389,68 @@ class IndexController extends AbstractDashboardController
         );
 
         $this->addFlash('success', 'Issue has been saved.');
+
+        return $this->redirectToRoute(self::DASHBOARD_TICKETS_ROUTE);
+    }
+
+    #[Route('/delete/{no}', name: 'app_dashboard_ticket_delete', methods: ['POST'])]
+    public function delete(?string $no, Request $request): Response
+    {
+        $this->denyAccessUnlessGrantedRoleCustomer();
+
+        $projectId = $this->validateNumber($request->get('pid'));
+        $issueId = $this->validateNumber($request->request->get('id'));
+
+        $project = $this->projectService->getById($projectId);
+
+        if (!$project) {
+            $this->addFlash('warning', 'Issue could not be found.');
+            return $this->redirectToRoute(self::DASHBOARD_TICKET_VIEW_ROUTE, [
+                'id' => $issueId,
+                'pid' => $projectId
+            ]);
+        }
+
+        $user = $this->getUser();
+        $isAdmin = $this->userService->isAdmin($user);
+
+        $issue = $isAdmin || $user->isNinja()
+            ? $this->ticketService->getById($issueId)
+            : $this->ticketService->getOneByProjectAndId($project, $issueId);
+
+        if (!$issue) {
+            $this->addFlash('warning', 'Issue could not be found.');
+            return $this->redirectToRoute(self::DASHBOARD_TICKET_VIEW_ROUTE, [
+                'id' => $issueId,
+                'pid' => $projectId
+            ]);
+        }
+
+        if (!empty($issue->getAssignee()) ||
+            !empty($issue->getInternalNote()) ||
+            $issue->getTimeSpentInMinutes() > 0 ||
+            $issue->getTicketComments()->count() > 0 ||
+            $issue->getAttachment()->count() > 0
+        ) {
+            $this->addFlash('warning', 'Issue could not be deleted.');
+            return $this->redirectToRoute(self::DASHBOARD_TICKET_VIEW_ROUTE, [
+                'id' => $issueId,
+                'pid' => $projectId
+            ]);
+        }
+
+        $this->monologService->logger->info(
+            sprintf(
+                'Issue T-%s has been deleted by %s',
+                $issue->getTicketNo(),
+                $user->getUserIdentifier()
+            )
+        );
+
+        $this->ticketActivitiesService->deleteByIssue($issue);
+        $this->ticketService->delete($issue);
+
+        $this->addFlash('success', 'Issue has been deleted.');
 
         return $this->redirectToRoute(self::DASHBOARD_TICKETS_ROUTE);
     }

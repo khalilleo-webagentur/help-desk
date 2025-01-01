@@ -42,6 +42,13 @@ final readonly class TicketActivitiesService
         return $model;
     }
 
+    public function deleteByIssue(Ticket $issue): void
+    {
+        foreach ($issue->getTicketActivities() as $ticketActivity) {
+            $this->delete($ticketActivity);
+        }
+    }
+
     public function delete(TicketActivity $model): void
     {
         $this->ticketActivityRepository->remove($model, true);

@@ -92,6 +92,11 @@
                                             <span class="fa fa-upload fa-sm pr-2"></span>
                                             <span class="font-size-14">Upload Attachment</span>
                                         </form>
+                                        <form class="dropdown-item pointer menu-text-color" action="#"
+                                              data-toggle="modal" data-target="#deleteIssueModal">
+                                            <span class="fa fa-trash-alt fa-xs pr-2"></span>
+                                            <span class="font-size-14">Delete issue</span>
+                                        </form>
 
                                     </div>
 
@@ -124,7 +129,7 @@
                                 <p class="mb-1"><b>Assignee: </b>
                                     <span>{{ issue.assignee ? issue.assignee.name : 'unassigned' }}</span></p>
                                 {% if isAdminOrEmployee %}
-                                    <p class="mb-1"><b>Spent Time: </b>
+                                    <p class="mb-1" title="Logged time in minutes: {{ issue.timeSpentInMinutes }}"><b>Spent Time: </b>
                                         <span>{{ issue.timeSpentInMinutes > 0 ? convertToHoursMinutes(issue.timeSpentInMinutes) : '00:00' }}</span>
                                     </p>
                                 {% endif %}
@@ -261,5 +266,6 @@
 
     {% include 'dashboard/tickets/modal/change_priority.html.twig' %}
     {% include 'dashboard/tickets/modal/upload.html.twig' with{ticketId: issue.id} %}
+    {% include 'dashboard/tickets/modal/delete_issue.html.twig' %}
 
 {% endblock %}

@@ -34,11 +34,6 @@ class LogTimeController extends AbstractDashboardController
         $minutes = $this->validateNumber($request->request->get('iO7nMi'));
         $projectId = $this->validateNumber($request->get('pid'));
 
-        if ($minutes <= 0) {
-            $this->addFlash('warning', 'Minutes must be greater than zero.');
-            return $this->redirectToRoute(self::DASHBOARD_TICKETS_ROUTE);
-        }
-
         if ($projectId <= 0) {
             $this->addFlash('warning', 'Project ID must be greater than zero.');
             return $this->redirectToRoute(self::DASHBOARD_TICKET_VIEW_ROUTE);

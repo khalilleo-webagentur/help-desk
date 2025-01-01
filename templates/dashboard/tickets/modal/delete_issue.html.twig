@@ -1,0 +1,41 @@
+<div class="modal fade" id="deleteIssueModal" tabindex="-1" role="dialog" aria-labelledby="deleteIssueModalTitle"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form action="{{ path('app_dashboard_ticket_delete', {no:issue.ticketNo}) }}" method="post">
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteIssueModalTitle">
+                        Delete issue
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body bg-light">
+                    <div class="mb-2">
+                        <div class="text-secondary">
+                            Issue can only be deleted when:
+                            <ol class="small">
+                                <li>Unassigned</li>
+                                <li>No Attachments</li>
+                                <li>No comments</li>
+                                {% if is_granted('ROLE_SUPER_ADMIN') %}
+                                    <li>No internal-note</li>
+                                    <li>Spent time equal zero</li>
+                                {% endif %}
+                            </ol>
+                        </div>
+                        <p>Sure to delete this issue T-{{ issue.ticketNo }}?</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-outline-danger">Delete issue</button>
+                    <input type="hidden" name="pid" value="{{ issue.project.id }}">
+                    <input type="hidden" name="id" value="{{ issue.id }}">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
