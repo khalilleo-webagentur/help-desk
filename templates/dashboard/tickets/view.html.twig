@@ -71,6 +71,15 @@
                                                 <span class="fa fa-user-edit fa-sm pr-2"></span>
                                                 <span class="font-size-14">Edit Assignee</span>
                                             </form>
+
+                                            {% if issue.internalNote == null and is_granted('ROLE_SUPER_ADMIN') %}
+                                                <form class="dropdown-item pointer menu-text-color" action="#"
+                                                      data-toggle="modal" data-target="#internalNoteModal">
+                                                    <span class="fa fa-sticky-note fa-sm pr-2"></span>
+                                                    <span class="font-size-14">Add Internal Note</span>
+                                                </form>
+                                            {% endif %}
+
                                         {% endif %}
 
                                         <form class="dropdown-item pointer menu-text-color" action="#"
@@ -137,6 +146,29 @@
                     </div>
                 </div>
             </div>
+
+            {% if issue.internalNote and is_granted('ROLE_SUPER_ADMIN') %}
+                <div class="container-fluid area-section">
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <h5 class="px-3 pt-3 pb-2">Internal Note</h5>
+                            <p class="px-3">{{ issue.internalNote }}</p>
+
+                            <div class="d-flex float-right">
+                                <button class="btn btn-light btn-sm mr-2"
+                                        data-toggle="modal" data-target="#internalNoteModal">
+                                    <span class="fa fa-edit text-primary fa-xs"></span>
+                                </button>
+                                <button class="btn btn-light btn-sm"
+                                        data-toggle="modal" data-target="#clearInternalNoteModal">
+                                    <span class="fa fa-trash text-danger fa-xs"></span>
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
 
             {% if count(attachments) > 0 %}
                 <div class="container-fluid area-section">
@@ -220,6 +252,8 @@
     </div>
 
     {% if isAdminOrEmployee %}
+        {% include 'dashboard/tickets/modal/internal_note.html.twig' %}
+        {% include 'dashboard/tickets/modal/internal_note_nullable.html.twig' %}
         {% include 'dashboard/tickets/modal/log_time.html.twig' %}
         {% include 'dashboard/tickets/modal/change_status.html.twig' %}
         {% include 'dashboard/tickets/modal/change_assignee.html.twig' %}

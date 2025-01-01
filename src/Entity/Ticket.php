@@ -37,6 +37,9 @@ class Ticket
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $internalNote = null;
+
     #[ORM\Column]
     private int $timeSpentInMinutes = 0;
 
@@ -160,6 +163,18 @@ class Ticket
     public function setDescription(string $description): static
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getInternalNote(): ?string
+    {
+        return $this->internalNote;
+    }
+
+    public function setInternalNote(?string $internalNote): static
+    {
+        $this->internalNote = $internalNote;
 
         return $this;
     }
