@@ -15,7 +15,10 @@
                 <th>{{ 'Assignee'|trans }}</th>
                 <th>{{ 'Title'|trans }}</th>
                 <th>{{ 'Status'|trans }}</th>
-                <th>{{ 'Updated'|trans }}</th>
+                {% if is_granted('ROLE_SUPER_ADMIN') %}
+                    <th>{{ 'Spent-time'|trans }}</th>
+                {% endif %}
+                <th>{{ 'Modified'|trans }}</th>
                 <th>{{ 'Created'|trans }}</th>
                 <th>{{ 'Action'|trans }}</th>
             </tr>
@@ -78,6 +81,12 @@
                              {{ row.status ? row.status.name : 'Open' }}
                         </span>
                     </td>
+
+                    {% if is_granted('ROLE_SUPER_ADMIN') %}
+                        <td>
+                            <span>{{ row.timeSpentInMinutes > 0 ? convertToHoursMinutes(row.timeSpentInMinutes) : '00:00' }}</span>
+                        </td>
+                    {% endif %}
 
                     <td title="{{ row.updatedAt|date }}">{{ timeAgo(row.updatedAt) }}</td>
 
