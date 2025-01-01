@@ -46,7 +46,7 @@ class IndexController extends AbstractDashboardController
         $setting = $this->userSettingService->getOneByUser($user);
 
         if ($setting) {
-            $config = true === $this->validateCheckbox($request->request->get('c1z3n6t4'));
+            $config = !$this->validateCheckbox($request->request->get('c1z3n6t4'));
             $this->userSettingService->save($setting->setNotifyCloseTicket($config));
             $this>$this->addFlash('success', 'Setting has been updated');
         }
