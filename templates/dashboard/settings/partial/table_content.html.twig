@@ -27,13 +27,16 @@
                         </form>
                     </td>
                     <td>
-                        {% include 'dashboard/component/toggle_flag.html.twig'
-                            with {
-                                flag:row.notifyCloseTicket,
-                                actionRoute: 'app_dashboard_settings_store',
-                                title: 'An E-mail will be sent to user directly if the status of ticket updated to Resolved or to Closed.'
-                            }
-                        %}
+                        <form action="{{ path('app_dashboard_settings_store') }}"
+                              method="post"
+                              title="An E-mail will be sent to user directly if the status of ticket updated to Resolved or to Closed.">
+                            <img src="{{ asset( row.notifyCloseTicket ? 'lte/img/toggle2-on.svg' : 'lte/img/toggle2-off.svg') }}" class="pointer"
+                                 onclick="this.closest('form').submit();"
+                                 alt="Toggle">
+                            <input type="hidden" name="config" value="{{ row.notifyCloseTicket ? 'on' : 'off' }}">
+                            <input type="hidden" name="uId" value="{{ row.user.id }}">
+                            <input type="hidden" name="path" value="{{ app.request.get('_route') }}">
+                        </form>
                     </td>
                     <td title="{{ row.updatedAt|date }}">{{ timeAgo(row.updatedAt) }}</td>
                     <td title="{{ row.createdAt|date }}">{{ timeAgo(row.createdAt) }}</td>

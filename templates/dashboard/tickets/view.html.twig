@@ -99,12 +99,11 @@
                                         </form>
 
                                     </div>
-
                                 </div>
                             </small>
-                            <h5 class="my-3">{{ issue.title }}</h5>
+                            <h4 class="my-3">{{ issue.title }}</h4>
                             <div class="text-secondary">
-                                <p>{{ issue.description|raw }}</p>
+                                <div class="pm-bottom">{{ issue.description|raw }}</div>
                                 <p class="mb-1"><b>Type: </b> <span>{{ issue.type.name }}</span></p>
                                 <p class="mb-1"><b>Issue created by: </b> <span>{{ issue.customer.name }}</span></p>
                                 <p class="mb-1">

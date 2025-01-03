@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Dashboard\Setting;
 
 use App\Controller\Dashboard\AbstractDashboardController;
+use App\Service\UserService;
 use App\Service\UserSettingService;
 use App\Traits\FormValidationTrait;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -20,7 +21,8 @@ class IndexController extends AbstractDashboardController
     private const DASHBOARD_SETTINGS_ROUTE = 'app_dashboard_settings_index';
 
     public function __construct(
-        private readonly UserSettingService $userSettingService
+        private readonly UserService $userService,
+        private readonly UserSettingService $userSettingService,
     ) {
     }
 
@@ -44,13 +46,15 @@ class IndexController extends AbstractDashboardController
     {
         $this->denyAccessUnlessGrantedRoleCustomer();
 
-        $user = $this->getUser();
+        $user = $this->userService->getById(
+            $this->validateNumber($request->request->get('uId'))
+        );
 
         $setting = $this->userSettingService->getOneByUser($user);
 
         if ($setting) {
             $this->userSettingService->save($setting->setNotifyCloseTicket(
-                $request->request->get('config') === 'on'
+                !$this->validateCheckbox($request->request->get('config'))
             ));
             $this>$this->addFlash('success', 'Setting has been updated');
         }

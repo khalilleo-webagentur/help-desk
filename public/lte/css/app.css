@@ -219,6 +219,11 @@ body {
     transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out !important;
 }
 
+.pm-bottom > p {
+    padding-bottom: 1px;
+    margin-bottom: 1px;
+}
+
 @media (max-width: 868px) {
     .md-text-center {
         text-align: center !important;
