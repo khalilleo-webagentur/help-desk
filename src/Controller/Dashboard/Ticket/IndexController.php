@@ -373,10 +373,8 @@ class IndexController extends AbstractDashboardController
                 $issue,
                 $user,
                 sprintf(
-                    '%s updated description of issue form: [%s] to [%s]',
-                    $user->getName(),
-                    strip_tags($issue->getDescription()),
-                    strip_tags($description)
+                    '%s updated description of issue.',
+                    $user->getName()
                 )
             );
         }
