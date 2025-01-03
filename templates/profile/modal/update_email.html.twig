@@ -3,7 +3,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title text-dark fs-5" id="emailModalLabel">Change Email</h1>
+                <h1 class="modal-title text-secondary fs-5" id="emailModalLabel">Change Email</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
@@ -11,7 +11,9 @@
                 <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label for="iEmail" class="form-label text-secondary">New Email:</label>
+                        <label for="iEmail" class="form-label text-secondary">
+                            New E-mail: <span class="text-danger">*</span>
+                        </label>
                         <input type="text" class="form-control" id="iEmail" placeholder="{{ app.user.email }}"
                                name="iEmail" style="height: 42px; border-radius: 0;" required autofocus>
                         <small class="text-secondary text-secondary">This feld is required.</small>
