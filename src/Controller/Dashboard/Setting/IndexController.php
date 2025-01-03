@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/dashboard/settings/seb8y5m8x4w4c2ng')]
+#[Route('/dashboard/settings/k9v1l4u9a0k2x8f5')]
 class IndexController extends AbstractDashboardController
 {
     use FormValidationTrait;
@@ -41,14 +41,12 @@ class IndexController extends AbstractDashboardController
         ]);
     }
 
-    #[Route('/store', name: 'app_dashboard_settings_store', methods: 'POST')]
-    public function store(Request $request): RedirectResponse
+    #[Route('/m1y2w9a5', name: 'app_dashboard_settings_store_own_config', methods: 'POST')]
+    public function storeOwnConfig(Request $request): RedirectResponse
     {
         $this->denyAccessUnlessGrantedRoleCustomer();
 
-        $user = $this->userService->getById(
-            $this->validateNumber($request->request->get('uId'))
-        );
+        $user = $this->getUser();
 
         $setting = $this->userSettingService->getOneByUser($user);
 
@@ -60,5 +58,33 @@ class IndexController extends AbstractDashboardController
         }
 
         return $this->redirectToRoute($request->request->get('path'));
+    }
+
+    #[Route('/store', name: 'app_dashboard_settings_store', methods: 'POST')]
+    public function store(Request $request): RedirectResponse
+    {
+        $this->denyAccessUnlessGrantedRoleSuperAdmin();
+
+        $user = $this->userService->getById(
+            $this->validateNumber($request->request->get('uId'))
+        );
+
+        $path = $this->validate($request->request->get('path'));
+
+        if (!$user) {
+            $this->addFlash('warning', 'User not found');
+            return $this->redirectToRoute($path);
+        }
+
+        $setting = $this->userSettingService->getOneByUser($user);
+
+        if ($setting) {
+            $this->userSettingService->save($setting->setNotifyCloseTicket(
+                !$this->validateCheckbox($request->request->get('config'))
+            ));
+            $this>$this->addFlash('success', 'Setting has been updated');
+        }
+
+        return $this->redirectToRoute($path);
     }
 }

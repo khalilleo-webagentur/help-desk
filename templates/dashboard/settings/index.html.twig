@@ -27,7 +27,7 @@
                         <h5>Ticket-Status Notifications</h5>
                         <p class="text-secondary"></p>
 
-                        <form action="{{ path('app_dashboard_settings_store') }}" method="post">
+                        <form action="{{ path('app_dashboard_settings_store_own_config') }}" method="post">
                             <div class="form-group form-check mt-3" onclick="this.closest('form').submit();">
                                 <input type="checkbox" class="form-check-input" id="c1z3n6t4" name="config"
                                         {{ notifyCustomerOnTicketStatusClosed ? 'checked' : '' }}>
