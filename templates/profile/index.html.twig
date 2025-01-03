@@ -17,8 +17,8 @@
                         My Profile
                         <span class="float-end">
                            {% if is_granted('ROLE_SUPER_ADMIN') or is_granted('ROLE_CUSTOMER') %}
-                               <a href="{{ path('app_dashboard_index') }}" class="text-decoration-none" style="font-size: 14px;">
-                                   Help-desk <span class="bi bi-arrow-right"></span>
+                               <a href="{{ path('app_dashboard_index') }}" class="text-decoration-none" style="font-size: 13px;">
+                                   Help-desk <span class="bi bi-box-arrow-up-right fs-13"></span>
                                 </a>
                            {% endif %}
                         </span>
