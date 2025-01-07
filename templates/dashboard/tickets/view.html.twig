@@ -34,8 +34,8 @@
                         {% if issue %}
 
                             <small class="text-secondary small">
-                                {{ issue.customer.company.name }} <span class="text-light-50 px-1">|</span>
-                                {{ issue.project.title }} <span class="text-light-50 px-1">|</span>
+                                {{ issue.customer.company.name }} <span class="text-light-50">|</span>
+                                {{ issue.project.title }} <span class="text-light-50">|</span>
                                 T-{{ issue.ticketNo }}
                                 <div class="float-right mx-1">
                                     <a class="text-info" data-toggle="dropdown" href="#" aria-expanded="false">
@@ -47,7 +47,8 @@
                                               action="{{ path('app_dashboard_ticket_edit', {id:issue.id}) }}"
                                               onclick="this.closest('form').submit();"
                                               method="post">
-                                            <input type="hidden" name="_csrf_token" value="{{ hash(csrf_token(issue.id)) }}">
+                                            <input type="hidden" name="_csrf_token"
+                                                   value="{{ hash(csrf_token(issue.id)) }}">
                                             <span class="fa fa-edit fa-sm pr-2"></span>
                                             <span class="font-size-14">Edit issue</span>
                                             <input type="hidden" name="pid" value="{{ issue.project.id }}">
@@ -78,6 +79,12 @@
                                                 </form>
                                             {% endif %}
 
+                                            <form class="dropdown-item pointer menu-text-color" action="#"
+                                                  data-toggle="modal" data-target="#linkIssueModal">
+                                                <span class="fa fa-link fa-sm pr-2"></span>
+                                                <span class="font-size-14">Link issue to</span>
+                                            </form>
+
                                         {% endif %}
 
                                         <form class="dropdown-item pointer menu-text-color" action="#"
@@ -99,7 +106,27 @@
                                     </div>
                                 </div>
                             </small>
+
+                            {% if issue.linkToTicket and issue.linkToTicketId %}
+                                <div class="alert-issue small mt-3">
+                                    <form action="{{ path('app_dashboard_ticket_view', {id: issue.linkToTicketId}) }}"
+                                          method="post">
+                                        <input type="hidden" name="csrf"
+                                               value="{{ hash(csrf_token(issue.linkToTicketId)) }}">
+                                        <span onclick="this.closest('form').submit();"
+                                              title="View issue T-{{ issue.linkToTicket }}">
+                                            This issue has been linked to
+                                            <span class="pointer text-primary">
+                                                T-{{ issue.linkToTicket }}
+                                            </span>
+                                            <input type="hidden" name="pid" value="{{ issue.project.id }}">
+                                        </span>
+                                    </form>
+                                </div>
+                            {% endif %}
+
                             <h4 class="my-3">{{ issue.title }}</h4>
+
                             <div class="text-secondary">
                                 <div class="pm-bottom">{{ issue.description|raw }}</div>
                                 <p class="mb-1"><b>Type: </b> <span>{{ issue.type.name }}</span></p>
@@ -126,7 +153,8 @@
                                 <p class="mb-1"><b>Assignee: </b>
                                     <span>{{ issue.assignee ? issue.assignee.name : 'unassigned' }}</span></p>
                                 {% if isAdminOrEmployee %}
-                                    <p class="mb-1" title="Logged time in minutes: {{ issue.timeSpentInMinutes }}"><b>Spent Time: </b>
+                                    <p class="mb-1" title="Logged time in minutes: {{ issue.timeSpentInMinutes }}"><b>Spent
+                                            Time: </b>
                                         <span>{{ issue.timeSpentInMinutes > 0 ? convertToHoursMinutes(issue.timeSpentInMinutes) : '00:00' }}</span>
                                     </p>
                                 {% endif %}
@@ -259,6 +287,7 @@
         {% include 'dashboard/tickets/modal/log_time.html.twig' %}
         {% include 'dashboard/tickets/modal/change_status.html.twig' %}
         {% include 'dashboard/tickets/modal/change_assignee.html.twig' %}
+        {% include 'dashboard/tickets/modal/link_issue.html.twig' %}
     {% endif %}
 
     {% include 'dashboard/tickets/modal/change_priority.html.twig' %}

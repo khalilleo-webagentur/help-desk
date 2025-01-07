@@ -169,6 +169,17 @@ final readonly class TicketService
         return $this->ticketRepository->count(['status' => $status]);
     }
 
+    public function linkIssue(Ticket $model, ?string $targetTicketNo, ?int $targetTicktId): Ticket
+    {
+        $this->save(
+            $model
+                ->setLinkToTicket($targetTicketNo)
+                ->setLinkToTicketId($targetTicktId),
+        );
+
+        return $model;
+    }
+
     public function save(Ticket $model): Ticket
     {
         $this->ticketRepository->save($model->setUpdatedAt(new DateTime()), true);

@@ -20,6 +20,12 @@ class Ticket
     #[ORM\Column(length: 150)]
     private int $ticketNo = 0;
 
+    #[ORM\Column(length: 100, nullable: true)]
+    private ?string $linkToTicket = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $linkToTicketId = null;
+
     #[ORM\ManyToOne(inversedBy: 'tickets')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $customer = null;
@@ -103,6 +109,30 @@ class Ticket
     public function setTicketNo(int $ticketNo): static
     {
         $this->ticketNo = $ticketNo;
+
+        return $this;
+    }
+
+    public function getLinkToTicket(): ?string
+    {
+        return $this->linkToTicket;
+    }
+
+    public function setLinkToTicket(?string $linkToTicket): static
+    {
+        $this->linkToTicket = $linkToTicket;
+
+        return $this;
+    }
+
+    public function getLinkToTicketId(): ?int
+    {
+        return $this->linkToTicketId;
+    }
+
+    public function setLinkToTicketId(?int $linkToTicketId): static
+    {
+        $this->linkToTicketId = $linkToTicketId;
 
         return $this;
     }

@@ -283,6 +283,19 @@ body {
     padding: 10px 12px 6px 10px;
 }
 
+.alert-issue {
+    border-left: 2px solid #3c75e4;
+    padding: 12px;
+    background: rgba(213, 223, 253, 0.51);
+    color: #0b2964;
+    font-size: 14px !important;
+}
+
+.alert-issue > .fa {
+    color: #3c75e4;
+    font-size: 15px;
+}
+
 .modal-info {
     border-left: 3px solid #1e4eac;
     padding: 14px 14px;
