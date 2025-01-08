@@ -188,10 +188,12 @@
                                 <button class="btn btn-light btn-sm mr-2"
                                         data-toggle="modal" data-target="#internalNoteModal">
                                     <span class="fa fa-edit text-primary fa-xs"></span>
+                                    <small class="text-primary">EDIT</small>
                                 </button>
                                 <button class="btn btn-light btn-sm"
                                         data-toggle="modal" data-target="#clearInternalNoteModal">
                                     <span class="fa fa-trash text-danger fa-xs"></span>
+                                    <small class="text-danger">DELETE</small>
                                 </button>
                             </div>
 
@@ -247,7 +249,9 @@
                                             {{ comment.commentedByName }}
                                             <small class="ml-2 text-secondary">{{ timeAgo(comment.createdAt) }}</small>
                                         </h6>
-                                        {{ comment.description|raw }}
+                                        <div class="pm-bottom">
+                                            {{ comment.description|raw }}
+                                        </div>
                                         {#  <small class="text-secondary">
                                             Reply <span class="px-2">.</span>
                                             Like {{ comment.likeCounter > 0 ? comment.likeCounter : '' }}<span
@@ -256,6 +260,20 @@
                                         </small> #}
                                     </div>
                                 </div>
+                                {% if is_granted('ROLE_SUPER_ADMIN') %}
+                                    <form action="{{ path('app_dashboard_ticket_comment_delete') }}"
+                                          class="float-right"
+                                          method="post">
+                                        <button class="btn btn-light btn-sm" type="submit"
+                                                title="Delete Attachment permanently!">
+                                            <span class="fa fa-trash text-danger fa-xs"></span>
+                                            <small class="text-danger">DELETE</small>
+                                        </button>
+                                        <span class="text-white">
+                                            <input type="hidden" name="comment" value="{{ comment.id }}">
+                                        </span>
+                                    </form>
+                                {% endif %}
                             </div>
                         </div>
                     {% endfor %}

@@ -83,4 +83,21 @@ class CommentController extends AbstractDashboardController
 
         return $backToRoute;
     }
+
+    #[Route('/delete', name: 'app_dashboard_ticket_comment_delete', methods: 'POST')]
+    public function delete(Request $request): RedirectResponse
+    {
+        $this->denyAccessUnlessGrantedRoleSuperAdmin();
+
+        $commentId = $this->validateNumber($request->request->get('comment'));
+
+        $user = $this->getUser();
+
+        if ($comment = $this->ticketCommentsService->getById($commentId)) {
+            $this->ticketCommentsService->delete($user, $comment);
+            $this->addFlash('success', 'Comment has been deleted.');
+        }
+
+        return $this->redirectToRoute(self::DASHBOARD_TICKETS_ROUTE);
+    }
 }

@@ -6,6 +6,7 @@ namespace App\Service;
 
 use App\Entity\TicketComment;
 use App\Repository\TicketCommentRepository;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 final readonly class TicketCommentsService
 {
@@ -14,9 +15,20 @@ final readonly class TicketCommentsService
     ) {
     }
 
+    public function getById(int $id): ?TicketComment
+    {
+        return $this->ticketCommentRepository->find($id);
+    }
+
     public function save(TicketComment $ticketComment): TicketComment
     {
         $this->ticketCommentRepository->save($ticketComment->setUpdatedAt(new \DateTime()), true);
         return $ticketComment;
+    }
+
+    public function delete(UserInterface $user, TicketComment $ticketComment): void
+    {
+        $ticketComment->removeCommentedBy($user);
+        $this->ticketCommentRepository->remove($ticketComment, true);
     }
 }

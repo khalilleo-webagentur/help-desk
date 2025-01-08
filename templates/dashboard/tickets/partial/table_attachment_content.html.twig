@@ -39,13 +39,17 @@
                         <form action="{{ path('app_dashboard_ticket_helper_delete_file', {hash: hash(attachment.filename)}) }}"
                               method="post">
                             <input type="hidden" name="csrf" value="{{ hash(csrf_token(attachment.id)) }}">
-                            <p class="text-danger fs-15 pointer"
-                               onclick="this.closest('form').submit();">
-                                Delete
-                            </p>
-                            <input type="hidden" name="tId" value="{{ attachment.ticket.id }}">
-                            <input type="hidden" name="pid" value="{{ attachment.ticket.project.id }}">
-                            <input type="hidden" name="aId" value="{{ attachment.id }}">
+
+                            <button class="btn btn-light btn-sm" type="submit"
+                                    title="Delete Attachment permanently!">
+                                <span class="fa fa-trash text-danger fa-xs"></span>
+                                <small class="text-danger">DELETE</small>
+                            </button>
+                           <div>
+                               <input type="hidden" name="tId" value="{{ attachment.ticket.id }}">
+                               <input type="hidden" name="pid" value="{{ attachment.ticket.project.id }}">
+                               <input type="hidden" name="aId" value="{{ attachment.id }}">
+                           </div>
                         </form>
                     </td>
                 </tr>

@@ -30,17 +30,17 @@
 
                 <div class="row px-2 py-3">
                     <div class="col-lg-12">
+
+                        <small class="text-secondary small mb-3">
+                            {{ issue.customer.company.name }} <span class="text-light-50">|</span>
+                            {{ issue.project.title }} <span class="text-light-50">|</span>
+                            T-{{ issue.ticketNo }}
+                            <span class="text-light-50">|</span>
+                            by {{ issue.customer.name }}
+                        </small>
+
                         <form action="{{ path('app_dashboard_ticket_store', {no:issue.ticketNo}) }}" method="post">
                             <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-
-                            <small class="text-secondary small">
-                                {{ issue.customer.company.name }} <span class="text-light-50">|</span>
-                                {{ issue.project.title }} <span class="text-light-50">|</span>
-                                T-{{ issue.ticketNo }}
-                                <span class="text-light-50">|</span>
-                                by {{ issue.customer.name }}
-                            </small>
-
                             <div class="row mt-2">
                                 <div class="col-lg-10">
                                     <div class="mb-3">
