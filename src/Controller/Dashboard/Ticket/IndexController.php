@@ -401,12 +401,14 @@ class IndexController extends AbstractDashboardController
 
         $project = $this->projectService->getById($projectId);
 
+        $redirectBack = $this->redirectToRoute(self::DASHBOARD_TICKET_VIEW_ROUTE, [
+            'id' => $issueId,
+            'pid' => $projectId
+        ]);
+
         if (!$project) {
             $this->addFlash('warning', 'Issue could not be found.');
-            return $this->redirectToRoute(self::DASHBOARD_TICKET_VIEW_ROUTE, [
-                'id' => $issueId,
-                'pid' => $projectId
-            ]);
+            return $redirectBack;
         }
 
         $user = $this->getUser();
@@ -418,23 +420,18 @@ class IndexController extends AbstractDashboardController
 
         if (!$issue) {
             $this->addFlash('warning', 'Issue could not be found.');
-            return $this->redirectToRoute(self::DASHBOARD_TICKET_VIEW_ROUTE, [
-                'id' => $issueId,
-                'pid' => $projectId
-            ]);
+            return $redirectBack;
         }
 
         if (!empty($issue->getAssignee()) ||
             !empty($issue->getInternalNote()) ||
             $issue->getTimeSpentInMinutes() > 0 ||
             $issue->getTicketComments()->count() > 0 ||
-            $issue->getAttachment()->count() > 0
+            $issue->getAttachment()->count() > 0 ||
+            $this->ticketService->getById($issueId+1)
         ) {
             $this->addFlash('warning', 'Issue could not be deleted.');
-            return $this->redirectToRoute(self::DASHBOARD_TICKET_VIEW_ROUTE, [
-                'id' => $issueId,
-                'pid' => $projectId
-            ]);
+            return $redirectBack;
         }
 
         $this->monologService->logger->info(

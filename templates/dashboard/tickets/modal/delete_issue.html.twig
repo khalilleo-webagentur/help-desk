@@ -14,12 +14,13 @@
                 </div>
                 <div class="modal-body bg-light">
                     <div class="mb-2">
-                        <div class="text-secondary">
+                        <div class="modal-info">
                             Issue can only be deleted when:
-                            <ol class="small">
+                            <ol class="small mb-0 pb-0">
                                 <li>Unassigned</li>
                                 <li>No Attachments</li>
                                 <li>No comments</li>
+                                <li>No other issue after it</li>
                                 {% if is_granted('ROLE_SUPER_ADMIN') %}
                                     <li>No internal-note</li>
                                     <li>Spent time equal zero</li>
