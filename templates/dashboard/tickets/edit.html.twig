@@ -41,7 +41,25 @@
 
                         <form action="{{ path('app_dashboard_ticket_store', {no:issue.ticketNo}) }}" method="post">
                             <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
                             <div class="row mt-2">
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label for="iO7nM4yT4bG2sO44">
+                                            Project <span class="text-danger">*</span>
+                                        </label>
+                                        <select class="form-control" name="project" id="iO7nM4yT4bG2sO44" required>
+                                            {% for project in projects %}
+                                                <option value="{{ project.id }}" {{ project.id == issue.project.id ? 'selected' : '' }}>
+                                                    {{ project.title }}
+                                                </option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
                                 <div class="col-lg-10">
                                     <div class="mb-3">
                                         <label for="V9xO3aD7v22" class="form-label">Title <span

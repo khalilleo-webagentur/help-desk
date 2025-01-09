@@ -304,10 +304,12 @@ class IndexController extends AbstractDashboardController
         }
 
         $users = $this->userService->getAllEmployees();
+        $projects = $this->projectService->getAllByCompany($issue->getCustomer()->getCompany());
 
         return $this->render('dashboard/tickets/edit.html.twig', [
             'issue' => $issue,
             'assignees' => $users,
+            'projects' => $projects,
         ]);
     }
 
@@ -345,6 +347,9 @@ class IndexController extends AbstractDashboardController
             ? $this->userService->getById($this->validateNumber($request->request->get('assignee')))
             : $issue->getAssignee();
 
+        $sProjectId = $this->validateNumber($request->request->get('project'));
+        $sProject = $this->projectService->getByCompanyAndId($issue->getCustomer()->getCompany(), $sProjectId);
+
         $this->monologService->logger->info(
             sprintf(
                 'issueUpdated: T-%s by %s [title: %s, description: %s, status: %s] to [title: %s, description: %s]',
@@ -357,6 +362,19 @@ class IndexController extends AbstractDashboardController
                 $description
             )
         );
+
+        if ($sProjectId !== $issue->getProject()->getId()) {
+            $this->ticketActivitiesService->add(
+                $issue,
+                $user,
+                sprintf(
+                    '%s updated project of issue "%s" to "%s"',
+                    $user->getName(),
+                    $issue->getProject()->getTitle(),
+                    $sProject->getTitle()
+                )
+            );
+        }
 
         if ($title !== $issue->getTitle()) {
             $this->ticketActivitiesService->add(
@@ -381,6 +399,7 @@ class IndexController extends AbstractDashboardController
 
         $this->ticketService->save(
             $issue
+                ->setProject($sProject)
                 ->setTitle($title)
                 ->setDescription($description)
                 ->setAssignee($assignee)
