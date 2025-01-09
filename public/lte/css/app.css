@@ -231,6 +231,10 @@ body {
     border-radius: .2rem
 }
 
+.link-primary:hover {
+    color: #007bff !important;
+}
+
 @media (max-width: 868px) {
     .md-text-center {
         text-align: center !important;
