@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Dashboard\Ticket;
 
 use App\Controller\Dashboard\AbstractDashboardController;
+use App\Service\TicketAttachmentsService;
 use App\Service\TicketService;
 use App\Service\UserService;
 use App\Traits\FormValidationTrait;
@@ -14,7 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/dashboard/ticket/filter/fil4m6e5l4y87ter')]
+#[Route('/dashboard/ticket/filter-attachments/att4m6e5m4y8n4ter')]
 class FilterController extends AbstractDashboardController
 {
     use FormValidationTrait;
@@ -22,13 +23,14 @@ class FilterController extends AbstractDashboardController
     private const DASHBOARD_TICKETS_ROUTE = 'app_dashboard_tickets_index';
 
     public function __construct(
-        private readonly UserService   $userService,
-        private readonly TicketService $ticketService,
+        private readonly UserService              $userService,
+        private readonly TicketService            $ticketService,
+        private readonly TicketAttachmentsService $ticketAttachmentsService,
     ) {
     }
 
-    #[Route('/filter', name: 'app_dashboard_ticket_filter', methods: ['GET', 'POST'])]
-    public function index(Request $request): RedirectResponse|Response
+    #[Route('/q-issues', name: 'app_dashboard_ticket_filter', methods: ['GET', 'POST'])]
+    public function filterIssues(Request $request): RedirectResponse|Response
     {
         $this->denyAccessUnlessGrantedRoleSuperAdmin();
         $user = $this->getUser();
@@ -72,6 +74,43 @@ class FilterController extends AbstractDashboardController
 
         return $this->render('dashboard/tickets/filter.html.twig', [
             'issues' => $issues
+        ]);
+    }
+
+    #[Route('/q-attachments', name: 'app_dashboard_ticket_filter_attachments', methods: ['GET', 'POST'])]
+    public function filterAttachments(Request $request): RedirectResponse|Response
+    {
+        $this->denyAccessUnlessGrantedRoleSuperAdmin();
+
+        $fileName = $this->validate($request->request->get('name'));
+        $userId = $this->validateNumber($request->request->get('uId'));
+        $fileNo = $this->validate($request->request->get('fileNo'));
+        $type = $this->validate($request->request->get('type'));
+        $from = $this->validate($request->request->get('dateFrom'));
+        $to = $this->validate($request->request->get('dateTo'));
+
+        $dateFrom = DateTime::createFromFormat('Y-m-d', $from);
+        $dateTo = DateTime::createFromFormat('Y-m-d', $to);
+
+        if (false === $dateFrom || false === $dateTo) {
+            $this->addFlash('warning', 'Invalid date format');
+            return $this->redirectToRoute(self::DASHBOARD_TICKETS_ROUTE);
+        }
+
+        $dateFrom->modify('00:00:00');
+        $dateTo->modify('23:59:59');
+
+        $attachments = $this->ticketAttachmentsService->getAllByCriteria(
+            $fileName,
+            $userId,
+            $fileNo,
+            $type,
+            $dateFrom,
+            $dateTo
+        );
+
+        return $this->render('dashboard/tickets/filter-attachments.html.twig', [
+            'attachments' => $attachments
         ]);
     }
 }

@@ -52,7 +52,7 @@ class IndexController extends AbstractDashboardController
 
         if ($setting) {
             $this->userSettingService->save($setting->setNotifyCloseTicket(
-                !$this->validateCheckbox($request->request->get('config'))
+                $this->validateCheckbox($request->request->get('config'))
             ));
             $this>$this->addFlash('success', 'Setting has been updated');
         }

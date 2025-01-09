@@ -69,9 +69,18 @@
                     <td>{{ row.assignee ? row.assignee.name : '---' }}</td>
 
                     <td>
-                        <span class="cursor-help" title="{{ row.title }}">
-                            {{ row.title|slice(0,35) ~ '..' }}
-                        </span>
+                        <form class="pointer"
+                              onclick="this.closest('form').submit();"
+                              action="{{ path('app_dashboard_ticket_view', {id: row.id}) }}" method="post">
+                            <input type="hidden" name="csrf" value="{{ hash(csrf_token(row.id)) }}">
+                            <input type="hidden" name="pid" value="{{ row.project.id }}">
+                            <span class="link-primary" title="{{ row.title }}">{{ row.title|slice(0,35) ~ '..' }}</span>
+
+                            {% if hasTicketComment(row.id) %}
+                                <span class="fa fa-comment-dots" title="Comments available"></span>
+                            {% endif %}
+
+                        </form>
                     </td>
 
                     <td>

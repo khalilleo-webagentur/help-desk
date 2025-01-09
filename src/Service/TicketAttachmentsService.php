@@ -8,6 +8,8 @@ use App\Entity\Ticket;
 use App\Entity\TicketAttachment;
 use App\Entity\User;
 use App\Repository\TicketAttachmentRepository;
+use DateTime;
+use DateTimeInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 final readonly class TicketAttachmentsService
@@ -57,10 +59,32 @@ final readonly class TicketAttachmentsService
     public function save(TicketAttachment $ticketAttachment): TicketAttachment
     {
         $this->ticketAttachmentRepository->save(
-            $ticketAttachment->setUpdatedAt(new \DateTime()),
+            $ticketAttachment->setUpdatedAt(new DateTime()),
             true
         );
         return $ticketAttachment;
+    }
+
+    /**
+     * @return TicketAttachment[]
+     */
+    public function getAllByCriteria(
+        ?string           $fileName,
+        ?int              $userId,
+        ?string           $fileNo,
+        ?string           $type,
+        DateTimeInterface $dateFrom,
+        DateTimeInterface $dateTo
+    ): array
+    {
+        return $this->ticketAttachmentRepository->findAllByCriteria(
+            $fileName,
+            $userId,
+            $fileNo,
+            $type,
+            $dateFrom,
+            $dateTo
+        );
     }
 
     public function delete(TicketAttachment $ticketAttachment): void

@@ -1,0 +1,74 @@
+{% extends 'dashboard/layout/base.html.twig' %}
+
+{% block title %} Dashboard Filter Tickets Attachments {% endblock %}
+
+{% block body %}
+
+    <div class="content-wrapper">
+
+        {% set isAdmin = is_granted('ROLE_SUPER_ADMIN') %}
+
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-8">
+                        <h5 class="m-0 text-dark">Filter Attachments Results</h5>
+                    </div>
+                    <div class="col-4">
+                        <div class="breadcrumb float-right">
+                            <a href="{{ path('app_dashboard_tickets_index') }}" class="text-secondary">
+                                Close <span class="fa fa-window-close"></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <section class="content">
+            <div class="container-fluid area-section">
+                <div class="row py-3">
+                    <div class="col-lg-12">
+
+                        {% if count(attachments) > 0 %}
+                            <ul class="mb-0 pb-0">
+                                {% for attachment in attachments %}
+                                    <li class="mb-1">
+                                        <form action="{{ path('app_dashboard_ticket_helper_show', {hash: hash(attachment.filename)}) }}"
+                                              method="post">
+                                            <input type="hidden" name="_csrf_token"
+                                                   value="{{ csrf_token('authenticate') }}">
+                                            <div class="fs-14">
+                                                <span class="text-primary pointer"
+                                                      onclick="this.closest('form').submit();">
+                                                    {{ attachment.originalFileName }}
+                                                </span>
+                                                <span class="text-light-50 px-1">|</span>
+                                                Ticket-No T-{{ attachment.ticket.ticketNo }}
+                                                <span class="text-light-50 px-1">|</span>
+                                                Uploaded by {{ attachment.user.name }}
+                                                at {{ attachment.createdAt|date }}
+                                            </div>
+                                            <div class="d-none">
+                                                <input type="hidden" name="tId" value="{{ attachment.ticket.id }}">
+                                                <input type="hidden" name="pid"
+                                                       value="{{ attachment.ticket.project.id }}">
+                                                <input type="hidden" name="aId" value="{{ attachment.id }}">
+                                            </div>
+                                        </form>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <small class="pl-3 text-secondary">
+                                <span class="fa fa-info-circle fa-sm"></span> No attachments has been found!
+                            </small>
+                        {% endif %}
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+{% endblock %}

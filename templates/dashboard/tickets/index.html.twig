@@ -31,9 +31,23 @@
                             </button>
 
                             <button class="btn btn-secondary btn-headers"
-                                    data-toggle="modal" data-target="#infosModal">
-                                <span class="fa fa-info-circle fa-sm"></span>
+                                    data-toggle="dropdown" href="#" aria-expanded="false">
+                                <i class="fa fa-ellipsis-v fa-sm px-1"></i>
                             </button>
+                            <div class="dropdown-menu">
+                                {% if isAdmin %}
+                                    <div class="dropdown-item pointer menu-text-color"
+                                         data-toggle="modal" data-target="#filterAttachmentsModal">
+                                        <span class="fa fa-filter fa-sm pr-1"></span>
+                                        <span>Filter Attachments</span>
+                                    </div>
+                                {% endif %}
+                                <div class="dropdown-item pointer menu-text-color"
+                                     data-toggle="modal" data-target="#infosModal">
+                                    <span class="fa fa-info-circle fa-sm pr-1"></span>
+                                    <span>Infos</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -78,6 +92,7 @@
 
     {% if isAdmin %}
         {% include 'dashboard/tickets/modal/filter.html.twig' %}
+        {% include 'dashboard/tickets/modal/filter_attachments.html.twig' %}
     {% endif %}
 
 {% endblock %}

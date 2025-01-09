@@ -11,6 +11,7 @@ use App\Service\TicketService;
 use DateTime;
 use DateTimeInterface;
 use Exception;
+use Random\RandomException;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
@@ -97,8 +98,15 @@ class TwigHelper extends AbstractExtension
         return $user && in_array('ROLE_SUPER_ADMIN', $user->getRoles(), true);
     }
 
-    public function hash(string $text): string
+    /**
+     * @throws RandomException
+     */
+    public function hash(?string $text = null): string
     {
+        if (empty($text)) {
+            return sha1(random_bytes(8));
+        }
+
         return sha1($text);
     }
 

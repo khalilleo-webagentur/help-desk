@@ -19,7 +19,14 @@ final readonly class UserSettingService
 
     public function getOneByUser(User|UserInterface $user): ?UserSetting
     {
-        return $this->userSettingRepository->findOneBy(['user' => $user]);
+        $setting = $this->userSettingRepository->findOneBy(['user' => $user]);
+
+        if (null === $setting) {
+            $setting = new UserSetting();
+            $this->save($setting->setUser($user));
+        }
+
+        return $setting;
     }
 
     /**
@@ -34,7 +41,7 @@ final readonly class UserSettingService
     {
         $setting = $this->getOneByUser($user);
 
-        return $setting && $setting->notifyCloseTicket();
+        return $setting && true === $setting->notifyCloseTicket();
     }
 
     public function save(UserSetting $model): UserSetting
