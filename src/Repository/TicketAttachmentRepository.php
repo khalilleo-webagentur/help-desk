@@ -57,7 +57,7 @@ class TicketAttachmentRepository extends ServiceEntityRepository
         }
 
         if ($userId > 0) {
-            $qb->andWhere('t1.userId = :userId')
+            $qb->andWhere('t1.user = :userId')
                 ->setParameter('userId', $userId);
         }
 
