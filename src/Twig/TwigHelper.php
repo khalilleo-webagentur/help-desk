@@ -6,6 +6,8 @@ namespace App\Twig;
 
 use App\Entity\User;
 use App\Service\Core\ConfigService;
+use App\Service\TicketCommentsService;
+use App\Service\TicketService;
 use DateTime;
 use DateTimeInterface;
 use Exception;
@@ -15,13 +17,16 @@ use Twig\TwigFunction;
 class TwigHelper extends AbstractExtension
 {
     public function __construct(
-        private readonly ConfigService $configService
+        private readonly ConfigService         $configService,
+        private readonly TicketService         $ticketService,
+        private readonly TicketCommentsService $ticketCommentsService,
     ) {
     }
 
     public function getFunctions(): array
     {
         return [
+            new TwigFunction('hasTicketComment', [$this, 'hasTicketComment']),
             new TwigFunction('convertToHoursMinutes', [$this, 'convertToHoursMinutes']),
             new TwigFunction('role', [$this, 'getRole']),
             new TwigFunction('isSuperAdmin', [$this, 'isSuperAdmin']),
@@ -42,6 +47,16 @@ class TwigHelper extends AbstractExtension
             new TwigFunction('madeBy', [$this, 'getMadeBy']),
             new TwigFunction('version', [$this, 'getVersion']),
         ];
+    }
+    
+    public function hasTicketComment(int $ticketId): bool
+    {
+        if ($ticket = $this->ticketService->getById($ticketId)) {
+            $comment = $this->ticketCommentsService->getByTicket($ticket);
+            return !empty($comment);
+        }
+
+        return false;
     }
 
     public function convertToHoursMinutes($time): string
