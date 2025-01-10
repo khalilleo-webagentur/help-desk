@@ -143,10 +143,12 @@ class IndexController extends AbstractDashboardController
         }
 
         $description = $this->validateTextarea($request->request->get('description'));
+        $url = $this->validateURL($request->request->get('url'));
 
         $this->projectService->save(
             $project
                 ->setTitle($title)
+                ->setUrl($url)
                 ->setDescription($description)
         );
 
