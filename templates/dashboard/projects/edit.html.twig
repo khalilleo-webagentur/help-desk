@@ -46,8 +46,16 @@
                                        value="{{ project.title }}" name="title">
                             </div>
                             <div class="mb-3">
-                                <label for="2hV9xO3aD7v" class="form-label">Description <span
-                                            class="text-danger">*</span></label>
+                                <label for="V9xO3aDuw" class="form-label">URL</label>
+                                <input type="url" class="form-control" id="V9xO3aDuw" placeholder="https://example.de"
+                                       value="{{ project.url }}" name="url"
+                                       onclick="this.value = 'https://'">
+                                <small class="text-secondary">
+                                    Link to Homepage if it is available. Otherwise, let it empty.
+                                </small>
+                            </div>
+                            <div class="mb-3">
+                                <label for="2hV9xO3aD7v" class="form-label">Description</label>
                                 <textarea type="text" class="form-control" id="2hV9xO3aD7v"
                                           rows="3"
                                           placeholder="Type description"
