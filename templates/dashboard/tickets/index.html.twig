@@ -43,6 +43,16 @@
                                     </div>
                                 {% endif %}
                                 <div class="dropdown-item pointer menu-text-color"
+                                     data-toggle="modal" data-target="#reportBugModal">
+                                    <span class="fa fa-bug fa-sm pr-1"></span>
+                                    <span>Report a Bug</span>
+                                </div>
+                                <form action="{{ path('app_contact_us_index') }}" method="get"
+                                      class="dropdown-item pointer menu-text-color">
+                                    <span class="fa fa-question fa-sm pr-1"></span>
+                                    <span onclick="this.closest('form').submit();">Help & Support</span>
+                                </form>
+                                <div class="dropdown-item pointer menu-text-color"
                                      data-toggle="modal" data-target="#infosModal">
                                     <span class="fa fa-info-circle fa-sm pr-1"></span>
                                     <span>Infos</span>
@@ -88,6 +98,7 @@
     </div>
 
     {% include 'dashboard/tickets/modal/new.html.twig' %}
+    {% include 'dashboard/tickets/modal/report_bug.html.twig' %}
     {% include 'dashboard/tickets/modal/infos.html.twig' %}
 
     {% if isAdmin %}
