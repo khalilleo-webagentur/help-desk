@@ -15,15 +15,19 @@
                         <h5 class="m-0 text-dark mt-1">Projects</h5>
                     </div>
                     <div class="col-6 mt-1">
-                        {% if isAdmin %}
-                            <div class="breadcrumb float-right">
-                                <button class="btn btn-outline-secondary btn-headers"
-                                        data-toggle="modal" data-target="#newProjectModal">
-                                    <span class="fa fa-plus fa-sm"></span> <span
-                                            class="ps-1 md-d-none">Add Project</span>
-                                </button>
-                            </div>
-                        {% endif %}
+                        <div class="breadcrumb float-right">
+                            {% if isAdmin %}
+                            <button class="btn btn-outline-secondary btn-headers mr-1"
+                                    data-toggle="modal" data-target="#newProjectModal">
+                                <span class="fa fa-plus fa-sm"></span> <span
+                                        class="ps-1 md-d-none">Add Project</span>
+                            </button>
+                            {% endif %}
+                            <button class="btn btn-secondary btn-headers mr-1"
+                                    data-toggle="modal" data-target="#infosModal">
+                                <span class="fa fa-info-circle fa-sm"></span>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -43,5 +47,7 @@
     {% if isAdmin %}
         {% include 'dashboard/projects/modal/new.html.twig' %}
     {% endif %}
+
+    {% include 'dashboard/projects/modal/infos.html.twig' %}
 
 {% endblock %}
