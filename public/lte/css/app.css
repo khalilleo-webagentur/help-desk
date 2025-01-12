@@ -94,6 +94,10 @@ label, label:not(.form-check-label):not(.custom-file-label) {
     color: #8a8a8a;
 }
 
+.menu-text-color:hover {
+    color: #007bff;
+}
+
 .cursor-help {
     cursor: help;
 }
