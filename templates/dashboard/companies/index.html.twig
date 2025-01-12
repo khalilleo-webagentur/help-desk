@@ -19,12 +19,16 @@
                     <div class="col-6 mt-1">
                         <div class="breadcrumb float-right">
                             {% if isAdmin %}
-                                <button class="btn btn-outline-secondary btn-headers"
+                                <button class="btn btn-outline-secondary btn-headers mr-1"
                                         data-toggle="modal" data-target="#newCompanyModal">
                                     <span class="fa fa-plus fa-sm"></span> <span
                                             class="ps-1 md-d-none">Add Company</span>
                                 </button>
                             {% endif %}
+                            <button class="btn btn-secondary btn-headers mr-1"
+                                    data-toggle="modal" data-target="#infosModal">
+                                <span class="fa fa-info-circle fa-sm"></span>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -45,5 +49,7 @@
     {% if isAdmin %}
         {% include 'dashboard/companies/modal/new.html.twig' %}
     {% endif %}
+
+    {% include 'dashboard/companies/modal/infos.html.twig' %}
 
 {% endblock %}
