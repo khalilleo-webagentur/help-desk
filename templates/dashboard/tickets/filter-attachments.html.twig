@@ -34,12 +34,12 @@
 
                             <div class="pl-3 my-3 fs-14">
                                 <span class="fa fa-info-circle text-info pr-1"></span>
-                                You can click on filename directly to show it.
+                                You can click on the Filename directly to show it.
                             </div>
 
                             <ul class="mb-0 pb-0">
                                 {% for attachment in attachments %}
-                                    <li class="mb-1">
+                                    <li class="mb-1"  style="border-bottom: 1px dashed #dcdcdc;padding-bottom: 3px;">
                                         <form action="{{ path('app_dashboard_ticket_helper_show', {hash: hash(attachment.filename)}) }}"
                                               method="post">
                                             <input type="hidden" name="_csrf_token"
@@ -50,10 +50,12 @@
                                                     {{ attachment.originalFileName }}
                                                 </span>
                                                 <span class="text-light-50 px-1">|</span>
-                                                Ticket-No T-{{ attachment.ticket.ticketNo }}
+                                                T-{{ attachment.ticket.ticketNo }}
                                                 <span class="text-light-50 px-1">|</span>
                                                 Uploaded by {{ attachment.user.name }}
-                                                at {{ attachment.createdAt|date }}
+                                                <span class="float-right pr-1" title="{{ attachment.createdAt|date }}">
+                                                    {{ timeAgo(attachment.createdAt) }}
+                                                </span>
                                             </div>
                                             <div class="d-none">
                                                 <input type="hidden" name="tId" value="{{ attachment.ticket.id }}">
