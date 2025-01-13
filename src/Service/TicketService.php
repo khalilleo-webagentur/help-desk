@@ -154,6 +154,14 @@ final readonly class TicketService
         );
     }
 
+    /**
+     * @return Ticket[]
+     */
+    public function queryAllIssueNotes(int $companyId, bool $iNote, bool $eNote, DateTimeInterface $from, DateTimeInterface $to): array
+    {
+        return $this->ticketRepository->queryAllIssueNotes($companyId, $iNote, $eNote, $from, $to);
+    }
+
     public function countAll(): int
     {
         return $this->ticketRepository->count();

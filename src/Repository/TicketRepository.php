@@ -162,4 +162,39 @@ class TicketRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    /**
+     * Filter all ticket targeting notes by criteria
+     * @return Ticket[]
+     */
+    public function queryAllIssueNotes(int $companyId, bool $iNote, bool $eNote, DateTimeInterface $from, DateTimeInterface $to): array
+    {
+        $qb = $this->createQueryBuilder('t0')
+            ->select('t1')
+            ->from(Ticket::class, 't1');
+
+        if ($companyId > 0) {
+            $qb->join('t1.customer', 't2') // user
+            ->join('t2.company', 't3', 'WITH', 't3.id = :companyId') // company
+            ->setParameter('companyId', $companyId);
+        }
+
+
+        if ($iNote) {
+            $qb->andWhere('t1.internalNote IS NOT NULL');
+        }
+
+        if ($eNote) {
+            $qb->andWhere('t1.externalNote IS NOT NULL');
+        }
+
+        $qb->andWhere('t1.createdAt >= :issueDateFrom')
+            ->setParameter('issueDateFrom', $from);
+        $qb->andWhere('t1.createdAt <= :issueDateTo')
+            ->setParameter('issueDateTo', $to);
+
+        return $qb->orderBy('t1.id', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
 }

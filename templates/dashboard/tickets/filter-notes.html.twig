@@ -1,0 +1,54 @@
+{% extends 'dashboard/layout/base.html.twig' %}
+
+{% block title %} Dashboard Filter Tickets Notes {% endblock %}
+
+{% block body %}
+
+    <div class="content-wrapper">
+
+        {% set isAdmin = is_granted('ROLE_SUPER_ADMIN') %}
+
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-8">
+                        <h5 class="m-0 text-dark">Filter Notes Results</h5>
+                    </div>
+                    <div class="col-4">
+                        <div class="breadcrumb float-right">
+                            <a href="{{ path('app_dashboard_tickets_index') }}" class="text-secondary">
+                                Close <span class="fa fa-window-close"></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <section class="content">
+            <div class="container-fluid area-section">
+                <div class="row py-3">
+                    <div class="col-lg-12">
+
+                        {% if count(issues) > 0 %}
+
+                            <div class="pl-3 my-3">
+                                <span class="fa fa-info-circle text-info pr-1"></span>
+                                This filter targeting only issues that has internal or external note.
+                            </div>
+
+                            {% include 'dashboard/tickets/partial/table_content.html.twig' %}
+
+                        {% else %}
+                            {% include 'dashboard/component/no_issues.html.twig' with{
+                                title: 'No Issues'
+                            } %}
+                        {% endif %}
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+{% endblock %}

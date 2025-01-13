@@ -1,0 +1,17 @@
+<div class="text-center py-4 user-select-none">
+    <h4 class="pl-3 mb-2">
+        {{ title is defined ? title : 'No Data Found' }}
+    </h4>
+
+    <p class="pl-3 fs-14 text-secondary">
+        {{ subTitle is defined ? subTitle : 'No issues have been found!' }}
+    </p>
+
+    <img src="{{ asset('lte/img/query.svg') }}" alt="No Data">
+
+    <br><br>
+
+    <a href="{{ path('app_dashboard_tickets_index') }}" class="pl-3 fs-13">
+        <span class="fa fa-arrow-alt-circle-left fa-sm"></span> Back to issues overview
+    </a>
+</div>

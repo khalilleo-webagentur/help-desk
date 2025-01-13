@@ -37,6 +37,11 @@
                             <div class="dropdown-menu">
                                 {% if isAdmin %}
                                     <div class="dropdown-item pointer menu-text-color fs-15"
+                                         data-toggle="modal" data-target="#filterNotesModal">
+                                        <span class="fa fa-filter fa-sm pr-1"></span>
+                                        <span>Filter Notes</span>
+                                    </div>
+                                    <div class="dropdown-item pointer menu-text-color fs-15"
                                          data-toggle="modal" data-target="#filterAttachmentsModal">
                                         <span class="fa fa-filter fa-sm pr-1"></span>
                                         <span>Filter Attachments</span>
@@ -104,6 +109,7 @@
     {% if isAdmin %}
         {% include 'dashboard/tickets/modal/filter.html.twig' %}
         {% include 'dashboard/tickets/modal/filter_attachments.html.twig' %}
+        {% include 'dashboard/tickets/modal/filter_notes.html.twig' %}
     {% endif %}
 
 {% endblock %}

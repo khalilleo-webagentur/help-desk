@@ -113,4 +113,39 @@ class FilterController extends AbstractDashboardController
             'attachments' => $attachments
         ]);
     }
+
+    #[Route('/q-notes', name: 'app_dashboard_ticket_filter_notes', methods: ['GET', 'POST'])]
+    public function filterNotes(Request $request): RedirectResponse|Response
+    {
+        $this->denyAccessUnlessGrantedRoleSuperAdmin();
+
+        $companyId = $this->validateNumber($request->request->get('company'));
+        $isInternalNote = $this->validateCheckbox($request->request->get('iNote'));
+        $isExternalNote = $this->validateCheckbox($request->request->get('eNote'));
+        $from = $this->validate($request->request->get('dateFrom'));
+        $to = $this->validate($request->request->get('dateTo'));
+
+        $dateFrom = DateTime::createFromFormat('Y-m-d', $from);
+        $dateTo = DateTime::createFromFormat('Y-m-d', $to);
+
+        if (false === $dateFrom || false === $dateTo) {
+            $this->addFlash('warning', 'Invalid date format');
+            return $this->redirectToRoute(self::DASHBOARD_TICKETS_ROUTE);
+        }
+
+        $dateFrom->modify('00:00:00');
+        $dateTo->modify('23:59:59');
+
+        $issues = $this->ticketService->queryAllIssueNotes(
+            $companyId,
+            $isInternalNote,
+            $isExternalNote,
+            $dateFrom,
+            $dateTo
+        );
+
+        return $this->render('dashboard/tickets/filter-notes.html.twig', [
+            'issues' => $issues
+        ]);
+    }
 }

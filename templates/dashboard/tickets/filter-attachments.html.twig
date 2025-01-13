@@ -68,9 +68,10 @@
                                 {% endfor %}
                             </ul>
                         {% else %}
-                            <span class="pl-3 fs-14 text-secondary">
-                                <span class="fa fa-info-circle fa-sm"></span> No attachments has been found!
-                            </span>
+                            {% include 'dashboard/component/no_issues.html.twig' with{
+                                title: 'No Attachments',
+                                subTitle: 'No attachments based on your creteria has been found'
+                            } %}
                         {% endif %}
 
                     </div>

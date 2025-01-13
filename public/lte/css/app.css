@@ -112,6 +112,10 @@ label, label:not(.form-check-label):not(.custom-file-label) {
     font-size: 18px;
 }
 
+.user-select-none {
+    user-select: none !important;
+}
+
 body {
     -webkit-animation: fadein 2s;
     -moz-animation: fadein 2s;
