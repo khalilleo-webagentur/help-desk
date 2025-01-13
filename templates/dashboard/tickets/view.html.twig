@@ -92,6 +92,15 @@
                                             <span class="fa fa-edit fa-sm pr-2"></span>
                                             <span class="font-size-14">Edit Priority</span>
                                         </form>
+                                        {% if issue.externalNote == null and not isAdminOrEmployee %}
+                                            <form class="dropdown-item pointer menu-text-color" action="#"
+                                                  data-toggle="modal" data-target="#externalNoteModal">
+                                                <span class="fa fa-sticky-note fa-sm pr-2"></span>
+                                                <span class="font-size-14">
+                                                        Add Note
+                                                    </span>
+                                            </form>
+                                        {% endif %}
                                         <form class="dropdown-item pointer menu-text-color" action="#"
                                               data-toggle="modal" data-target="#newAttachmentModal">
                                             <span class="fa fa-upload fa-sm pr-2"></span>
@@ -196,6 +205,44 @@
                                     <small class="text-danger">DELETE</small>
                                 </button>
                             </div>
+
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+
+            {% if issue.externalNote %}
+                <div class="container-fluid area-section">
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <h5 class="px-3 pt-3 pb-2">{{ isAdminOrEmployee ? 'External Note' : 'Note Related to Issue' }}</h5>
+                            <p class="px-3">{{ issue.externalNote }}</p>
+
+                            {% if not isAdminOrEmployee %}
+                                <div class="d-flex float-right">
+                                    <button class="btn btn-light btn-sm mr-2"
+                                            data-toggle="modal" data-target="#externalNoteModal">
+                                        <span class="fa fa-edit text-primary fa-xs"></span>
+                                        <small class="text-primary">EDIT</small>
+                                    </button>
+                                    <button class="btn btn-light btn-sm"
+                                            data-toggle="modal" data-target="#clearExternalNoteModal">
+                                        <span class="fa fa-trash text-danger fa-xs"></span>
+                                        <small class="text-danger">DELETE</small>
+                                    </button>
+                                </div>
+                            {% else %}
+                                <div class="d-flex float-right">
+                                    <button class="btn btn-light btn-sm mr-2" disabled>
+                                        <span class="fa fa-edit text-primary fa-xs"></span>
+                                        <small class="text-primary">EDIT</small>
+                                    </button>
+                                    <button class="btn btn-light btn-sm" disabled>
+                                        <span class="fa fa-trash text-danger fa-xs"></span>
+                                        <small class="text-danger">DELETE</small>
+                                    </button>
+                                </div>
+                            {% endif %}
 
                         </div>
                     </div>
@@ -308,6 +355,8 @@
         {% include 'dashboard/tickets/modal/link_issue.html.twig' %}
     {% endif %}
 
+    {% include 'dashboard/tickets/modal/external_note.html.twig' %}
+    {% include 'dashboard/tickets/modal/external_note_nullable.html.twig' %}
     {% include 'dashboard/tickets/modal/change_priority.html.twig' %}
     {% include 'dashboard/tickets/modal/upload.html.twig' with{ticketId: issue.id} %}
     {% include 'dashboard/tickets/modal/delete_issue.html.twig' %}

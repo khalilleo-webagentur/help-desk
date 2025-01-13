@@ -46,6 +46,9 @@ class Ticket
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $internalNote = null;
 
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $externalNote = null;
+
     #[ORM\Column]
     private int $timeSpentInMinutes = 0;
 
@@ -205,6 +208,18 @@ class Ticket
     public function setInternalNote(?string $internalNote): static
     {
         $this->internalNote = $internalNote;
+
+        return $this;
+    }
+
+    public function getExternalNote(): ?string
+    {
+        return $this->externalNote;
+    }
+
+    public function setExternalNote(?string $externalNote): static
+    {
+        $this->externalNote = $externalNote;
 
         return $this;
     }
