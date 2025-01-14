@@ -79,6 +79,10 @@ label, label:not(.form-check-label):not(.custom-file-label) {
     font-size: 15px !important;
 }
 
+.fs-16 {
+    font-size: 16px !important;
+}
+
 .alert-fixed-z-index {
     position: fixed;
     top: 2px;

@@ -47,11 +47,14 @@
                                         <span>Filter Attachments</span>
                                     </div>
                                 {% endif %}
-                                <form action="{{ path('app_contact_us_index') }}" method="get"
-                                      class="dropdown-item pointer menu-text-color fs-15">
-                                    <span class="fa fa-question fa-sm pr-1"></span>
-                                    <span onclick="this.closest('form').submit();">Help & Support</span>
-                                </form>
+                                <div class="dropdown-item pointer menu-text-color">
+                                    <form action="{{ path('app_contact_us_index') }}" method="get">
+                                        <span class="fa fa-question fa-sm pr-1"></span>
+                                        <span onclick="this.closest('form').submit();">
+                                            Help & Support
+                                        </span>
+                                    </form>
+                                </div>
                                 <div class="dropdown-item pointer menu-text-color fs-15"
                                      data-toggle="modal" data-target="#reportBugModal">
                                     <span class="fa fa-bug fa-sm pr-1"></span>
