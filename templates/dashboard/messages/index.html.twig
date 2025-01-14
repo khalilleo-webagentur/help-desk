@@ -1,0 +1,40 @@
+{% extends 'dashboard/layout/base.html.twig' %}
+
+{% block title %} Dashboard Messages from Contact-Form {% endblock %}
+
+{% block body %}
+
+    <div class="content-wrapper">
+
+        {% set isAdmin = is_granted('ROLE_SUPER_ADMIN') %}
+
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-6 mt-1">
+                        <h5 class="m-0 text-dark mt-1">Messages Overview</h5>
+                    </div>
+                    <div class="col-6 mt-1">
+                        <div class="breadcrumb float-right">
+                          {#  <button class="btn btn-secondary btn-headers mr-1"
+                                    data-toggle="modal" data-target="#infosModal">
+                                <span class="fa fa-info-circle fa-sm"></span>
+                            </button>#}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <section class="content">
+            <div class="container-fluid area-section">
+                <div class="row py-3">
+                    <div class="col-lg-12">
+                        {% include 'dashboard/messages/partial/table_content.html.twig' %}
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+{% endblock %}

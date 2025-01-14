@@ -107,7 +107,10 @@
                 </li>
 
                 {% if isAdmin %}
-                    <li class="nav-item has-treeview">
+
+                    {% set isMessageTreeOpen = _route == 'app_dashboard_message_index' %}
+
+                    <li class="nav-item has-treeview {{ isMessageTreeOpen ? 'menu-is-opening menu-open' : '' }}">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-envelope"></i>
                             <p>
@@ -115,10 +118,10 @@
                                 <i class="fas fa-angle-left right"></i>
                             </p>
                         </a>
-                        <ul class="nav nav-treeview">
+                        <ul class="nav nav-treeview {{ isMessageTreeOpen ? 'active' : '' }}">
                             <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    <i class="far fa-circle nav-icon text-warning"></i>
+                                <a href="{{ path('app_dashboard_message_index') }}" class="nav-link">
+                                    <i class="far {{ _route == 'app_dashboard_message_index' ? 'fa-dot-circle' : 'fa-circle' }} nav-icon text-warning"></i>
                                     <p>Overview</p>
                                 </a>
                             </li>
