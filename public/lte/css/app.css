@@ -243,6 +243,11 @@ body {
     color: #007bff !important;
 }
 
+.ins {
+    text-decoration: line-through !important;
+    color: #f63030;
+}
+
 @media (max-width: 868px) {
     .md-text-center {
         text-align: center !important;

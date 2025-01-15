@@ -27,6 +27,9 @@ class Message
     #[ORM\Column(type: Types::TEXT)]
     private ?string $message = null;
 
+    #[ORM\Column]
+    private bool $isDeleted = false;
+
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $updatedAt = null;
 
@@ -87,6 +90,18 @@ class Message
     public function setMessage(string $message): static
     {
         $this->message = $message;
+
+        return $this;
+    }
+
+    public function isDeleted(): bool
+    {
+        return $this->isDeleted;
+    }
+
+    public function setDeleted(bool $isDeleted): static
+    {
+        $this->isDeleted = $isDeleted;
 
         return $this;
     }

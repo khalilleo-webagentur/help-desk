@@ -54,4 +54,23 @@ class IndexController extends AbstractDashboardController
             'message' => $message,
         ]);
     }
+
+    #[Route('/d3t4lti7/{id}', name: 'app_dashboard_message_delete', methods: ['POST'])]
+    public function delete(?string $id): Response
+    {
+        $this->denyAccessUnlessGrantedRoleSuperAdmin();
+
+        $messageId = $this->validateNumber($id);
+
+        $message = $this->messagesService->getById($messageId);
+
+        if (!$message) {
+            $this->addFlash('warning', 'Message could not be found.');
+            return $this->redirectToRoute(self::DASHBOARD_MESSAGES_ROUTE);
+        }
+
+        $this->messagesService->delete($message);
+
+        return $this->redirectToRoute(self::DASHBOARD_MESSAGES_ROUTE);
+    }
 }

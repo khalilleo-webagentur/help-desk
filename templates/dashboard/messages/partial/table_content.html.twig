@@ -22,7 +22,8 @@
                     <td>
                         <form class="pointer text-primary" action="{{ path('app_dashboard_message_view', {id:row.id}) }}">
                             <input type="hidden" name="csrf" value="{{ hash(csrf_token(row.id)) }}">
-                            <span onclick="this.closest('form').submit();">
+                            <span onclick="this.closest('form').submit();"
+                                class="{{ row.isDeleted ? 'ins' : '' }}">
                                 {{ row.subject }}
                             </span>
                         </form>
@@ -35,7 +36,7 @@
                         </a>
                         <div class="dropdown-menu">
                             <form class="dropdown-item pointer menu-text-color"
-                                  action="#"
+                                  action="{{ path('app_dashboard_message_delete', {id:row.id}) }}"
                                   onclick="this.closest('form').submit();"
                                   method="post">
                                 <input type="hidden" name="csrf" value="{{ hash(csrf_token(row.id)) }}">

@@ -47,4 +47,10 @@ final readonly class MessagesService
         $this->messageRepository->save($message->setUpdatedAt(new \DateTime()), true);
         return $message;
     }
+
+    public function delete(Message $message): void
+    {
+        $message->setDeleted(true);
+        $this->save($message);
+    }
 }
