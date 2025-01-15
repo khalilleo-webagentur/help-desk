@@ -54,7 +54,6 @@ input[type="color"]:focus,
     outline: 0 none;
     border: 1px solid rgb(141, 1, 191) !important;
     box-shadow: none !important;
-    height: 48px !important;
 }
 
 .btn {
