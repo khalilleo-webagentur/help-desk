@@ -3,14 +3,16 @@
 namespace App\EventSubscriber;
 
 use App\Service\Core\MonologService;
+use App\Service\SystemLogsService;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
-class ExceptionSubscriber implements EventSubscriberInterface
+readonly class ExceptionSubscriber implements EventSubscriberInterface
 {
     public function __construct(
-        private readonly MonologService $monolog
+        private SystemLogsService $systemLogsService,
+        private MonologService    $monolog
     ) {
     }
 
@@ -24,7 +26,12 @@ class ExceptionSubscriber implements EventSubscriberInterface
     public function logException(ExceptionEvent $event): void
     {
         $message = $event->getThrowable()->getMessage();
+        $line = $event->getThrowable()->getLine();
+        $file = basename($event->getThrowable()->getFile());
 
+        $message = sprintf('%s, %s and %s', $message, $file, $line);
+
+        $this>$this->systemLogsService->create($message);
         $this->monolog->logger->warning($message);
     }
 }
