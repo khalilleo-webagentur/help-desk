@@ -71,7 +71,7 @@
                         ---
                     {% endif %}
                 </td>
-                <td>{{ row.isVerified ? faThumbsUp() : faThumbsDown() }}</td>
+                <td>{{ row.isVerified ? check('text-success') : faThumbsDown() }}</td>
                 <td>{{ row.isDeleted ? circle('text-danger') : circle('text-light-50') }}</td>
 
                 <td title="{{ row.updatedAt|date }}">{{ timeAgo(row.updatedAt) }}</td>

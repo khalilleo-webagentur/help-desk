@@ -42,6 +42,7 @@ class TwigHelper extends AbstractExtension
             new TwigFunction('year', [$this, 'getYear']),
             new TwigFunction('circle', [$this, 'circle']),
             new TwigFunction('checkCircle', [$this, 'checkCircle']),
+            new TwigFunction('check', [$this, 'check']),
             new TwigFunction('faThumbsUp', [$this, 'getThumbsUp']),
             new TwigFunction('faThumbsDown', [$this, 'getThumbsDown']),
             new TwigFunction('appAuthor', [$this, 'getAppAuthor']),
@@ -220,6 +221,11 @@ class TwigHelper extends AbstractExtension
     public function checkCircle(string $color): void
     {
         echo "<span class='bi bi-check2-circle fa fa-check-circle fs-6 $color'></span>";
+    }
+
+    public function check(string $color): void
+    {
+        echo "<span class='fa fa-check fs-6 $color'></span>";
     }
 
     public function getThumbsUp(): void

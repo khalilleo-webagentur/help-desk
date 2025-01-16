@@ -193,7 +193,8 @@ body {
 .area-section {
     border-radius: 10px;
     background-color: #fff;
-    margin-bottom: 20px;
+    margin-bottom: 12px;
+    padding: 8px;
     border: 1px solid #ece9e9;
     opacity: .9;
 }
