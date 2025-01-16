@@ -134,7 +134,7 @@
                                 </div>
                             {% endif %}
 
-                            <h4 class="my-3">{{ issue.title }}</h4>
+                            <h5 class="my-3">{{ issue.title }}</h5>
 
                             <div class="text-secondary">
                                 <div class="pm-bottom">{{ issue.description|raw }}</div>
@@ -186,31 +186,6 @@
                 </div>
             </div>
 
-            {% if issue.internalNote and is_granted('ROLE_SUPER_ADMIN') %}
-                <div class="container-fluid area-section">
-                    <div class="row mb-3">
-                        <div class="col-12">
-                            <h5 class="px-3 pt-3 pb-2">Internal Note</h5>
-                            <p class="px-3">{{ issue.internalNote }}</p>
-
-                            <div class="d-flex float-right">
-                                <button class="btn btn-light btn-sm mr-2"
-                                        data-toggle="modal" data-target="#internalNoteModal">
-                                    <span class="fa fa-edit text-primary fa-xs"></span>
-                                    <small class="text-primary">EDIT</small>
-                                </button>
-                                <button class="btn btn-light btn-sm"
-                                        data-toggle="modal" data-target="#clearInternalNoteModal">
-                                    <span class="fa fa-trash text-danger fa-xs"></span>
-                                    <small class="text-danger">DELETE</small>
-                                </button>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            {% endif %}
-
             {% if issue.externalNote %}
                 <div class="container-fluid area-section">
                     <div class="row mb-3">
@@ -222,27 +197,41 @@
                                 <div class="d-flex float-right">
                                     <button class="btn btn-light btn-sm mr-2"
                                             data-toggle="modal" data-target="#externalNoteModal">
-                                        <span class="fa fa-edit text-primary fa-xs"></span>
-                                        <small class="text-primary">EDIT</small>
+                                        <span class="fa fa-edit text-light-25 fa-xs"></span>
+                                        <small class="text-light-25">EDIT</small>
                                     </button>
                                     <button class="btn btn-light btn-sm"
                                             data-toggle="modal" data-target="#clearExternalNoteModal">
-                                        <span class="fa fa-trash text-danger fa-xs"></span>
-                                        <small class="text-danger">DELETE</small>
-                                    </button>
-                                </div>
-                            {% else %}
-                                <div class="d-flex float-right">
-                                    <button class="btn btn-light btn-sm mr-2" disabled>
-                                        <span class="fa fa-edit text-primary fa-xs"></span>
-                                        <small class="text-primary">EDIT</small>
-                                    </button>
-                                    <button class="btn btn-light btn-sm" disabled>
-                                        <span class="fa fa-trash text-danger fa-xs"></span>
-                                        <small class="text-danger">DELETE</small>
+                                        <span class="fa fa-trash text-light-25 fa-xs"></span>
+                                        <small class="text-light-25">DELETE</small>
                                     </button>
                                 </div>
                             {% endif %}
+
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+
+            {% if issue.internalNote and is_granted('ROLE_SUPER_ADMIN') %}
+                <div class="container-fluid area-section">
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <h5 class="px-3 pt-3 pb-2">Internal Note</h5>
+                            <p class="px-3">{{ issue.internalNote }}</p>
+
+                            <div class="d-flex float-right">
+                                <button class="btn btn-light btn-sm mr-2"
+                                        data-toggle="modal" data-target="#internalNoteModal">
+                                    <span class="fa fa-edit text-light-25 fa-xs"></span>
+                                    <small class="text-light-25">EDIT</small>
+                                </button>
+                                <button class="btn btn-light btn-sm"
+                                        data-toggle="modal" data-target="#clearInternalNoteModal">
+                                    <span class="fa fa-trash text-light-25 fa-xs"></span>
+                                    <small class="text-light-25">DELETE</small>
+                                </button>
+                            </div>
 
                         </div>
                     </div>
@@ -299,8 +288,8 @@
                                           method="post">
                                         <button class="btn btn-light btn-sm" type="submit"
                                                 title="Delete Comment permanently!">
-                                            <span class="fa fa-trash text-danger fa-xs"></span>
-                                            <small class="text-danger">DELETE</small>
+                                            <span class="fa fa-trash text-light-25 fa-xs"></span>
+                                            <small class="text-light-25">DELETE</small>
                                         </button>
                                         <span class="text-white">
                                             <input type="hidden" name="comment" value="{{ comment.id }}">
