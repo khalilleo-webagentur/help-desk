@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Dashboard\SystemLog;
 
 use App\Controller\Dashboard\AbstractDashboardController;
+use App\Helper\AppHelper;
 use App\Service\SystemLogsService;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -23,11 +24,13 @@ class IndexController extends AbstractDashboardController
     public function index(?string $limit): Response
     {
         $this->denyAccessUnlessGrantedRoleCustomer();
-        $limit = $limit ? 1000 : 50;
+        $limit = $limit ? 1000 : AppHelper::DEFAULT_LIMIT_SYSTEM_LOGS_ENTRIES;
         $systemLogs = $this->systemLogsService->getAllWithLimit($limit);
 
         return $this->render('dashboard/system-logs/index.html.twig', [
             'systemLogs' => $systemLogs,
+            'limit' => AppHelper::DEFAULT_LIMIT_SYSTEM_LOGS_ENTRIES,
+            'maxLimit' => AppHelper::DEFAULT_MAX_LIMIT_SYSTEM_LOGS_ENTRIES,
         ]);
     }
 }

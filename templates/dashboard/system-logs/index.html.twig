@@ -29,11 +29,19 @@
                         </div>
                     </div>
                 </div>
-                <div class="float-right mb-3">
-                    <a href="{{ path('app_dashboard_system_logs_index', {limit:1000}) }}">
-                        Load all System-logs <span class="fa fa-sync-alt pr-1"></span>
-                    </a>
-                </div>
+                {% if count(systemLogs) >= limit %}
+                    <div class="container-fluid mb-4">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="float-right">
+                                    <a href="{{ path('app_dashboard_system_logs_index', {limit:maxLimit}) }}">
+                                        Load all System-logs <span class="fa fa-sync-alt pr-1"></span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
             {% endif %}
 
         </section>
