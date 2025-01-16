@@ -24,7 +24,7 @@ final readonly class MessagesService
      */
     public function getAllWithLimit(int $limit): array
     {
-        return $this->messageRepository->findBy([], ['createdAt' => 'DESC'], $limit);
+        return $this->messageRepository->findBy([], ['isDeleted' => 'ASC', 'createdAt' => 'DESC'], $limit);
     }
 
     public function create(string $name, string $email, string $subject, string $message): Message
