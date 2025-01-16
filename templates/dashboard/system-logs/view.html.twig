@@ -1,0 +1,50 @@
+{% extends 'dashboard/layout/base.html.twig' %}
+
+{% block title %} Dashboard :: System-Log Details {% endblock %}
+
+{% block body %}
+
+    <div class="content-wrapper">
+
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-8">
+                        <h5 class="m-0 text-dark">System-Log Details</h5>
+                    </div>
+                    <div class="col-4">
+                        <div class="float-right">
+                            <a href="{{ path('app_dashboard_system_logs_index') }}" class="text-secondary">
+                                Close <span class="fa fa-window-close"></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <section class="content">
+            <div class="container-fluid area-section">
+
+                <div class="row px-2 py-3">
+                    <div class="col-lg-12">
+
+                        <p class="mt-2">{{ systemLog.message }}</p>
+
+                        <small class="text-secondary" title="{{ systemLog.createdAt|date }}">
+                            <span class="text-warning fa fa-clock pr-1"></span> {{ timeAgo(systemLog.createdAt) }}
+                        </small>
+
+                        <p class="small pb-0 mb-0 mt-3">
+                            <a href="{{ path('app_dashboard_system_logs_index') }}">
+                                <span class="fa fa-arrow-alt-circle-left fa-sm"></span> Back to System-Logs
+                            </a>
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </div>
+
+{% endblock %}

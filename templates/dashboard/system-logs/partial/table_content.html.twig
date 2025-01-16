@@ -16,9 +16,13 @@
                 <tr class="fs-14">
                     <td>{{ row.id }}</td>
                     <td>
-                        <code class="cursor-help fs-13 text-dark" title="{{ row.message }}">
-                            {{ row.message|slice(0, 70) ~ '..' }}
-                        </code>
+                        <form action="{{ path('app_dashboard_system_log_view', {id:row.id}) }}">
+                            <code class="pointer fs-13 text-dark link-primary"
+                                  onclick="this.closest('form').submit();"
+                                  title="{{ row.message }}">
+                                {{ row.message|slice(0, 70) ~ '..' }}
+                            </code>
+                        </form>
                     </td>
                     <td title="{{ row.createdAt|date }}">{{ timeAgo(row.createdAt) }}</td>
                 </tr>

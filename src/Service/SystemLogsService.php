@@ -14,6 +14,11 @@ final readonly class SystemLogsService
     ) {
     }
 
+    public function getById(int $id): ?SystemLog
+    {
+        return $this->systemLogRepository->find($id);
+    }
+
     /**
      * @return SystemLog[]
      */
