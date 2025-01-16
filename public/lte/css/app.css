@@ -94,6 +94,14 @@ label, label:not(.form-check-label):not(.custom-file-label) {
     color: #ccc;
 }
 
+.text-light-25 {
+    color: #989898 !important;
+}
+
+.text-light-25:hover {
+    color: #787878 !important;
+}
+
 .menu-text-color {
     color: #8a8a8a;
 }

@@ -7,14 +7,12 @@
         <tr class="fs-14">
             {% if isAdmin %}
                 <th>#</th>
-            {% endif %}
-            <th>{{ 'Name'|trans }}</th>
-            {% if isAdmin %}
                 <th>{{ 'Company'|trans }}</th>
             {% endif %}
+            <th>{{ 'Name'|trans }}</th>
             <th>{{ 'Email'|trans }}</th>
-            <th>{{ 'Verified'|trans }}</th>
             <th>{{ 'Token'|trans }}</th>
+            <th>{{ 'Verified'|trans }}</th>
             <th>{{ 'Deleted'|trans }}</th>
             <th>{{ 'Updated'|trans }}</th>
             <th>{{ 'Created'|trans }}</th>
@@ -29,17 +27,6 @@
                 {% if isAdmin %}
                     <td>{{ row.id }}</td>
                 {% endif %}
-                <td>{{ row.name }}
-                    {% if isSuperAdmin(row) %}
-                        <span class="fa fa-user-tie text-success fa-sm cursor-help" title="Super Admin"></span>
-                    {% endif %}
-                    {% if row.isTeamLeader %}
-                        <span class="fa fa-user-tie text-warning fa-sm cursor-help" title="Team Leader"></span>
-                    {% endif %}
-                    {% if row.ninja %}
-                        <span class="fa fa-user-ninja text-info fa-sm cursor-help" title="Employee"></span>
-                    {% endif %}
-                </td>
                 {% if isAdmin %}
                     <td>
                         <form action="{{ path('app_dashboard_company_edit', {id:row.id}) }}" method="post">
@@ -51,8 +38,32 @@
                         </form>
                     </td>
                 {% endif %}
-                <td>{{ row.email }}</td>
-                <td>{{ row.isVerified ? faThumbsUp() : faThumbsDown() }}</td>
+                <td>
+                    <div class="d-flex">
+                        <form class="link-primary pointer"
+                              onclick="this.closest('form').submit();"
+                              action="{{ path('app_dashboard_user_edit', {id:row.id}) }}"
+                              method="post">
+                            <input type="hidden" name="csrf" value="{{ hash(csrf_token(row.id)) }}">
+                            <span>
+                            {{ row.name }}
+                            <input type="hidden" name="p7x5a8e9" value="{{ selectedCompanyId }}">
+                        </span>
+                        </form>
+                        {% if isSuperAdmin(row) %}
+                            <span class="fa fa-user-tie text-success fa-sm cursor-help pt-1 pl-1" title="Super Admin"></span>
+                        {% endif %}
+                        {% if row.isTeamLeader %}
+                            <span class="fa fa-user-tie text-warning fa-sm cursor-help pt-1 pl-1" title="Team Leader"></span>
+                        {% endif %}
+                        {% if row.ninja %}
+                            <span class="fa fa-user-ninja text-info fa-sm cursor-help pt-1 pl-1" title="Employee"></span>
+                        {% endif %}
+                    </div>
+                </td>
+                <td>
+                    <span title="{{ row.email }}" class="fa fa-envelope fa-sm cursor-help text-light-25"></span>
+                </td>
                 <td>
                     {% if row.token %}
                         <span class="text-danger">{{ row.token }}</span>
@@ -60,6 +71,7 @@
                         ---
                     {% endif %}
                 </td>
+                <td>{{ row.isVerified ? faThumbsUp() : faThumbsDown() }}</td>
                 <td>{{ row.isDeleted ? circle('text-danger') : circle('text-light-50') }}</td>
 
                 <td title="{{ row.updatedAt|date }}">{{ timeAgo(row.updatedAt) }}</td>
