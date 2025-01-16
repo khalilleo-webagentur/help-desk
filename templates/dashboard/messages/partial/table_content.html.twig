@@ -18,7 +18,9 @@
                 <tr class="fs-14">
                     <td>{{ row.id }}</td>
                     <td>{{ row.name }}</td>
-                    <td>{{ row.email }}</td>
+                    <td>
+                        <span title="{{ row.email }}" class="fa fa-envelope fa-sm cursor-help text-light-25"></span>
+                    </td>
                     <td>
                         <form class="pointer text-primary" action="{{ path('app_dashboard_message_view', {id:row.id}) }}">
                             <input type="hidden" name="csrf" value="{{ hash(csrf_token(row.id)) }}">
