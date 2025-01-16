@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Dashboard\Message;
 
 use App\Controller\Dashboard\AbstractDashboardController;
+use App\Helper\AppHelper;
 use App\Service\MessagesService;
 use App\Service\UserService;
 use App\Traits\FormValidationTrait;
@@ -29,12 +30,14 @@ class IndexController extends AbstractDashboardController
     {
         $this->denyAccessUnlessGrantedRoleSuperAdmin();
 
-        $limit = $limit ? 1000 : 15;
+        $limit = $limit ? 1000 : AppHelper::DEFAULT_LIMIT_MESSAGES_ENTRIES;
 
         $messages = $this->messagesService->getAllWithLimit($limit);
 
         return $this->render('dashboard/messages/index.html.twig', [
             'messages' => $messages,
+            'limit' => AppHelper::DEFAULT_LIMIT_MESSAGES_ENTRIES,
+            'maxLimit' => AppHelper::DEFAULT_MAX_LIMIT_MESSAGES_ENTRIES,
         ]);
     }
 

@@ -32,4 +32,10 @@ final class AppHelper
 
     public const ROLE_CUSTOMER = 'ROLE_CUSTOMER';
     public const ROLE_SUPER_ADMIN = 'ROLE_SUPER_ADMIN';
+
+    // Default Limits
+    public const DEFAULT_LIMIT_MESSAGES_ENTRIES = 15;
+    public const DEFAULT_MAX_LIMIT_MESSAGES_ENTRIES = 100;
+    public const DEFAULT_LIMIT_SYSTEM_LOGS_ENTRIES = 50;
+    public const DEFAULT_MAX_LIMIT_SYSTEM_LOGS_ENTRIES = 500;
 }
