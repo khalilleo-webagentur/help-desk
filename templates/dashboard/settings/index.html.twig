@@ -10,7 +10,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-6 mt-1">
-                        <h5 class="m-0 text-dark mt-1">Settings</h5>
+                        <h5 class="m-0 text-dark mt-1">User Settings Overview</h5>
                     </div>
                     <div class="col-6 mt-1">
                         <div class="breadcrumb float-right"></div>
@@ -32,7 +32,9 @@
                                 <input type="checkbox" class="form-check-input" id="c1z3n6t4" name="config"
                                         {{ notifyCustomerOnTicketStatusClosed ? 'checked' : '' }}>
                                 <label class="form-check-label fs-15" for="c1z3n6t4">
-                                    Let me know if a Ticket status is being changed to resolved or closed
+                                    <span class="pl-1">
+                                        Let me know if a Ticket status is being changed to resolved or closed
+                                    </span>
                                 </label>
                                 <span class="d-none">
                                     <input type="hidden" name="path" value="{{ app.request.get('_route') }}">

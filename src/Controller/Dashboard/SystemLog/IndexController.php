@@ -19,12 +19,12 @@ class IndexController extends AbstractDashboardController
     ) {
     }
 
-    #[Route('/i5h8u6v0', name: 'app_dashboard_system_logs_index')]
-    public function index(): Response
+    #[Route('/i5h8u6v0/{limit?}', name: 'app_dashboard_system_logs_index')]
+    public function index(?string $limit): Response
     {
         $this->denyAccessUnlessGrantedRoleCustomer();
-
-        $systemLogs = $this->systemLogsService->getAllWithLimit(50);
+        $limit = $limit ? 1000 : 50;
+        $systemLogs = $this->systemLogsService->getAllWithLimit($limit);
 
         return $this->render('dashboard/system-logs/index.html.twig', [
             'systemLogs' => $systemLogs,

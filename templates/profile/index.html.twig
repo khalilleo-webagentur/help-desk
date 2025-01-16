@@ -21,7 +21,8 @@
                                   class="text-decoration-none d-color"
                                   style="font-size: 12px;"
                                   title="Goto Dashboard">
-                                   Help-Desk <img src="{{ asset('assets/img/svg/open_in_new.svg') }}" style="margin-bottom: 1px" alt="Link">
+                                   Help-Desk <img src="{{ asset('assets/img/svg/open_in_new.svg') }}"
+                                                  style="margin-bottom: 1px" alt="Link">
                                 </a>
                            {% endif %}
                         </span>
@@ -30,14 +31,21 @@
                     <div class="bg-white rounded-3 d-border">
                         <div class="d-flex p-3 py-lg-4">
                             <div class="">
-                                <img src="{{ asset('assets/img/avatar-160x160.png') }}" height="145px" alt="Avatar"
-                                     class="rounded-3">
+                                {# <img src="{{ asset('assets/img/avatar-160x160.png') }}" height="145px" alt="Avatar"
+                                     class="rounded-3"> #}
+                                <div style="background: #fcf3ff;padding: 7px 36px;border-radius: 12px;user-select: none;">
+                                    <span style="font-size: 74px; color: rgb(141, 1, 191); font-weight: bold; font-family: Georgia, Times New Roman, serif">
+                                        {{ app.user.name|slice(0, 1) }}
+                                    </span>
+                                </div>
                             </div>
                             <div class="ms-3">
                                 <p class="text-secondary mb-1 pt-3">{{ app.user.name }}</p>
                                 <p class="text-secondary mb-1">{{ app.user.email }}</p>
                                 <p class="text-secondary mb-1">{{ app.user.company.name }}</p>
-                                <p class="text-secondary mb-1">Account created {{ app.user.createdAt|date('d.m.Y') }}</p>
+                                <p class="text-secondary mb-1">
+                                    Account created {{ app.user.createdAt|date('d.m.Y') }}
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -47,7 +55,7 @@
                     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-2 g-3">
                         <div class="col">
                             <div class="card h-100 d-border">
-                                <div class="card-body"  data-bs-toggle="modal" data-bs-target="#usernameModal">
+                                <div class="card-body" data-bs-toggle="modal" data-bs-target="#usernameModal">
                                     <h6 class="card-title text-secondary mb-0 py-2">
                                         Username
                                     </h6>
@@ -104,7 +112,8 @@
 
                 <p class="text-secondary pb-5 mb-5">
                     If you have any questions about your account, please use the
-                    <a href="{{ path('app_contact_us_index') }}" class="text-decoration-none d-color">contact form</a> or
+                    <a href="{{ path('app_contact_us_index') }}" class="text-decoration-none d-color">contact form</a>
+                    or
                     <a href="mailto::{{ email }}" class="text-decoration-none d-color">email us</a> directly.
                 </p>
             </div>

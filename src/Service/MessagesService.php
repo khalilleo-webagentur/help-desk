@@ -22,9 +22,9 @@ final readonly class MessagesService
     /**
      * @return Message[]
      */
-    public function getAll(): array
+    public function getAllWithLimit(int $limit): array
     {
-        return $this->messageRepository->findBy([], ['createdAt' => 'DESC']);
+        return $this->messageRepository->findBy([], ['createdAt' => 'DESC'], $limit);
     }
 
     public function create(string $name, string $email, string $subject, string $message): Message

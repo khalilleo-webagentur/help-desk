@@ -24,12 +24,14 @@ class IndexController extends AbstractDashboardController
     ) {
     }
 
-    #[Route('/b3z3d3k9', name: 'app_dashboard_message_index')]
-    public function index(): Response
+    #[Route('/b3z3d3k9/{limit?}', name: 'app_dashboard_message_index')]
+    public function index(?string $limit): Response
     {
         $this->denyAccessUnlessGrantedRoleSuperAdmin();
 
-        $messages = $this->messagesService->getAll();
+        $limit = $limit ? 1000 : 15;
+
+        $messages = $this->messagesService->getAllWithLimit($limit);
 
         return $this->render('dashboard/messages/index.html.twig', [
             'messages' => $messages,

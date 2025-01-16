@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Http\Event\LogoutEvent;
 
-class LogoutSubscriber implements EventSubscriberInterface
+readonly class LogoutSubscriber implements EventSubscriberInterface
 {
     public function __construct(
         private UrlGeneratorInterface $urlGenerator

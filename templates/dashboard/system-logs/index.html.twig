@@ -22,12 +22,17 @@
         <section class="content">
 
             {% if is_granted('ROLE_SUPER_ADMIN') %}
-                <div class="container-fluid area-section">
-                    <div class="row px-3 py-3">
+                <div class="container-fluid area-section mb-1">
+                    <div class="row px-3 pt-3">
                         <div class="col-lg-12">
                             {% include 'dashboard/system-logs/partial/table_content.html.twig' %}
                         </div>
                     </div>
+                </div>
+                <div class="float-right mb-3">
+                    <a href="{{ path('app_dashboard_system_logs_index', {limit:1000}) }}">
+                        Load all System-logs <span class="fa fa-sync-alt pr-1"></span>
+                    </a>
                 </div>
             {% endif %}
 

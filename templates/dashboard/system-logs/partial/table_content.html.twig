@@ -16,8 +16,8 @@
                 <tr class="fs-14">
                     <td>{{ row.id }}</td>
                     <td>
-                        <code class="cursor-help fs-14" title="{{ row.message }}">
-                            {{ row.message|slice(0, 70) ~ ' ..' }}
+                        <code class="cursor-help fs-13 text-dark" title="{{ row.message }}">
+                            {{ row.message|slice(0, 70) ~ '..' }}
                         </code>
                     </td>
                     <td title="{{ row.createdAt|date }}">{{ timeAgo(row.createdAt) }}</td>
