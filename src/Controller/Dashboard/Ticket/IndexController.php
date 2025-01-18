@@ -204,7 +204,7 @@ class IndexController extends AbstractDashboardController
             }
         }
 
-        $message = sprintf('Issue T-%s added by %s', $ticket->getTicketNo(), $user->getName());
+        $message = sprintf('added issue T-%s', $ticket->getTicketNo());
         $this->ticketActivitiesService->add($ticket, $user, $message);
 
         // notify admins when customer add a new issue ..
