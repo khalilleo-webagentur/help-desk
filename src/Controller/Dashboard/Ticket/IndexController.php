@@ -354,7 +354,7 @@ class IndexController extends AbstractDashboardController
 
         $this->monologService->logger->info(
             sprintf(
-                'issueUpdated: T-%s by %s [title: %s, description: %s, status: %s] to [title: %s, description: %s]',
+                'issue Description Updated: T-%s by %s [title: %s, description: %s, status: %s] to [title: %s, description: %s]',
                 $issue->getTicketNo(),
                 $user->getUserIdentifier(),
                 $issue->getTitle(),
@@ -370,8 +370,7 @@ class IndexController extends AbstractDashboardController
                 $issue,
                 $user,
                 sprintf(
-                    '%s updated project of issue "%s" to "%s"',
-                    $user->getName(),
+                    'changed project of issue "%s" to "%s"',
                     $issue->getProject()->getTitle(),
                     $sProject->getTitle()
                 )
@@ -383,7 +382,7 @@ class IndexController extends AbstractDashboardController
                 $issue,
                 $user,
                 sprintf(
-                    '%s updated title of issue to "%s"', $user->getName(), $issue->getTitle()
+                    'changed title of issue to "%s"', $issue->getTitle()
                 )
             );
         }
@@ -392,10 +391,7 @@ class IndexController extends AbstractDashboardController
             $this->ticketActivitiesService->add(
                 $issue,
                 $user,
-                sprintf(
-                    '%s updated description of issue.',
-                    $user->getName()
-                )
+                'changed description of issue.'
             );
         }
 
@@ -409,8 +405,7 @@ class IndexController extends AbstractDashboardController
                     $issue,
                     $user,
                     sprintf(
-                        '%s updated Label of issue "%s" to "%s".',
-                        $user->getName(),
+                        'changed label of issue "%s" to "%s".',
                         $label->getName(),
                         $sLabel->getName()
                     )

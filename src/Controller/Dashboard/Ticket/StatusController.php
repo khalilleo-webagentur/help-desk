@@ -64,7 +64,7 @@ class StatusController extends AbstractDashboardController
         $this->ticketService->save($issue->setStatus($status));
 
         $user = $this->getUser();
-        $message = sprintf('%s updated status of issue to "%s"', $user->getName(), strtolower($status->getName()));
+        $message = sprintf('changed status of issue to "%s"', strtolower($status->getName()));
         $this->ticketActivitiesService->add(
             $issue,
             $user,

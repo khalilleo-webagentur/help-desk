@@ -53,7 +53,7 @@ class LogTimeController extends AbstractDashboardController
         );
 
         $user = $this->getUser();
-        $message = sprintf('%s logged time spent of issue "%s" minutes', $user->getName(), $minutes);
+        $message = sprintf('logged spent time "%s" minutes', $minutes);
         $this->ticketActivitiesService->add($issue, $user, $message);
 
         $this->addFlash('success', 'Time is being logged.');

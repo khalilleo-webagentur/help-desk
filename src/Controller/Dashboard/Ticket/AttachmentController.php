@@ -173,7 +173,7 @@ class AttachmentController extends AbstractDashboardController
 
         $this->ticketAttachmentsService->delete($attachment);
 
-        $message = sprintf('Attachment %s removed by %s', $attachment->getOriginalFileName(), $user->getName());
+        $message = sprintf('removed attachment "%s".', $attachment->getOriginalFileName());
         $this->ticketActivitiesService->add($issue, $user, $message);
 
         $this->addFlash('success', 'Attachment has been deleted.');

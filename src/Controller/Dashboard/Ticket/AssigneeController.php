@@ -59,8 +59,7 @@ class AssigneeController extends AbstractDashboardController
 
         $user = $this->getUser();
         $message = sprintf(
-            '%s updated issue assignee to "%s"',
-            $user->getName(),
+            'changed assignee to "%s"',
             $assigner ? $assigner->getName() : 'unassigned'
         );
         $this->ticketActivitiesService->add($issue, $user, $message);

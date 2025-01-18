@@ -56,7 +56,7 @@ class LinkToController extends AbstractDashboardController
 
         if ($this->validateCheckbox($request->request->get('c1z3n6t4'))) {
 
-            $message = sprintf('%s has removed linked-issue "T-%s".', $user->getName(), $issue->getLinkToTicket());
+            $message = sprintf('removed linked-issue "T-%s".', $issue->getLinkToTicket());
             $this->ticketActivitiesService->add($issue, $user, $message);
             $this->ticketService->linkIssue($issue, null, null);
 
@@ -88,7 +88,7 @@ class LinkToController extends AbstractDashboardController
 
         $this->ticketService->linkIssue($issue, (string)$targetIssue->getTicketNo(), $targetIssue->getId());
 
-        $message = sprintf('%s has linked issue to issue "%s".', $user->getName(), $linkToTicketNo);
+        $message = sprintf('linked issue to issue "%s".', $linkToTicketNo);
         $this->ticketActivitiesService->add($issue, $user, $message);
 
         $this->addFlash('success', 'Issue has been linked.');

@@ -7,7 +7,7 @@
     <ul>
         {% for row in ticketActivities %}
             <li class="fs-14 text-secondary mb-1" style="border-bottom: 1px dashed #dcdcdc;padding-bottom: 3px;">
-                {{ row.message }}
+                {{ row.user.name|capitalize}} {{ row.message }}
                 <span class="float-right md-d-none" title="{{ row.createdAt|date }}">
                     {{ timeAgo(row.createdAt) }}
                 </span>

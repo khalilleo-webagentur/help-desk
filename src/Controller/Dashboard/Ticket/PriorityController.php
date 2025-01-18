@@ -58,11 +58,7 @@ class PriorityController extends AbstractDashboardController
         $this->ticketService->save($issue->setPriority($priority));
 
         $user = $this->getUser();
-        $message = sprintf(
-            '%s updated issue priority to "%s"',
-            $user->getName(),
-            $priority->getName()
-        );
+        $message = sprintf('changed priority to "%s"', $priority->getName());
         $this->ticketActivitiesService->add($issue, $user, $message);
 
         $this->addFlash('success', 'Priority is being updated.');
