@@ -305,11 +305,13 @@ class IndexController extends AbstractDashboardController
 
         $users = $this->userService->getAllEmployees();
         $projects = $this->projectService->getAllByCompany($issue->getCustomer()->getCompany());
+        $ticketLabels = $this->ticketLabelsService->getAll();
 
         return $this->render('dashboard/tickets/edit.html.twig', [
             'issue' => $issue,
             'assignees' => $users,
             'projects' => $projects,
+            'ticketLabels' => $ticketLabels
         ]);
     }
 
@@ -397,9 +399,31 @@ class IndexController extends AbstractDashboardController
             );
         }
 
+        $label = $issue->getLabel();
+        $labelId = $this->validateNumber($request->request->get('l7b7d6z0'));
+
+        if ($sLabel = $this->ticketLabelsService->getById($labelId)) {
+
+            if ($label->getId() !== $sLabel->getId()) {
+                $this->ticketActivitiesService->add(
+                    $issue,
+                    $user,
+                    sprintf(
+                        '%s updated Label of issue "%s" to "%s".',
+                        $user->getName(),
+                        $label->getName(),
+                        $sLabel->getName()
+                    )
+                );
+            }
+
+            $label = $sLabel;
+        }
+
         $this->ticketService->save(
             $issue
                 ->setProject($sProject)
+                ->setLabel($label)
                 ->setTitle($title)
                 ->setDescription($description)
                 ->setAssignee($assignee)
