@@ -4,7 +4,7 @@
         <table class="table table-hover text-nowrap">
             <thead>
             <tr class="fs-14">
-                <th>ID</th>
+                <th>#</th>
                 <th>{{ 'Name'|trans }}</th>
                 <th>{{ 'E-mail'|trans }}</th>
                 <th>{{ 'Subject'|trans }}</th>
@@ -22,10 +22,10 @@
                         <span title="{{ row.email }}" class="fa fa-envelope fa-sm cursor-help text-light-25"></span>
                     </td>
                     <td>
-                        <form class="pointer text-primary" action="{{ path('app_dashboard_message_view', {id:row.id}) }}">
+                        <form class="pointer" action="{{ path('app_dashboard_message_view', {id:row.id}) }}">
                             <input type="hidden" name="csrf" value="{{ hash(csrf_token(row.id)) }}">
                             <span onclick="this.closest('form').submit();"
-                                class="{{ row.isDeleted ? 'ins' : '' }}">
+                                class="link-primary {{ row.isDeleted ? 'ins' : '' }}">
                                 {{ row.subject }}
                             </span>
                         </form>

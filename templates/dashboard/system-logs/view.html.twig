@@ -31,8 +31,8 @@
 
                         <p class="mt-2">{{ systemLog.message }}</p>
 
-                        <small class="text-secondary" title="{{ systemLog.createdAt|date }}">
-                            <span class="text-warning fa fa-clock pr-1"></span> {{ timeAgo(systemLog.createdAt) }}
+                        <small class="text-secondary" title="{{ timeAgo(systemLog.createdAt) }}">
+                            <span class="text-warning fa fa-clock pr-1"></span> {{ systemLog.createdAt|date('Y-m-d H:i:s') }}
                         </small>
 
                         <p class="small pb-0 mb-0 mt-3">

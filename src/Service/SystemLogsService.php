@@ -33,4 +33,21 @@ final readonly class SystemLogsService
         $systemLog->setMessage($message);
         $this->systemLogRepository->save($systemLog, true);
     }
+
+    public function deleteAllByCriteria(\DateTimeInterface $from, \DateTimeInterface $to): int
+    {
+        $i = 0;
+
+        foreach ($this->systemLogRepository->findTDeleteAllByCriteria($from, $to) as $systemLog) {
+            $this->delete($systemLog);
+            $i++;
+        }
+
+        return $i;
+    }
+
+    public function delete(SystemLog $systemLog): void
+    {
+        $this->systemLogRepository->remove($systemLog, true);
+    }
 }

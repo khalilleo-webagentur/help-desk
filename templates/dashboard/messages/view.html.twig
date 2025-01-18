@@ -36,8 +36,8 @@
 
                         <h4 class="mt-2">{{ message.subject }}</h4>
                         <p>{{ message.message }}</p>
-                        <small class="text-secondary" title="{{ message.createdAt|date }}">
-                            <span class="text-warning fa fa-clock pr-1"></span> {{ timeAgo(message.createdAt) }}
+                        <small class="text-secondary" title="{{ timeAgo(message.createdAt) }}">
+                            <span class="text-warning fa fa-clock pr-1"></span> {{ message.createdAt|date('Y-m-d H:i:s') }}
                         </small>
 
                         <p class="small pb-0 mb-0 mt-3">

@@ -13,7 +13,15 @@
                         <h5 class="m-0 text-dark mt-1">System-Logs Overview</h5>
                     </div>
                     <div class="col-4 mt-1">
-                        <div class="breadcrumb float-right"></div>
+                        <div class="breadcrumb float-right">
+                            {% if count(systemLogs) > 0 %}
+                                <button class="btn btn-outline-secondary btn-headers mr-1"
+                                        data-toggle="modal" data-target="#deleteToolModal">
+                                    <span class="fa fa-filter fa-sm pr-1"></span> <span
+                                            class="ps-1 md-d-none">Filter Delete</span>
+                                </button>
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -46,5 +54,7 @@
 
         </section>
     </div>
+
+    {% include 'dashboard/system-logs/modal/delete.html.twig' %}
 
 {% endblock %}

@@ -33,4 +33,19 @@ class SystemLogRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+
+    /**
+     * @return SystemLog[]
+     */
+    public function findTDeleteAllByCriteria(\DateTimeInterface $from, \DateTimeInterface $to): array
+    {
+        return $this->createQueryBuilder('t1')
+            ->where('t1.createdAt >= :from')
+            ->setParameter('from', $from)
+            ->andWhere('t1.createdAt <= :to')
+            ->setParameter('to', $to)
+            ->orderBy('t1.id', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
 }
