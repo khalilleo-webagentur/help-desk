@@ -138,8 +138,9 @@
                     </a>
                 </li>
 
-                {% if isAdmin %}
+
                     <li class="nav-header">EXTRA</li>
+                {% if isAdmin %}
                     <li class="nav-item {{ _route == 'app_dashboard_system_logs_index' ? 'menu-is-opening menu-open' : '' }}">
                         <a href="{{ path('app_dashboard_system_logs_index') }}" class="nav-link">
                             <i class="nav-icon fas fa-file"></i>
@@ -147,6 +148,12 @@
                         </a>
                     </li>
                 {% endif %}
+                <li class="nav-item" data-toggle="modal" data-target="#LogoutModalCenter">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-power-off"></i>
+                        <p>Log out</p>
+                    </a>
+                </li>
             </ul>
         </nav>
     </div>

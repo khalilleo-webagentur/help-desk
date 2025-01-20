@@ -5,7 +5,7 @@ parameters:
   no_reply: "no-reply@helpdesk.khalilleo.com"
 
   webmasterName: "Webmaster"
-  webmasterEmail: "support@khalilleo.com"
+  webmasterEmail: "ronijan@posteo.de"
   phoneNumber: '(+49) 0163/616-5396'
   infoEmail: 'info@khalilleo.com'
   legalEmail: 'legal@khalilleo.com'
@@ -14,7 +14,7 @@ parameters:
   addressCity: 'Bietigheim-Bissingen'
   addressCountry: 'Deutschland'
 
-  app_version: "1.4.2"
+  app_version: "1.4.6"
   
   app_author: "Khalilleo Teams"
   app_created: "2024-07-01"

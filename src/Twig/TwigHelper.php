@@ -45,6 +45,7 @@ class TwigHelper extends AbstractExtension
             new TwigFunction('check', [$this, 'check']),
             new TwigFunction('faThumbsUp', [$this, 'getThumbsUp']),
             new TwigFunction('faThumbsDown', [$this, 'getThumbsDown']),
+            new TwigFunction('phoneNumber', [$this, 'phoneNumber']),
             new TwigFunction('appAuthor', [$this, 'getAppAuthor']),
             new TwigFunction('madeBy', [$this, 'getMadeBy']),
             new TwigFunction('version', [$this, 'getVersion']),
@@ -238,6 +239,11 @@ class TwigHelper extends AbstractExtension
         $color = $color ?? 'text-danger';
 
         echo "<span class='fa fa-thumbs-down fa-sm $color'></span>";
+    }
+
+    public function phoneNumber(): string
+    {
+        return $this->configService->getParameter('phoneNumber');
     }
 
     public function getAppName(): string

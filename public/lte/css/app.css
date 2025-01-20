@@ -199,10 +199,6 @@ body {
     opacity: .9;
 }
 
-.form-control:disabled, .form-control[readonly] {
-    background-color: rgba(246, 244, 244, 0.55) !important;
-}
-
 .form-control:disabled:focus, .form-control:focus[readonly] {
     border: 1px solid #f89797 !important;
     background-color: rgba(250, 223, 223, 0.49) !important;

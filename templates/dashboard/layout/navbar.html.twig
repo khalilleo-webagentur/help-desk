@@ -63,12 +63,16 @@
         </li>#}
     </ul>
 
-    <a href="#" class="nav-link" title="{{ 'Logout'|trans }}">
-        <span data-toggle="modal" data-target="#LogoutModalCenter" class="text-secondary">
-            <span class="md-d-none">Logout</span>
-            <i class="fa fa-power-off text-secondary fa-sm"></i>
+    <a href="tel:{{ phoneNumber() }}" class="nav-link pr-1" title="{{ 'Call ' ~ phoneNumber() }}">
+        <i class="fa fa-headset text-secondary"></i>
+    </a>
+
+    <a href="#" class="nav-link" title="{{ 'Contact us directly'|trans }}">
+        <span data-toggle="modal" data-target="#emailUsModal" class="text-secondary">
+            <i class="fa fa-envelope text-secondary"></i>
         </span>
     </a>
 </nav>
 
 {% include 'component/logout_confirmation.html.twig' %}
+{% include 'dashboard/component/email_us_modal.html.twig' %}
