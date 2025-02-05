@@ -116,7 +116,7 @@
                                 </div>
                             </small>
 
-                            {% if issue.linkToTicket and issue.linkToTicketId %}
+                            {% if issue.linkToTicket and issue.linkToTicketId and isAdminOrEmployee %}
                                 <div class="alert-issue small mt-3">
                                     <form action="{{ path('app_dashboard_ticket_view', {id: issue.linkToTicketId}) }}"
                                           method="post">
