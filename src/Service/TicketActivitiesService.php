@@ -25,13 +25,14 @@ final readonly class TicketActivitiesService
         return $this->ticketActivityRepository->findBy(['ticket' => $ticket], ['createdAt' => 'DESC']);
     }
 
-    public function add(Ticket $ticket, ?UserInterface $user, string $message): void
+    public function add(Ticket $ticket, ?UserInterface $user, string $message, bool $isHidden = false): void
     {
         $ticketActivity = new TicketActivity();
         $ticketActivity
             ->setTicket($ticket)
             ->setUser($user)
-            ->setMessage($message);
+            ->setMessage($message)
+            ->setIsHidden($isHidden);
         $this->save($ticketActivity);
     }
 

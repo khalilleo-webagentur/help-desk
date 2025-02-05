@@ -1,19 +1,31 @@
 {% if count(ticketActivities) > 0 %}
 
     <div class="my-3 fs-14">
-       <span class="fa fa-info-circle text-info pr-1"></span> Latest Activities will be shown at first.
+        <span class="fa fa-info-circle text-info pr-1"></span> Latest Activities will be shown at first.
     </div>
 
-    <ul>
+    <div class="pl-2">
         {% for row in ticketActivities %}
-            <li class="fs-14 text-secondary mb-1" style="border-bottom: 1px dashed #dcdcdc;padding-bottom: 3px;">
-                {{ row.user.name|capitalize}} {{ row.message }}
-                <span class="float-right md-d-none" title="{{ row.createdAt|date }}">
-                    {{ timeAgo(row.createdAt) }}
-                </span>
-            </li>
+            {% if row.isHidden and is_granted('ROLE_SUPER_ADMIN') %}
+                <p class="fs-14 mb-1 text-secondary small" style="border-bottom: 1px dashed #dcdcdc;padding-bottom: 3px;">
+                    <span class="fa fa-circle fa-xs mr-2 text-warning"></span>
+                    {{ row.user.name|capitalize }} {{ row.message }}
+                    <span class="float-right md-d-none" title="{{ row.createdAt|date }}">
+                        {{ timeAgo(row.createdAt) }}
+                    </span>
+                </p>
+            {% elseif not row.isHidden %}
+                <p class="fs-14 text-secondary mb-1 small" style="border-bottom: 1px dashed #dcdcdc;padding-bottom: 3px;">
+                    <span class="fa fa-circle text-light-50 fa-xs mr-2"></span>
+                    {{ row.user.name|capitalize }} {{ row.message }}
+                    <span class="float-right md-d-none" title="{{ row.createdAt|date }}">
+                        {{ timeAgo(row.createdAt) }}
+                    </span>
+                </p>
+            {% endif %}
+
         {% endfor %}
-    </ul>
+    </div>
 
 {% else %}
     <span class="pl-3 fs-14 text-secondary">
