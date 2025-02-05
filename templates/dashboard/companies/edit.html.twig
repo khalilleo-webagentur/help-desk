@@ -36,19 +36,21 @@
                                 <input type="text" class="form-control" id="V9xO3aD7v" placeholder="{{ company.name }}"
                                        value="{{ company.name }}" name="name">
                             </div>
-                            <div class="mb-3">
-                                <label for="V9xO3aD7vfff" class="form-label">E-mail <span
-                                            class="text-danger">*</span></label>
-                                <input type="email" class="form-control" id="V9xO3aD7vfff"
-                                       placeholder="{{ company.email ?? 'Type email' }}"
-                                       value="{{ company.email }}" name="email">
-                            </div>
-                            <div class="mb-3">
-                                <label for="V9xO3aD7vd" class="form-label">Phone <span
-                                            class="text-danger">*</span></label>
-                                <input type="text" class="form-control" id="V9xO3aD7vd"
-                                       placeholder="{{ company.phone ?? 'Type phone' }}"
-                                       value="{{ company.phone }}" name="phone">
+                            <div class="row">
+                                <div class="col-lg-6 mb-3">
+                                    <label for="V9xO3aD7vfff" class="form-label">E-mail <span
+                                                class="text-danger">*</span></label>
+                                    <input type="email" class="form-control" id="V9xO3aD7vfff"
+                                           placeholder="{{ company.email ?? 'Type email' }}"
+                                           value="{{ company.email }}" name="email">
+                                </div>
+                                <div class="col-lg-6 mb-3">
+                                    <label for="V9xO3aD7vd" class="form-label">Phone <span
+                                                class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="V9xO3aD7vd"
+                                           placeholder="{{ company.phone ?? 'Type phone' }}"
+                                           value="{{ company.phone }}" name="phone">
+                                </div>
                             </div>
                             <div class="mb-3">
                                 <label for="V9xO3aD7vd" class="form-label">Street <span
