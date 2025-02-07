@@ -58,7 +58,7 @@ class IndexController extends AbstractDashboardController
     #[Route('/new', name: 'app_dashboard_project_new', methods: 'POST')]
     public function new(Request $request): RedirectResponse
     {
-        $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
+        $this->denyAccessUnlessGrantedRoleCustomer();
 
         $title = $this->validate($request->request->get('title'));
 
@@ -72,8 +72,13 @@ class IndexController extends AbstractDashboardController
             return $this->redirectToRoute(self::DASHBOARD_PROJECTS_ROUTE);
         }
 
+        $user = $this->getUser();
+        $isAdmin = $this->userService->isAdmin($user);
+
         $company = $this->companyService->getById(
-            $this->validateNumber($request->request->get('company'))
+            $isAdmin
+                ? $this->validateNumber($request->request->get('company'))
+                : $user->getCompany()->getId()
         );
 
         if (!$company) {
@@ -87,12 +92,15 @@ class IndexController extends AbstractDashboardController
 
         $this->projectService->save(
             $project
-                ->setTitle($title)
+                ->setTitle($this->validateNameAndReplaceSpace($title))
                 ->setCompany($company)
                 ->setDescription($description)
         );
 
-        $this->addFlash('notice', 'New project has been added.');
+        $this->addFlash(
+            'success',
+            'New project has been added. Please add a short description and a URL if possible.'
+        );
 
         return $this->redirectToRoute(self::DASHBOARD_PROJECTS_ROUTE);
     }
@@ -171,7 +179,7 @@ class IndexController extends AbstractDashboardController
 
         $this->projectService->save(
             $project
-                ->setTitle($title)
+                ->setTitle($this->validateNameAndReplaceSpace($title))
                 ->setUrl($url)
                 ->setDescription($description)
         );

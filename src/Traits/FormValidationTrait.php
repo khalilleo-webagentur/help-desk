@@ -196,7 +196,7 @@ trait FormValidationTrait
         return $input;
     }
 
-    private function validateUsernameAndReplaceSpace(?string $input, string $replacement = '.'): ?string
+    private function validateNameAndReplaceSpace(?string $input, string $replacement = '-'): ?string
     {
         if (empty($input)) {
             return null;

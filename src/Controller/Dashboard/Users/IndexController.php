@@ -104,7 +104,7 @@ class IndexController extends AbstractDashboardController
 
         $this->userService->save(
             $user
-                ->setName($name)
+                ->setName($this->validateNameAndReplaceSpace($name, '.'))
                 ->setEmail($email)
                 ->setCompany($company)
                 ->setPassword($this->userService->encodePassword($email))
@@ -228,7 +228,7 @@ class IndexController extends AbstractDashboardController
 
         $this->userService->save(
             $user
-                ->setName($name)
+                ->setName($this->validateNameAndReplaceSpace($name, '.'))
                 ->setEmail($email)
                 ->setPassword($this->userService->encodePassword($email))
                 ->setToken($token)

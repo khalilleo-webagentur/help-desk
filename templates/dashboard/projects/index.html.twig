@@ -7,6 +7,7 @@
     <div class="content-wrapper">
 
         {% set isAdmin = is_granted('ROLE_SUPER_ADMIN') %}
+        {% set isTeamLeader = app.user.isTeamLeader %}
 
         <div class="content-header">
             <div class="container-fluid">
@@ -16,7 +17,7 @@
                     </div>
                     <div class="col-6 mt-1">
                         <div class="breadcrumb float-right">
-                            {% if isAdmin %}
+                            {% if isAdmin or isTeamLeader %}
                             <button class="btn btn-outline-secondary btn-headers mr-1"
                                     data-toggle="modal" data-target="#newProjectModal">
                                 <span class="fa fa-plus fa-sm"></span> <span
@@ -44,7 +45,7 @@
         </section>
     </div>
 
-    {% if isAdmin %}
+    {% if isAdmin or isTeamLeader %}
         {% include 'dashboard/projects/modal/new.html.twig' %}
     {% endif %}
 
