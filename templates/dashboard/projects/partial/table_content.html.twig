@@ -1,6 +1,7 @@
 {% if count(projects) > 0 %}
 
     {% set isAdmin = is_granted('ROLE_SUPER_ADMIN') %}
+    {% set isTeamLeader = app.user.isTeamLeader %}
 
     <div class="card-body table-responsive bg-white p-0 mb-3">
         <table class="table table-hover text-nowrap">
@@ -12,7 +13,7 @@
                 {% endif %}
                 <th>{{ 'Title'|trans }}</th>
                 <th>{{ 'Description'|trans }}</th>
-                {% if isAdmin %}
+                {% if isAdmin or isTeamLeader %}
                     <th>{{ 'Modified'|trans }}</th>
                     <th>{{ 'Created'|trans }}</th>
                     <th>{{ 'Action'|trans }}</th>
@@ -48,7 +49,7 @@
                         </span>
                     </td>
 
-                    {% if isAdmin %}
+                    {% if isAdmin or isTeamLeader %}
                         <td title="{{ row.updatedAt|date }}">{{ timeAgo(row.updatedAt) }}</td>
 
                         <td title="{{ row.createdAt|date }}">{{ timeAgo(row.createdAt) }}</td>

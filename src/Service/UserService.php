@@ -112,6 +112,15 @@ final readonly class UserService
         return in_array('ROLE_SUPER_ADMIN', $user->getRoles());
     }
 
+    public function isTeamLeader(?UserInterface $user): bool
+    {
+        if (null === $user) {
+            return false;
+        }
+
+        return true === $user->isTeamLeader();
+    }
+
     public function isCustomer(UserInterface $user): bool
     {
         return in_array('ROLE_CUSTOMER', $user->getRoles());

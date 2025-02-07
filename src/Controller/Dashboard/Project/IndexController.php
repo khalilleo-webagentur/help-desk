@@ -100,11 +100,23 @@ class IndexController extends AbstractDashboardController
     #[Route('/edit/{id}', name: 'app_dashboard_project_edit')]
     public function edit(?string $id): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
+        $this->denyAccessUnlessGrantedRoleCustomer();
 
-        $project = $this->projectService->getById(
-            $this->validateNumber($id)
-        );
+        $user = $this->getUser();
+        $project = null;
+
+        if ($this->userService->isTeamLeader($user)) {
+            $project = $this->projectService->getByCompanyAndId(
+                $user->getCompany(),
+                $this->validateNumber($id)
+            );
+        }
+
+        $isAdmin = $this->userService->isAdmin($user) || $user->isNinja();
+
+        if ($isAdmin) {
+            $project = $this->projectService->getById($this->validateNumber($id));
+        }
 
         if (!$project) {
             $this->addFlash('warning', 'Project could not be found.');
@@ -119,7 +131,8 @@ class IndexController extends AbstractDashboardController
     #[Route('/store/{id}', name: 'app_dashboard_project_store', methods: 'POST')]
     public function store(?string $id, Request $request): RedirectResponse
     {
-        $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
+        $this->denyAccessUnlessGrantedRoleCustomer();
+        $user = $this->getUser();
 
         $title = $this->validate($request->request->get('title'));
 
@@ -128,9 +141,20 @@ class IndexController extends AbstractDashboardController
             return $this->redirectToRoute(self::DASHBOARD_PROJECTS_ROUTE);
         }
 
-        $project = $this->projectService->getById(
-            $this->validateNumber($id)
-        );
+        $project = null;
+
+        if ($this->userService->isTeamLeader($user)) {
+            $project = $this->projectService->getByCompanyAndId(
+                $user->getCompany(),
+                $this->validateNumber($id)
+            );
+        }
+
+        $isAdmin = $this->userService->isAdmin($user) || $user->isNinja();
+
+        if ($isAdmin) {
+            $project = $this->projectService->getById($this->validateNumber($id));
+        }
 
         if (!$project) {
             $this->addFlash('warning', 'Project could not be found.');
