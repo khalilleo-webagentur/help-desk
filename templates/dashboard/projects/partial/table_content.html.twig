@@ -37,6 +37,13 @@
                     <td>
                         {{ row.title }}
 
+                        {% if count(row.getTickets) > 0 %}
+                            <sup class="fs-10 text-bold text-secondary cursor-help"
+                                 title="Count of issues related to ({{ row.title }}) project.">
+                                {{ '('~count(row.getTickets)~')' }}
+                            </sup>
+                        {% endif %}
+
                         {% if row.url %}
                             <a href="{{ row.url }}" target="_blank" rel="nofollow">
                                 <img src="{{ asset('lte/img/open_in_new.svg') }}" alt="Link">
