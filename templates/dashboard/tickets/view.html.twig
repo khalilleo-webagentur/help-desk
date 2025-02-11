@@ -161,12 +161,10 @@
                                 </p>
                                 <p class="mb-1"><b>Assignee: </b>
                                     <span>{{ issue.assignee ? issue.assignee.name : 'unassigned' }}</span></p>
-                                {% if isAdminOrEmployee %}
-                                    <p class="mb-1" title="Logged time in minutes: {{ issue.timeSpentInMinutes }}"><b>Spent
-                                            Time: </b>
-                                        <span>{{ issue.timeSpentInMinutes > 0 ? convertToHoursMinutes(issue.timeSpentInMinutes) : '00:00' }}</span>
-                                    </p>
-                                {% endif %}
+                                <p class="mb-1" title="Logged time in minutes: {{ issue.timeSpentInMinutes }}"><b>Spent
+                                        Time: </b>
+                                    <span>{{ issue.timeSpentInMinutes > 0 ? convertToHoursMinutes(issue.timeSpentInMinutes) : '00:00' }}</span>
+                                </p>
                                 <p class="mb-1">
                                     <b>Modified at: </b>
                                     <span title="{{ issue.updatedAt|date }}">{{ timeAgo(issue.updatedAt) }}</span>
