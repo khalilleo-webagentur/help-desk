@@ -167,7 +167,7 @@ class TicketRepository extends ServiceEntityRepository
      * Filter all ticket targeting notes by criteria
      * @return Ticket[]
      */
-    public function queryAllIssueNotes(int $companyId, bool $iNote, bool $eNote, DateTimeInterface $from, DateTimeInterface $to): array
+    public function queryAllIssueNotes(int $companyId, ?string $note, bool $iNote, bool $eNote, DateTimeInterface $from, DateTimeInterface $to): array
     {
         $qb = $this->createQueryBuilder('t0')
             ->select('t1')
@@ -179,6 +179,10 @@ class TicketRepository extends ServiceEntityRepository
             ->setParameter('companyId', $companyId);
         }
 
+        if ($note) {
+            $qb->andWhere('t1.internalNote LIKE :note')
+                ->setParameter('note', '%' . $note . '%');
+        }
 
         if ($iNote) {
             $qb->andWhere('t1.internalNote IS NOT NULL');

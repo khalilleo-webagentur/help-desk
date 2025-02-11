@@ -120,6 +120,7 @@ class FilterController extends AbstractDashboardController
         $this->denyAccessUnlessGrantedRoleSuperAdmin();
 
         $companyId = $this->validateNumber($request->request->get('company'));
+        $note = $this->validate($request->request->get('note'));
         $isInternalNote = $this->validateCheckbox($request->request->get('iNote'));
         $isExternalNote = $this->validateCheckbox($request->request->get('eNote'));
         $from = $this->validate($request->request->get('dateFrom'));
@@ -138,6 +139,7 @@ class FilterController extends AbstractDashboardController
 
         $issues = $this->ticketService->queryAllIssueNotes(
             $companyId,
+            $note,
             $isInternalNote,
             $isExternalNote,
             $dateFrom,

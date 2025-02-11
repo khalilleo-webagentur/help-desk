@@ -157,9 +157,9 @@ final readonly class TicketService
     /**
      * @return Ticket[]
      */
-    public function queryAllIssueNotes(int $companyId, bool $iNote, bool $eNote, DateTimeInterface $from, DateTimeInterface $to): array
+    public function queryAllIssueNotes(int $companyId, ?string $note, bool $iNote, bool $eNote, DateTimeInterface $from, DateTimeInterface $to): array
     {
-        return $this->ticketRepository->queryAllIssueNotes($companyId, $iNote, $eNote, $from, $to);
+        return $this->ticketRepository->queryAllIssueNotes($companyId, $note, $iNote, $eNote, $from, $to);
     }
 
     public function countAll(): int
