@@ -30,6 +30,17 @@
                     </div>
 
                     <div class="row">
+                        <div class="col-12">
+                            <div class="form-group">
+                                {% set hashId = hash() %}
+                                <label for="{{ hashId }}" class="form-label">Note</label>
+                                <input type="text" class="form-control" id="{{ hashId }}"
+                                       placeholder="Note keyword" name="note">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
                         <div class="col-lg-6">
                             {% set hashId = hash() %}
                             <label for="{{ hashId }}" class="form-label">
