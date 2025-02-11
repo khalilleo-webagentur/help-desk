@@ -50,7 +50,7 @@ final readonly class ProjectService
      */
     public function getAll(): array
     {
-        return $this->projectRepository->findAll();
+        return $this->projectRepository->findBy([], ['company' => 'DESC', 'title' => 'ASC']);
     }
 
     public function save(Project $model): Project
