@@ -6,6 +6,7 @@ namespace App\Controller\Dashboard\Ticket;
 
 use App\Controller\Dashboard\AbstractDashboardController;
 use App\Entity\TicketComment;
+use App\Mails\Dashboard\NotifyIssueCommentMail;
 use App\Service\ProjectService;
 use App\Service\TicketCommentsService;
 use App\Service\TicketService;
@@ -32,7 +33,7 @@ class CommentController extends AbstractDashboardController
     }
 
     #[Route('/add', name: 'app_dashboard_ticket_comment_new', methods: 'POST')]
-    public function new(Request $request): RedirectResponse
+    public function new(Request $request, NotifyIssueCommentMail $notifyIssueCommentMail): RedirectResponse
     {
         $this->denyAccessUnlessGrantedRoleCustomer();
         $user = $this->getUser();
@@ -80,6 +81,27 @@ class CommentController extends AbstractDashboardController
                 ->setTicket($issue)
                 ->setDescription($description)
         );
+
+        if ($this->validateCheckbox($request->request->get('notify'))) {
+
+            $name = $this->getParameter('webmasterName');
+            $email = $this->getParameter('webmasterEmail');
+
+            if ($issue->getAssignee()) {
+                $name = $issue->getAssignee()->getName();
+                $email = $issue->getAssignee()->getEmail();
+            }
+
+            $customer = $issue->getCustomer();
+
+            $notifyIssueCommentMail->send(
+                $isAdmin ? $customer->getName() : $name,
+                $isAdmin ? $customer->getEmail() : $email,
+                $issue->getTicketNo(),
+                $issue->getTitle(),
+                strip_tags($description)
+            );
+        }
 
         return $backToRoute;
     }

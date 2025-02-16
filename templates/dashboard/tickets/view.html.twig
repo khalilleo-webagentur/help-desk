@@ -304,6 +304,17 @@
                         <form action="{{ path('app_dashboard_ticket_comment_new') }}" method="post">
                             <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
                             <div id="editor"></div>
+
+                            <div class="my-2">
+                                <div class="form-group form-check">
+                                    <input type="checkbox" class="form-check-input" id="4lN3jG3gE9oB3o"
+                                           name="notify">
+                                    <label class="form-check-label text-secondary" for="4lN3jG3gE9oB3o">
+                                        Notify issue creator about this comment
+                                    </label>
+                                </div>
+                            </div>
+
                             <div class="my-3">
                                 <button class="btn btn-primary" id="formSave">
                                     <span class="fa fa-check fa-sm pr-1"></span> Add Comment
