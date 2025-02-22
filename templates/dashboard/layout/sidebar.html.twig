@@ -106,7 +106,7 @@
                     </ul>
                 </li>
 
-                {% if isAdmin %}
+                {% if isAdmin or app.user.isTeamLeader %}
 
                     {% set isMessageTreeOpen = _route == 'app_dashboard_message_index' %}
 
