@@ -40,39 +40,34 @@
     {% endif %}
 
     <ul class="navbar-nav ml-auto">
-       {# <li class="mr-3 nav-item dropdown">
+        <li>
+            <a href="tel:{{ phoneNumber() }}" class="nav-link pr-2" title="{{ 'Call ' ~ phoneNumber() }}">
+                <i class="fa fa-headset text-secondary"></i>
+            </a>
+        </li>
+        <li class="mr-3 nav-item dropdown">
+            {% set countNewMessages = unseenMessages(app.user.email)['count'] %}
             <a class="nav-link" data-toggle="dropdown" href="#">
                 <i class="far fa-bell"></i>
-                <span class="badge badge-warning navbar-badge">15</span>
+                {% if countNewMessages > 0 %}
+                    <span class="badge badge-warning navbar-badge">{{ countNewMessages }}</span>
+                {% endif %}
             </a>
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                <span class="dropdown-item dropdown-header">Notifications</span>
+                <span class="dropdown-item dropdown-header">Messages</span>
                 <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item">
-                    <i class="fas fa-envelope mr-2"></i> 4 new messages
-                    <span class="float-right text-muted text-sm">3 mins</span>
+                <a href="{{ path('app_dashboard_message_index') }}" class="dropdown-item">
+                    {% set lastMessageDateTime = unseenMessages(app.user.email)['lastMessageDateTime'] ? timeAgo(unseenMessages(app.user.email)['lastMessageDateTime']) : '' %}
+                    <i class="fas fa-envelope mr-2"></i> {{ countNewMessages }} new messages
+                    <span class="float-right text-muted text-sm">{{ lastMessageDateTime }}</span>
                 </a>
                 <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item">
-                    <i class="fas fa-file mr-2"></i> 3 new reports
-                    <span class="float-right text-muted text-sm">2 days</span>
+                <a href="{{ path('app_dashboard_message_index') }}" class="dropdown-item dropdown-footer">
+                    See All Messages
                 </a>
-                <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
             </div>
-        </li>#}
+        </li>
     </ul>
-
-    <a href="tel:{{ phoneNumber() }}" class="nav-link pr-1" title="{{ 'Call ' ~ phoneNumber() }}">
-        <i class="fa fa-headset text-secondary"></i>
-    </a>
-
-    <a href="#" class="nav-link" title="{{ 'Contact us directly'|trans }}">
-        <span data-toggle="modal" data-target="#emailUsModal" class="text-secondary">
-            <i class="fa fa-envelope text-secondary"></i>
-        </span>
-    </a>
 </nav>
 
 {% include 'component/logout_confirmation.html.twig' %}
-{% include 'dashboard/component/email_us_modal.html.twig' %}
