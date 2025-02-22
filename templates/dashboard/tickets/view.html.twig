@@ -216,7 +216,7 @@
                     <div class="row mb-3">
                         <div class="col-12">
                             <h5 class="px-3 pt-3 pb-2">Internal Note</h5>
-                            <p class="px-3">{{ issue.internalNote }}</p>
+                            <div class="px-3">{{ issue.internalNote|raw }}</div>
 
                             <div class="d-flex float-right">
                                 <button class="btn btn-light btn-sm mr-2"
@@ -303,20 +303,20 @@
                     <div class="col">
                         <form action="{{ path('app_dashboard_ticket_comment_new') }}" method="post">
                             <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-                            <div id="editor"></div>
+                            <div id="comment"></div>
 
                             <div class="my-2">
                                 <div class="form-group form-check">
                                     <input type="checkbox" class="form-check-input" id="4lN3jG3gE9oB3o"
                                            name="notify">
                                     <label class="form-check-label text-secondary" for="4lN3jG3gE9oB3o">
-                                        Send notification via e-mail
+                                        Send Comment as Notification via E-mail
                                     </label>
                                 </div>
                             </div>
 
                             <div class="my-3">
-                                <button class="btn btn-primary" id="formSave">
+                                <button class="btn btn-primary" id="commentSaveBtn">
                                     <span class="fa fa-check fa-sm pr-1"></span> Add Comment
                                 </button>
                                 <input type="hidden" name="tId" value="{{ issue.id }}">

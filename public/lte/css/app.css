@@ -12,6 +12,10 @@ label, label:not(.form-check-label):not(.custom-file-label) {
     font-weight: 500;
 }
 
+.bg-success-25 {
+    background-color: #68f9861f;
+}
+
 .btn {
     text-transform: capitalize;
     border-radius: 5px;
@@ -267,7 +271,7 @@ body {
 
 .ins {
     text-decoration: line-through !important;
-    color: #f63030;
+    color: #f63030 !important;
 }
 
 @media (max-width: 868px) {

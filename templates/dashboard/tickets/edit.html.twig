@@ -76,7 +76,7 @@
                                     <div class="mb-3">
                                         <label for="V9xO3aD7v22" class="form-label">Description <span
                                                     class="text-danger">*</span></label>
-                                        <div id="editor"></div>
+                                        <div id="quillEditor"></div>
                                     </div>
                                 </div>
                             </div>
@@ -123,7 +123,7 @@
                                 <input type="hidden" name="pid" value="{{ issue.project.id }}">
                             </div>
 
-                            {% include "dashboard/component/edit_save_btn.html.twig" with {id:"formSave"} %}
+                            {% include "dashboard/component/edit_save_btn.html.twig" with {id:"quillEditorSaveBtn"} %}
 
                         </form>
                     </div>
@@ -134,7 +134,7 @@
         </section>
 
         <script>
-            let editor = document.getElementById('editor');
+            let editor = document.getElementById('quillEditor');
             editor.innerHTML = '{{ issue.description|raw }}'
         </script>
     </div>
