@@ -67,7 +67,7 @@ class CommentController extends AbstractDashboardController
 
         $description = $this->validateTextarea($request->request->get('content'), true);
 
-        if (empty(strip_tags($description))) {
+        if (!$description || empty(strip_tags($description))) {
             $this->addFlash('warning', 'Description could not be empty.');
             return $backToRoute;
         }
