@@ -32,7 +32,7 @@ final class AccountConfirmationMail extends AbstractMail implements MailInterfac
                 )
             )
             ->to(new address($userEmail, $username))
-            ->subject('Email Verification')
+            ->subject('Khalilleo-Helpdesk: Email Verification')
             ->htmlTemplate('mails/account/confirmation_email.html.twig')
             ->context([
                 'username' => $username,

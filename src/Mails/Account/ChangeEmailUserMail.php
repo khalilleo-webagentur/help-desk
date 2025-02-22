@@ -32,7 +32,7 @@ final class ChangeEmailUserMail extends AbstractMail implements MailInterface
                 )
             )
             ->to(new address($userEmail, $username))
-            ->subject('Email Verification')
+            ->subject('Khalilleo-Helpdesk: Email Verification')
             ->htmlTemplate('mails/account/update_email.html.twig')
             ->context([
                 'username' => $username,

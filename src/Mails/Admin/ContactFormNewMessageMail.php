@@ -34,7 +34,7 @@ final class ContactFormNewMessageMail extends AbstractMail implements MailInterf
                 )
             )
             ->to(new address($webmasterEmail, $webmasterName))
-            ->subject('New Message Arrived')
+            ->subject('Khalilleo-Helpdesk: New Message Arrived')
             ->htmlTemplate('mails/admin/contact_form_new_message.html.twig')
             ->context([
                 'username' => $webmasterName

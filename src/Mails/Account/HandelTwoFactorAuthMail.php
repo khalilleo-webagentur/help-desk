@@ -32,7 +32,7 @@ final class HandelTwoFactorAuthMail extends AbstractMail implements MailInterfac
                 )
             )
             ->to(new address($userEmail, $username))
-            ->subject('Two-Step Verification')
+            ->subject('Khalilleo-Helpdesk: Two-Step Verification')
             ->htmlTemplate('mails/account/send_otp.html.twig')
             ->context([
                 'username' => $username,
