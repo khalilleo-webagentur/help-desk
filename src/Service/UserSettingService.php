@@ -37,6 +37,13 @@ final readonly class UserSettingService
         return $this->userSettingRepository->findAll();
     }
 
+    public function notifyWebmasterNewIssueAdded(UserInterface|User $user): bool
+    {
+        $setting = $this->getOneByUser($user);
+
+        return $setting && true === $setting->notifyNewTicket();
+    }
+
     public function notifyCustomerOnTicketStatusClosed(UserInterface|User $user): bool
     {
         $setting = $this->getOneByUser($user);
