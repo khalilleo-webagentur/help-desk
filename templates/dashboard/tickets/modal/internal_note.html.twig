@@ -13,20 +13,15 @@
                     </button>
                 </div>
                 <div class="modal-body bg-light">
-                    <div class="mb-2">
-                        <label for="iO7nMiNot" class="form-label">
-                            Internal Note <span class="text-danger">*</span>
-                        </label>
-                        <textarea class="form-control" id="iO7nMiNot" placeholder="Type internal note .." rows="4"
-                               name="note" spellcheck="false"
-                                  required>{{ issue.internalNote }}</textarea>
-                        <small class="text-secondary">This field is required.</small>
-                    </div>
-
+                    <label for="noteQuillEditor" class="form-label">
+                        Internal Note <span class="text-danger">*</span>
+                    </label>
+                    <div id="quillEditor">{{ issue.internalNote|raw }}</div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-outline-primary">Save</button>
+                    <button type="submit" class="btn btn-outline-primary" id="quillEditorSaveBtn">Save</button>
+                    <input type="hidden" name="tId" value="{{ issue.id }}">
                     <input type="hidden" name="pid" value="{{ issue.project.id }}">
                 </div>
             </div>

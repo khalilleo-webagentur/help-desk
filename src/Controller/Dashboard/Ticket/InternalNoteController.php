@@ -45,7 +45,7 @@ class InternalNoteController extends AbstractDashboardController
             return $this->redirectToRoute(self::DASHBOARD_TICKET_VIEW_ROUTE);
         }
 
-        $note = $this->validateTextarea($request->request->get('note'));
+        $note = $this->validateTextarea($request->request->get('content'), true);
 
         $this->ticketService->save($issue->setInternalNote($note));
 
