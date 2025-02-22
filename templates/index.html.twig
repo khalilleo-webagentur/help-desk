@@ -19,7 +19,8 @@
                         The help desk provides essential support by assisting users with technical issues,
                         troubleshooting problems, and ensuring smooth operation of systems and software.
                     </h6>
-                    <a href="{{ path('app_auth') }}" class="btn btn-lg btn-light fs-15 rounded-2 d-color">
+                    <a href="{{ path(app.user? 'app_dashboard_tickets_index' : 'app_auth') }}"
+                       class="btn btn-lg btn-light fs-15 rounded-2 d-color">
                         Open new Issue <span class="bi bi-arrow-right"></span>
                     </a>
                 </div>
