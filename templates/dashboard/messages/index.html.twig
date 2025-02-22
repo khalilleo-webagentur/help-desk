@@ -16,10 +16,11 @@
                     </div>
                     <div class="col-4 mt-1">
                         <div class="breadcrumb float-right">
-                          {#  <button class="btn btn-secondary btn-headers mr-1"
-                                    data-toggle="modal" data-target="#infosModal">
-                                <span class="fa fa-info-circle fa-sm"></span>
-                            </button>#}
+                            <button class="btn btn-outline-secondary btn-headers mr-1"
+                                    data-toggle="modal" data-target="#emailUsModal">
+                                <span class="fa fa-plus fa-sm"></span> <span
+                                        class="ps-1 md-d-none">Send Message</span>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -49,5 +50,7 @@
             {% endif %}
         </section>
     </div>
+
+    {% include 'dashboard/messages/modal/new_message.html.twig' %}
 
 {% endblock %}

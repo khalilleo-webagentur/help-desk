@@ -1,12 +1,15 @@
 <div class="modal fade" id="emailUsModal" tabindex="-1" role="dialog" aria-labelledby="emailUsModalTitle"
      aria-hidden="true">
+
+    {% set isAdmin = is_granted('ROLE_SUPER_ADMIN') %}
+
     <div class="modal-dialog" role="document">
-        <form action="{{ path('app_dashboard_email_us') }}" method="post">
+        <form action="{{ path('app_dashboard_message_new') }}" method="post">
             <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="emailUsModalTitle">
-                        Contact Us
+                        Send Message
                     </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -14,7 +17,21 @@
                 </div>
                 <div class="modal-body bg-light">
 
-                    <div class="mb-3">
+                    {% if isAdmin and count(users) > 0 %}
+                        <div class="form-group">
+                            <label for="iO7nM4yT4bG2sO44">
+                                Message To <span class="text-danger">*</span>
+                            </label>
+                            <select class="form-control" name="uId" id="iO7nM4yT4bG2sO44">
+                                <option value="0" selected>Select User</option>
+                                {% for user in users %}
+                                    <option value="{{ user.id }}">{{ user.company.name ~ ' | ' ~  user.name}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    {% endif %}
+
+                    <div class="mb-2">
                         <label for="cfxO3aD7v" class="form-label">
                             Subject <span class="text-danger">*</span>
                         </label>
@@ -31,6 +48,8 @@
                                   class="form-control"
                                   id="k8xO3aD7v"
                                   placeholder="Type message" name="msg"
+                                  spellcheck="false"
+                                  autocomplete="off"
                                   required></textarea>
                         <small class="text-light-25">We'll make a Response within 3 work days.</small>
                     </div>

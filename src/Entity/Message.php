@@ -28,6 +28,12 @@ class Message
     private ?string $message = null;
 
     #[ORM\Column]
+    private bool $isSeen = false;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $seenAt = null;
+
+    #[ORM\Column]
     private bool $isDeleted = false;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
@@ -90,6 +96,31 @@ class Message
     public function setMessage(string $message): static
     {
         $this->message = $message;
+
+        return $this;
+    }
+
+    public function isSeen(): bool
+    {
+        return $this->isSeen;
+    }
+
+    public function setIsSeen(bool $isSeen): static
+    {
+        $this->isSeen = $isSeen;
+        $this->setSeenAt(new \DateTime());
+
+        return $this;
+    }
+
+    public function getSeenAt(): ?\DateTimeInterface
+    {
+        return $this->seenAt;
+    }
+
+    private function setSeenAt(?\DateTimeInterface $seenAt): static
+    {
+        $this->seenAt = $seenAt;
 
         return $this;
     }
