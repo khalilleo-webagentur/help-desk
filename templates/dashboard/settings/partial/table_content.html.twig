@@ -6,8 +6,9 @@
         <table class="table table-hover text-nowrap">
             <thead>
             <tr class="fs-14">
-                <th>{{ '#'|trans }}</th>
+                <th>{{ 'ID'|trans }}</th>
                 <th>{{ 'User'|trans }}</th>
+                <th>{{ 'NewTicketNotification' }}</th>
                 <th>{{ 'TicketCloseNotification'|trans }}</th>
                 <th>{{ 'Modified'|trans }}</th>
                 <th>{{ 'Created'|trans }}</th>
@@ -29,13 +30,31 @@
                     <td>
                         <form action="{{ path('app_dashboard_settings_store') }}"
                               method="post"
+                              class="cursor-help"
+                              title="An E-mail will be sent to Webmaster directly when user [{{ row.user.name }}] add a new issue.">
+                            <img src="{{ asset( row.notifyNewTicket ? 'lte/img/toggle2-on.svg' : 'lte/img/toggle2-off.svg') }}"
+                                 class="pointer"
+                                 onclick="this.closest('form').submit();"
+                                 alt="Toggle">
+                            <input type="hidden" name="config" value="{{ row.notifyNewTicket ? 'on' : 'off' }}">
+                            <input type="hidden" name="uId" value="{{ row.user.id }}">
+                            <input type="hidden" name="path" value="{{ app.request.get('_route') }}">
+                            <input type="hidden" name="notifyNewTicket" value="on">
+                        </form>
+                    </td>
+                    <td>
+                        <form action="{{ path('app_dashboard_settings_store') }}"
+                              class="cursor-help"
+                              method="post"
                               title="An E-mail will be sent to user directly if the status of ticket updated to Resolved or to Closed.">
-                            <img src="{{ asset( row.notifyCloseTicket ? 'lte/img/toggle2-on.svg' : 'lte/img/toggle2-off.svg') }}" class="pointer"
+                            <img src="{{ asset( row.notifyCloseTicket ? 'lte/img/toggle2-on.svg' : 'lte/img/toggle2-off.svg') }}"
+                                 class="pointer"
                                  onclick="this.closest('form').submit();"
                                  alt="Toggle">
                             <input type="hidden" name="config" value="{{ row.notifyCloseTicket ? 'on' : 'off' }}">
                             <input type="hidden" name="uId" value="{{ row.user.id }}">
                             <input type="hidden" name="path" value="{{ app.request.get('_route') }}">
+                            <input type="hidden" name="notifyCloseTicket" value="on">
                         </form>
                     </td>
                     <td title="{{ row.updatedAt|date }}">{{ timeAgo(row.updatedAt) }}</td>
