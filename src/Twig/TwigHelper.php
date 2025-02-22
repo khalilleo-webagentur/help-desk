@@ -6,6 +6,7 @@ namespace App\Twig;
 
 use App\Entity\User;
 use App\Service\Core\ConfigService;
+use App\Service\MessagesService;
 use App\Service\TicketCommentsService;
 use App\Service\TicketService;
 use DateTime;
@@ -18,15 +19,17 @@ use Twig\TwigFunction;
 class TwigHelper extends AbstractExtension
 {
     public function __construct(
-        private readonly ConfigService         $configService,
-        private readonly TicketService         $ticketService,
-        private readonly TicketCommentsService $ticketCommentsService,
+        private readonly ConfigService          $configService,
+        private readonly TicketService          $ticketService,
+        private readonly TicketCommentsService  $ticketCommentsService,
+        private readonly MessagesService        $messagesService,
     ) {
     }
 
     public function getFunctions(): array
     {
         return [
+            new TwigFunction('unseenMessages', [$this, 'getUnseenMessages']),
             new TwigFunction('hasTicketComment', [$this, 'hasTicketComment']),
             new TwigFunction('convertToHoursMinutes', [$this, 'convertToHoursMinutes']),
             new TwigFunction('role', [$this, 'getRole']),
@@ -50,6 +53,11 @@ class TwigHelper extends AbstractExtension
             new TwigFunction('madeBy', [$this, 'getMadeBy']),
             new TwigFunction('version', [$this, 'getVersion']),
         ];
+    }
+
+    public function getUnseenMessages(string $email): array
+    {
+        return $this->messagesService->getAllUnSeenMessagesByIdentifier($email);
     }
     
     public function hasTicketComment(int $ticketId): bool
