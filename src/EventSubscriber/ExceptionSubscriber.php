@@ -26,11 +26,6 @@ readonly class ExceptionSubscriber implements EventSubscriberInterface
     public function logException(ExceptionEvent $event): void
     {
         $message = $event->getThrowable()->getMessage();
-        $line = $event->getThrowable()->getLine();
-        $file = basename($event->getThrowable()->getFile());
-
-        $message = sprintf('%s, %s and L.%s', $message, $file, $line);
-
         $this>$this->systemLogsService->create($message);
         $this->monolog->logger->warning($message);
     }
