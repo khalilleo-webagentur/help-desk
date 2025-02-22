@@ -24,6 +24,9 @@ class UserSetting
     #[ORM\Column]
     private bool $notifyCloseTicket = AppHelper::NOTIFY_CUSTOMER_ON_TICKET_STATUS_CLOSED;
 
+    #[ORM\Column]
+    private bool $notifyNewTicket = AppHelper::NOTIFY_WEBMASTER_ON_TICKET_CREATE;
+
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $updatedAt = null;
 
@@ -60,6 +63,18 @@ class UserSetting
     public function setNotifyCloseTicket(bool $notifyCloseTicket): static
     {
         $this->notifyCloseTicket = $notifyCloseTicket;
+
+        return $this;
+    }
+
+    public function notifyNewTicket(): bool
+    {
+        return $this->notifyNewTicket;
+    }
+
+    public function setNotifyNewTicket(bool $notifyNewTicket): static
+    {
+        $this->notifyNewTicket = $notifyNewTicket;
 
         return $this;
     }
