@@ -4,18 +4,31 @@ declare(strict_types=1);
 
 namespace App\Controller\Account;
 
+use App\Service\UserService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class LoginController extends AbstractController
 {
+    private const AUTHENTICATE_ROUTE = 'app_auth';
+
+    public function __construct(
+        private readonly UserService $userService
+    ) {
+    }
+
     #[Route('/login/a9x4g0m4c8j4z1u7', name: 'app_login')]
-    public function index(AuthenticationUtils $authenticationUtils): Response
+    public function index(AuthenticationUtils $authenticationUtils): Response|RedirectResponse
     {
         if ($this->getUser()) {
             return $this->redirectToRoute('app_profile');
+        }
+
+        if (!$this->userService->hasUserRequestedNewSecurityCode()) {
+            return $this->redirectToRoute(self::AUTHENTICATE_ROUTE);
         }
 
         $error = $authenticationUtils->getLastAuthenticationError();

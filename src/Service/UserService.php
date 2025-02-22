@@ -32,6 +32,12 @@ final readonly class UserService
         return $this->userRepository->findOneBy(['token' => $token]);
     }
 
+    public function hasUserRequestedNewSecurityCode(): bool
+    {
+        $users = $this->userRepository->findTheLastRecentToken();
+        return count($users) > 0;
+    }
+
     public function getOneByCompany(Company $company): ?User
     {
         return $this->userRepository->findOneBy(['company' => $company]);

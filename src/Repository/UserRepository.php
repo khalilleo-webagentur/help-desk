@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Exception;
 
 /**
  * @extends ServiceEntityRepository<User>
@@ -37,5 +38,22 @@ class UserRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    /**
+     * @return User[]
+     * @throws Exception
+     */
+    public function findTheLastRecentToken(): array
+    {
+        $now = new \DateTime();
+        $now->modify('-30 minute')->format('Y-m-d H:i:s');
+
+        return $this->createQueryBuilder('t1')
+            ->where('t1.token IS NOT NULL')
+            ->andWhere('t1.updatedAt >= :now')
+            ->setParameter('now', $now)
+            ->getQuery()
+            ->getResult();
     }
 }
