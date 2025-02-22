@@ -41,7 +41,7 @@ final class NotifyIssueCommentMail extends AbstractMail implements MailInterface
                 'comment' => $comment,
             ]);
 
-        Mailer:: catch(sprintf('Comment on issue is being sent to [%s]', $userEmail));
+        Mailer:: catch(sprintf('Comment on issue is being sent to [%s], comment: [%s]', $userEmail, $comment));
 
         $this->mailer->send($email);
     }
