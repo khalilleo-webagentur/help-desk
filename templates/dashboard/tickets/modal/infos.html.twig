@@ -15,6 +15,7 @@
                     <li>Search term is only Ticket-no without "T-"</li>
 
                     {% if is_granted('ROLE_SUPER_ADMIN') %}
+                        <li>Adding new issue, the webmaster will be informed.</li>
                         <li>Pagination is not implemented yet</li>
                         <li>Filter is not implemented yet</li>
                     {% endif %}
