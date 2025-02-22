@@ -8,6 +8,7 @@ final class AppHelper
 {
     // General Configs
     public const NOTIFY_CUSTOMER_ON_TICKET_STATUS_CLOSED = true;
+    public const NOTIFY_WEBMASTER_ON_TICKET_CREATE = false;
 
     // Ticket-Status
     public const STATUS_ALL = 'ALL';
