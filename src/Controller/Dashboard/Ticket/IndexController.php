@@ -8,11 +8,13 @@ use App\Controller\Dashboard\AbstractDashboardController;
 use App\Controller\Dashboard\Dto\Search;
 use App\Entity\Ticket;
 use App\Helper\AppHelper;
+use App\Mails\Dashboard\NotifyNewIssueMail;
 use App\Service\CompanyService;
 use App\Service\Core\FileUploaderService;
 use App\Service\Core\MonologService;
 use App\Service\Helper\TicketStatusHelper;
 use App\Service\ProjectService;
+use App\Service\SystemLogsService;
 use App\Service\TicketActivitiesService;
 use App\Service\TicketAttachmentsService;
 use App\Service\TicketCommentsService;
@@ -22,6 +24,7 @@ use App\Service\TicketService;
 use App\Service\TicketStatusService;
 use App\Service\TicketTypesService;
 use App\Service\UserService;
+use App\Service\UserSettingService;
 use App\Traits\FormValidationTrait;
 use DateTime;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -51,6 +54,8 @@ class IndexController extends AbstractDashboardController
         private readonly TicketCommentsService    $ticketCommentsService,
         private readonly TicketPriorityService    $ticketPriorityService,
         private readonly CompanyService           $companyService,
+        private readonly UserSettingService       $userSettingService,
+        private readonly SystemLogsService        $systemLogsService,
         private readonly MonologService           $monologService,
     ) {
     }
@@ -108,7 +113,7 @@ class IndexController extends AbstractDashboardController
     }
 
     #[Route('/new', name: 'app_dashboard_ticket_new', methods: 'POST')]
-    public function new(Request $request, FileUploaderService $fileUploaderService): RedirectResponse
+    public function new(Request $request, FileUploaderService $fileUploaderService, NotifyNewIssueMail $notifyNewIssueMail): RedirectResponse
     {
         $this->denyAccessUnlessGrantedRoleCustomer();
 
@@ -117,10 +122,10 @@ class IndexController extends AbstractDashboardController
         $title = $this->validate($request->request->get('title'));
         $type = $this->validateNumber($request->request->get('type'));
         $description = $this->validateTextarea($request->request->get('content'), true);
-        $project = $this->validateNumber($request->request->get('project'));
+        $projectId = $this->validateNumber($request->request->get('project'));
         $label = $this->validateNumber($request->request->get('label'));
 
-        if (!$title || $type <= 0 || !$description || $label <= 0 || $project <= 0) {
+        if (!$title || $type <= 0 || !$description || $label <= 0 || $projectId <= 0) {
             $this->addFlash('warning', 'Fields with star are required.');
             return $this->redirectToRoute(self::DASHBOARD_TICKETS_ROUTE);
         }
@@ -128,8 +133,8 @@ class IndexController extends AbstractDashboardController
         $isAdmin = $this->userService->isAdmin($user);
 
         $project = $isAdmin || $user->isNinja()
-            ? $this->projectService->getById($project)
-            : $this->projectService->getByCompanyAndId($user->getCompany(), $project);
+            ? $this->projectService->getById($projectId)
+            : $this->projectService->getByCompanyAndId($user->getCompany(), $projectId);
 
         if (!$project) {
             $this->addFlash('warning', 'Project not found.');
@@ -167,7 +172,12 @@ class IndexController extends AbstractDashboardController
         $customer = $isAdmin
             ? $this->userService->getOneByCompany($project->getCompany())
             : $user;
-        
+
+        if (!$customer) {
+            $this->addFlash('warning', 'Customer not found.');
+            return $this->redirectToRoute(self::DASHBOARD_TICKETS_ROUTE);
+        }
+
         $priority = $this->validateNumber($request->request->get('priority'));
         
         $ticketPriority = $this->ticketPriorityService->getById($priority);
@@ -176,19 +186,23 @@ class IndexController extends AbstractDashboardController
             $ticketPriority = $this->ticketPriorityService->getOneByName(AppHelper::PRIORITY_LOW);
         }
 
-        $this->ticketService->save(
-            $ticket
-                ->setTicketNo($ticketNo)
-                ->setCustomer($customer)
-                ->setAssignee($assignee)
-                ->setProject($project)
-                ->setType($ticketType)
-                ->setLabel($ticketLabel)
-                ->setStatus($status)
-                ->setPriority($ticketPriority)
-                ->setTitle($title)
-                ->setDescription($description)
-        );
+        try {
+            $this->ticketService->save(
+                $ticket
+                    ->setTicketNo($ticketNo)
+                    ->setCustomer($customer)
+                    ->setAssignee($assignee)
+                    ->setProject($project)
+                    ->setType($ticketType)
+                    ->setLabel($ticketLabel)
+                    ->setStatus($status)
+                    ->setPriority($ticketPriority)
+                    ->setTitle($title)
+                    ->setDescription($description)
+            );
+        } catch (\Exception $e) {
+            $this->systemLogsService->create(sprintf('Issue cannot be created. %s', $e->getMessage()));
+        }
 
         /** @var UploadedFile $attachment */
         $attachment = $request->files->get('attachment');
@@ -207,7 +221,10 @@ class IndexController extends AbstractDashboardController
         $message = sprintf('added issue T-%s', $ticket->getTicketNo());
         $this->ticketActivitiesService->add($ticket, $user, $message);
 
-        // notify admins when customer add a new issue ..
+        // Notification will be sent to webmaster, only when the config active by user.
+        if ($this->userSettingService->notifyWebmasterNewIssueAdded($user)) {
+            $notifyNewIssueMail->send([]);
+        }
 
         $this->addFlash('success', 'New issue has been added.');
 
