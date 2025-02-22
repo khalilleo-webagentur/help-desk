@@ -1,59 +1,79 @@
 {% if count(messages) > 0 %}
 
-    <div class="card-body table-responsive bg-white p-0 mb-3">
-        <table class="table table-hover text-nowrap">
-            <thead>
-            <tr class="fs-14">
-                <th>#</th>
+    {% set isAdmin = is_granted('ROLE_SUPER_ADMIN') %}
+
+<div class="card-body table-responsive bg-white p-0 mb-3">
+    <table class="table table-hover text-nowrap">
+        <thead>
+        <tr class="fs-14">
+            {% if isAdmin %}
+                <th>ID</th>
                 <th>{{ 'Name'|trans }}</th>
                 <th>{{ 'E-mail'|trans }}</th>
-                <th>{{ 'Subject'|trans }}</th>
-                <th>{{ 'Modified'|trans }}</th>
-                <th>{{ 'Created'|trans }}</th>
-                <th>{{ 'Action'|trans }}</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for row in messages %}
-                <tr class="fs-14">
-                    <td>{{ row.id }}</td>
-                    <td>{{ row.name }}</td>
-                    <td>
-                        <span title="{{ row.email }}" class="fa fa-envelope fa-sm cursor-help text-light-25"></span>
-                    </td>
-                    <td>
-                        <form class="pointer" action="{{ path('app_dashboard_message_view', {id:row.id}) }}">
-                            <input type="hidden" name="csrf" value="{{ hash(csrf_token(row.id)) }}">
-                            <span onclick="this.closest('form').submit();"
-                                class="link-primary {{ row.isDeleted ? 'ins' : '' }}">
-                                {{ row.subject }}
+            {% endif %}
+            <th>{{ 'Subject'|trans }}</th>
+            <th>{{ 'Message'|trans }}</th>
+            <th>{{ 'Modified'|trans }}</th>
+            <th>{{ 'Created'|trans }}</th>
+            <th>{{ 'Action'|trans }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for row in messages %}
+        <tr class="fs-14 {{ row.isSeen ? '' : 'bg-success-25' }} {{ row.isDeleted ? 'ins' : '' }}">
+            {% if isAdmin %}
+                <td>{{ row.id }}</td>
+                <td>{{ row.name }}</td>
+                <td>
+                    <span title="{{ row.email }}" class="fa fa-envelope fa-sm cursor-help text-light-25"></span>
+                </td>
+            {% endif %}
+            <td>
+                {{ row.subject }}
+            </td>
+            <td>
+                <form class="pointer" action="{{ path('app_dashboard_message_view', {id:row.id}) }}">
+                    <input type="hidden" name="csrf" value="{{ hash(csrf_token(row.id)) }}">
+                    <span onclick="this.closest('form').submit();">
+                                 <span class="link-primary" title="{{ row.message }}">
+                                    {{ row.message|slice(0, 45) ~ '..' }}
+                                 </span>
                             </span>
+                </form>
+            </td>
+            <td title="{{ row.updatedAt|date }}">{{ timeAgo(row.updatedAt) }}</td>
+            <td title="{{ row.createdAt|date }}">{{ timeAgo(row.createdAt) }}</td>
+            <td>
+                <a class="text-secondary" data-toggle="dropdown" href="#" aria-expanded="false">
+                    <i class="fa fa-ellipsis-h fa-sm"></i>
+                </a>
+                <div class="dropdown-menu">
+                    <form class="dropdown-item pointer menu-text-color"
+                          action="{{ path('app_dashboard_message_view', {id:row.id}) }}"
+                          onclick="this.closest('form').submit();"
+                          method="post">
+                        <input type="hidden" name="csrf" value="{{ hash(csrf_token(row.id)) }}">
+                        <span class="fa fa-eye fa-sm pr-1"></span>
+                        <span>View</span>
+                    </form>
+
+                    {% if not row.isDeleted %}
+                        <form class="dropdown-item pointer menu-text-color"
+                              action="{{ path('app_dashboard_message_delete', {id:row.id}) }}"
+                              onclick="this.closest('form').submit();"
+                              method="post">
+                            <input type="hidden" name="csrf" value="{{ hash(csrf_token(row.id)) }}">
+                            <span class="fa fa-trash fa-xs pr-1"></span>
+                            <span>Delete</span>
                         </form>
-                    </td>
-                    <td title="{{ row.updatedAt|date }}">{{ timeAgo(row.updatedAt) }}</td>
-                    <td title="{{ row.createdAt|date }}">{{ timeAgo(row.createdAt) }}</td>
-                    <td>
-                        <a class="text-secondary" data-toggle="dropdown" href="#" aria-expanded="false">
-                            <i class="fa fa-ellipsis-h fa-sm"></i>
-                        </a>
-                        <div class="dropdown-menu">
-                            <form class="dropdown-item pointer menu-text-color"
-                                  action="{{ path('app_dashboard_message_delete', {id:row.id}) }}"
-                                  onclick="this.closest('form').submit();"
-                                  method="post">
-                                <input type="hidden" name="csrf" value="{{ hash(csrf_token(row.id)) }}">
-                                <span>
-                                        <span class="fa fa-trash fa-sm pr-1"></span>
-                                        <span>Delete</span>
-                                    </span>
-                            </form>
-                        </div>
-                    </td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-    </div>
+                    {% endif %}
+                </div>
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
 {% else %}
     {% include 'dashboard/component/no_data.html.twig' with{
         title: 'No Messages',
