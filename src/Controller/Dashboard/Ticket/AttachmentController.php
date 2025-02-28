@@ -77,7 +77,7 @@ class AttachmentController extends AbstractDashboardController
             if ($filename && $size && $extension) {
                 $this->ticketAttachmentsService->create($user, $issue, $originalFilename, $filename, $size, $extension);
 
-                $message = sprintf('Attachment %s added by %s', $originalFilename, $user->getName());
+                $message = sprintf('added new attachment "%s"', $originalFilename);
                 $this->ticketActivitiesService->add($issue, $user, $message);
 
                 $this->addFlash('success', 'File uploaded successfully.');
