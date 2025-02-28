@@ -138,7 +138,7 @@ class IndexController extends AbstractDashboardController
             return $this->redirectToRoute(self::DASHBOARD_MESSAGES_ROUTE);
         }
 
-        if ($message->getEmail() !== $user->getUserIdentifier()) {
+        if ($message->getEmail() === $user->getUserIdentifier()) {
             $this->messagesService->updateIsSeen($message);
         }
 
