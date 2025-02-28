@@ -7,9 +7,11 @@ namespace App\Controller\Dashboard\Message;
 use App\Controller\Dashboard\AbstractDashboardController;
 use App\Helper\AppHelper;
 use App\Mails\Admin\ContactFormNewMessageMail;
+use App\Service\MessageContentService;
 use App\Service\MessagesService;
 use App\Service\UserService;
 use App\Traits\FormValidationTrait;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -22,9 +24,10 @@ class IndexController extends AbstractDashboardController
     private const DASHBOARD_MESSAGES_ROUTE = 'app_dashboard_message_index';
 
     public function __construct(
-        private readonly UserService     $userService,
-        private readonly MessagesService $messagesService,
-    ) {
+        private readonly UserService           $userService,
+        private readonly MessagesService       $messagesService,
+        private readonly MessageContentService $messageContentService,
+    ){
     }
 
     #[Route('/b3z3d3k9/{limit?}', name: 'app_dashboard_message_index')]
@@ -75,24 +78,45 @@ class IndexController extends AbstractDashboardController
         }
 
         $user = $this->getUser();
-        $username = $user->getName();
-        $email = $user->getUserIdentifier();
+        $isAdmin = $this->userService->isAdmin($user);
 
-        if ($this->userService->isAdmin($user)) {
-            $targetUser = $this->userService->getById($this->validateNumber(
-                $request->request->get('uId')
-            ));
-            $username = $targetUser->getName();
-            $email = $targetUser->getEmail();
+        if (!$this->validateCheckbox($request->request->get('addToAll'))) {
+            $username = $user->getName();
+            $email = $user->getUserIdentifier();
+
+            if ($isAdmin) {
+                $targetUser = $this->userService->getById($this->validateNumber(
+                    $request->request->get('uId')
+                ));
+                $username = $targetUser->getName();
+                $email = $targetUser->getEmail();
+            }
+
+            $messageContent = $this->messageContentService->create($message);
+            $this->messagesService->create($username, $email, $subject, $messageContent);
+            $this->addFlash('success', 'Your message has been sent successfully.');
+        } else {
+
+            $users = $this->userService->getAllCustomers();
+
+            if (count($users) > 0) {
+                $messageContent = $this->messageContentService->create($message);
+
+                foreach ($users as $row) {
+                    $this->messagesService->create(
+                        $row->getName(),
+                        $row->getEmail(),
+                        $subject,
+                        $messageContent,
+                    );
+                }
+                $this->addFlash('success', 'Your message has been sent to all users.');
+            }
         }
 
-        $this->messagesService->create($username, $email, $subject, $message);
-
-        // @TODO add configuration notifySendMessage ...
-
-        $contactFormNewMessageMail->send([]);
-
-        $this->addFlash('success', 'Your message has been sent successfully.');
+        if (!$isAdmin) {
+            $contactFormNewMessageMail->send([]);
+        }
 
         return $redirectTo;
     }
@@ -103,8 +127,9 @@ class IndexController extends AbstractDashboardController
         $this->denyAccessUnlessGrantedRoleCustomer();
         $user = $this->getUser();
         $messageId = $this->validateNumber($id);
+        $isAdmin = $this->userService->isAdmin($user);
 
-        $message = $this->userService->isAdmin($user)
+        $message = $isAdmin
             ? $this->messagesService->getById($messageId)
             : $this->messagesService->getByEmailAndId($user->getUserIdentifier(), $messageId);
 
@@ -120,6 +145,60 @@ class IndexController extends AbstractDashboardController
         return $this->render('dashboard/messages/view.html.twig', [
             'message' => $message,
         ]);
+    }
+
+    #[Route('/d8t4c6i7/{id}', name: 'app_dashboard_message_edit')]
+    public function edit(?string $id): Response
+    {
+        $this->denyAccessUnlessGrantedRoleSuperAdmin();
+        $messageId = $this->validateNumber($id);
+
+        $message = $this->messagesService->getById($messageId);
+
+        if (!$message) {
+            $this->addFlash('warning', 'Message could not be found.');
+            return $this->redirectToRoute(self::DASHBOARD_MESSAGES_ROUTE);
+        }
+
+        return $this->render('dashboard/messages/edit.html.twig', [
+            'message' => $message,
+        ]);
+    }
+
+    #[Route('/sk74c3ib/{id}', name: 'app_dashboard_message_store', methods: ['POST'])]
+    public function store(?string $id, Request $request): Response|RedirectResponse
+    {
+        $this->denyAccessUnlessGrantedRoleSuperAdmin();
+
+        $subject = $this->validate($request->request->get('subject'));
+        $content = $this->validateTextarea($request->request->get('content'), true);
+
+        if (!$subject || !$content) {
+            $this->addFlash('warning', 'Subject and Message fields are required.');
+            return $this->redirectToRoute(self::DASHBOARD_MESSAGES_ROUTE);
+        }
+
+        $messageId = $this->validateNumber($id);
+        $message = $this->messagesService->getById($messageId);
+
+        if (!$message) {
+            $this->addFlash('warning', 'Message could not be found.');
+            return $this->redirectToRoute(self::DASHBOARD_MESSAGES_ROUTE);
+        }
+
+        $isSeen = !$this->validateCheckbox($request->request->get('isSeen'));
+        $this->messagesService->save(
+            $message
+                ->setSubject($subject)
+                ->setIsSeen($isSeen)
+                ->setSeenAt($isSeen ? new \DateTime() : null)
+        );
+
+        $this->messageContentService->save($message->getMessageContent()->setContent($content));
+
+        $this->addFlash('success', 'Message has been saved successfully.');
+
+        return $this->redirectToRoute(self::DASHBOARD_MESSAGES_ROUTE);
     }
 
     #[Route('/d3t4lti7/{id}', name: 'app_dashboard_message_delete', methods: ['POST'])]

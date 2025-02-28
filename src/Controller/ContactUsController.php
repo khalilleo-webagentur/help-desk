@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use App\Mails\Admin\ContactFormNewMessageMail;
 use App\Service\Core\MonologService;
+use App\Service\MessageContentService;
 use App\Service\MessagesService;
 use App\Traits\FormValidationTrait;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -21,8 +22,9 @@ class ContactUsController extends AbstractController
     private const CONTACT_US_ROUTE = 'app_contact_us_index';
 
     public function __construct(
-        private readonly MessagesService $messagesService,
-        private readonly MonologService  $monolog
+        private readonly MessageContentService $messageContentService,
+        private readonly MessagesService       $messagesService,
+        private readonly MonologService        $monolog
     ) {
     }
 
@@ -48,9 +50,11 @@ class ContactUsController extends AbstractController
             return $this->redirectToRoute(self::CONTACT_US_ROUTE);
         }
 
-        $this->messagesService->create($name, $email, $subject, $message);
+        $messageContent = $this->messageContentService->create($message);
 
-        $contactFormNewMessageMail->send([]);
+        $this->messagesService->create($name, $email, $subject, $messageContent);
+
+       // $contactFormNewMessageMail->send([]);
 
         $this->addFlash('success', 'Thank you for contact us - will make a Response as soon as possible');
 

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Service;
 
 use App\Entity\Message;
+use App\Entity\MessageContent;
 use App\Repository\MessageRepository;
 
 final readonly class MessagesService
@@ -65,19 +66,18 @@ final readonly class MessagesService
         ];
     }
 
-    public function create(string $name, string $email, string $subject, string $message): Message
+    public function create(string $name, string $email, string $subject, MessageContent $content): Message
     {
-        $messageModel = new Message();
-
-        $messageModel
+        $message = new Message();
+        $message
             ->setName($name)
             ->setEmail($email)
             ->setSubject($subject)
-            ->setMessage($message);
+            ->setMessageContent($content);
 
-        $this->save($messageModel);
+        $this->save($message);
 
-        return $messageModel;
+        return $message;
     }
 
     public function updateIsSeen(Message $message): void

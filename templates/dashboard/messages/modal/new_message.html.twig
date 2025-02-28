@@ -39,7 +39,7 @@
                                required>
                     </div>
 
-                    <div class="mb-3">
+                    <div class="mb-2">
                         <label for="k8xO3aD7v" class="form-label">
                             Message <span class="text-danger">*</span>
                         </label>
@@ -53,6 +53,18 @@
                                   required></textarea>
                         <small class="text-light-25">We'll make a Response within 3 work days.</small>
                     </div>
+
+                    {% if isAdmin %}
+                        <div class="mb-3">
+                            <div class="form-group form-check">
+                                <input type="checkbox" class="form-check-input" id="c1z3n6t4"
+                                       name="addToAll">
+                                <label class="form-check-label text-secondary" for="c1z3n6t4">
+                                    Send this message as Notification to all users.
+                                </label>
+                            </div>
+                        </div>
+                    {% endif %}
 
                 </div>
                 <div class="modal-footer">

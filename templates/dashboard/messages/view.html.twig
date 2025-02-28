@@ -36,10 +36,19 @@
                             {% endif %}
                             {{ message.name }} <span class="text-light-50 px-1">|</span>
                             {{ message.email }}
+
+                            {% if is_granted('ROLE_SUPER_ADMIN') %}
+                                <span class="text-light-50 px-1">|</span>
+                                <a href="{{ path('app_dashboard_message_edit', {id:message.id}) }}"
+                                   class="fs-13">
+                                    Edit
+                                </a>
+                            {% endif %}
+
                         </small>
 
                         <h4 class="mt-2">{{ message.subject }}</h4>
-                        <p>{{ message.message }}</p>
+                        <p>{{ message.messageContent.content }}</p>
                         <small class="text-secondary" title="{{ timeAgo(message.createdAt) }}">
                             <span class="text-warning fa fa-clock pr-1"></span> {{ message.createdAt|date('Y-m-d H:i:s') }}
                         </small>

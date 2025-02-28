@@ -24,8 +24,9 @@ class Message
     #[ORM\Column(type: Types::TEXT)]
     private ?string $subject = null;
 
-    #[ORM\Column(type: Types::TEXT)]
-    private ?string $message = null;
+    #[ORM\ManyToOne(inversedBy: 'messages')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?MessageContent $messageContent = null;
 
     #[ORM\Column]
     private bool $isSeen = false;
@@ -88,14 +89,14 @@ class Message
         return $this;
     }
 
-    public function getMessage(): ?string
+    public function getMessageContent(): ?MessageContent
     {
-        return $this->message;
+        return $this->messageContent;
     }
 
-    public function setMessage(string $message): static
+    public function setMessageContent(?MessageContent $messageContent): static
     {
-        $this->message = $message;
+        $this->messageContent = $messageContent;
 
         return $this;
     }
@@ -118,7 +119,7 @@ class Message
         return $this->seenAt;
     }
 
-    private function setSeenAt(?\DateTimeInterface $seenAt): static
+    public function setSeenAt(?\DateTimeInterface $seenAt): static
     {
         $this->seenAt = $seenAt;
 

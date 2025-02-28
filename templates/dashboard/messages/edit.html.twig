@@ -1,0 +1,73 @@
+{% extends 'dashboard/layout/base.html.twig' %}
+
+{% block title %} Dashboard :: Edit Message Details {% endblock %}
+
+{% block body %}
+
+    <div class="content-wrapper">
+
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-8">
+                        <h5 class="m-0 text-dark">Edit Message Details</h5>
+                    </div>
+                    <div class="col-4">
+                        <div class="float-right">
+                            <a href="{{ path('app_dashboard_message_index') }}" class="text-secondary">
+                                Close <span class="fa fa-window-close"></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <section class="content">
+            <div class="container-fluid area-section">
+
+                <div class="row px-2 py-3">
+                    <div class="col-lg-6">
+                        <form action="{{ path('app_dashboard_message_store', {id:message.id}) }}" method="post">
+                            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+                            <div class="mb-3">
+                                <label for="V9xO3aD7v" class="form-label">
+                                    Subject <span class="text-danger">*</span>
+                                </label>
+                                <input type="text" class="form-control" id="V9xO3aD7v" placeholder="Type title"
+                                       value="{{ message.subject }}" name="subject">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="2hV9xO3aD7v" class="form-label">Message</label>
+                                <textarea type="text" class="form-control" id="2hV9xO3aD7v"
+                                          rows="3"
+                                          required
+                                          spellcheck="false"
+                                          autocomplete="off"
+                                          placeholder="Type description"
+                                          name="content">{{ message.messageContent.content }}</textarea>
+                            </div>
+
+                            <div class="mb-3">
+                                <div class="form-group form-check">
+                                    <input type="checkbox" class="form-check-input" id="c1z3n6t4"
+                                           name="isSeen">
+                                    <label class="form-check-label text-secondary" for="c1z3n6t4">
+                                        Mark this message as not seen yet
+                                    </label>
+                                </div>
+                            </div>
+
+                            {% include "dashboard/component/edit_save_btn.html.twig" %}
+
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </div>
+
+{% endblock %}
