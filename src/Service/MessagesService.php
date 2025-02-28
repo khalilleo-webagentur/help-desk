@@ -82,7 +82,9 @@ final readonly class MessagesService
 
     public function updateIsSeen(Message $message): void
     {
-        $this->save($message->setIsSeen(true));
+        if (!$message->isSeen()) {
+            $this->save($message->setIsSeen(true));
+        }
     }
 
     public function save(Message $message): Message
