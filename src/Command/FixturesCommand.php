@@ -42,6 +42,8 @@ class FixturesCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        // $ php bin/console app:seeds
+
         $output->writeln('running ...');
 
         $this->addProjects();

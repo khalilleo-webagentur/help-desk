@@ -51,15 +51,15 @@ class NewUserCommand extends Command
 
         if (!$this->userService->getByEmail($email)) {
 
-          /* $company = $this->companyService->save(
+          $company = $this->companyService->save(
                  (new Company())
-                     ->setName('Khalilleo GmbH')
+                     ->setName('Example GmbH')
                      ->setEmail($faker->safeEmail)
                      ->setPhone($faker->phoneNumber)
                      ->setStreet($faker->address)
                      ->setCity($faker->city)
                      ->setZip($faker->postcode)
-             );*/
+             );
 
             $user = new User();
 
@@ -67,16 +67,16 @@ class NewUserCommand extends Command
 
             $this->userService->save(
                 $user
-                   // ->setCompany($company)
+                    ->setCompany($company)
                     ->setName($faker->name())
                     ->setEmail($email)
                     ->setPassword($this->userService->encodePassword($email))
                     ->setRoles(['ROLE_SUPER_ADMIN']) // ROLE_CUSTOMER, ROLE_SUPER_ADMIN, ROLE_USER
                     ->setIsVerified(true)
                     ->setToken($code)
-                   // ->setTeamLeader(true)
-                   // ->setNinja(true)
-                   ->setCompany($this->companyService->getByName('Khalilleo GmbH'))
+                    ->setTeamLeader(true)
+                    // ->setNinja(true)
+                   //->setCompany($this->companyService->getByName('Khalilleo GmbH'))
             );
 
             $userSetting = new UserSetting();
