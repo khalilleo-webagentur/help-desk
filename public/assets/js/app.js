@@ -4,6 +4,15 @@ $(document).ready(function () {
         $(".alert").alert('close').fadeOut();
     }, 10000);
 
+    if ($('.rmModal').length) {
+        $('.rmModal').on('click', function () {
+        setTimeout(function () {
+            $('.removeModalAfterClick').modal('hide');
+            $('input').val('');
+        }, 1000);
+    });
+    }
+
     if ($('#clipboard').length) {
         $('#clipboard').on('click', function (e) {
             let link = $('#link').text();
@@ -32,6 +41,6 @@ async function copyContent(text) {
             await navigator.clipboard.writeText(text);
         }
     } catch (err) {
-        swal('', 'clipboard is not avialble on your Browser.', 'warning');
+        swal('', 'clipboard is not available on your Browser.', 'warning');
     }
 }

@@ -35,7 +35,7 @@ class PersonalDataController extends AbstractController
 
         $this->denyAccessUnlessGranted('ROLE_USER');
 
-        $newUsername = $this->validateUsernameAndReplaceSpace($request->request->get('iUsername'));
+        $newUsername = $this->validateNameAndReplaceSpace($request->request->get('iUsername'), '.');
 
         if (!$newUsername) {
             $this->addFlash('warning', 'Username is required.');
