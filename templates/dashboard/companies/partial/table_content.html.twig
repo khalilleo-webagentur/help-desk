@@ -33,7 +33,13 @@
                                   onclick="this.closest('form').submit();">{{ row.name }}</span>
                         </form>
                     </td>
-                    <td>{{ row.email ? row.email : '---' }}</td>
+                    <td>
+                        {% if row.email %}
+                            <span title="{{ row.email }}" class="fa fa-envelope fa-sm cursor-help text-light-25"></span>
+                        {% else %}
+                            <span>---</span>
+                        {% endif %}
+                    </td>
                     <td>{{ row.phone ? row.phone : '---' }}</td>
                     <td>{{ row.street ? row.street : '---' }}</td>
                     <td>{{ row.zip ? row.zip : '---' }}</td>
