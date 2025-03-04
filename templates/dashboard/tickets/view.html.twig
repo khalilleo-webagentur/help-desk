@@ -33,88 +33,108 @@
 
                         {% if issue %}
 
-                            <small class="text-secondary small">
-                                {{ issue.customer.company.name }} <span class="text-light-50">|</span>
-                                {{ issue.project.title }} <span class="text-light-50">|</span>
-                                T-{{ issue.ticketNo }}
-                                <div class="float-right mx-1">
-                                    <a class="text-info" data-toggle="dropdown" href="#" aria-expanded="false">
-                                        <span class="md-d-none">Menu</span> <i class="fa fa-ellipsis-h fa-sm"></i>
-                                    </a>
-                                    <div class="dropdown-menu">
+                            <div class="text-secondary d-flex">
+                                <div class="d-flex small">
+                                    <div>
+                                        {{ issue.customer.company.name }} <span class="text-light-50 px-1">|</span>
+                                    </div>
 
-                                        <form class="dropdown-item pointer menu-text-color"
-                                              action="{{ path('app_dashboard_ticket_edit', {id:issue.id}) }}"
-                                              onclick="this.closest('form').submit();"
-                                              method="post">
-                                            <input type="hidden" name="_csrf_token"
-                                                   value="{{ hash(csrf_token(issue.id)) }}">
-                                            <span class="fa fa-edit fa-sm pr-2"></span>
-                                            <span class="font-size-14">Edit issue</span>
+                                    <div>
+                                        {{ issue.project.title|capitalize }} <span class="text-light-50  px-1">|</span>
+                                    </div>
+
+                                    <form class="pointer" title="Edit Issue"
+                                          action="{{ path('app_dashboard_ticket_edit', {id:issue.id}) }}"
+                                          onclick="this.closest('form').submit();"
+                                          method="post">
+                                        <input type="hidden" name="csrf" value="{{ hash(csrf_token(issue.id)) }}">
+                                        <small class="text-primary">
+                                            T-{{ issue.ticketNo }}
                                             <input type="hidden" name="pid" value="{{ issue.project.id }}">
-                                        </form>
+                                        </small>
+                                    </form>
 
-                                        {% if isAdminOrEmployee %}
-                                            <form class="dropdown-item pointer menu-text-color" action="#"
-                                                  data-toggle="modal" data-target="#logTimeModal">
-                                                <span class="fa fa-clock fa-sm pr-2"></span>
-                                                <span class="font-size-14">Log spent time</span>
-                                            </form>
-                                            <form class="dropdown-item pointer menu-text-color" action="#"
-                                                  data-toggle="modal" data-target="#changeStatusModal">
+                                    <span class="text-light-50  px-1">|</span>
+                                    <div class="mx-1 float-right">
+                                        <a class="text-secondary mb-1" data-toggle="dropdown" href="#"
+                                           aria-expanded="false">
+                                            <span class="fa fa-ellipsis-h fa-sm"></span>
+                                        </a>
+                                        <div class="dropdown-menu">
+
+                                            <form class="dropdown-item pointer menu-text-color"
+                                                  action="{{ path('app_dashboard_ticket_edit', {id:issue.id}) }}"
+                                                  onclick="this.closest('form').submit();"
+                                                  method="post">
+                                                <input type="hidden" name="_csrf_token"
+                                                       value="{{ hash(csrf_token(issue.id)) }}">
                                                 <span class="fa fa-edit fa-sm pr-2"></span>
-                                                <span class="font-size-14">Edit Status</span>
-                                            </form>
-                                            <form class="dropdown-item pointer menu-text-color" action="#"
-                                                  data-toggle="modal" data-target="#assigneeModal">
-                                                <span class="fa fa-user-edit fa-sm pr-2"></span>
-                                                <span class="font-size-14">Edit Assignee</span>
+                                                <span class="font-size-14">Edit issue</span>
+                                                <input type="hidden" name="pid" value="{{ issue.project.id }}">
                                             </form>
 
-                                            {% if issue.internalNote == null and is_granted('ROLE_SUPER_ADMIN') %}
+                                            {% if isAdminOrEmployee %}
                                                 <form class="dropdown-item pointer menu-text-color" action="#"
-                                                      data-toggle="modal" data-target="#internalNoteModal">
-                                                    <span class="fa fa-sticky-note fa-sm pr-2"></span>
-                                                    <span class="font-size-14">Add Internal Note</span>
+                                                      data-toggle="modal" data-target="#logTimeModal">
+                                                    <span class="fa fa-clock fa-sm pr-2"></span>
+                                                    <span class="font-size-14">Log spent time</span>
                                                 </form>
+                                                <form class="dropdown-item pointer menu-text-color" action="#"
+                                                      data-toggle="modal" data-target="#changeStatusModal">
+                                                    <span class="fa fa-edit fa-sm pr-2"></span>
+                                                    <span class="font-size-14">Edit Status</span>
+                                                </form>
+                                                <form class="dropdown-item pointer menu-text-color" action="#"
+                                                      data-toggle="modal" data-target="#assigneeModal">
+                                                    <span class="fa fa-user-edit fa-sm pr-2"></span>
+                                                    <span class="font-size-14">Edit Assignee</span>
+                                                </form>
+
+                                                {% if issue.internalNote == null and is_granted('ROLE_SUPER_ADMIN') %}
+                                                    <form class="dropdown-item pointer menu-text-color" action="#"
+                                                          data-toggle="modal" data-target="#internalNoteModal">
+                                                        <span class="fa fa-sticky-note fa-sm pr-2"></span>
+                                                        <span class="font-size-14">Add Internal Note</span>
+                                                    </form>
+                                                {% endif %}
+
+                                                <form class="dropdown-item pointer menu-text-color" action="#"
+                                                      data-toggle="modal" data-target="#linkIssueModal">
+                                                    <span class="fa fa-link fa-sm pr-2"></span>
+                                                    <span class="font-size-14">Link issue to</span>
+                                                </form>
+
                                             {% endif %}
 
                                             <form class="dropdown-item pointer menu-text-color" action="#"
-                                                  data-toggle="modal" data-target="#linkIssueModal">
-                                                <span class="fa fa-link fa-sm pr-2"></span>
-                                                <span class="font-size-14">Link issue to</span>
+                                                  data-toggle="modal" data-target="#priorityModal">
+                                                <span class="fa fa-edit fa-sm pr-2"></span>
+                                                <span class="font-size-14">Edit Priority</span>
                                             </form>
-
-                                        {% endif %}
-
-                                        <form class="dropdown-item pointer menu-text-color" action="#"
-                                              data-toggle="modal" data-target="#priorityModal">
-                                            <span class="fa fa-edit fa-sm pr-2"></span>
-                                            <span class="font-size-14">Edit Priority</span>
-                                        </form>
-                                        {% if issue.externalNote == null and not isAdminOrEmployee %}
-                                            <form class="dropdown-item pointer menu-text-color" action="#"
-                                                  data-toggle="modal" data-target="#externalNoteModal">
-                                                <span class="fa fa-sticky-note fa-sm pr-2"></span>
-                                                <span class="font-size-14">
+                                            {% if issue.externalNote == null and not isAdminOrEmployee %}
+                                                <form class="dropdown-item pointer menu-text-color" action="#"
+                                                      data-toggle="modal" data-target="#externalNoteModal">
+                                                    <span class="fa fa-sticky-note fa-sm pr-2"></span>
+                                                    <span class="font-size-14">
                                                         Add Note
                                                     </span>
+                                                </form>
+                                            {% endif %}
+                                            <form class="dropdown-item pointer menu-text-color" action="#"
+                                                  data-toggle="modal" data-target="#newAttachmentModal">
+                                                <span class="fa fa-upload fa-sm pr-2"></span>
+                                                <span class="font-size-14">Upload Attachment</span>
                                             </form>
-                                        {% endif %}
-                                        <form class="dropdown-item pointer menu-text-color" action="#"
-                                              data-toggle="modal" data-target="#newAttachmentModal">
-                                            <span class="fa fa-upload fa-sm pr-2"></span>
-                                            <span class="font-size-14">Upload Attachment</span>
-                                        </form>
-                                        <form class="dropdown-item pointer menu-text-color" action="#"
-                                              data-toggle="modal" data-target="#deleteIssueModal">
-                                            <span class="fa fa-trash-alt fa-xs pr-2"></span>
-                                            <span class="font-size-14">Delete issue</span>
-                                        </form>
+                                            <form class="dropdown-item pointer menu-text-color" action="#"
+                                                  data-toggle="modal" data-target="#deleteIssueModal">
+                                                <span class="fa fa-trash-alt fa-xs pr-2"></span>
+                                                <span class="font-size-14">Delete issue</span>
+                                            </form>
 
+                                        </div>
                                     </div>
                                 </div>
-                            </small>
+                            </div>
 
                             {% if issue.linkToTicket and issue.linkToTicketId and isAdminOrEmployee %}
                                 <div class="alert-issue small mt-3">
