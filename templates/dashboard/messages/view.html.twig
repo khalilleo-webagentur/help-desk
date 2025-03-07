@@ -32,25 +32,20 @@
                     <div class="col-lg-12">
                         <small class="text-secondary small">
                             {% if isAdmin %}
-                                #{{ message.id }} <span class="text-light-50 px-1">|</span>
+                                <a href="{{ path('app_dashboard_message_edit', {id:message.id}) }}"
+                                   class="fs-13">
+                                    #{{ message.id }}
+                                </a>
+                                <span class="text-light-50 px-1">|</span>
                             {% endif %}
                             {{ message.name }} <span class="text-light-50 px-1">|</span>
                             {{ message.email }}
-
-                            {% if is_granted('ROLE_SUPER_ADMIN') %}
-                                <span class="text-light-50 px-1">|</span>
-                                <a href="{{ path('app_dashboard_message_edit', {id:message.id}) }}"
-                                   class="fs-13">
-                                    Edit
-                                </a>
-                            {% endif %}
-
                         </small>
 
                         <h4 class="mt-2">{{ message.subject }}</h4>
                         <p>{{ message.messageContent.content }}</p>
-                        <small class="text-secondary" title="{{ timeAgo(message.createdAt) }}">
-                            <span class="text-warning fa fa-clock pr-1"></span> {{ message.createdAt|date('Y-m-d H:i:s') }}
+                        <small class="text-secondary" title="{{ message.seenAt|date('Y-m-d H:i:s') }}">
+                            <span class="text-warning fa fa-clock pr-1"></span>seen  {{ timeAgo(message.seenAt) }}
                         </small>
 
                         <p class="small pb-0 mb-0 mt-3">
