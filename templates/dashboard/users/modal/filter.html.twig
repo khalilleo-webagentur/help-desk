@@ -2,7 +2,6 @@
      aria-hidden="true">
     <div class="modal-dialog" role="document">
         <form action="{{ path('app_dashboard_users_index') }}" method="get">
-            <input type="hidden" name="t" value="{{ hash(csrf_token('token')) }}">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="filterModalTitle">
@@ -33,8 +32,19 @@
                                     {% endfor %}
                                 </select>
                             </div>
+                            <div class="mb-3">
+                                <div class="form-group form-check">
+                                    <input type="checkbox" class="form-check-input" id="c1z3n6t4"
+                                           name="hasToken">
+                                    <label class="form-check-label text-secondary" for="c1z3n6t4">
+                                        Only users that have Tokens
+                                    </label>
+                                </div>
+                            </div>
                         </div>
                     </div>
+
+                    <input type="hidden" name="t" value="{{ hash(csrf_token('token')) }}">
 
                 </div>
                 <div class="modal-footer">

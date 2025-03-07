@@ -51,6 +51,17 @@ class IndexController extends AbstractDashboardController
             ? $this->userService->getAllOrAllByCompany($company)
             : $this->userService->getAllByCompany($user->getCompany());
 
+        $hasToken = $this->validateCheckbox($request->get('hasToken'));
+        $usersByFilter = [];
+
+        if ($hasToken) {
+            foreach ($users as $user) {
+                if (!empty($user->getToken())) {
+                    $usersByFilter[] = $user;
+                }
+            }
+        }
+
         $isAdmin && $company
             ? $this->companyService->updateIsSelected($company)
             : $this->companyService->updateIsSelected(null);
@@ -58,7 +69,7 @@ class IndexController extends AbstractDashboardController
         $companies = $this->companyService->getAll();
 
         return $this->render('dashboard/users/index.html.twig', [
-            'users' => $users,
+            'users' => $hasToken ? $usersByFilter : $users,
             'roles' => $isAdmin ? AppHelper::ROLES : [],
             'companies' => $isAdmin ? $companies : [],
             'selectedCompanyId' => $company ? $company->getId() : 0,
@@ -202,10 +213,10 @@ class IndexController extends AbstractDashboardController
         $isDeleted = $this->validateCheckbox($request->request->get('isDeleted'));
 
         $verified = ($isAdmin
-                || $currentUser->isTeamLeader())
-                && !in_array(AppHelper::ROLE_SUPER_ADMIN, $user->getRoles(), true
+            || $currentUser->isTeamLeader())
+        && !in_array(AppHelper::ROLE_SUPER_ADMIN, $user->getRoles(), true
         ) ? $isVerified
-          : $user->isVerified();
+            : $user->isVerified();
 
         if ($isDeleted) {
             $verified = false;
