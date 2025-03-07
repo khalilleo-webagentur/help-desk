@@ -135,6 +135,7 @@ final readonly class TicketService
         ?string           $issueAssignedTo,
         ?int              $issueNo,
         ?string           $issueTitle,
+        bool              $onlyLinkedIssues,
         DateTimeInterface $issueDateFrom,
         DateTimeInterface $issueDateTo
     ): array
@@ -149,6 +150,7 @@ final readonly class TicketService
             $issueAssignedTo,
             $issueNo,
             $issueTitle,
+            $onlyLinkedIssues,
             $issueDateFrom,
             $issueDateTo
         );

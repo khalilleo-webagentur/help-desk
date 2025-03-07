@@ -93,6 +93,7 @@ class TicketRepository extends ServiceEntityRepository
         ?string           $issueAssignedTo,
         ?int              $issueNo,
         ?string           $issueTitle,
+        bool              $onlyLinkedIssues,
         DateTimeInterface $issueDateFrom,
         DateTimeInterface $issueDateTo
     ): array
@@ -151,6 +152,10 @@ class TicketRepository extends ServiceEntityRepository
         if ($issueTitle != '') {
             $qb->andWhere('t1.title LIKE :title')
                 ->setParameter('title', '%' . $issueTitle . '%');
+        }
+
+        if ($onlyLinkedIssues) {
+            $qb->andWhere('t1.linkToTicket IS NOT NULL');
         }
 
         $qb->andWhere('t1.createdAt >= :issueDateFrom')

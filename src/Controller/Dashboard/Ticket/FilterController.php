@@ -45,6 +45,7 @@ class FilterController extends AbstractDashboardController
         $ticketNo = $this->validateNumber($request->request->get('f6a0f1i8'));
         $ticketTitle = $this->validate($request->request->get('e2j0m2m5'));
         $dateFrom = $this->validate($request->request->get('o2o0b4t1'));
+        $onlyLinkedIssues = $this->validateCheckbox($request->request->get('bQ0dN1dZ'));
         $dateTo = $this->validate($request->request->get('a1n3m1j2'));
 
         $issueDateFrom = DateTime::createFromFormat('Y-m-d', $dateFrom);
@@ -68,6 +69,7 @@ class FilterController extends AbstractDashboardController
             $issueAssignedTo,
             $ticketNo,
             $ticketTitle,
+            $onlyLinkedIssues,
             $issueDateFrom,
             $issueDateTo
         );
