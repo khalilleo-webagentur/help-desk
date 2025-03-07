@@ -34,8 +34,8 @@ class IndexController extends AbstractDashboardController
             'systemLogs' => $systemLogs,
             'limit' => AppHelper::DEFAULT_LIMIT_SYSTEM_LOGS_ENTRIES,
             'maxLimit' => AppHelper::DEFAULT_MAX_LIMIT_SYSTEM_LOGS_ENTRIES,
-            'dateTimeFrom' => (new \DateTime())->modify('-1 year')->format('Y-m-d'),
-            'dateTimeTo' => (new \DateTime())->modify('-7 days')->format('Y-m-d'),
+            'dateTimeFrom' => (new \DateTime())->modify('-1 week')->format('Y-m-d'),
+            'dateTimeTo' => (new \DateTime())->format('Y-m-d'),
         ]);
     }
 
