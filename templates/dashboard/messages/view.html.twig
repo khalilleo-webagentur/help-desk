@@ -44,9 +44,16 @@
 
                         <h4 class="mt-2">{{ message.subject }}</h4>
                         <p>{{ message.messageContent.content }}</p>
-                        <small class="text-secondary" title="{{ message.seenAt|date('Y-m-d H:i:s') }}">
-                            <span class="text-warning fa fa-clock pr-1"></span>seen  {{ timeAgo(message.seenAt) }}
-                        </small>
+
+                        {% if message.seenAt %}
+                            <small class="text-secondary" title="{{ message.seenAt|date('Y-m-d H:i:s') }}">
+                                <span class="text-warning fa fa-clock pr-1"></span>seen  {{ timeAgo(message.seenAt) }}
+                            </small>
+                        {% else %}
+                            <small class="text-secondary" title="{{ message.createdAt|date('Y-m-d H:i:s') }}">
+                                <span class="text-warning fa fa-clock pr-1"></span>{{ timeAgo(message.createdAt) }}
+                            </small>
+                        {% endif %}
 
                         <p class="small pb-0 mb-0 mt-3">
                             <a href="{{ path('app_dashboard_message_index') }}">
