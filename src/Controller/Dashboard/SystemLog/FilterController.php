@@ -21,7 +21,8 @@ class FilterController extends AbstractDashboardController
 
     public function __construct(
         private readonly SystemLogsService $systemLogsService,
-    ) {
+    )
+    {
     }
 
     #[Route('/q-logs', name: 'app_dashboard_system_logs_filter_delete', methods: ['POST'])]
@@ -45,9 +46,16 @@ class FilterController extends AbstractDashboardController
 
         $countDeletedLogs = $this->systemLogsService->deleteAllByCriteria($logDateFrom, $logDateTo);
 
-        if ($countDeletedLogs > 0) {
-            $this->addFlash('success', sprintf('System-Logs [%s] have been deleted.', $countDeletedLogs));
-        }
+        $countDeletedLogs > 0
+            ? $this->addFlash('success', sprintf('System-Logs [%s] have been deleted.', $countDeletedLogs))
+            : $this->addFlash(
+            'notice',
+            sprintf(
+                'No Logs between %s and %s have been founded.',
+                $logDateFrom->format('Y-m-d'),
+                $logDateTo->format('Y-m-d')
+            )
+        );
 
         return $this->redirectToRoute(self::DASHBOARD_SYSTEM_LOGS_ROUTE);
     }

@@ -8,6 +8,7 @@ use App\Controller\Dashboard\AbstractDashboardController;
 use App\Helper\AppHelper;
 use App\Service\SystemLogsService;
 use App\Traits\FormValidationTrait;
+use DateTime;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
@@ -34,8 +35,8 @@ class IndexController extends AbstractDashboardController
             'systemLogs' => $systemLogs,
             'limit' => AppHelper::DEFAULT_LIMIT_SYSTEM_LOGS_ENTRIES,
             'maxLimit' => AppHelper::DEFAULT_MAX_LIMIT_SYSTEM_LOGS_ENTRIES,
-            'dateTimeFrom' => (new \DateTime())->modify('-1 week')->format('Y-m-d'),
-            'dateTimeTo' => (new \DateTime())->format('Y-m-d'),
+            'dateTimeFrom' => (new DateTime())->modify('-1 year')->format('Y-m-d'),
+            'dateTimeTo' => (new DateTime())->modify('-1 month')->format('Y-m-d'),
         ]);
     }
 
