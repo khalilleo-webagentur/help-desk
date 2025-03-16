@@ -21,8 +21,7 @@ class FilterController extends AbstractDashboardController
 
     public function __construct(
         private readonly SystemLogsService $systemLogsService,
-    )
-    {
+    ) {
     }
 
     #[Route('/q-logs', name: 'app_dashboard_system_logs_filter_delete', methods: ['POST'])]
