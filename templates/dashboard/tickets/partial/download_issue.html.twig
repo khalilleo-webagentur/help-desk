@@ -1,0 +1,28 @@
+<div style="display: none">
+    <div id="issueContent">
+        <div class="row mb-3">
+            <div class="col-8">
+                <small style="color: #aeaeae;">{{ companyName }} &#183; {{ projectName }} &#183;
+                    T-{{ issue.ticketNo }}</small>
+            </div>
+            <div class="col-4">
+                <img src="{{ asset('Khalilleo_Logo.png') }}" style="float: right" width="120" height="23"
+                     alt="Khalilleo">
+            </div>
+        </div>
+
+        <div class="row mb-0 pb-0">
+            <div class="col">
+                <p style="float: right; font-size: 12px; padding-bottom: 1px; margin-bottom: 1px; color: #aeaeae;">
+                    Exported at {{ dateTime('Y-m-d H:i') }}</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <h3 style="margin-bottom: 15px; margin-top: 15px;">{{ issue.title }}</h3>
+                <div>{{ issue.description|raw }}</div>
+            </div>
+        </div>
+    </div>
+</div>

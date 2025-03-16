@@ -5,6 +5,8 @@
 {% block body %}
 
     {% set isAdminOrEmployee = is_granted('ROLE_SUPER_ADMIN') or app.user.isNinja %}
+    {% set companyName = issue and issue.customer and issue.customer.company ? issue.customer.company.name|capitalize : '' %}
+    {% set projectName = issue and issue.project ? issue.project.title|capitalize : '' %}
 
     <div class="content-wrapper">
 
@@ -36,11 +38,11 @@
                             <div class="text-secondary d-flex">
                                 <div class="d-flex small">
                                     <div>
-                                        {{ issue.customer.company.name }} <span class="text-light-50 px-1">|</span>
+                                        {{ companyName }} <span class="text-light-50 px-1">|</span>
                                     </div>
 
                                     <div>
-                                        {{ issue.project.title|capitalize }} <span class="text-light-50  px-1">|</span>
+                                        {{ projectName }} <span class="text-light-50  px-1">|</span>
                                     </div>
 
                                     <form class="pointer" title="Edit Issue"
@@ -61,6 +63,18 @@
                                             <span class="fa fa-ellipsis-h fa-sm"></span>
                                         </a>
                                         <div class="dropdown-menu">
+
+                                            <form class="dropdown-item pointer menu-text-color" action="#"
+                                                  data-toggle="modal" data-target="#newAttachmentModal">
+                                                <span class="fa fa-upload fa-sm pr-2"></span>
+                                                <span class="font-size-14">Upload Attachment</span>
+                                            </form>
+
+                                            <form class="dropdown-item pointer menu-text-color downloadIssueAsPdf" action="#">
+                                                <span class="fa fa-download fa-sm pr-2"></span>
+                                                <input type="hidden" class="filename" value="Khalilleo_Helpdesk_T_{{ issue.ticketNo }}">
+                                                <span class="font-size-14">Download as PDF</span>
+                                            </form>
 
                                             <form class="dropdown-item pointer menu-text-color"
                                                   action="{{ path('app_dashboard_ticket_edit', {id:issue.id}) }}"
@@ -120,11 +134,7 @@
                                                     </span>
                                                 </form>
                                             {% endif %}
-                                            <form class="dropdown-item pointer menu-text-color" action="#"
-                                                  data-toggle="modal" data-target="#newAttachmentModal">
-                                                <span class="fa fa-upload fa-sm pr-2"></span>
-                                                <span class="font-size-14">Upload Attachment</span>
-                                            </form>
+
                                             <form class="dropdown-item pointer menu-text-color" action="#"
                                                   data-toggle="modal" data-target="#deleteIssueModal">
                                                 <span class="fa fa-trash-alt fa-xs pr-2"></span>
@@ -360,6 +370,8 @@
                     </div>
                 </div>
             {% endif %}
+
+            {% include 'dashboard/tickets/partial/download_issue.html.twig' %}
 
         </section>
     </div>
