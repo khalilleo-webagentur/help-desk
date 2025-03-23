@@ -40,7 +40,15 @@
                             <span>---</span>
                         {% endif %}
                     </td>
-                    <td>{{ row.phone ? row.phone : '---' }}</td>
+                    <td>
+                        {% if row.phone %}
+                            <a href="tel:{{ row.phone }}">
+                                <span title="{{ row.phone }}" class="fa fa-phone-alt fa-sm text-success"></span>
+                            </a>
+                        {% else %}
+                            <span>---</span>
+                        {% endif %}
+                    </td>
                     <td>{{ row.street ? row.street : '---' }}</td>
                     <td>{{ row.zip ? row.zip : '---' }}</td>
                     <td>{{ row.city ? row.city : '---' }}</td>
