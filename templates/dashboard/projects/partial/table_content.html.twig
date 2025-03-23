@@ -51,9 +51,16 @@
                         {% endif %}
                     </td>
                     <td>
-                        <span class="cursor-help" title="{{ row.description }}">
-                            {{ row.description ? row.description|slice(0, 35) ~ '..' : '---' }}
-                        </span>
+                        {% if row.description %}
+                            <form class="pointer link-primary"
+                                  onclick="this.closest('form').submit();"
+                                  action="{{ path('app_dashboard_project_edit', {id:row.id}) }}" method="post">
+                                <input type="hidden" name="csrf" value="{{ hash(csrf_token(row.id)) }}">
+                                <span>{{ row.description }}</span>
+                            </form>
+                        {% else %}
+                            ---
+                        {% endif %}
                     </td>
 
                     {% if isAdmin or isTeamLeader %}
