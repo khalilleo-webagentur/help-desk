@@ -15,7 +15,7 @@ $(document).ready(function () {
 function downloadAsPDF(filename) {
 
     let options = {
-        margin: 10,
+        margin: 18,
         filename: filename + '.pdf',
         image: {type: 'jpeg', quality: 0.95},
         html2canvas: {scale: 2, dpi: 192, letterRendering: true, allowTaint: true},
