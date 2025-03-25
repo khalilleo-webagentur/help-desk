@@ -80,7 +80,7 @@ class AuthenticateController extends AbstractController
 
         $handelTwoFactorAuthMail->send($user->getName(), $email, $otp);
 
-        $this->addFlash('notice', 'A new OTP is being sent to your email.');
+        $this->addFlash('notice', 'A new Security-code is being sent to your email.');
 
         return $this->render('account/login.html.twig', [
             'email' => $email
