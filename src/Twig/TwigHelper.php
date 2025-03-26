@@ -77,8 +77,8 @@ class TwigHelper extends AbstractExtension
         }
 
         $hours = floor($time / 60);
-        $hours = $hours > 0 ? $hours . ' hours ' : "";
-        $minutes = $time % 60 . ' minutes';
+        $hours = $hours > 0 ? $hours . ' ' . ($hours == 1 ? 'hour ' : 'hours ') : "";
+        $minutes = $time % 60 != 0 ? $time % 60 . ' ' . ($time % 60 == 1 ? 'minute ' : 'minutes ') : "";
 
         return $hours . $minutes;
     }
