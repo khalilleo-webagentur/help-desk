@@ -19,7 +19,9 @@
 
                     {% if isAdmin %}
                         <p class="modal-info">
-                            Team-Leader has extra permission than others. The customer will have a customer role.
+                            Team-Leader has extra permission than others. The customer will have a customer Role.
+                            No confirmation email will be sent. The account will be directly active and no further
+                            steps are required.
                         </p>
                     {% endif %}
 
@@ -57,9 +59,6 @@
                         <input type="email" class="form-control" id="iO7nM4yT4bG2sO5itt" placeholder="j.doe@example.com"
                                name="email"
                                required>
-                        <small class="text-secondary">
-                            E-mail confirmation will not be sent. E-mail will be directly verified.
-                        </small>
                         <input type="hidden" name="p7x5a8e9" value="{{ app.request.get('p7x5a8e9') }}">
                     </div>
 
