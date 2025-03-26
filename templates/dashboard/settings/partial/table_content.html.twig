@@ -9,7 +9,7 @@
                 <th>{{ 'ID'|trans }}</th>
                 <th>{{ 'User'|trans }}</th>
                 <th>{{ 'NewTicketNotification' }}</th>
-                <th>{{ 'TicketCloseNotification'|trans }}</th>
+                <th>{{ 'TicketResolvedNotification'|trans }}</th>
                 <th>{{ 'Modified'|trans }}</th>
                 <th>{{ 'Created'|trans }}</th>
             </tr>
@@ -46,7 +46,7 @@
                         <form action="{{ path('app_dashboard_settings_store') }}"
                               class="cursor-help"
                               method="post"
-                              title="An E-mail will be sent to user directly if the status of ticket updated to Resolved or to Closed.">
+                              title="An E-mail will be sent to user directly if the status of ticket is being updated to Resolved.">
                             <img src="{{ asset( row.notifyCloseTicket ? 'lte/img/toggle2-on.svg' : 'lte/img/toggle2-off.svg') }}"
                                  class="pointer"
                                  onclick="this.closest('form').submit();"

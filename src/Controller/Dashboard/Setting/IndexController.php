@@ -33,11 +33,11 @@ class IndexController extends AbstractDashboardController
 
         $settings = $this->userSettingService->getAll();
 
-        $notifyCustomerOnTicketStatusClosed = $this->userSettingService->notifyCustomerOnTicketStatusClosed($this->getUser());
+        $notifyCustomerOnTicketStatusClosed = $this->userSettingService->notifyCustomerOnTicketStatusResolved($this->getUser());
 
         return $this->render('dashboard/settings/index.html.twig', [
             'settings' => $settings,
-            'notifyCustomerOnTicketStatusClosed' => $notifyCustomerOnTicketStatusClosed,
+            'notifyCustomerOnTicketStatusResolved' => $notifyCustomerOnTicketStatusClosed,
         ]);
     }
 
@@ -51,7 +51,8 @@ class IndexController extends AbstractDashboardController
         $setting = $this->userSettingService->getOneByUser($user);
 
         if ($setting) {
-            $this->userSettingService->save($setting->setNotifyCloseTicket(
+            $this->userSettingService->save(
+                $setting->setNotifyCloseTicket(
                 $this->validateCheckbox($request->request->get('config'))
             ));
             $this>$this->addFlash('success', 'Setting has been updated');

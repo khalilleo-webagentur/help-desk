@@ -71,14 +71,13 @@ class StatusController extends AbstractDashboardController
             $message
         );
 
-        if ((AppHelper::STATUS_CLOSED === strtoupper($status->getName())
-            || AppHelper::STATUS_RESOLVED === strtoupper($status->getName()))
-            && $this->userSettingService->notifyCustomerOnTicketStatusClosed($issue->getCustomer())
+        if (AppHelper::STATUS_RESOLVED === strtoupper($status->getName()) &&
+            $this->userSettingService->notifyCustomerOnTicketStatusResolved($issue->getCustomer())
         ) {
             $this->addFlash(
                 'notice',
                 sprintf(
-                    'The customer "%s" is being notified that the issue is being done.',
+                    'The customer "%s" is being notified that the issue is being resolved.',
                     $issue->getCustomer()->getName())
             );
 

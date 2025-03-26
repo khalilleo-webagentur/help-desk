@@ -44,7 +44,7 @@ final readonly class UserSettingService
         return $setting && true === $setting->notifyNewTicket();
     }
 
-    public function notifyCustomerOnTicketStatusClosed(UserInterface|User $user): bool
+    public function notifyCustomerOnTicketStatusResolved(UserInterface|User $user): bool
     {
         $setting = $this->getOneByUser($user);
 
