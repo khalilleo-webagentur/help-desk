@@ -123,7 +123,7 @@ class IndexController extends AbstractDashboardController
                 ->setRoles([AppHelper::ROLE_CUSTOMER])
                 ->setIsVerified(true)
                 ->setTeamLeader($isTeamLeader)
-                ->setNinja(true === $currentUser->isNinja())
+                ->setNinja($iCompany === $currentUser->getCompany()->getId())
         );
 
         $companyId = $this->validateNumber($request->request->get('p7x5a8e9'));
