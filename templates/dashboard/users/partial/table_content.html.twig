@@ -66,8 +66,8 @@
                 </td>
                 <td>
                     {% if row.token %}
-                        <small class="text-danger pr-1">{{ row.token }}</small>
-                        <span class="fa fa-copy pointer text-secondary copyToClipBoard"
+                        <small class="pr-1 fs-13">{{ row.token }}</small>
+                        <span class="fa fa-copy text-orangered-light pointer copyToClipBoard"
                               title="Copy"
                               data-token="{{ row.token }}"></span>
                     {% else %}
