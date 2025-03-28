@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\TicketAttachmentRepository;
+use DateTime;
+use DateTimeInterface;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -32,10 +34,10 @@ class TicketAttachment
     private string $extension = "";
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $updatedAt = null;
+    private ?DateTimeInterface $updatedAt = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $createdAt = null;
+    private ?DateTimeInterface $createdAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'attachment')]
     #[ORM\JoinColumn(nullable: false)]
@@ -47,7 +49,7 @@ class TicketAttachment
 
     public function __construct()
     {
-        $this->setCreatedAt(new \DateTime());
+        $this->setCreatedAt(new DateTime());
     }
 
     public function getId(): ?int
@@ -115,24 +117,24 @@ class TicketAttachment
         return $this;
     }
 
-    public function getUpdatedAt(): ?\DateTimeInterface
+    public function getUpdatedAt(): ?DateTimeInterface
     {
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(\DateTimeInterface $updatedAt): static
+    public function setUpdatedAt(DateTimeInterface $updatedAt): static
     {
         $this->updatedAt = $updatedAt;
 
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeInterface
+    public function getCreatedAt(): ?DateTimeInterface
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeInterface $createdAt): static
+    public function setCreatedAt(DateTimeInterface $createdAt): static
     {
         $this->createdAt = $createdAt;
 

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\SystemLogRepository;
+use DateTime;
+use DateTimeInterface;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -19,11 +21,11 @@ class SystemLog
     private ?string $message = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $createdAt = null;
+    private ?DateTimeInterface $createdAt = null;
 
     public function __construct()
     {
-        $this->setCreatedAt(new \DateTime());
+        $this->setCreatedAt(new DateTime());
     }
 
     public function getId(): ?int
@@ -43,12 +45,12 @@ class SystemLog
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeInterface
+    public function getCreatedAt(): ?DateTimeInterface
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeInterface $createdAt): static
+    public function setCreatedAt(DateTimeInterface $createdAt): static
     {
         $this->createdAt = $createdAt;
 

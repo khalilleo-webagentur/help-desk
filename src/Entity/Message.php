@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\MessageRepository;
+use DateTimeInterface;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -32,16 +33,16 @@ class Message
     private bool $isSeen = false;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $seenAt = null;
+    private ?DateTimeInterface $seenAt = null;
 
     #[ORM\Column]
     private bool $isDeleted = false;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $updatedAt = null;
+    private ?DateTimeInterface $updatedAt = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $createdAt = null;
+    private ?DateTimeInterface $createdAt = null;
 
     public function __construct()
     {
@@ -114,12 +115,12 @@ class Message
         return $this;
     }
 
-    public function getSeenAt(): ?\DateTimeInterface
+    public function getSeenAt(): ?DateTimeInterface
     {
         return $this->seenAt;
     }
 
-    public function setSeenAt(?\DateTimeInterface $seenAt): static
+    public function setSeenAt(?DateTimeInterface $seenAt): static
     {
         $this->seenAt = $seenAt;
 
@@ -138,24 +139,24 @@ class Message
         return $this;
     }
 
-    public function getUpdatedAt(): ?\DateTimeInterface
+    public function getUpdatedAt(): ?DateTimeInterface
     {
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(\DateTimeInterface $updatedAt): static
+    public function setUpdatedAt(DateTimeInterface $updatedAt): static
     {
         $this->updatedAt = $updatedAt;
 
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeInterface
+    public function getCreatedAt(): ?DateTimeInterface
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeInterface $createdAt): static
+    public function setCreatedAt(DateTimeInterface $createdAt): static
     {
         $this->createdAt = $createdAt;
 

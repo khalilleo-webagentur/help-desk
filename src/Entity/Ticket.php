@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\TicketRepository;
+use DateTime;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -61,10 +63,10 @@ class Ticket
     private ?TicketType $type = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $updatedAt = null;
+    private ?DateTimeInterface $updatedAt = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $createdAt = null;
+    private ?DateTimeInterface $createdAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'tickets')]
     private ?TicketStatus $status = null;
@@ -93,7 +95,7 @@ class Ticket
 
     public function __construct()
     {
-        $this->setCreatedAt(new \DateTime());
+        $this->setCreatedAt(new DateTime());
         $this->ticketActivities = new ArrayCollection();
         $this->attachment = new ArrayCollection();
         $this->ticketComments = new ArrayCollection();
@@ -248,24 +250,24 @@ class Ticket
         return $this;
     }
 
-    public function getUpdatedAt(): ?\DateTimeInterface
+    public function getUpdatedAt(): ?DateTimeInterface
     {
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(\DateTimeInterface $updatedAt): static
+    public function setUpdatedAt(DateTimeInterface $updatedAt): static
     {
         $this->updatedAt = $updatedAt;
 
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeInterface
+    public function getCreatedAt(): ?DateTimeInterface
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeInterface $createdAt): static
+    public function setCreatedAt(DateTimeInterface $createdAt): static
     {
         $this->createdAt = $createdAt;
 

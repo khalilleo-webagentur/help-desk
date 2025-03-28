@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Helper\AppHelper;
 use App\Repository\UserSettingRepository;
 use DateTime;
+use DateTimeInterface;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -21,17 +22,19 @@ class UserSetting
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
+    // @TODO rename it to notifyOnTickedResolved
     #[ORM\Column]
-    private bool $notifyCloseTicket = AppHelper::NOTIFY_CUSTOMER_ON_TICKET_STATUS_CLOSED;
+    private bool $notifyCloseTicket = AppHelper::NOTIFY_CUSTOMER_ON_TICKET_RESOLVED;
 
+    // @TODO rename it to notifyOnTickedCreated
     #[ORM\Column]
-    private bool $notifyNewTicket = AppHelper::NOTIFY_WEBMASTER_ON_TICKET_CREATE;
+    private bool $notifyNewTicket = AppHelper::NOTIFY_WEBMASTER_ON_TICKET_CREATED;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $updatedAt = null;
+    private ?DateTimeInterface $updatedAt = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $createdAt = null;
+    private ?DateTimeInterface $createdAt = null;
 
     public function __construct()
     {
@@ -79,24 +82,24 @@ class UserSetting
         return $this;
     }
 
-    public function getUpdatedAt(): ?\DateTimeInterface
+    public function getUpdatedAt(): ?DateTimeInterface
     {
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(\DateTimeInterface $updatedAt): static
+    public function setUpdatedAt(DateTimeInterface $updatedAt): static
     {
         $this->updatedAt = $updatedAt;
 
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeInterface
+    public function getCreatedAt(): ?DateTimeInterface
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeInterface $createdAt): static
+    public function setCreatedAt(DateTimeInterface $createdAt): static
     {
         $this->createdAt = $createdAt;
 

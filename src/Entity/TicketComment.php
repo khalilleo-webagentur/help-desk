@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\TicketCommentRepository;
+use DateTime;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -28,7 +30,7 @@ class TicketComment
     private bool $isSeen = false;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $seenAt = null;
+    private ?DateTimeInterface $seenAt = null;
 
     #[ORM\Column]
     private int $likeCounter = 0;
@@ -37,10 +39,10 @@ class TicketComment
     private int $disLikeCounter = 0;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $updatedAt = null;
+    private ?DateTimeInterface $updatedAt = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $createdAt = null;
+    private ?DateTimeInterface $createdAt = null;
 
     /**
      * @var Collection<int, User>
@@ -50,7 +52,7 @@ class TicketComment
 
     public function __construct()
     {
-        $this->setCreatedAt(new \DateTime());
+        $this->setCreatedAt(new DateTime());
         $this->commentedBy = new ArrayCollection();
     }
 
@@ -95,12 +97,12 @@ class TicketComment
         return $this;
     }
 
-    public function getSeenAt(): ?\DateTimeInterface
+    public function getSeenAt(): ?DateTimeInterface
     {
         return $this->seenAt;
     }
 
-    public function setSeenAt(?\DateTimeInterface $seenAt): static
+    public function setSeenAt(?DateTimeInterface $seenAt): static
     {
         $this->seenAt = $seenAt;
 
@@ -131,24 +133,24 @@ class TicketComment
         return $this;
     }
 
-    public function getUpdatedAt(): ?\DateTimeInterface
+    public function getUpdatedAt(): ?DateTimeInterface
     {
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(\DateTimeInterface $updatedAt): static
+    public function setUpdatedAt(DateTimeInterface $updatedAt): static
     {
         $this->updatedAt = $updatedAt;
 
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeInterface
+    public function getCreatedAt(): ?DateTimeInterface
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeInterface $createdAt): static
+    public function setCreatedAt(DateTimeInterface $createdAt): static
     {
         $this->createdAt = $createdAt;
 
