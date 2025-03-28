@@ -44,16 +44,30 @@
 
                     {% if app.user.isTeamLeader %}
                         <td>
-                            <a href="{{ path('app_dashboard_user_edit', {id:row.customer.id}) }}">
-                                {{ row.customer.name }}
-                            </a>
+                            <form action="{{ path('app_dashboard_user_edit', {id:row.customer.id}) }}"
+                                  method="get">
+                                <input type="hidden" name="csrf"
+                                       value="{{ hash(csrf_token(row.customer.company.id)) }}">
+                                <span class="link-primary pointer"
+                                      onclick="this.closest('form').submit();">{{ row.customer.name }}
+                                </span>
+                            </form>
                         </td>
                     {% else %}
                         <td>{{ row.customer.name }}</td>
                     {% endif %}
 
                     <td>
-                        {{ row.project.title }}
+                        {% if app.user.isTeamLeader %}
+                            <form class="pointer link-primary"
+                                  onclick="this.closest('form').submit();"
+                                  action="{{ path('app_dashboard_project_edit', {id:row.project.id}) }}" method="post">
+                                <input type="hidden" name="csrf" value="{{ hash(csrf_token(row.project.id)) }}">
+                                {{ row.project.title }}
+                            </form>
+                        {% else %}
+                            {{ row.project.title }}
+                        {% endif %}
                     </td>
 
                     <td>
