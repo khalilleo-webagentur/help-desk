@@ -106,28 +106,25 @@
                     </ul>
                 </li>
 
-                {% if isAdmin or app.user.isTeamLeader %}
+                {% set isMessageTreeOpen = _route == 'app_dashboard_message_index' %}
 
-                    {% set isMessageTreeOpen = _route == 'app_dashboard_message_index' %}
-
-                    <li class="nav-item has-treeview {{ isMessageTreeOpen ? 'menu-is-opening menu-open' : '' }}">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-envelope"></i>
-                            <p>
-                                Messages
-                                <i class="fas fa-angle-left right"></i>
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview {{ isMessageTreeOpen ? 'active' : '' }}">
-                            <li class="nav-item">
-                                <a href="{{ path('app_dashboard_message_index') }}" class="nav-link">
-                                    <i class="far {{ _route == 'app_dashboard_message_index' ? 'fa-dot-circle' : 'fa-circle' }} nav-icon text-warning"></i>
-                                    <p>Overview</p>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                {% endif %}
+                <li class="nav-item has-treeview {{ isMessageTreeOpen ? 'menu-is-opening menu-open' : '' }}">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-envelope"></i>
+                        <p>
+                            Messages
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview {{ isMessageTreeOpen ? 'active' : '' }}">
+                        <li class="nav-item">
+                            <a href="{{ path('app_dashboard_message_index') }}" class="nav-link">
+                                <i class="far {{ _route == 'app_dashboard_message_index' ? 'fa-dot-circle' : 'fa-circle' }} nav-icon text-warning"></i>
+                                <p>Overview</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
 
                 <li class="nav-header">SETTINGS</li>
 

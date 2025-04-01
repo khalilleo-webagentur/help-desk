@@ -31,7 +31,10 @@ final readonly class MessagesService
      */
     public function getAllByEmailWithLimit(string $email, int $limit): array
     {
-        return $this->messageRepository->findBy(['email' => $email], ['isDeleted' => 'ASC', 'createdAt' => 'DESC'], $limit);
+        $criteria = ['email' => $email, 'isDeleted' => 0];
+        $orderBy = ['isDeleted' => 'ASC', 'createdAt' => 'DESC'];
+
+        return $this->messageRepository->findBy($criteria, $orderBy, $limit);
     }
 
     /**
@@ -40,7 +43,9 @@ final readonly class MessagesService
      */
     public function getAllWithLimit(int $limit): array
     {
-        return $this->messageRepository->findBy([], ['isDeleted' => 'ASC', 'isSeen' => 'ASC', 'createdAt' => 'DESC'], $limit);
+        $orderBy = ['isDeleted' => 'ASC', 'isSeen' => 'ASC', 'createdAt' => 'DESC'];
+
+        return $this->messageRepository->findBy([], $orderBy, $limit);
     }
 
     public function getAllUnSeenMessagesByIdentifier(string $email): array

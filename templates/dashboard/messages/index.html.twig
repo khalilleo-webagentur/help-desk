@@ -16,11 +16,13 @@
                     </div>
                     <div class="col-4 mt-1">
                         <div class="breadcrumb float-right">
-                            <button class="btn btn-outline-secondary btn-headers mr-1"
-                                    data-toggle="modal" data-target="#emailUsModal">
-                                <span class="fa fa-plus fa-sm"></span> <span
-                                        class="ps-1 md-d-none">Send Message</span>
-                            </button>
+                            {% if isAdmin %}
+                                <button class="btn btn-outline-secondary btn-headers mr-1"
+                                        data-toggle="modal" data-target="#emailUsModal">
+                                    <span class="fa fa-bell fa-sm"></span>
+                                    <span class="ps-1 md-d-none">Send Notification</span>
+                                </button>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -51,6 +53,8 @@
         </section>
     </div>
 
-    {% include 'dashboard/messages/modal/new_message.html.twig' %}
+    {% if isAdmin %}
+        {% include 'dashboard/messages/modal/new_message.html.twig' %}
+    {% endif %}
 
 {% endblock %}
