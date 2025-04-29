@@ -28,7 +28,7 @@
                     <td>{{ row.name|capitalize }}</td>
                     <td>{{ row.description }}</td>
                     <td>
-                        <span style="color: {{ row.color }};" class="fa fa-circle"></span>
+                        <span style="color: {{ row.color }};" class="fa fa-circle"></span> {{ row.color }}
                     </td>
 
                     {% if is_granted('ROLE_SUPER_ADMIN') %}
