@@ -29,7 +29,7 @@
                     <td>{{ row.name|capitalize }}</td>
                     <td>{{ row.description }}</td>
                     <td>
-                        <span style="color: {{ row.color }};" class="fa fa-circle"></span> {{ row.color }}
+                        <span style="color: {{ row.color }};" class="fa fa-circle"></span> {{ row.color|slice(1) }}
                     </td>
 
                     {% if is_granted('ROLE_SUPER_ADMIN') %}
