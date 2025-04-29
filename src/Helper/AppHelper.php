@@ -11,12 +11,16 @@ final class AppHelper
     public const NOTIFY_WEBMASTER_ON_TICKET_CREATED = true;
 
     // Ticket-Status
-    public const STATUS_ALL = 'ALL';
-    public const STATUS_OPEN = 'OPEN';
-    public const STATUS_IN_PROGRESS = 'IN-PROGRESS';
-    public const STATUS_PENDING = 'PENDING';
-    public const STATUS_RESOLVED = 'RESOLVED';
-    public const STATUS_CLOSED = 'CLOSED';
+    public const STATUS_ALL = 'All';
+    public const STATUS_OPEN = 'Open';
+    public const STATUS_IN_PROGRESS = 'In-progress';
+    public const STATUS_PENDING = 'Pending';
+    public const STATUS_ESCALATED = 'Escalated';
+    public const STATUS_HOLD = 'On-hold';
+    public const STATUS_WAITING_FOR_CUSTOMER = 'Waiting-for-customer';
+    public const STATUS_REOPENED = 'Reopened';
+    public const STATUS_RESOLVED = 'Resolved';
+    public const STATUS_CLOSED = 'Closed';
 
     // Ticket Priority
     public const PRIORITY_URGENT = 'Urgent';

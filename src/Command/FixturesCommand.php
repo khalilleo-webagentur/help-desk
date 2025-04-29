@@ -106,11 +106,15 @@ class FixturesCommand extends Command
     private function addStatus(): void
     {
         $statuses = [
-            [AppHelper::STATUS_OPEN, 'Being Processed', '#9d8900'],
-            [AppHelper::STATUS_IN_PROGRESS, 'We are working on this ticket', '#1c71d8'],
-            [AppHelper::STATUS_PENDING, 'Awaiting your Reply', '#e66100'],
-            [AppHelper::STATUS_RESOLVED, 'This ticket has been resolved', '#2b8202'],
-            [AppHelper::STATUS_CLOSED, 'This ticket has been closed', '#c01c28'],
+            [AppHelper::STATUS_OPEN, 'The ticket has been created but not yet addressed.', '#9d8900'],
+            [AppHelper::STATUS_IN_PROGRESS, 'The ticket is currently being addressed, with active efforts to resolve the issue or fulfill the request.', '#1c71d8'],
+            [AppHelper::STATUS_PENDING, 'The ticket is awaiting action or information, either from customer or another team.', '#e66100'],
+            [AppHelper::STATUS_ESCALATED, 'The issue has been raised to a higher level of support or management for further attention.', '#e66100'],
+            [AppHelper::STATUS_HOLD, 'Work on ticket has been temporarily paused.', '#000'],
+            [AppHelper::STATUS_WAITING_FOR_CUSTOMER, 'The ticket is in a pending state, awaiting a response or action from customer.', '#000'],
+            [AppHelper::STATUS_REOPENED, 'The ticket is reopened because the issue was fully resolved or has recurred.', '#000'],
+            [AppHelper::STATUS_RESOLVED, 'The issue has been fixed or the request has been fulfilled.', '#2b8202'],
+            [AppHelper::STATUS_CLOSED, 'The ticket has been resolved and no further action is required.', '#c01c28'],
         ];
 
         foreach ($statuses as $status) {
