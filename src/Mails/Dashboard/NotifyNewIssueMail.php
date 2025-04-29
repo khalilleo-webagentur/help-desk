@@ -36,6 +36,7 @@ final class NotifyNewIssueMail extends AbstractMail implements MailInterface
             ->to(new address($webmasterEmail, $webmasterName))
             ->subject('Khalilleo-Helpdesk: New issue created')
             ->htmlTemplate('mails/dashboard/notify_new_issue.html.twig')
+            ->textTemplate('mails/dashboard/notify_new_issue.txt.twig')
             ->context([
                 'username' => $webmasterName
             ]);

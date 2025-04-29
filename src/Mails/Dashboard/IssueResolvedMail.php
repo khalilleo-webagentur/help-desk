@@ -34,6 +34,7 @@ final class IssueResolvedMail extends AbstractMail implements MailInterface
             ->to(new address($userEmail, $username))
             ->subject(sprintf('Khalilleo-Helpdesk: T-%s is being resolved', $ticketNo))
             ->htmlTemplate('mails/dashboard/issue_resolved.html.twig')
+            ->textTemplate('mails/dashboard/issue_resolved.txt.twig')
             ->context([
                 'username' => $username,
                 'issueTitle' => $issueTitle,

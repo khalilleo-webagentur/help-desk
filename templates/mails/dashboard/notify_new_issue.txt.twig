@@ -1,0 +1,19 @@
+Hey {{ username|capitalize }},
+
+A new issue from {{ appName() }} has been just created.
+
+{{ absolute_url(path('app_login')) }}
+
+This is an automatically generated message, please do not reply to this sender.
+
+Thanks,
+
+The {{ appName() }} Team
+
+-----------------------------------------------------------
+
+Copyright {{ appName() }} {{ year() }} - {{ 'All Rights Reserved'|trans }} - {{ version() }}
+
+{{ absolute_url(path('app_home')) }}
+
+Unsere Datenschutzrichtlinie finden Sie unter {{ absolute_url(path('app_legal_privacy_policy')) }}

@@ -1,0 +1,19 @@
+Hi {{ username|capitalize }},
+
+Our system is detected that the issue with Title "{{ issueTitle }}" is being closed.
+
+{{ absolute_url(path('app_auth')) }}
+
+If you don't want to receive these kinds of Notification, you can deactivate it unter the setting on the Dashboard at any time.
+
+Thanks,
+
+The {{ appName() }} Team
+
+-----------------------------------------------------------
+
+Copyright {{ appName() }} {{ year() }} - {{ 'All Rights Reserved'|trans }} - {{ version() }}
+
+{{ absolute_url(path('app_home')) }}
+
+Unsere Datenschutzrichtlinie finden Sie unter {{ absolute_url(path('app_legal_privacy_policy')) }}
