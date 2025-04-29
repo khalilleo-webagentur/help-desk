@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Service\Helper;
 
 use App\Entity\User;
-use App\Helper\AppHelper;
 use App\Service\TicketService;
 use App\Service\TicketStatusService;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -22,41 +21,25 @@ final readonly class TicketStatusHelper
     {
         $isAdminOrEmployee = in_array('ROLE_SUPER_ADMIN', $user->getRoles()) || $user->isNinja();
 
-        $statusOpen = $this->ticketStatusService->getOneByName(AppHelper::STATUS_OPEN);
-        $statusInProgress = $this->ticketStatusService->getOneByName(AppHelper::STATUS_IN_PROGRESS);
-        $statusPending = $this->ticketStatusService->getOneByName(AppHelper::STATUS_PENDING);
-        $statusResolved = $this->ticketStatusService->getOneByName(AppHelper::STATUS_RESOLVED);
-        $statusClosed = $this->ticketStatusService->getOneByName(AppHelper::STATUS_CLOSED);
+        $tabs = [];
+        $countAll = 0;
 
-        $open = $isAdminOrEmployee
-            ? count($this->ticketService->getAllByStatus($statusOpen))
-            : count($this->ticketService->getAllByCompanyAndStatus($user->getCompany(), $statusOpen));
+        $tabs[] = ['name' => 'all', 'counter' => &$countAll];
 
-        $inProgress = $isAdminOrEmployee
-            ? count($this->ticketService->getAllByStatus($statusInProgress))
-            : count($this->ticketService->getAllByCompanyAndStatus($user->getCompany(), $statusInProgress));
+        foreach ($this->ticketStatusService->getAll() as $ticketStatus) {
 
-        $pending = $isAdminOrEmployee
-            ? count($this->ticketService->getAllByStatus($statusPending))
-            : count($this->ticketService->getAllByCompanyAndStatus($user->getCompany(), $statusPending));
+            $countTickets = $isAdminOrEmployee
+                ? count($this->ticketService->getAllByStatus($ticketStatus))
+                : count($this->ticketService->getAllByCompanyAndStatus($user->getCompany(), $ticketStatus));
 
-        $resolved = $isAdminOrEmployee
-            ? count($this->ticketService->getAllByStatus($statusResolved))
-            : count($this->ticketService->getAllByCompanyAndStatus($user->getCompany(), $statusResolved));
+            $countAll += $countTickets;
 
-        $closed = $isAdminOrEmployee
-            ? count($this->ticketService->getAllByStatus($statusClosed))
-            : count($this->ticketService->getAllByCompanyAndStatus($user->getCompany(), $statusClosed));
+            $tabs[] = [
+                'name' => strtolower($ticketStatus->getName()),
+                'counter' => $countTickets,
+            ];
+        }
 
-        $all = $open + $inProgress + $pending + $resolved + $closed;
-
-        return [
-            ['name' => AppHelper::STATUS_ALL, 'counter' => $all],
-            ['name' => AppHelper::STATUS_OPEN, 'counter' => $open],
-            ['name' => AppHelper::STATUS_IN_PROGRESS, 'counter' => $inProgress],
-            ['name' => AppHelper::STATUS_PENDING, 'counter' => $pending],
-            ['name' => AppHelper::STATUS_RESOLVED, 'counter' => $resolved],
-            ['name' => AppHelper::STATUS_CLOSED, 'counter' => $closed],
-        ];
+        return $tabs;
     }
 }
