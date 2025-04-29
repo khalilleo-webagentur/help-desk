@@ -22,6 +22,9 @@ class TicketStatus
     #[ORM\Column(length: 150)]
     private ?string $name = null;
 
+    #[ORM\Column]
+    private int $position = -1;
+
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?DateTimeInterface $updatedAt = null;
 
@@ -59,6 +62,18 @@ class TicketStatus
     public function setName(string $name): static
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getPosition(): int
+    {
+        return $this->position;
+    }
+
+    public function setPosition(int $position): static
+    {
+        $this->position = $position;
 
         return $this;
     }
