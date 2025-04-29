@@ -298,26 +298,29 @@
         },
         {
             "name": "doctrine/deprecations",
-            "version": "1.1.4",
+            "version": "1.1.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/deprecations.git",
-                "reference": "31610dbb31faa98e6b5447b62340826f54fbc4e9"
+                "reference": "459c2f5dd3d6a4633d3b5f46ee2b1c40f57d3f38"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/deprecations/zipball/31610dbb31faa98e6b5447b62340826f54fbc4e9",
-                "reference": "31610dbb31faa98e6b5447b62340826f54fbc4e9",
+                "url": "https://api.github.com/repos/doctrine/deprecations/zipball/459c2f5dd3d6a4633d3b5f46ee2b1c40f57d3f38",
+                "reference": "459c2f5dd3d6a4633d3b5f46ee2b1c40f57d3f38",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.1 || ^8.0"
             },
+            "conflict": {
+                "phpunit/phpunit": "<=7.5 || >=13"
+            },
             "require-dev": {
-                "doctrine/coding-standard": "^9 || ^12",
-                "phpstan/phpstan": "1.4.10 || 2.0.3",
+                "doctrine/coding-standard": "^9 || ^12 || ^13",
+                "phpstan/phpstan": "1.4.10 || 2.1.11",
                 "phpstan/phpstan-phpunit": "^1.0 || ^2",
-                "phpunit/phpunit": "^7.5 || ^8.5 || ^9.5",
+                "phpunit/phpunit": "^7.5 || ^8.5 || ^9.6 || ^10.5 || ^11.5 || ^12",
                 "psr/log": "^1 || ^2 || ^3"
             },
             "suggest": {
@@ -337,9 +340,9 @@
             "homepage": "https://www.doctrine-project.org/",
             "support": {
                 "issues": "https://github.com/doctrine/deprecations/issues",
-                "source": "https://github.com/doctrine/deprecations/tree/1.1.4"
+                "source": "https://github.com/doctrine/deprecations/tree/1.1.5"
             },
-            "time": "2024-12-07T21:18:45+00:00"
+            "time": "2025-04-07T20:06:18+00:00"
         },
         {
             "name": "doctrine/doctrine-bundle",
@@ -1383,16 +1386,16 @@
         },
         {
             "name": "khalilleo-webagentur/token-gen",
-            "version": "v1.0.0",
+            "version": "v1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/khalilleo-webagentur/token-gen.git",
-                "reference": "9661b4eaaae52d5047fdce7a7931ed1b60654c73"
+                "reference": "c0fc8194278c59ed333ee195791fc75b721d58f6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/khalilleo-webagentur/token-gen/zipball/9661b4eaaae52d5047fdce7a7931ed1b60654c73",
-                "reference": "9661b4eaaae52d5047fdce7a7931ed1b60654c73",
+                "url": "https://api.github.com/repos/khalilleo-webagentur/token-gen/zipball/c0fc8194278c59ed333ee195791fc75b721d58f6",
+                "reference": "c0fc8194278c59ed333ee195791fc75b721d58f6",
                 "shasum": ""
             },
             "require": {
@@ -1411,10 +1414,11 @@
             "authors": [
                 {
                     "name": "Khalilleo",
-                    "email": "info@khalilleo.com"
+                    "email": "dev@khalilleo.com"
                 }
             ],
             "description": "PHP library for simple and secure generation of random tokens.",
+            "homepage": "https://github.com/khalilleo-webagentur",
             "keywords": [
                 "generation",
                 "password",
@@ -1424,9 +1428,9 @@
             ],
             "support": {
                 "issues": "https://github.com/khalilleo-webagentur/token-gen/issues",
-                "source": "https://github.com/khalilleo-webagentur/token-gen/tree/v1.0.0"
+                "source": "https://github.com/khalilleo-webagentur/token-gen/tree/v1.0.1"
             },
-            "time": "2024-03-14T23:09:16+00:00"
+            "time": "2025-04-19T14:28:39+00:00"
         },
         {
             "name": "psr/cache",
@@ -5660,21 +5664,21 @@
         },
         {
             "name": "symfony/maker-bundle",
-            "version": "v1.62.1",
+            "version": "v1.63.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/maker-bundle.git",
-                "reference": "468ff2708200c95ebc0d85d3174b6c6711b8a590"
+                "reference": "69478ab39bc303abfbe3293006a78b09a8512425"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/maker-bundle/zipball/468ff2708200c95ebc0d85d3174b6c6711b8a590",
-                "reference": "468ff2708200c95ebc0d85d3174b6c6711b8a590",
+                "url": "https://api.github.com/repos/symfony/maker-bundle/zipball/69478ab39bc303abfbe3293006a78b09a8512425",
+                "reference": "69478ab39bc303abfbe3293006a78b09a8512425",
                 "shasum": ""
             },
             "require": {
                 "doctrine/inflector": "^2.0",
-                "nikic/php-parser": "^4.18|^5.0",
+                "nikic/php-parser": "^5.0",
                 "php": ">=8.1",
                 "symfony/config": "^6.4|^7.0",
                 "symfony/console": "^6.4|^7.0",
@@ -5732,7 +5736,7 @@
             ],
             "support": {
                 "issues": "https://github.com/symfony/maker-bundle/issues",
-                "source": "https://github.com/symfony/maker-bundle/tree/v1.62.1"
+                "source": "https://github.com/symfony/maker-bundle/tree/v1.63.0"
             },
             "funding": [
                 {
@@ -5748,7 +5752,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-01-15T00:21:40+00:00"
+            "time": "2025-04-26T01:41:37+00:00"
         },
         {
             "name": "symfony/process",
