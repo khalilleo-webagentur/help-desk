@@ -29,12 +29,25 @@ final readonly class TicketStatusService
         return $this->ticketStatusRepository->findOneBy(['name' => $name]);
     }
 
+    public function getOneByPosition(int $position): ?TicketStatus
+    {
+        return $this->ticketStatusRepository->findOneBy(['position' => $position]);
+    }
+
     /**
      * @return TicketStatus[]
      */
     public function getAll(): array
     {
         return $this->ticketStatusRepository->findAll();
+    }
+
+    /**
+     * @return TicketStatus[]
+     */
+    public function getAllPositioned(): array
+    {
+        return $this->ticketStatusRepository->findBy([], ['position' => 'ASC']);
     }
 
     public function save(TicketStatus $model): TicketStatus

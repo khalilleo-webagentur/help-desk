@@ -22,7 +22,8 @@ class IndexController extends AbstractDashboardController
 
     public function __construct(
         private readonly TicketStatusService $ticketStatusService
-    ) {
+    )
+    {
     }
 
     #[Route('/home', name: 'app_dashboard_ticket_status_index')]
@@ -47,6 +48,18 @@ class IndexController extends AbstractDashboardController
 
         if (!$name || !$color) {
             $this->addFlash('warning', 'Name and color are required.');
+            return $this->redirectToRoute(self::DASHBOARD_TICKET_STATUS_ROUTE);
+        }
+
+        $position = $this->validateNumber($request->request->get('position'));
+
+        if ($position <= 0) {
+            $this->addFlash('warning', 'Position must be greater than 0.');
+            return $this->redirectToRoute(self::DASHBOARD_TICKET_STATUS_ROUTE);
+        }
+
+        if ($this->ticketStatusService->getOneByPosition($position)) {
+            $this->addFlash('warning', 'Position already exists. Please choose another position.');
             return $this->redirectToRoute(self::DASHBOARD_TICKET_STATUS_ROUTE);
         }
 

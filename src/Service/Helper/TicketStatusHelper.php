@@ -26,7 +26,7 @@ final readonly class TicketStatusHelper
 
         $tabs[] = ['name' => 'all', 'counter' => &$countAll];
 
-        foreach ($this->ticketStatusService->getAll() as $ticketStatus) {
+        foreach ($this->ticketStatusService->getAllPositioned() as $ticketStatus) {
 
             $countTickets = $isAdminOrEmployee
                 ? count($this->ticketService->getAllByStatus($ticketStatus))

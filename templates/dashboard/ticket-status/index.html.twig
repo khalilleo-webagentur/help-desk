@@ -15,6 +15,11 @@
                     <div class="col-6 mt-1">
                         <div class="breadcrumb float-right">
                             {% if is_granted('ROLE_SUPER_ADMIN') %}
+                                <button class="btn btn-outline-secondary btn-headers mr-2"
+                                        data-toggle="modal" data-target="#positionsModal">
+                                    <span class="fa fa-arrows-alt fa-sm"></span> <span
+                                            class="ps-1 md-d-none">Rearrange Positions</span>
+                                </button>
                                 <button class="btn btn-outline-secondary btn-headers"
                                         data-toggle="modal" data-target="#newStatusModal">
                                     <span class="fa fa-plus fa-sm"></span> <span
@@ -41,5 +46,6 @@
     </div>
 
     {% include 'dashboard/ticket-status/modal/new.html.twig' %}
+    {% include 'dashboard/ticket-status/modal/fix_positions.html.twig' %}
 
 {% endblock %}
