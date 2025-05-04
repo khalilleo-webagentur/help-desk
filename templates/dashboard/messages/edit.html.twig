@@ -45,7 +45,12 @@
                                           rows="3"
                                           required
                                           spellcheck="false"
+                                          ondragstart="return false"
+                                          ondrop="return false"
+                                          dir="auto"
+                                          autocapitalize="off"
                                           autocomplete="off"
+                                          translate="no"
                                           placeholder="Type description"
                                           name="content">{{ message.messageContent.content }}</textarea>
                             </div>
@@ -54,7 +59,7 @@
                                 <div class="form-group form-check">
                                     <input type="checkbox" class="form-check-input" id="c1z3n6t4"
                                            name="isSeen"
-                                    checked>
+                                           checked>
                                     <label class="form-check-label text-secondary" for="c1z3n6t4">
                                         Mark this message as not seen yet
                                     </label>

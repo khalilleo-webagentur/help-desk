@@ -23,7 +23,14 @@
                             Note <span class="text-danger">*</span>
                         </label>
                         <textarea class="form-control" id="iO7nMiNot" placeholder="Type your note .." rows="4"
-                               name="note" spellcheck="false"
+                                  name="note"
+                                  spellcheck="false"
+                                  ondragstart="return false"
+                                  ondrop="return false"
+                                  dir="auto"
+                                  autocapitalize="off"
+                                  autocomplete="off"
+                                  translate="no"
                                   required>{{ issue.externalNote }}</textarea>
                         <small class="text-secondary">This field is required.</small>
                     </div>

@@ -16,11 +16,11 @@
                                 <span class="bi bi-house pe-1"></span> Home</a>
                         </li>
                         {% if is_granted('ROLE_SUPER_ADMIN') or is_granted('ROLE_CUSTOMER') %}
-                           <li>
-                               <a href="{{ path('app_dashboard_index') }}" class="dropdown-item">
-                                   <span class="bi bi-speedometer2 pe-1"></span> Dashboard
-                               </a>
-                           </li>
+                            <li>
+                                <a href="{{ path('app_dashboard_index') }}" class="dropdown-item">
+                                    <span class="bi bi-speedometer2 pe-1"></span> Dashboard
+                                </a>
+                            </li>
                         {% endif %}
                         <li><a href="{{ path('app_profile') }}" class="dropdown-item" type="button">
                                 <span class="bi bi-person pe-1"></span> Profile</a>

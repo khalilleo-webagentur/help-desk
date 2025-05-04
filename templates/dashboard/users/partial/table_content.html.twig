@@ -51,13 +51,16 @@
                         </span>
                         </form>
                         {% if isSuperAdmin(row) %}
-                            <span class="fa fa-user-tie text-success fa-sm cursor-help pt-1 pl-1" title="Super Admin"></span>
+                            <span class="fa fa-user-tie text-success fa-sm cursor-help pt-1 pl-1"
+                                  title="Super Admin"></span>
                         {% endif %}
                         {% if row.isTeamLeader %}
-                            <span class="fa fa-user-tie text-warning fa-sm cursor-help pt-1 pl-1" title="Team Leader"></span>
+                            <span class="fa fa-user-tie text-warning fa-sm cursor-help pt-1 pl-1"
+                                  title="Team Leader"></span>
                         {% endif %}
                         {% if row.ninja %}
-                            <span class="fa fa-user-ninja text-info fa-sm cursor-help pt-1 pl-1" title="Employee"></span>
+                            <span class="fa fa-user-ninja text-info fa-sm cursor-help pt-1 pl-1"
+                                  title="Employee"></span>
                         {% endif %}
                     </div>
                 </td>

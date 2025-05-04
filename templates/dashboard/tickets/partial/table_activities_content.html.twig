@@ -7,7 +7,8 @@
     <div class="pl-2">
         {% for row in ticketActivities %}
             {% if row.isHidden and is_granted('ROLE_SUPER_ADMIN') %}
-                <p class="fs-14 mb-1 text-secondary small" style="border-bottom: 1px dashed #dcdcdc;padding-bottom: 3px;">
+                <p class="fs-14 mb-1 text-secondary small"
+                   style="border-bottom: 1px dashed #dcdcdc;padding-bottom: 3px;">
                     <span class="fa fa-circle fa-xs mr-2 text-warning"></span>
                     {{ row.user.name|capitalize }} {{ row.message }}
                     <span class="float-right md-d-none" title="{{ row.createdAt|date }}">
@@ -15,7 +16,8 @@
                     </span>
                 </p>
             {% elseif not row.isHidden %}
-                <p class="fs-14 text-secondary mb-1 small" style="border-bottom: 1px dashed #dcdcdc;padding-bottom: 3px;">
+                <p class="fs-14 text-secondary mb-1 small"
+                   style="border-bottom: 1px dashed #dcdcdc;padding-bottom: 3px;">
                     <span class="fa fa-circle text-light-50 fa-xs mr-2"></span>
                     {{ row.user.name|capitalize }} {{ row.message }}
                     <span class="float-right md-d-none" title="{{ row.createdAt|date }}">

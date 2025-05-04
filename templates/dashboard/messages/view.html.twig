@@ -47,7 +47,7 @@
 
                         {% if message.seenAt %}
                             <small class="text-secondary" title="{{ message.seenAt|date('Y-m-d H:i:s') }}">
-                                <span class="text-warning fa fa-clock pr-1"></span>seen  {{ timeAgo(message.seenAt) }}
+                                <span class="text-warning fa fa-clock pr-1"></span>seen {{ timeAgo(message.seenAt) }}
                             </small>
                         {% else %}
                             <small class="text-secondary" title="{{ message.createdAt|date('Y-m-d H:i:s') }}">
