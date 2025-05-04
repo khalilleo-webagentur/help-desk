@@ -44,3 +44,11 @@ async function copyContent(text) {
         swal('', 'clipboard is not available on your Browser.', 'warning');
     }
 }
+
+// blur images
+window.addEventListener('load', function() {
+    const image = document.querySelector('img');
+    if (image) {
+        image.style.filter = 'blur(0)';
+    }
+});
