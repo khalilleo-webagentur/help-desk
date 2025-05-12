@@ -43,4 +43,12 @@ final class AppHelper
     public const DEFAULT_MAX_LIMIT_MESSAGES_ENTRIES = 100;
     public const DEFAULT_LIMIT_SYSTEM_LOGS_ENTRIES = 50;
     public const DEFAULT_MAX_LIMIT_SYSTEM_LOGS_ENTRIES = 500;
+
+    // System Logs
+    public const SYSTEM_LOG_EVENTS = [
+        self::SYSTEM_LOG_EVENT_EXCEPTION,
+        self::SYSTEM_LOG_EVENT_TICKET_COMMENT,
+    ];
+    public const SYSTEM_LOG_EVENT_EXCEPTION = 'Exception';
+    public const SYSTEM_LOG_EVENT_TICKET_COMMENT = 'Ticket Comment Message';
 }
