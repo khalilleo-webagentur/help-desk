@@ -36,15 +36,13 @@ class IndexController extends AbstractDashboardController
         $this->denyAccessUnlessGrantedRoleCustomer();
         $limit = $limit ? 1000 : AppHelper::DEFAULT_LIMIT_MESSAGES_ENTRIES;
         $user = $this->getUser();
-        $isAdmin = $this->userService->isAdmin($user);
+        $isSuperAdmin = $this->isSuperAdmin();
 
-        $messages = $isAdmin
+        $messages = $isSuperAdmin
             ? $this->messagesService->getAllWithLimit($limit)
             : $this->messagesService->getAllByEmailWithLimit($user->getUserIdentifier(), $limit);
 
-        $users = $isAdmin
-            ? $this->userService->getAllCustomers()
-            : [];
+        $users = $isSuperAdmin ? $this->userService->getAllCustomers() : [];
 
         return $this->render('dashboard/messages/index.html.twig', [
             'messages' => $messages,
@@ -78,13 +76,13 @@ class IndexController extends AbstractDashboardController
         }
 
         $user = $this->getUser();
-        $isAdmin = $this->userService->isAdmin($user);
+        $isSuperAdmin = $this->isSuperAdmin();
 
         if (!$this->validateCheckbox($request->request->get('addToAll'))) {
             $username = $user->getName();
             $email = $user->getUserIdentifier();
 
-            if ($isAdmin) {
+            if ($isSuperAdmin) {
                 $targetUser = $this->userService->getById($this->validateNumber(
                     $request->request->get('uId')
                 ));
@@ -114,7 +112,7 @@ class IndexController extends AbstractDashboardController
             }
         }
 
-        if (!$isAdmin) {
+        if (!$isSuperAdmin) {
             $contactFormNewMessageMail->send([]);
         }
 
@@ -127,9 +125,9 @@ class IndexController extends AbstractDashboardController
         $this->denyAccessUnlessGrantedRoleCustomer();
         $user = $this->getUser();
         $messageId = $this->validateNumber($id);
-        $isAdmin = $this->userService->isAdmin($user);
+        $isSuperAdmin = $this->isSuperAdmin();
 
-        $message = $isAdmin
+        $message = $isSuperAdmin
             ? $this->messagesService->getById($messageId)
             : $this->messagesService->getByEmailAndId($user->getUserIdentifier(), $messageId);
 

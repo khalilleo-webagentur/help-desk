@@ -39,13 +39,13 @@ class IndexController extends AbstractDashboardController
 
         $currentUser = $this->getUser();
 
-        $isAdmin = $this->userService->isAdmin($currentUser);
+        $isSuperAdmin = $this->isSuperAdmin();
 
-        if (!$isAdmin && !$currentUser->isTeamLeader()) {
+        if (!$isSuperAdmin && !$currentUser->isTeamLeader()) {
             return $this->redirectToRoute(self::DASHBOARD_TICKETS_ROUTE);
         }
 
-        $companies = $isAdmin
+        $companies = $isSuperAdmin
             ? $this->companyService->getAll()
             : [$currentUser->getCompany()];
 
@@ -101,9 +101,9 @@ class IndexController extends AbstractDashboardController
 
         $currentUser = $this->getUser();
 
-        $isAdmin = $this->userService->isAdmin($currentUser);
+        $isSuperAdmin = $this->isSuperAdmin();
 
-        if (!$isAdmin && !$currentUser->isTeamLeader()) {
+        if (!$isSuperAdmin && !$currentUser->isTeamLeader()) {
             return $this->redirectToRoute(self::DASHBOARD_COMPANIES_ROUTE);
         }
 
@@ -117,7 +117,7 @@ class IndexController extends AbstractDashboardController
         }
 
         return $this->render('dashboard/companies/edit.html.twig', [
-            'company' => $isAdmin ? $company : $currentUser->getCompany(),
+            'company' => $isSuperAdmin ? $company : $currentUser->getCompany(),
         ]);
     }
 
@@ -128,9 +128,9 @@ class IndexController extends AbstractDashboardController
 
         $currentUser = $this->getUser();
 
-        $isAdmin = $this->userService->isAdmin($currentUser);
+        $isSuperAdmin = $this->isSuperAdmin();
 
-        if (!$isAdmin && !$currentUser->isTeamLeader()) {
+        if (!$isSuperAdmin && !$currentUser->isTeamLeader()) {
             return $this->redirectToRoute(self::DASHBOARD_COMPANIES_ROUTE);
         }
 
@@ -141,7 +141,7 @@ class IndexController extends AbstractDashboardController
             return $this->redirectToRoute(self::DASHBOARD_COMPANIES_ROUTE);
         }
 
-        $company = $isAdmin
+        $company = $isSuperAdmin
             ? $this->companyService->getById($this->validateNumber($id))
             : $currentUser->getCompany();
 

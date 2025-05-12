@@ -46,7 +46,7 @@ class FilterController extends AbstractDashboardController
         $countDeletedLogs = $this->systemLogsService->deleteAllByCriteria($logDateFrom, $logDateTo);
 
         $countDeletedLogs > 0
-            ? $this->addFlash('success', sprintf('System-Logs [%s] have been deleted.', $countDeletedLogs))
+            ? $this->addFlash('success', sprintf('System-Logs from type Exception [%s] have been deleted.', $countDeletedLogs))
             : $this->addFlash(
             'notice',
             sprintf(

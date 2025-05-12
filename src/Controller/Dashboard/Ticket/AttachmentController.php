@@ -43,7 +43,7 @@ class AttachmentController extends AbstractDashboardController
 
         $user = $this->getUser();
 
-        $isAdmin = $this->userService->isAdmin($user);
+        $isSuperAdmin = $this->isSuperAdmin();
 
         $id = $this->validateNumber($request->request->get('tId'));
 
@@ -56,7 +56,7 @@ class AttachmentController extends AbstractDashboardController
             return $this->redirectToRoute(self::DASHBOARD_TICKETS_ROUTE);
         }
 
-        $issue = $isAdmin
+        $issue = $isSuperAdmin
             ? $this->ticketService->getById($id)
             : $this->ticketService->getOneByProjectAndId($project, $id);
 
@@ -108,11 +108,11 @@ class AttachmentController extends AbstractDashboardController
 
         $user = $this->getUser();
 
-        $isAdmin = $this->userService->isAdmin($user);
+        $isSuperAdmin = $this->isSuperAdmin();
 
         $id = $this->validateNumber($request->request->get('tId'));
 
-        $issue = $isAdmin
+        $issue = $isSuperAdmin
             ? $this->ticketService->getById($id)
             : $this->ticketService->getOneByProjectAndId($project, $id);
 
@@ -146,10 +146,10 @@ class AttachmentController extends AbstractDashboardController
         $this->denyAccessUnlessGrantedRoleCustomer();
         $user = $this->getUser();
 
-        $isAdmin = $this->userService->isAdmin($user);
+        $isSuperAdmin = $this->isSuperAdmin();
 
         $id = $this->validateNumber($request->request->get('tId'));
-        $issue = $isAdmin
+        $issue = $isSuperAdmin
             ? $this->ticketService->getById($id)
             : $this->ticketService->getOneByCustomerAndId($user, $id);
 

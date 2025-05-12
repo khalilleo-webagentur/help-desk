@@ -17,4 +17,9 @@ class AbstractDashboardController extends AbstractController
     {
         $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
     }
+
+    protected function isSuperAdmin(): bool
+    {
+        return $this->isGranted('ROLE_SUPER_ADMIN');
+    }
 }

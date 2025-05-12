@@ -37,17 +37,17 @@ class IndexController extends AbstractDashboardController
 
         $user = $this->getUser();
 
-        $isAdmin = $this->userService->isAdmin($user);
+        $isSuperAdmin = $this->isSuperAdmin();
 
-        if (!$isAdmin && !$user->isTeamLeader()) {
+        if (!$isSuperAdmin && !$user->isTeamLeader()) {
             return $this->redirectToRoute(self::DASHBOARD_TICKETS_ROUTE);
         }
 
-        $projects = $isAdmin
+        $projects = $isSuperAdmin
             ? $this->projectService->getAll()
             : $this->projectService->getAllByCompany($user->getCompany());
 
-        $companies = $isAdmin ? $this->companyService->getAll() : [];
+        $companies = $isSuperAdmin ? $this->companyService->getAll() : [];
 
         return $this->render('dashboard/projects/index.html.twig', [
             'projects' => $projects,
@@ -73,10 +73,10 @@ class IndexController extends AbstractDashboardController
         }
 
         $user = $this->getUser();
-        $isAdmin = $this->userService->isAdmin($user);
+        $isSuperAdmin = $this->isSuperAdmin();
 
         $company = $this->companyService->getById(
-            $isAdmin
+            $isSuperAdmin
                 ? $this->validateNumber($request->request->get('company'))
                 : $user->getCompany()->getId()
         );
@@ -120,9 +120,9 @@ class IndexController extends AbstractDashboardController
             );
         }
 
-        $isAdmin = $this->userService->isAdmin($user) || $user->isNinja();
+        $isSuperAdminOrNinja = $this->isSuperAdmin() || $user->isNinja();
 
-        if ($isAdmin) {
+        if ($isSuperAdminOrNinja) {
             $project = $this->projectService->getById($this->validateNumber($id));
         }
 
@@ -158,9 +158,9 @@ class IndexController extends AbstractDashboardController
             );
         }
 
-        $isAdmin = $this->userService->isAdmin($user) || $user->isNinja();
+        $isSuperAdminOrNinja = $this->isSuperAdmin() || $user->isNinja();
 
-        if ($isAdmin) {
+        if ($isSuperAdminOrNinja) {
             $project = $this->projectService->getById($this->validateNumber($id));
         }
 

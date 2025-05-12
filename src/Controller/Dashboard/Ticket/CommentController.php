@@ -6,8 +6,10 @@ namespace App\Controller\Dashboard\Ticket;
 
 use App\Controller\Dashboard\AbstractDashboardController;
 use App\Entity\TicketComment;
+use App\Helper\AppHelper;
 use App\Mails\Dashboard\NotifyIssueCommentMail;
 use App\Service\ProjectService;
+use App\Service\SystemLogsService;
 use App\Service\TicketCommentsService;
 use App\Service\TicketService;
 use App\Service\UserService;
@@ -29,6 +31,7 @@ class CommentController extends AbstractDashboardController
         private readonly TicketService         $ticketService,
         private readonly TicketCommentsService $ticketCommentsService,
         private readonly ProjectService        $projectService,
+        private readonly SystemLogsService     $systemLogsService,
     ) {
     }
 
@@ -48,10 +51,10 @@ class CommentController extends AbstractDashboardController
             return $this->redirectToRoute(self::DASHBOARD_TICKETS_ROUTE);
         }
 
-        $isAdmin = $this->userService->isAdmin($user);
+        $isSuperAdmin = $this->isSuperAdmin();
         $ticketId = $this->validateNumber($request->request->get('tId'));
 
-        $issue = $isAdmin
+        $issue = $isSuperAdmin
             ? $this->ticketService->getById($ticketId)
             : $this->ticketService->getOneByProjectAndId($project, $ticketId);
 
@@ -93,14 +96,17 @@ class CommentController extends AbstractDashboardController
             }
 
             $customer = $issue->getCustomer();
+            $message = strip_tags($description);
 
             $notifyIssueCommentMail->send(
-                $isAdmin ? $customer->getName() : $name,
-                $isAdmin ? $customer->getEmail() : $email,
+                $isSuperAdmin ? $customer->getName() : $name,
+                $isSuperAdmin ? $customer->getEmail() : $email,
                 $issue->getTicketNo(),
                 $issue->getTitle(),
-                strip_tags($description)
+                $message
             );
+
+            $this->systemLogsService->create(AppHelper::SYSTEM_LOG_EVENT_TICKET_COMMENT, $message);
         }
 
         return $backToRoute;

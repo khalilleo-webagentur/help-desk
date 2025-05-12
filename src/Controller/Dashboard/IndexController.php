@@ -31,39 +31,39 @@ class IndexController extends AbstractDashboardController
 
         $user = $this->getUser();
 
-        $isAdmin = $this->userService->isAdmin($user) || $user->isNinja();
+        $isSuperAdminOrNinja = $this->isSuperAdmin() || $user->isNinja();
         $company = $user->getCompany();
 
         // all of them
-        $countIssues = $isAdmin
+        $countIssues = $isSuperAdminOrNinja
             ? $this->ticketService->countAll()
             : $this->ticketService->countAllByCompany($company);
 
         // only status open
         $status = $this->ticketStatusService->getOneByName(AppHelper::STATUS_OPEN);
 
-        $countOpenIssues = $isAdmin
+        $countOpenIssues = $isSuperAdminOrNinja
             ? $this->ticketService->countStatus($status)
             : $this->ticketService->countAllByCompanyAndStatus($company, $status);
 
         // only status closed
         $status = $this->ticketStatusService->getOneByName(AppHelper::STATUS_CLOSED);
 
-        $countClosedIssues = $isAdmin
+        $countClosedIssues = $isSuperAdminOrNinja
             ? $this->ticketService->countStatus($status)
             : $this->ticketService->countAllByCompanyAndStatus($company, $status);
 
         // only status resolved
         $status = $this->ticketStatusService->getOneByName(AppHelper::STATUS_RESOLVED);
 
-        $countResolvedIssues = $isAdmin
+        $countResolvedIssues = $isSuperAdminOrNinja
             ? $this->ticketService->countStatus($status)
             : $this->ticketService->countAllByCompanyAndStatus($company, $status);
 
         // only status in progress
         $status = $this->ticketStatusService->getOneByName(AppHelper::STATUS_IN_PROGRESS);
 
-        $countIssuesInProgress = $isAdmin
+        $countIssuesInProgress = $isSuperAdminOrNinja
             ? $this->ticketService->countStatus($status)
             : $this->ticketService->countAllByCompanyAndStatus($company, $status);
 

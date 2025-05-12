@@ -2,6 +2,7 @@
 
 namespace App\EventSubscriber;
 
+use App\Helper\AppHelper;
 use App\Service\Core\MonologService;
 use App\Service\SystemLogsService;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -26,7 +27,7 @@ readonly class ExceptionSubscriber implements EventSubscriberInterface
     public function logException(ExceptionEvent $event): void
     {
         $message = $event->getThrowable()->getMessage();
-        $this>$this->systemLogsService->create($message);
+        $this>$this->systemLogsService->create(AppHelper::SYSTEM_LOG_EVENT_EXCEPTION, $message);
         $this->monolog->logger->warning($message);
     }
 }

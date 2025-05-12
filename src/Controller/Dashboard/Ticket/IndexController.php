@@ -27,6 +27,7 @@ use App\Service\UserService;
 use App\Service\UserSettingService;
 use App\Traits\FormValidationTrait;
 use DateTime;
+use Exception;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -67,13 +68,13 @@ class IndexController extends AbstractDashboardController
 
         $user = $this->getUser();
 
-        $isAdmin = $this->userService->isAdmin($user) || $user->isNinja();
+        $isSuperAdminOrNinja = $this->isSuperAdmin() || $user->isNinja();
 
         $status = !empty($status) ? mb_strtoupper($this->validate($status)) : AppHelper::STATUS_OPEN;
 
         $ticketStatus = $this->ticketStatusService->getOneByName($status);
 
-        $issues = $isAdmin
+        $issues = $isSuperAdminOrNinja
             ? $this->ticketService->getAllByStatus($ticketStatus)
             : $this->ticketService->getAllByCompanyAndStatus($user->getCompany(), $ticketStatus);
 
@@ -81,12 +82,12 @@ class IndexController extends AbstractDashboardController
 
         $ticketLabels = $this->ticketLabelsService->getAll();
 
-        $projects = $isAdmin
+        $projects = $isSuperAdminOrNinja
             ? $this->projectService->getAll()
             : $this->projectService->getAllByCompany($user->getCompany());
 
-        $companies = $isAdmin ? $this->companyService->getAll() : [];
-        $statuses = $isAdmin ? $this->ticketStatusService->getAll() : [];
+        $companies = $isSuperAdminOrNinja ? $this->companyService->getAll() : [];
+        $statuses = $isSuperAdminOrNinja ? $this->ticketStatusService->getAll() : [];
         $assigners = $this->userService->getAllByCompany($user->getCompany());
 
         $dateTime = new DateTime();
@@ -130,9 +131,9 @@ class IndexController extends AbstractDashboardController
             return $this->redirectToRoute(self::DASHBOARD_TICKETS_ROUTE);
         }
 
-        $isAdmin = $this->userService->isAdmin($user);
+        $isSuperAdmin = $this->isSuperAdmin();
 
-        $project = $isAdmin || $user->isNinja()
+        $project = $isSuperAdmin || $user->isNinja()
             ? $this->projectService->getById($projectId)
             : $this->projectService->getByCompanyAndId($user->getCompany(), $projectId);
 
@@ -169,9 +170,7 @@ class IndexController extends AbstractDashboardController
         $ticketNo = $this->ticketService->getLatTicketNo();
         $status = $this->ticketStatusService->getOneByName(AppHelper::STATUS_OPEN);
 
-        $customer = $isAdmin
-            ? $this->userService->getOneByCompany($project->getCompany())
-            : $user;
+        $customer = $isSuperAdmin ? $this->userService->getOneByCompany($project->getCompany()) : $user;
 
         if (!$customer) {
             $this->addFlash('warning', 'Customer not found.');
@@ -200,8 +199,11 @@ class IndexController extends AbstractDashboardController
                     ->setTitle($title)
                     ->setDescription($description)
             );
-        } catch (\Exception $e) {
-            $this->systemLogsService->create(sprintf('Issue cannot be created. %s', $e->getMessage()));
+        } catch (Exception $e) {
+            $this->systemLogsService->create(
+                AppHelper::SYSTEM_LOG_EVENT_EXCEPTION,
+                sprintf('Issue cannot be created. %s', $e->getMessage())
+            );
         }
 
         /** @var UploadedFile $attachment */
@@ -236,7 +238,7 @@ class IndexController extends AbstractDashboardController
     {
         $this->denyAccessUnlessGrantedRoleCustomer();
         $user = $this->getUser();
-        $isAdmin = $this->userService->isAdmin($user) || $user->isNinja();
+        $isSuperAdminOrNinja = $this->isSuperAdmin() || $user->isNinja();
         $id = $this->validateNumber($id);
         $projectId = $this->validateNumber($request->get('pid'));
 
@@ -247,7 +249,7 @@ class IndexController extends AbstractDashboardController
             return $this->redirectToRoute(self::DASHBOARD_TICKETS_ROUTE);
         }
 
-        $issue = $isAdmin
+        $issue = $isSuperAdminOrNinja
             ? $this->ticketService->getById($id)
             : $this->ticketService->getOneByProjectAndId($project, $id);
 
@@ -275,7 +277,7 @@ class IndexController extends AbstractDashboardController
             ];
         }
 
-        $statuses = $isAdmin ? $this->ticketStatusService->getAll() : [];
+        $statuses = $isSuperAdminOrNinja ? $this->ticketStatusService->getAll() : [];
         $assigners = $this->userService->getAllByCompany($user->getCompany());
         $priorities = $this->ticketPriorityService->getAll();
 
@@ -307,11 +309,11 @@ class IndexController extends AbstractDashboardController
 
         $user = $this->getUser();
 
-        $isAdmin = $this->userService->isAdmin($user);
+        $isSuperAdmin = $this->isSuperAdmin();
 
         $id = $this->validateNumber($id);
 
-        $issue = $isAdmin
+        $issue = $isSuperAdmin
             ? $this->ticketService->getById($id)
             : $this->ticketService->getOneByProjectAndId($project, $id);
 
@@ -347,10 +349,10 @@ class IndexController extends AbstractDashboardController
         }
 
         $user = $this->getUser();
-        $isAdmin = $this->userService->isAdmin($user);
+        $isSuperAdmin = $this->isSuperAdmin();
         $issueId = $this->validateNumber($request->request->get('id'));
 
-        $issue = $isAdmin || $user->isNinja()
+        $issue = $isSuperAdmin || $user->isNinja()
             ? $this->ticketService->getById($issueId)
             : $this->ticketService->getOneByProjectAndId($project, $issueId);
 
@@ -362,7 +364,7 @@ class IndexController extends AbstractDashboardController
         $title = $this->validateTextarea($request->request->get('title'), true);
         $description = $this->validateTextarea($request->request->get('content'), true);
 
-        $assignee = $isAdmin || $user->isNinja()
+        $assignee = $isSuperAdmin || $user->isNinja()
             ? $this->userService->getById($this->validateNumber($request->request->get('assignee')))
             : $issue->getAssignee();
 
@@ -467,9 +469,9 @@ class IndexController extends AbstractDashboardController
         }
 
         $user = $this->getUser();
-        $isAdmin = $this->userService->isAdmin($user);
+        $isSuperAdmin = $this->isSuperAdmin();
 
-        $issue = $isAdmin || $user->isNinja()
+        $issue = $isSuperAdmin || $user->isNinja()
             ? $this->ticketService->getById($issueId)
             : $this->ticketService->getOneByProjectAndId($project, $issueId);
 

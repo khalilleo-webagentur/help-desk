@@ -37,9 +37,9 @@ class IndexController extends AbstractDashboardController
         $this->denyAccessUnlessGrantedRoleCustomer();
 
         $user = $this->getUser();
-        $isAdmin = $this->userService->isAdmin($user);
+        $isSuperAdmin = $this->isSuperAdmin();
 
-        if (!$isAdmin && !$user->isTeamLeader()) {
+        if (!$isSuperAdmin && !$user->isTeamLeader()) {
             return $this->redirectToRoute(self::ADMIN_TICKETS_ROUTE);
         }
 
@@ -47,7 +47,7 @@ class IndexController extends AbstractDashboardController
             $request->get('p7x5a8e9')
         ));
 
-        $users = $isAdmin
+        $users = $isSuperAdmin
             ? $this->userService->getAllOrAllByCompany($company)
             : $this->userService->getAllByCompany($user->getCompany());
 
@@ -62,7 +62,7 @@ class IndexController extends AbstractDashboardController
             }
         }
 
-        $isAdmin && $company
+        $isSuperAdmin && $company
             ? $this->companyService->updateIsSelected($company)
             : $this->companyService->updateIsSelected(null);
 
@@ -70,8 +70,8 @@ class IndexController extends AbstractDashboardController
 
         return $this->render('dashboard/users/index.html.twig', [
             'users' => $hasToken ? $usersByFilter : $users,
-            'roles' => $isAdmin ? AppHelper::ROLES : [],
-            'companies' => $isAdmin ? $companies : [],
+            'roles' => $isSuperAdmin ? AppHelper::ROLES : [],
+            'companies' => $isSuperAdmin ? $companies : [],
             'selectedCompanyId' => $company ? $company->getId() : 0,
         ]);
     }
@@ -97,17 +97,17 @@ class IndexController extends AbstractDashboardController
         }
 
         $currentUser = $this->getUser();
-        $isAdmin = $this->userService->isAdmin($currentUser);
+        $isSuperAdmin = $this->isSuperAdmin();
         $iCompany = $this->validateNumber($request->request->get('company'));
 
-        if ($isAdmin && $iCompany <= 0) {
+        if ($isSuperAdmin && $iCompany <= 0) {
             $this->addFlash('warning', 'Company is required.');
             return $this->redirectToRoute(self::ADMIN_USERS_ROUTE);
         }
 
-        $company = $isAdmin ? $this->companyService->getById($iCompany) : $currentUser->getCompany();
+        $company = $isSuperAdmin ? $this->companyService->getById($iCompany) : $currentUser->getCompany();
 
-        $isTeamLeader = $isAdmin && count($this->userService->getAllTeamLeadersWithinACompany($company)) === 0;
+        $isTeamLeader = $isSuperAdmin && count($this->userService->getAllTeamLeadersWithinACompany($company)) === 0;
 
         $token = $this->tokenGeneratorService->randomToken();
 
@@ -139,9 +139,9 @@ class IndexController extends AbstractDashboardController
         $this->denyAccessUnlessGrantedRoleCustomer();
 
         $user = $this->getUser();
-        $isAdmin = $this->userService->isAdmin($user);
+        $isSuperAdmin = $this->isSuperAdmin();
 
-        if (!$isAdmin && !$user->isTeamLeader()) {
+        if (!$isSuperAdmin && !$user->isTeamLeader()) {
             return $this->redirectToRoute(self::ADMIN_TICKETS_ROUTE);
         }
 
@@ -154,14 +154,14 @@ class IndexController extends AbstractDashboardController
             return $this->redirectToRoute(self::ADMIN_USERS_ROUTE);
         }
 
-        if (!$isAdmin && ($targetUser->getCompany() !== $user->getCompany())) {
+        if (!$isSuperAdmin && ($targetUser->getCompany() !== $user->getCompany())) {
             $this->addFlash('warning', 'User could not be found. E-0002');
             return $this->redirectToRoute(self::ADMIN_USERS_ROUTE);
         }
 
         return $this->render('dashboard/users/edit.html.twig', [
             'user' => $targetUser,
-            'roles' => $isAdmin ? AppHelper::ROLES : [],
+            'roles' => $isSuperAdmin ? AppHelper::ROLES : [],
         ]);
     }
 
@@ -171,9 +171,9 @@ class IndexController extends AbstractDashboardController
         $this->denyAccessUnlessGrantedRoleCustomer();
 
         $currentUser = $this->getUser();
-        $isAdmin = $this->userService->isAdmin($currentUser);
+        $isSuperAdmin = $this->isSuperAdmin();
 
-        if (!$isAdmin && !$currentUser->isTeamLeader()) {
+        if (!$isSuperAdmin && !$currentUser->isTeamLeader()) {
             return $this->redirectToRoute(self::ADMIN_TICKETS_ROUTE);
         }
 
@@ -193,12 +193,12 @@ class IndexController extends AbstractDashboardController
             return $this->redirectToRoute(self::ADMIN_USERS_ROUTE);
         }
 
-        if (!$isAdmin && $this->userService->isAdmin($user)) {
+        if (!$isSuperAdmin && $this->userService->isAdmin($user)) {
             $this->addFlash('warning', 'You don not have enough permission to update admin details. E-0003');
             return $this->redirectToRoute(self::ADMIN_USERS_ROUTE);
         }
 
-        if (!$isAdmin && ($currentUser->getCompany() !== $user->getCompany())) {
+        if (!$isSuperAdmin && ($currentUser->getCompany() !== $user->getCompany())) {
             $this->addFlash('warning', 'User could not be found. E-0002');
             return $this->redirectToRoute(self::ADMIN_USERS_ROUTE);
         }
@@ -212,7 +212,7 @@ class IndexController extends AbstractDashboardController
         $token = $this->validate($request->request->get('token'));
         $isDeleted = $this->validateCheckbox($request->request->get('isDeleted'));
 
-        $verified = ($isAdmin
+        $verified = ($isSuperAdmin
             || $currentUser->isTeamLeader())
         && !in_array(AppHelper::ROLE_SUPER_ADMIN, $user->getRoles(), true
         ) ? $isVerified
@@ -224,14 +224,14 @@ class IndexController extends AbstractDashboardController
         }
 
         $iRole = $this->validate($request->request->get('4yt4bG2'));
-        $role = $isAdmin && in_array($iRole, array_keys(AppHelper::ROLES), true)
+        $role = $isSuperAdmin && in_array($iRole, array_keys(AppHelper::ROLES), true)
             ? ['ROLE_' . $iRole]
             : $user->getRoles();
 
 
         $isTeamLeader = $this->validateCheckbox($request->request->get('x3h1r9u2'));
 
-        if ($isAdmin) {
+        if ($isSuperAdmin) {
             $this->userService->changeUserPositionToTeamLeader($user, $isTeamLeader);
         }
 
@@ -244,7 +244,7 @@ class IndexController extends AbstractDashboardController
                 ->setPassword($this->userService->encodePassword($email))
                 ->setToken($token)
                 ->setIsVerified($verified)
-                ->setNinja($isAdmin ? $isEmployee : false)
+                ->setNinja($isSuperAdmin ? $isEmployee : false)
                 ->setRoles($role)
                 ->setDeleted($isDeleted)
         );

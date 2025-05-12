@@ -42,10 +42,10 @@ class SearchController extends AbstractDashboardController
             return $backToRoute;
         }
 
-        $isAdmin = $this->userService->isAdmin($user);
+        $isSuperAdmin = $this->isSuperAdmin();
         $canViewIssue = false;
 
-        if (!$isAdmin) {
+        if (!$isSuperAdmin) {
             foreach ($this->projectService->getAllByCompany($user->getCompany()) as $project) {
                 if ($project->getId() === $issue->getProject()->getId()) {
                     $canViewIssue = true;
@@ -54,7 +54,7 @@ class SearchController extends AbstractDashboardController
             }
         }
 
-        if (false === $canViewIssue && !$isAdmin) {
+        if (false === $canViewIssue && !$isSuperAdmin) {
             $this->addFlash('warning', 'Issue could not be found. E-0004');
             return $backToRoute;
         }
