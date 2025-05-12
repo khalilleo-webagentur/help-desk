@@ -12,8 +12,8 @@ final readonly class MessagesService
 {
     public function __construct(
         private MessageRepository $messageRepository,
-        private UserService $userService,
-    ){
+        private UserService       $userService,
+    ) {
     }
 
     public function getById(int $id): ?Message
@@ -100,7 +100,6 @@ final readonly class MessagesService
 
     public function delete(Message $message): void
     {
-        $message->setDeleted(true);
-        $this->save($message);
+        $this->messageRepository->remove($message, true);
     }
 }

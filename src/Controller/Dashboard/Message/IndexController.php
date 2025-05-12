@@ -27,7 +27,7 @@ class IndexController extends AbstractDashboardController
         private readonly UserService           $userService,
         private readonly MessagesService       $messagesService,
         private readonly MessageContentService $messageContentService,
-    ){
+    ) {
     }
 
     #[Route('/b3z3d3k9/{limit?}', name: 'app_dashboard_message_index')]
@@ -200,13 +200,13 @@ class IndexController extends AbstractDashboardController
     }
 
     #[Route('/d3t4lti7/{id}', name: 'app_dashboard_message_delete', methods: ['POST'])]
-    public function delete(?string $id): Response
+    public function delete(?string $id, Request $request): Response
     {
         $this->denyAccessUnlessGrantedRoleCustomer();
         $user = $this->getUser();
         $messageId = $this->validateNumber($id);
 
-        $message = $this->userService->isAdmin($user)
+        $message = $this->isSuperAdmin()
             ? $this->messagesService->getById($messageId)
             : $this->messagesService->getByEmailAndId($user->getUserIdentifier(), $messageId);
 
@@ -215,7 +215,9 @@ class IndexController extends AbstractDashboardController
             return $this->redirectToRoute(self::DASHBOARD_MESSAGES_ROUTE);
         }
 
-        $this->messagesService->delete($message);
+        $this->validateCheckbox($request->request->get('deletePermanently'))
+            ? $this->messagesService->delete($message)
+            : $this->messagesService->save($message->setDeleted(true));
 
         return $this->redirectToRoute(self::DASHBOARD_MESSAGES_ROUTE);
     }
