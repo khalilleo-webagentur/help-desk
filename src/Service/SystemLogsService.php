@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Service;
 
 use App\Entity\SystemLog;
+use App\Helper\AppHelper;
 use App\Repository\SystemLogRepository;
 
 final readonly class SystemLogsService
@@ -27,10 +28,13 @@ final readonly class SystemLogsService
         return $this->systemLogRepository->findBy([], ['createdAt' => 'DESC'], $limit);
     }
 
-    public function create(string $message): void
+    public function create(string $event, string $message): void
     {
         $systemLog = new SystemLog();
-        $systemLog->setMessage($message);
+        $systemLog
+            ->setEvent($event)
+            ->setMessage($message);
+
         $this->systemLogRepository->save($systemLog, true);
     }
 
@@ -39,8 +43,10 @@ final readonly class SystemLogsService
         $i = 0;
 
         foreach ($this->systemLogRepository->findTDeleteAllByCriteria($from, $to) as $systemLog) {
-            $this->delete($systemLog);
-            $i++;
+            if ($systemLog->getEvent() === AppHelper::SYSTEM_LOG_EVENT_EXCEPTION) {
+                $this->delete($systemLog);
+                $i++;
+            }
         }
 
         return $i;

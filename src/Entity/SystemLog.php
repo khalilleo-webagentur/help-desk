@@ -17,6 +17,9 @@ class SystemLog
     #[ORM\Column]
     private ?int $id = null;
 
+    #[ORM\Column(length: 150)]
+    private ?string $event = null;
+
     #[ORM\Column(type: Types::TEXT)]
     private ?string $message = null;
 
@@ -31,6 +34,18 @@ class SystemLog
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getEvent(): ?string
+    {
+        return $this->event;
+    }
+
+    public function setEvent(string $event): static
+    {
+        $this->event = $event;
+
+        return $this;
     }
 
     public function getMessage(): ?string

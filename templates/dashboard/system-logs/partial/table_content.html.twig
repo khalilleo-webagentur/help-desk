@@ -6,7 +6,8 @@
             <thead>
             <tr class="fs-14">
                 <th>{{ 'ID'|trans }}</th>
-                <th>{{ 'Exception'|trans }}</th>
+                <th>{{ 'Event'|trans }}</th>
+                <th>{{ 'Message'|trans }}</th>
                 <th>{{ 'Occured at'|trans }}</th>
             </tr>
             </thead>
@@ -14,6 +15,7 @@
             {% for row in systemLogs %}
                 <tr class="fs-14">
                     <td>{{ row.id }}</td>
+                    <td>{{ row.event }}</td>
                     <td>
                         <form action="{{ path('app_dashboard_system_log_view', {id:row.id}) }}">
                             <code class="pointer fs-13 text-dark link-primary"
