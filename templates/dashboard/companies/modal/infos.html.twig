@@ -15,8 +15,10 @@
                     <li>Please add all the infos of your company especially your e-mail and phone-number and let it
                         always up to date.
                     </li>
-                    <li>Search is not implemented yet</li>
-                    <li>Pagination is not implemented yet</li>
+                    {% if is_granted('ROLE_SUPER_ADMIN') %}
+                        <li>Search is not implemented yet</li>
+                        <li>Pagination is not implemented yet</li>
+                    {% endif %}
                 </ul>
             </div>
             <div class="modal-footer">
