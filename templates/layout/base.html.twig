@@ -30,7 +30,7 @@
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicon/favicon-16x16.png') }}">
     <link rel="manifest" href="{{ asset('favicon/site.webmanifest') }}">
 
-    <meta name="apple-mobile-web-app-capable"/>
+    <meta name="mobile-web-app-capable" content="yes"/>
     <meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
     <meta content="{{ appName() }}" name="application-name">
     <meta content="#ffffff" name="msapplication-TileColor">
@@ -62,7 +62,7 @@
 {% block javascripts %}
     <script src="{{ asset('assets/js/bootstrap.bundle.min.js?v=5.1.0') }}"></script>
     <script src="{{ asset('assets/js/jquery.min.js?v=3.2.0') }}"></script>
-    <script src="{{ asset('assets/js/sweetalert.min.js?v=1.0.0') }}" defer></script>
+    <script src="{{ asset('lib/swal/sweetalert.min.js?v=1.0.0') }}" defer></script>
     <script src="{{ asset('assets/js/app.js?v=1.0.0') }}"></script>
 {% endblock %}
 

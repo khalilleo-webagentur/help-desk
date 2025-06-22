@@ -22,9 +22,6 @@ $(document).ready(function () {
             let content = $(this).attr('data-token');
             if (content) {
                 copyContent(content);
-                alert('( ' + content + ') has been copied to clipboard.');
-            } else {
-                alert('cannot be copied to clipboard.');
             }
         });
     }
@@ -34,8 +31,9 @@ $(document).ready(function () {
 async function copyContent(text) {
     try {
         await navigator.clipboard.writeText(text);
+        swal('', '( ' + text + ') has been copied to clipboard.', 'success');
     } catch (err) {
-        console.error('Failed to copy: ', err);
+        swal('', '(content) cannot be copied to clipboard.', 'error');
     }
 }
 

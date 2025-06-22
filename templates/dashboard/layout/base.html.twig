@@ -23,7 +23,7 @@
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon/favicon-32x32.png') }}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicon/favicon-16x16.png') }}">
     <link rel="manifest" href="{{ asset('favicon/site.webmanifest') }}">
-    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="mobile-web-app-capable" content="yes"/>
     <meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
     <meta content="{{ appName() }}" name="application-name">
     <meta content="#ffffff" name="msapplication-TileColor">
@@ -35,8 +35,8 @@
 
     {% block stylesheets %}
         <link rel="stylesheet" href="{{ asset('lte/css/root.min.css?v=3.4.0') }}">
-        <link rel="stylesheet" href="{{ asset('quill/quill.min.css?v=2.0.2') }}">
-        <link rel="stylesheet" href="{{ asset('draggable/draggable.min.css?v=1.0.2') }}">
+        <link rel="stylesheet" href="{{ asset('lib/quill/quill.min.css?v=2.0.2') }}">
+        <link rel="stylesheet" href="{{ asset('lib/draggable/draggable.min.css?v=1.0.2') }}">
         <link rel="stylesheet" href="{{ asset('lte/flatpickr/flatpickr.min.css?v=4.0.2') }}">
         <link rel="stylesheet" href="{{ asset('lte/css/app.css?v=1.0.0') }}">
     {% endblock %}
@@ -61,13 +61,14 @@
     <script src="{{ asset('lte/js/root.min.js?v=3.4.0') }}"></script>
 
     {% if app.request.get('_route') == 'app_dashboard_ticket_view' %}
-    <script src="{{ asset('html2pdf/html2pdf.min.js?v=0.10.1') }}"></script>
+    <script src="{{ asset('lib/html2pdf/html2pdf.min.js?v=0.10.1') }}"></script>
     <script src="{{ asset('lte/js/download_issue.js?v=1.0.0') }}"></script>
     {% endif %}
 
-    <script src="{{ asset('quill/quill.min.js?v=2.0.2') }}"></script>
-    <script src="{{ asset('draggable/draggable.min.js?v=1.0.2') }}" defer></script>
+    <script src="{{ asset('lib/quill/quill.min.js?v=2.0.2') }}"></script>
+    <script src="{{ asset('lib/draggable/draggable.min.js?v=1.0.2') }}" defer></script>
     <script src="{{ asset('lte/flatpickr/flatpickr.min.js?v=4.0.2') }}" defer></script>
+    <script src="{{ asset('lib/swal/sweetalert.min.js?v=1.0.0') }}" defer></script>
     <script src="{{ asset('lte/js/app.js?v=1.0.0') }}"></script>
 {% endblock %}
 </body>
