@@ -2,7 +2,7 @@ $(document).ready(function () {
 
     setTimeout(function () {
         $(".alert").alert('close').fadeOut();
-    }, 6000);
+    }, 12000);
 
     let selector = $('.selector');
 

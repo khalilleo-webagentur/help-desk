@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Service;
 
 use App\Entity\SystemLog;
-use App\Helper\AppHelper;
 use App\Repository\SystemLogRepository;
 use DateTimeInterface;
 
@@ -21,6 +20,11 @@ final readonly class SystemLogsService
         return $this->systemLogRepository->find($id);
     }
 
+    public function getOneByMessage(string $message): ?SystemLog
+    {
+        return $this->systemLogRepository->findOneBy(['message' => $message]);
+    }
+
     /**
      * @return SystemLog[]
      */
@@ -31,6 +35,8 @@ final readonly class SystemLogsService
 
     public function create(string $event, string $message): void
     {
+        if ($this->getOneByMessage($message)) return;
+
         $systemLog = new SystemLog();
         $systemLog
             ->setEvent($event)
@@ -44,10 +50,8 @@ final readonly class SystemLogsService
         $i = 0;
 
         foreach ($this->systemLogRepository->findTDeleteAllByCriteria($event, $from, $to) as $systemLog) {
-            if ($systemLog->getEvent() === AppHelper::SYSTEM_LOG_EVENT_EXCEPTION) {
-                $this->delete($systemLog);
-                $i++;
-            }
+            $this->delete($systemLog);
+            $i++;
         }
 
         return $i;

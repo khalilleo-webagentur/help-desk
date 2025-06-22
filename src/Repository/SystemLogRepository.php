@@ -5,6 +5,8 @@ namespace App\Repository;
 use App\Entity\SystemLog;
 use DateTimeInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Query\Parameter;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -40,19 +42,23 @@ class SystemLogRepository extends ServiceEntityRepository
      */
     public function findTDeleteAllByCriteria(string $event, DateTimeInterface $from, DateTimeInterface $to): array
     {
-        $qb = $this->createQueryBuilder('t1')
-            ->where('t1.createdAt >= :from')
-            ->setParameter('from', $from)
-            ->andWhere('t1.createdAt <= :to')
-            ->setParameter('to', $to);
+        $entityManager = $this->getEntityManager();
+        $qb = $entityManager->createQueryBuilder();
+        $qb->select('t1')
+            ->from(SystemLog::class, 't1')
+            ->where('t1.createdAt BETWEEN :from AND :to')
+            ->setParameters(new ArrayCollection([
+                new Parameter('from', $from, 'datetime'),
+                new Parameter('to', $to, 'datetime')
+            ]));
 
-        if ('' !== $event) {
-            $qb->andWhere('t1.event = :event')
-                ->setParameter('event', $event);
+        if ($event) {
+            $qb
+                ->andWhere($qb->expr()->like('t1.event', ':event'))
+                ->setParameter('event', '%' . $event . '%');
         }
 
         return $qb
-            ->orderBy('t1.id', 'DESC')
             ->getQuery()
             ->getResult();
     }
