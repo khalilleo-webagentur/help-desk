@@ -17,7 +17,7 @@ class IndexController extends AbstractDashboardController
 {
     use FormValidationTrait;
 
-    private const DASHBOARD_SYSTEM_LOGS_ROUTE = 'app_dashboard_system_logs_index';
+    private const string DASHBOARD_SYSTEM_LOGS_ROUTE = 'app_dashboard_system_logs_index';
 
     public function __construct(
         private readonly SystemLogsService $systemLogsService,
@@ -35,8 +35,9 @@ class IndexController extends AbstractDashboardController
             'systemLogs' => $systemLogs,
             'limit' => AppHelper::DEFAULT_LIMIT_SYSTEM_LOGS_ENTRIES,
             'maxLimit' => AppHelper::DEFAULT_MAX_LIMIT_SYSTEM_LOGS_ENTRIES,
-            'dateTimeFrom' => (new DateTime())->modify('-1 year')->format('Y-m-d'),
-            'dateTimeTo' => (new DateTime())->modify('-1 month')->format('Y-m-d'),
+            'dateTimeFrom' => (new DateTime())->modify('-1 month')->format('Y-m-d'),
+            'dateTimeTo' => (new DateTime())->format('Y-m-d'),
+            'logEvents' => AppHelper::SYSTEM_LOG_EVENTS,
         ]);
     }
 

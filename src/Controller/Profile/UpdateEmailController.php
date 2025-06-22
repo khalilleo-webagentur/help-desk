@@ -20,8 +20,8 @@ class UpdateEmailController extends AbstractController
 {
     use FormValidationTrait;
 
-    private const APP_PROFILE = 'app_profile';
-    private const APP_AUTH = 'app_auth';
+    private const string APP_PROFILE = 'app_profile';
+    private const string APP_AUTH = 'app_auth';
 
     public function __construct(
         private readonly UserService           $userService,

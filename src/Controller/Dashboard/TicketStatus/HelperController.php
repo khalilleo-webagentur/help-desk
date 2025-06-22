@@ -16,7 +16,7 @@ class HelperController extends AbstractDashboardController
 {
     use FormValidationTrait;
 
-    private const DASHBOARD_TICKET_STATUS_ROUTE = 'app_dashboard_ticket_status_index';
+    private const string DASHBOARD_TICKET_STATUS_ROUTE = 'app_dashboard_ticket_status_index';
 
     public function __construct(
         private readonly TicketStatusService $ticketStatusService

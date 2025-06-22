@@ -21,8 +21,8 @@ class StatusController extends AbstractDashboardController
 {
     use FormValidationTrait;
 
-    private const DASHBOARD_TICKETS_ROUTE = 'app_dashboard_tickets_index';
-    private const DASHBOARD_TICKET_VIEW_ROUTE = 'app_dashboard_ticket_view';
+    private const string DASHBOARD_TICKETS_ROUTE = 'app_dashboard_tickets_index';
+    private const string DASHBOARD_TICKET_VIEW_ROUTE = 'app_dashboard_ticket_view';
 
     public function __construct(
         private readonly TicketService           $ticketService,

@@ -19,6 +19,22 @@
                     </div>
 
                     <div class="row">
+                        <div class="col">
+                                <div class="form-group">
+                                    <label for="iO7nM4yT4bG2sO00">
+                                        Event
+                                    </label>
+                                    <select class="form-control" name="event" id="iO7nM4yT4bG2sO00">
+                                        <option value="all" selected>All Events</option>
+                                        {% for event in logEvents %}
+                                            <option value="{{ event }}">{{ event }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
                         <div class="col-lg-6">
                             {% set hashId = hash() %}
                             <label for="{{ hashId }}" class="form-label">

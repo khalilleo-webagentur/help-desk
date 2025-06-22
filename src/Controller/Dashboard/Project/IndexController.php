@@ -20,8 +20,8 @@ class IndexController extends AbstractDashboardController
 {
     use FormValidationTrait;
 
-    private const DASHBOARD_PROJECTS_ROUTE = 'app_dashboard_projects_index';
-    private const DASHBOARD_TICKETS_ROUTE = 'app_dashboard_tickets_index';
+    private const string DASHBOARD_PROJECTS_ROUTE = 'app_dashboard_projects_index';
+    private const string DASHBOARD_TICKETS_ROUTE = 'app_dashboard_tickets_index';
 
     public function __construct(
         private readonly UserService    $userService,

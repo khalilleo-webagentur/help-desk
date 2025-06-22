@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Dashboard\SystemLog;
 
 use App\Controller\Dashboard\AbstractDashboardController;
+use App\Helper\AppHelper;
 use App\Service\SystemLogsService;
 use App\Traits\FormValidationTrait;
 use DateTime;
@@ -17,7 +18,7 @@ class FilterController extends AbstractDashboardController
 {
     use FormValidationTrait;
 
-    private const DASHBOARD_SYSTEM_LOGS_ROUTE = 'app_dashboard_system_logs_index';
+    private const string DASHBOARD_SYSTEM_LOGS_ROUTE = 'app_dashboard_system_logs_index';
 
     public function __construct(
         private readonly SystemLogsService $systemLogsService,
@@ -42,12 +43,22 @@ class FilterController extends AbstractDashboardController
 
         $logDateFrom->modify('00:00:00');
         $logDateTo->modify('23:59:59');
+        $event = $this->validate($request->request->get('event'));
 
-        $countDeletedLogs = $this->systemLogsService->deleteAllByCriteria($logDateFrom, $logDateTo);
+        if ($event === 'all' || !in_array($event, AppHelper::SYSTEM_LOG_EVENTS, true)) {
+            $event = '';
+        }
 
-        $countDeletedLogs > 0
-            ? $this->addFlash('success', sprintf('System-Logs from type Exception [%s] have been deleted.', $countDeletedLogs))
-            : $this->addFlash(
+        $countDeletedLogs = $this->systemLogsService->deleteAllByCriteria($event, $logDateFrom, $logDateTo);
+
+        if ($countDeletedLogs > 0) {
+            $message = sprintf('System-Logs [%s] have been deleted.', $countDeletedLogs);
+            $this->systemLogsService->create($event, $event);
+            $this->addFlash('success', $message);
+            return $this->redirectToRoute(self::DASHBOARD_SYSTEM_LOGS_ROUTE);
+        }
+
+        $this->addFlash(
             'notice',
             sprintf(
                 'No Logs between %s and %s have been founded.',

@@ -18,7 +18,7 @@ class IndexController extends AbstractDashboardController
 {
     use FormValidationTrait;
 
-    private const DASHBOARD_TICKET_TYPES_ROUTE = 'app_dashboard_ticket_types_index';
+    private const string DASHBOARD_TICKET_TYPES_ROUTE = 'app_dashboard_ticket_types_index';
 
     public function __construct(
         private readonly TicketTypesService $ticketTypesService

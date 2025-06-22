@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\SystemLog;
+use DateTimeInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -37,13 +38,20 @@ class SystemLogRepository extends ServiceEntityRepository
     /**
      * @return SystemLog[]
      */
-    public function findTDeleteAllByCriteria(\DateTimeInterface $from, \DateTimeInterface $to): array
+    public function findTDeleteAllByCriteria(string $event, DateTimeInterface $from, DateTimeInterface $to): array
     {
-        return $this->createQueryBuilder('t1')
+        $qb = $this->createQueryBuilder('t1')
             ->where('t1.createdAt >= :from')
             ->setParameter('from', $from)
             ->andWhere('t1.createdAt <= :to')
-            ->setParameter('to', $to)
+            ->setParameter('to', $to);
+
+        if ('' !== $event) {
+            $qb->andWhere('t1.event = :event')
+                ->setParameter('event', $event);
+        }
+
+        return $qb
             ->orderBy('t1.id', 'DESC')
             ->getQuery()
             ->getResult();

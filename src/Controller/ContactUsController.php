@@ -18,8 +18,8 @@ class ContactUsController extends AbstractController
 {
     use FormValidationTrait;
 
-    private const HOME_ROUTE = 'app_home';
-    private const CONTACT_US_ROUTE = 'app_contact_us_index';
+    private const string HOME_ROUTE = 'app_home';
+    private const string CONTACT_US_ROUTE = 'app_contact_us_index';
 
     public function __construct(
         private readonly MessageContentService $messageContentService,

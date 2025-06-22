@@ -18,7 +18,7 @@ class IndexController extends AbstractDashboardController
 {
     use FormValidationTrait;
 
-    private const DASHBOARD_TICKET_LABELS_ROUTE = 'app_dashboard_ticket_labels_index';
+    private const string DASHBOARD_TICKET_LABELS_ROUTE = 'app_dashboard_ticket_labels_index';
 
     public function __construct(
         private readonly TicketLabelsService $ticketLabelsService

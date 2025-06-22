@@ -21,7 +21,7 @@ class IndexController extends AbstractDashboardController
 {
     use FormValidationTrait;
 
-    private const DASHBOARD_MESSAGES_ROUTE = 'app_dashboard_message_index';
+    private const string DASHBOARD_MESSAGES_ROUTE = 'app_dashboard_message_index';
 
     public function __construct(
         private readonly UserService           $userService,

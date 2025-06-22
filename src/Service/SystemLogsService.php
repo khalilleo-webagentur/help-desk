@@ -7,6 +7,7 @@ namespace App\Service;
 use App\Entity\SystemLog;
 use App\Helper\AppHelper;
 use App\Repository\SystemLogRepository;
+use DateTimeInterface;
 
 final readonly class SystemLogsService
 {
@@ -38,11 +39,11 @@ final readonly class SystemLogsService
         $this->systemLogRepository->save($systemLog, true);
     }
 
-    public function deleteAllByCriteria(\DateTimeInterface $from, \DateTimeInterface $to): int
+    public function deleteAllByCriteria(string $event, DateTimeInterface $from, DateTimeInterface $to): int
     {
         $i = 0;
 
-        foreach ($this->systemLogRepository->findTDeleteAllByCriteria($from, $to) as $systemLog) {
+        foreach ($this->systemLogRepository->findTDeleteAllByCriteria($event, $from, $to) as $systemLog) {
             if ($systemLog->getEvent() === AppHelper::SYSTEM_LOG_EVENT_EXCEPTION) {
                 $this->delete($systemLog);
                 $i++;
