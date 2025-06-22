@@ -1,0 +1,6 @@
+{% if content is defined and content %}
+<span class="ps-1 pointer copyToClipBoard" title="Copy to clipboard">
+    <span class="bi bi-copy text-orange fs-13"></span>
+    <i class="d-none" id="copyToClipBoard">{{ content }}</i>
+</span>
+{% endif %}

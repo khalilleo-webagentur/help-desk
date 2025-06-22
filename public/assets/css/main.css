@@ -10,6 +10,10 @@
     border-radius: 5px !important;
 }
 
+.text-orange {
+    color: orangered;
+}
+
 .form-label {
     margin-bottom: 0;
 }

@@ -31,6 +31,13 @@ $(document).ready(function () {
      modal.on('shown.bs.modal', function () {
          $(this).find('[autofocus]').focus();
      });
+
+    // copy to clipboard
+    $('.copyToClipBoard').on('click', function (e) {
+        e.stopPropagation();
+        let content = document.getElementById('copyToClipBoard').innerHTML;
+        copyContent(content);
+    });
 });
 
 function isLocalStorageAvailable() { return typeof (Storage) !== "undefined" }
@@ -39,6 +46,7 @@ async function copyContent(text) {
     try {
         if (isLocalStorageAvailable) {
             await navigator.clipboard.writeText(text);
+            swal('', '( ' + text + ') has been copied to clipboard.', 'success');
         }
     } catch (err) {
         swal('', 'clipboard is not available on your Browser.', 'warning');
