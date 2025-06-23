@@ -54,4 +54,38 @@ final class AppHelper
     public const string SYSTEM_LOG_EVENT_INFO = 'Info';
     public const string SYSTEM_LOG_EVENT_EXCEPTION = 'Exception';
     public const string SYSTEM_LOG_EVENT_TICKET_COMMENT = 'Ticket Comment Message';
+
+    // FAQs
+    public const array FAQS = [
+        [
+            'uuid' => 'k1l2m3n4o5p6',
+            'title' => 'What is the role of the HelpDesk?',
+            'description' => 'The HelpDesk provides essential support by assisting users with technical issues, troubleshooting problems, and ensuring smooth operation of systems and software.'
+        ],
+        [
+            'uuid' => 'l2m3n4o5p6q7',
+            'title' => 'How can I contact the HelpDesk?',
+            'description' => 'You can contact the HelpDesk via email, phone, or through the support portal available on our website.'
+        ],
+        [
+            'uuid' => 'm3n4o5p6q7r8',
+            'title' => 'What types of issues can the HelpDesk assist with?',
+            'description' => 'The HelpDesk can assist with a variety of issues, including software installation, network connectivity problems, and hardware malfunctions.'
+        ],
+        [
+            'uuid' => 'n4o5p6q7r8s9',
+            'title' => 'What are the HelpDesk hours of operation?',
+            'description' => 'The HelpDesk operates from 8 AM to 6 PM, Monday through Friday, excluding public holidays.'
+        ],
+        [
+            'uuid' => 'o5p6q7r8s9t0',
+            'title' => 'How long does it take to resolve an issue?',
+            'description' => 'Resolution times vary depending on the complexity of the issue, but the HelpDesk aims to address all inquiries within 24 hours.'
+        ],
+        [
+            'uuid' => 'p6q7r8s9t0u1',
+            'title' => 'Can I track the status of my support request?',
+            'description' => 'Yes, you can track the status of your support request through the support portal where you submitted your inquiry.'
+        ]
+    ];
 }

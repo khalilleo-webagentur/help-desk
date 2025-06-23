@@ -15,10 +15,10 @@
                     <h3 class="py-2 text-white">
                         Help-Desk
                     </h3>
-                    <h6 class=" text-white py-3">
+                    <p class=" text-white pb-3 pt-2">
                         The help desk provides essential support by assisting users with technical issues,
                         troubleshooting problems, and ensuring smooth operation of systems and software.
-                    </h6>
+                    </p>
                     <a href="{{ path(app.user? 'app_dashboard_tickets_index' : 'app_auth') }}"
                        class="btn btn-lg btn-light fs-15 rounded-2 d-color">
                         Open new Issue <span class="bi bi-arrow-right"></span>
@@ -120,12 +120,68 @@
         </div>
     </div>
 
-    <div class="container-fluid bg-white mb-3 pb-3">
+    <div class="container-fluid bg-white py-5">
+        <div class="container">
+
+            <div class="row justify-content-center">
+                <div class="col-lg-8 text-center">
+
+                    <h2 class="pt-5 mb-3 d-color">FAQ</h2>
+                    <p>
+                        Frequently asked questions
+                    </p>
+                </div>
+            </div>
+
+            <div class="row justify-content-center my-3">
+                <div class="col-lg-10">
+
+                    <div class="accordion accordion-flush" id="accordionFlushHelpDesk">
+
+                        {% for faq in faqs %}
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed"
+                                            type="button"
+                                            data-bs-toggle="collapse"
+                                            data-bs-target="#flush-collapse-{{ faq.uuid }}"
+                                            aria-expanded="false"
+                                            aria-controls="flush-collapseOne">{{ faq.title }}
+                                    </button>
+                                </h2>
+                                <div id="flush-collapse-{{ faq.uuid }}" class="accordion-collapse collapse" data-bs-parent="#accordionFlushHelpDesk">
+                                    <div class="accordion-body">
+                                        <p class="fs-14">
+                                            {{ faq.description }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row justify-content-center mt-3">
+                <div class="col-lg-6">
+                    <div class="text-center">
+                        <p class="small">Do you have any further questions?
+                            <a href="{{ path('app_contact_us_index') }}" class="text-decoration-none">
+                                Ask Question
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid bg-light mb-3 pb-3">
         <div class="container pb-3">
             <div class="row mt-5">
                 <div class="row py-5 text-center">
                     <div class="col-md-12">
-                        <h4>Do you have any questions?</h4>
+                        <h2 class="mb-3 d-color">Get in touch</h2>
                         <p class=" fs-15">Contact us personally or send us an e-mail, we will be happy to help you!</p>
                     </div>
                 </div>
