@@ -89,7 +89,7 @@ class RegisterController extends AbstractController
 
         $this->addFlash('notice', 'An email was sent to your mailbox. Please follow instruction to get started.');*/
 
-        $this->addFlash('notice', 'Please contact us before you confirm your account.');
+        $this->addFlash('notice', 'Please contact us before you create your account. Your account has been created.');
 
         return $this->redirectToRoute(self::HOME_ROUTE);
     }
