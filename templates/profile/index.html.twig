@@ -41,8 +41,8 @@
                             </div>
                             <div class="ms-3">
                                 <p class="text-secondary mb-1 pt-3">{{ app.user.name }}</p>
-                                <p class="text-secondary mb-1">
-                                    {{ app.user.email }}
+                                <p class="text-secondary mb-1" title="{{ app.user.email }}">
+                                    {{ maskEmail(app.user.email, '.') }}
                                     {% include 'component/copy_to_clipboard.html.twig' with {
                                         content: app.user.email
                                     } %}

@@ -29,6 +29,7 @@ class TwigHelper extends AbstractExtension
     public function getFunctions(): array
     {
         return [
+            new TwigFunction('maskEmail', [$this, 'maskEmail']),
             new TwigFunction('unseenMessages', [$this, 'getUnseenMessages']),
             new TwigFunction('hasTicketComment', [$this, 'hasTicketComment']),
             new TwigFunction('convertToHoursMinutes', [$this, 'convertToHoursMinutes']),
@@ -53,6 +54,13 @@ class TwigHelper extends AbstractExtension
             new TwigFunction('madeBy', [$this, 'getMadeBy']),
             new TwigFunction('version', [$this, 'getVersion']),
         ];
+    }
+
+    public function maskEmail(string $email, string $replacement = '*'): string
+    {
+        list($username, $domain) = explode('@', $email);
+        $maskedUsername = $username[0] . str_repeat($replacement, strlen($username) - 2) . $username[strlen($username) - 1];
+        return $maskedUsername . '@' . $domain;
     }
 
     public function getUnseenMessages(string $email): array
