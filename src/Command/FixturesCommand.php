@@ -27,8 +27,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 )]
 class FixturesCommand extends Command
 {
-    public const FAILURE = 0;
-    public const SUCCESS = 1;
+    public const int FAILURE = 0;
+    public const int SUCCESS = 1;
 
     public function __construct(
         private readonly TicketPriorityService $ticketPriorityService,
