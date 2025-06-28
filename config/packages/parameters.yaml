@@ -2,17 +2,20 @@ parameters:
 
   app_name: "He!p-Desk"
   full_app_name: "He!p-Desk"
-  no_reply: "no-reply@helpdesk.khalilleo.com"
+  no_reply: "no-reply@example.com"
 
   webmasterName: "Webmaster"
-  webmasterEmail: "ronijan@posteo.de"
-  phoneNumber: '(+49) 0163/616-5396'
-  infoEmail: 'info@khalilleo.com'
-  legalEmail: 'legal@khalilleo.com'
+  webmasterEmail: "webmaster@example.com"
+  phoneNumber: '(+49) 0123/456-0000'
+  infoEmail: 'info@example.com'
+  legalEmail: 'legal@example.com'
   addressStreet: 'Paul-Gerhardt-Str. 7'
-  addressPlz: '74321'
-  addressCity: 'Bietigheim-Bissingen'
+  addressPlz: '123456'
+  addressCity: 'Ludwigsburg'
   addressCountry: 'Deutschland'
+
+  generalManager: "Ronijan"
+  taxNumber: "DE000000000"
 
   app_version: "2.2.6"
   
