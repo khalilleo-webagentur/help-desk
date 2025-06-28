@@ -30,32 +30,36 @@
 
                     <div class="row row-cols-1 row-cols-md-1 g-3">
                         <div class="col mt-4">
-                            <div class="card text-center d-border">
+                            <div class="card bg-light text-center d-border">
                                 <div class="card-body py-4">
                                     <h5 class="card-title text-secondary pb-2">Phone</h5>
-                                    <p class="card-text text-secondary">
-                                        <span class="bi bi-phone me-2 d-color"></span> 0163 / 616 - 5396
-                                    </p>
+                                    <a href="tel:{{ phoneNumber }}" class="text-decoration-none">
+                                        <p class="card-text text-secondary">
+                                            <span class="bi bi-phone me-2 d-color"></span> {{ phoneNumber }}
+                                        </p>
+                                    </a>
                                 </div>
                             </div>
                         </div>
                         <div class="col">
-                            <div class="card text-center d-border">
+                            <div class="card bg-light text-center d-border">
                                 <div class="card-body py-4">
                                     <h5 class="card-title text-secondary pb-2">Email</h5>
-                                    <p class="card-text text-secondary">
-                                        <span class="bi bi-envelope me-2 d-color"></span> ronijan[@]posteo.de
-                                    </p>
+                                    <a href="mailto:{{ email }}" class="text-decoration-none">
+                                        <p class="card-text text-secondary">
+                                            <span class="bi bi-envelope me-2 d-color"></span> {{ email }}
+                                        </p>
+                                    </a>
                                 </div>
                             </div>
                         </div>
                         <div class="col">
-                            <div class="card text-center d-border">
+                            <div class="card bg-light text-center d-border">
                                 <div class="card-body py-4">
                                     <h5 class="card-title text-secondary pb-2">Address</h5>
                                     <p class="card-text text-secondary">
-                                        <span class="bi bi-pin-map-fill me-2 d-color"></span>Paul-Gerhardt-Str. 7, 74321
-                                        Bietigheim
+                                        <span class="bi bi-pin-map-fill me-2 d-color"></span>
+                                        {{ address }}
                                     </p>
                                 </div>
                             </div>

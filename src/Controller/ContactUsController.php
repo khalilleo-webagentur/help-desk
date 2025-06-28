@@ -31,7 +31,18 @@ class ContactUsController extends AbstractController
     #[Route('/contact-us/s3f2y1l5w8e7d2l5', name: 'app_contact_us_index')]
     public function index(): Response
     {
-        return $this->render('static/contact-us.html.twig');
+        $street = $this->getParameter('addressStreet');
+        $plz = $this->getParameter('addressPlz');
+        $city = $this->getParameter('addressCity');
+        $country = $this->getParameter('addressCountry');
+        $phoneNumber = $this->getParameter('phoneNumber');
+        $email = $this->getParameter('infoEmail');
+
+        return $this->render('static/contact-us.html.twig', [
+            'address' => $street . ', ' . $plz . ' ' . $city . ' ' . $country,
+            'phoneNumber' => $phoneNumber,
+            'email' => $email,
+        ]);
     }
 
     #[Route('/contact-us-new/a3t0i0a0q5u0u5c9', name: 'app_contact_us_new', methods: 'POST')]
