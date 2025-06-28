@@ -191,18 +191,22 @@
                 <div class="col">
                     <div class="card border-primary">
                         <div class="card-body">
-                            <h6 class="pt-1 text-primary">
-                                <span class="bi bi-phone"></span> (+49) 163 / 616-53-96
-                            </h6>
+                            <a href="tel:{{ phoneNumber }}" class="text-decoration-none">
+                                <h6 class="pt-1 text-primary">
+                                    <span class="bi bi-phone"></span> {{ phoneNumber }}
+                                </h6>
+                            </a>
                         </div>
                     </div>
                 </div>
                 <div class="col">
                     <div class="card border-primary">
                         <div class="card-body">
-                            <h6 class="pt-1 text-primary">
-                                <span class="bi bi-envelope"></span> support@khalilleo.com
-                            </h6>
+                            <a href="mailto:{{ infoEmail }}" class="text-decoration-none">
+                                <h6 class="pt-1 text-primary">
+                                    <span class="bi bi-envelope"></span> {{ infoEmail }}
+                                </h6>
+                            </a>
                         </div>
                     </div>
                 </div>

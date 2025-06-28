@@ -14,8 +14,13 @@ class HomeController extends AbstractController
     #[Route('/', name: 'app_home')]
     public function index(): Response
     {
+        $phoneNumber = $this->getParameter('phoneNumber');
+        $infoEmail = $this->getParameter('infoEmail');
+
         return $this->render('index.html.twig', [
-            'faqs' => AppHelper::FAQS
+            'faqs' => AppHelper::FAQS,
+            'infoEmail' => $infoEmail,
+            'phoneNumber' => $phoneNumber,
         ]);
     }
 }
