@@ -8,6 +8,8 @@
 
     {% include 'component/custom_type_message_top_fixed.html.twig' %}
 
+    {% include 'component/breadcrumb.html.twig' with{page: 'Contact us'} %}
+
     <header class="container" style="padding-bottom: 180px;">
         <div class="px-lg-5 pb-5">
 
@@ -102,7 +104,7 @@
                             <small class="text-secondary" style="font-size: 13px;">
                                 <span class="bi bi-info-circle pe-1"></span> By submitting this form, you agree to our
                                 <a href="{{ path('app_legal_privacy_policy') }}"
-                                   class="text-secondary text-decoration-none"
+                                   class="text-decoration-none"
                                    rel="nofollow">Privacy
                                     Policy</a>.
                             </small>

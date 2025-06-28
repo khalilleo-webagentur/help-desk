@@ -23,6 +23,20 @@
     color: orangered;
 }
 
+.icon-hover:hover > .target-icon-hover {
+    padding-left: 3px;
+}
+
+.icon-bg {
+    background-color: #f7f7f7;
+    padding: 10px 11px;
+    border-radius: 50px;
+}
+
+.icon-bg:hover {
+    background-color: rgba(225, 222, 222, 0.71);
+}
+
 .form-label {
     margin-bottom: 0;
 }
