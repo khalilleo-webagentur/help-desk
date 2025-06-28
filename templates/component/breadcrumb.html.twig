@@ -1,0 +1,16 @@
+{% if page is defined and page %}
+    <div class="container-fluid bg-light">
+        <div class="container">
+            <nav class="pt-3 pb-1" aria-label="breadcrumb">
+                <ol class="breadcrumb bs-breadcrumb-divider">
+                    <li class="breadcrumb-item">
+                        <a href="{{ path('app_home') }}" class="text-decoration-none">Home</a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                        {{ page }}
+                    </li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+{% endif %}
