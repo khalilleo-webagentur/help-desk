@@ -8,12 +8,14 @@
 
     {% include 'component/custom_type_message_top_fixed.html.twig' %}
 
-    <div class="container-fluid" style="height: 100vh;">
+    {% include 'component/breadcrumb.html.twig' with{page: 'My Profile'} %}
+
+    <div class="container-fluid bg-white" style="height: 100vh;">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
 
-                    <h5 class="text-secondary mt-5">
+                    <h5 class="text-secondary mt-4">
                         My Profile
                         <span class="float-end">
                            {% if is_granted('ROLE_SUPER_ADMIN') or is_granted('ROLE_CUSTOMER') %}

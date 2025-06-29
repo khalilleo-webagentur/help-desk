@@ -17,7 +17,7 @@ parameters:
   generalManager: "Ronijan"
   taxNumber: "DE000000000"
 
-  app_version: "2.2.6"
+  app_version: "3.1.14"
   
   app_author: "Khalilleo Teams"
   app_created: "2024-07-01"
