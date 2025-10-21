@@ -8,6 +8,11 @@ All notable changes to this project will be documented in this file.
 - Add changelog md file
 - Remove HTML tags from description
 - Base Layout for Error Pages
+- Start page, login and auth design
+- Dashboard Project Edit add help-block
+- Dashboard update text
+- Dashboard change user icon
+- Popover info component used in edit user
 
 ---
 
