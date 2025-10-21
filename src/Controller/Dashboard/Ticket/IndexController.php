@@ -377,7 +377,7 @@ class IndexController extends AbstractDashboardController
                 $issue->getTicketNo(),
                 $user->getUserIdentifier(),
                 $issue->getTitle(),
-                $issue->getDescription(),
+                strip_tags($issue->getDescription()),
                 $issue->getStatus() ? $issue->getStatus()->getName() : AppHelper::STATUS_OPEN,
                 $title,
                 $description
