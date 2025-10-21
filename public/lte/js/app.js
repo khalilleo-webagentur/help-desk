@@ -12,9 +12,8 @@ $(document).ready(function () {
             $('.ID').val($(this).attr('data-id'));
         });
     }
-    // zlEvLVW5 UlKtWfG2
 
-    // copy to clipboard
+    // Copy to clipboard
     let copyToClipBoard = $('.copyToClipBoard');
     if (copyToClipBoard.length) {
         copyToClipBoard.on('click', function (e) {
@@ -25,6 +24,20 @@ $(document).ready(function () {
             }
         });
     }
+
+    // Popover
+    $(function () {
+        const popover = $('[data-toggle="popover"]');
+        popover.popover();
+        $(document).on('click', function (e) {
+            if (!$(e.target).closest('[data-toggle="popover"]').length) {
+                popover.popover('hide');
+            }
+        });
+        popover.on('click', function () {
+            $(this).popover('toggle');
+        });
+    });
 });
 
 // clipboard

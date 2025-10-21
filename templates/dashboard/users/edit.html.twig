@@ -99,9 +99,11 @@
                                                name="x3h1r9u2"
                                                 {{ user.isTeamLeader ? 'checked' : '' }}>
                                         <label class="form-check-label text-secondary" for="7lN3isTeamLeader">
-                                            is Team-Leader (currently each company has only one Team-Leader. If this
-                                            checked it means that the user is a Team-Leader.)
+                                            is Team-Leader
                                         </label>
+                                        {% include 'dashboard/component/popover_info.html.twig' with{
+                                            content: 'Each company has only one Team Leader. If this checked, it indicates that the user is a Team Leader and has more Permissions.'
+                                        } %}
                                     </div>
                                 </div>
                                 <div class="mb-3">
