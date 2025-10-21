@@ -101,6 +101,10 @@ input[type="color"]:focus,
     border-color: rgb(141, 1, 191) !important;
 }
 
+.border-light-75 {
+    border-color: #e5e5e5 !important;
+}
+
 .btn-primary {
     --bs-btn-color: #fff;
     --bs-btn-bg: rgb(141, 1, 191);
@@ -173,6 +177,10 @@ input[type="color"]:focus,
 
 .bg-primary {
     background-color: rgb(70, 6, 94) !important;
+}
+
+.logo {
+    height: 24px !important;
 }
 
 .alert {

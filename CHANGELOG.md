@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 - Composer upgrade packages
 - Add changelog md file
 - Remove HTML tags from description
+- Base Layout for Error Pages
 
 ---
 
