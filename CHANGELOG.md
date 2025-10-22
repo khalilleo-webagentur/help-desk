@@ -15,6 +15,7 @@ All notable changes to this project will be documented in this file.
 - Popover info component used in edit user
 - Authenticate logs
 - Messages job empty-pin
+- System-Logs filter and code improvements
 
 ---
 
