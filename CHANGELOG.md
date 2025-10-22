@@ -13,6 +13,8 @@ All notable changes to this project will be documented in this file.
 - Dashboard update text
 - Dashboard change user icon
 - Popover info component used in edit user
+- Authenticate logs
+- Messages job empty-pin
 
 ---
 
