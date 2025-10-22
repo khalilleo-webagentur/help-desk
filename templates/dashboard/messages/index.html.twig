@@ -22,6 +22,11 @@
                                     <span class="fa fa-bell fa-sm"></span>
                                     <span class="ps-1 md-d-none">Send Notification</span>
                                 </button>
+                                <button class="btn btn-outline-secondary btn-headers mr-1"
+                                        data-toggle="modal" data-target="#emptyPinModal">
+                                    <span class="fa fa-trash-alt fa-sm"></span>
+                                    <span class="ps-1 md-d-none">Empty Pin</span>
+                                </button>
                             {% endif %}
                         </div>
                     </div>
@@ -55,6 +60,7 @@
 
     {% if isAdmin %}
         {% include 'dashboard/messages/modal/new_message.html.twig' %}
+        {% include 'dashboard/messages/modal/empty_pin.html.twig' %}
     {% endif %}
 
 {% endblock %}

@@ -71,6 +71,15 @@ final readonly class MessagesService
         ];
     }
 
+    /**
+     * Delete all messages that have the flag `is_deleted`.
+     * @return Message[]
+     */
+    public function getAllHaveDeletedFlag(): array
+    {
+        return $this->messageRepository->findBy(['isDeleted' => 1]);
+    }
+
     public function create(string $name, string $email, string $subject, MessageContent $content): Message
     {
         $message = new Message();
@@ -96,6 +105,18 @@ final readonly class MessagesService
     {
         $this->messageRepository->save($message->setUpdatedAt(new \DateTime()), true);
         return $message;
+    }
+
+    public function emptyPin(): int
+    {
+        $countDeletedMessages = 0;
+
+        foreach ($this->getAllHaveDeletedFlag() as $message) {
+            $this->delete($message);
+            $countDeletedMessages++;
+        }
+
+        return $countDeletedMessages;
     }
 
     public function delete(Message $message): void
