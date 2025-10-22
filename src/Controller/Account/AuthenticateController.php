@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Account;
 
 use App\Mails\Account\HandelTwoFactorAuthMail;
+use App\Service\Core\MonologService;
 use App\Service\TokenGeneratorService;
 use App\Service\UserService;
 use App\Traits\FormValidationTrait;
@@ -26,7 +27,8 @@ class AuthenticateController extends AbstractController
 
     public function __construct(
         private readonly UserService           $userService,
-        private readonly TokenGeneratorService $tokenGeneratorService
+        private readonly TokenGeneratorService $tokenGeneratorService,
+        private readonly MonologService        $monolog,
     ) {
     }
 
@@ -61,15 +63,18 @@ class AuthenticateController extends AbstractController
 
         if (!$user) {
             $this->addFlash('notice', 'If your email exists then a new OTP just being sent to your email.');
+            $this->monolog->logger->debug(sprintf('Unknown E-mail: %s', $email));
             return $this->redirectToRoute(self::HOME_ROUTE);
         }
 
         if (!$user->isVerified()) {
+            $this->monolog->logger->debug(sprintf('User has not verified the email: %s', $email));
             $this->addFlash('warning', 'Your account is not verified yet. Please verify your email.');
             return $this->redirectToRoute(self::HOME_ROUTE);
         }
 
         if ($user->isDeleted()) {
+            $this->monolog->logger->debug(sprintf('User account is deleted and tried to login with the email: %s', $email));
             $this->addFlash('notice', 'Recently you have requested to delete your account. Contact us to get your account back.');
             return $this->redirectToRoute(self::HOME_ROUTE);
         }
