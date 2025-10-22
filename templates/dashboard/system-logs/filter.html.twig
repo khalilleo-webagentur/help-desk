@@ -30,11 +30,15 @@
                     <div class="row px-3 pt-3">
                         <div class="col-lg-12">
                             <p class="{{ count(systemLogs) > 0 ? 'modal-info' : 'modal-warning' }}">
-                                <small>Filter results found ({{ count(systemLogs) }}) entries.</small><br>
-                                <small>Datetime from: {{ datetimeFrom }}</small><br>
-                                <small>Datetime to: {{ datetimeTo }}</small><br>
-                                <small>Event Type: {{ event ? event : 'All' }}</small><br>
+                                Filter Criteria: <br>
+                                <small><strong>Datetime from:</strong> {{ datetimeFrom }}</small><br>
+                                <small><strong>Datetime to:</strong> {{ datetimeTo }}</small><br>
+                                <small><strong>Event Type:</strong> {{ event ? event : 'All' }}</small>
                             </p>
+                            <p>Filter results found
+                                <q>{{ count(systemLogs) }}</q> {{ count(systemLogs) > 0 ? 'entries' : 'entry' }}.
+                            </p>
+
                             {% include 'dashboard/system-logs/partial/table_content.html.twig' %}
                         </div>
                     </div>
