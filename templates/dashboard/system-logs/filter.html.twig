@@ -1,0 +1,58 @@
+{% extends 'dashboard/layout/base.html.twig' %}
+
+{% block title %} Dashboard System-Logs Filter {% endblock %}
+
+{% block body %}
+
+    <div class="content-wrapper">
+
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-8 mt-1">
+                        <h5 class="m-0 text-dark mt-1">System-Logs Filter</h5>
+                    </div>
+                    <div class="col-4 mt-1">
+                        <div class="breadcrumb float-right">
+                            <a href="{{ path('app_dashboard_system_logs_index') }}" class="text-secondary">
+                                Close <span class="fa fa-window-close"></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <section class="content">
+
+            {% if is_granted('ROLE_SUPER_ADMIN') %}
+                <div class="container-fluid area-section mb-1">
+                    <div class="row px-3 pt-3">
+                        <div class="col-lg-12">
+                            <p class="{{ count(systemLogs) > 0 ? 'modal-info' : 'modal-warning' }}">
+                                <small>Filter results found ({{ count(systemLogs) }}) entries.</small><br>
+                                <small>Datetime from: {{ datetimeFrom }}</small><br>
+                                <small>Datetime to: {{ datetimeTo }}</small><br>
+                                <small>Event Type: {{ event ? event : 'All' }}</small><br>
+                            </p>
+                            {% include 'dashboard/system-logs/partial/table_content.html.twig' %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="container-fluid mb-4 mt-2">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <a href="{{ path('app_dashboard_system_logs_index') }}">
+                                Clear System-Logs filter
+                                <span class="fa fa-window-close"></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+
+        </section>
+    </div>
+
+{% endblock %}

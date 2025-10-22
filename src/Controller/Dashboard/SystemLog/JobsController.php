@@ -11,11 +11,10 @@ use App\Traits\FormValidationTrait;
 use DateTime;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/dashboard/system-logs/filter/fm6e5m4y8n4del')]
-class FilterController extends AbstractDashboardController
+#[Route('/dashboard/system-logs/jobs/vm6e7m4y8m4dex')]
+class JobsController extends AbstractDashboardController
 {
     use FormValidationTrait;
 
@@ -26,8 +25,8 @@ class FilterController extends AbstractDashboardController
     ) {
     }
 
-    #[Route('/q-logs', name: 'app_dashboard_system_logs_filter_index', methods: ['POST'])]
-    public function index(Request $request): RedirectResponse|Response
+    #[Route('/delete-system-logs', name: 'app_dashboard_system_logs_job_delete', methods: ['POST'])]
+    public function delete(Request $request): RedirectResponse
     {
         $this->denyAccessUnlessGrantedRoleSuperAdmin();
 
@@ -50,18 +49,32 @@ class FilterController extends AbstractDashboardController
             $event = '';
         }
 
-        $systemLogs = $this->systemLogsService->getAllByCriteria($event, $logDateFrom, $logDateTo);
+        $countDeletedLogs = $this->systemLogsService->deleteAllByCriteria($event, $logDateFrom, $logDateTo);
 
-        if ($systemLogs <= 0) {
-            $this->addFlash('notice', 'No system logs found.');
+        if ($countDeletedLogs > 0) {
+            $user = $this->getUser();
+            $this->systemLogsService->create(
+                AppHelper::SYSTEM_LOG_EVENT_INFO,
+                sprintf(
+                    'System-Logs [%s] event [%s] have been deleted by [%s].',
+                    ($event == '' ? 'ALL' : $event),
+                    $countDeletedLogs,
+                    $user->getUserIdentifier()
+                )
+            );
+            $this->addFlash('success', sprintf('System-Logs [%s] have been deleted.', $countDeletedLogs));
             return $this->redirectToRoute(self::DASHBOARD_SYSTEM_LOGS_ROUTE);
         }
 
-        return $this->render('dashboard/system-logs/filter.html.twig', [
-            'systemLogs' => $systemLogs,
-            'datetimeFrom' => $logDateFrom->format('Y-m-d H:i:s'),
-            'datetimeTo' => $logDateTo->format('Y-m-d H:i:s'),
-            'event' => $event,
-        ]);
+        $this->addFlash(
+            'notice',
+            sprintf(
+                'No Logs between %s and %s have been founded.',
+                $logDateFrom->format('Y-m-d'),
+                $logDateTo->format('Y-m-d')
+            )
+        );
+
+        return $this->redirectToRoute(self::DASHBOARD_SYSTEM_LOGS_ROUTE);
     }
 }

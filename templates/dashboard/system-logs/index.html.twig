@@ -16,9 +16,14 @@
                         <div class="breadcrumb float-right">
                             {% if count(systemLogs) > 0 %}
                                 <button class="btn btn-outline-secondary btn-headers mr-1"
-                                        data-toggle="modal" data-target="#deleteToolModal">
+                                        data-toggle="modal" data-target="#filterModal">
                                     <span class="fa fa-filter fa-sm pr-1"></span> <span
-                                            class="ps-1 md-d-none">Filter Delete</span>
+                                            class="ps-1 md-d-none">Filter</span>
+                                </button>
+                                <button class="btn btn-outline-secondary btn-headers mr-1"
+                                        data-toggle="modal" data-target="#deleteToolModal">
+                                    <span class="fa fa-trash-alt fa-sm pr-1"></span> <span
+                                            class="ps-1 md-d-none">Delete Logs</span>
                                 </button>
                             {% endif %}
                         </div>
@@ -55,6 +60,7 @@
         </section>
     </div>
 
+    {% include 'dashboard/system-logs/modal/filter.html.twig' %}
     {% include 'dashboard/system-logs/modal/delete.html.twig' %}
 
 {% endblock %}

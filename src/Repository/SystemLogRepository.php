@@ -38,9 +38,10 @@ class SystemLogRepository extends ServiceEntityRepository
     }
 
     /**
+     * Job
      * @return SystemLog[]
      */
-    public function findTDeleteAllByCriteria(string $event, DateTimeInterface $from, DateTimeInterface $to): array
+    public function findAllByCriteria(string $event, DateTimeInterface $from, DateTimeInterface $to): array
     {
         $entityManager = $this->getEntityManager();
         $qb = $entityManager->createQueryBuilder();

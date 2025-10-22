@@ -33,6 +33,15 @@ final readonly class SystemLogsService
         return $this->systemLogRepository->findBy([], ['createdAt' => 'DESC'], $limit);
     }
 
+    /**
+     * Filter
+     * @return SystemLog[]
+     */
+    public function getAllByCriteria(string $event, DateTimeInterface $from, DateTimeInterface $to): array
+    {
+        return $this->systemLogRepository->findAllByCriteria($event, $from, $to);
+    }
+
     public function create(string $event, string $message): void
     {
         if ($this->getOneByMessage($message)) return;
@@ -49,7 +58,7 @@ final readonly class SystemLogsService
     {
         $i = 0;
 
-        foreach ($this->systemLogRepository->findTDeleteAllByCriteria($event, $from, $to) as $systemLog) {
+        foreach ($this->getAllByCriteria($event, $from, $to) as $systemLog) {
             $this->delete($systemLog);
             $i++;
         }
