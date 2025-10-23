@@ -36,6 +36,29 @@
                 <a href="{{ path('app_auth') }}" class="text-decoration-none text-secondary fs-15">
                     Login <span class="bi bi-person"></span>
                 </a>
+                <div class="dropstart me-2 ms-4">
+                    <a class="text-secondary fw-bold fs-15" href="#" role="button" data-bs-toggle="dropdown"
+                       aria-expanded="false">
+                        <i class="bi bi-three-dots-vertical"></i>
+                    </a>
+                    <ul class="dropdown-menu fs-14">
+                        <li>
+                            <a class="dropdown-item" href="{{ path('app_legal_imprint') }}">
+                                <span class="bi bi-layout-split me-1 text-secondary"></span> Imprint
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{{ path('app_legal_privacy_policy') }}">
+                                <span class="bi bi-file-earmark-text me-1 text-secondary"></span> Privacy Policy
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{{ path('app_contact_us_index') }}">
+                                <span class="bi bi-envelope-arrow-up me-1 text-secondary"></span> Contact us
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             {% endif %}
         </div>
     </div>
