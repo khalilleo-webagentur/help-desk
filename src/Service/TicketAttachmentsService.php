@@ -87,8 +87,15 @@ final readonly class TicketAttachmentsService
         );
     }
 
-    public function delete(TicketAttachment $ticketAttachment): void
+    public function deleteAllByTicket(Ticket $ticket, bool $flush): void
     {
-        $this->ticketAttachmentRepository->remove($ticketAttachment, true);
+        foreach ($this->getAllByTicket($ticket) as $ticketAttachment) {
+            $this->delete($ticketAttachment, $flush);
+        }
+    }
+
+    public function delete(TicketAttachment $ticketAttachment, bool $flush): void
+    {
+        $this->ticketAttachmentRepository->remove($ticketAttachment, $flush);
     }
 }

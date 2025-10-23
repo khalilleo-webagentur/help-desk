@@ -171,7 +171,7 @@ class AttachmentController extends AbstractDashboardController
             return $this->redirectToRoute(self::DASHBOARD_TICKETS_ROUTE);
         }
 
-        $this->ticketAttachmentsService->delete($attachment);
+        $this->ticketAttachmentsService->delete($attachment, true);
 
         $message = sprintf('removed attachment "%s".', $attachment->getOriginalFileName());
         $this->ticketActivitiesService->add($issue, $user, $message);

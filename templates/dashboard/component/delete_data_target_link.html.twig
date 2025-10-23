@@ -1,0 +1,9 @@
+{% if dataTargetId is defined %}
+    <span class="float-right pointer"
+          data-toggle="modal"
+          data-target="#{{ dataTargetId }}">
+        <small class="text-danger text-uppercase" style="font-size: 9px;">
+            {{ name is defined ? name : 'Delete'}} <span class="fa fa-trash-alt"></span>
+        </small>
+    </span>
+{% endif %}

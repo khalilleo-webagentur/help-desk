@@ -203,7 +203,7 @@ class IndexController extends AbstractDashboardController
             return $this->redirectToRoute(self::DASHBOARD_PROJECTS_ROUTE);
         }
 
-        $this->projectService->delete($project);
+        $this->projectService->delete($project, true);
 
         $this->addFlash('success', 'Project has been deleted.');
 

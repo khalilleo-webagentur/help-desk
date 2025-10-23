@@ -32,6 +32,14 @@ final readonly class TicketService
     }
 
     /**
+     * @return Ticket[]
+     */
+    public function getAllByLinkToTicket(int $no): array
+    {
+        return $this->ticketRepository->findBy(['linkToTicket' => $no]);
+    }
+
+    /**
      * @deprecated
      * @use TicketService::getOneByProjectAndId()
      */
@@ -159,6 +167,14 @@ final readonly class TicketService
     /**
      * @return Ticket[]
      */
+    public function getAllByProject(Project $project): array
+    {
+        return $this->ticketRepository->findBy(['project' => $project]);
+    }
+
+    /**
+     * @return Ticket[]
+     */
     public function queryAllIssueNotes(int $companyId, ?string $note, bool $iNote, bool $eNote, DateTimeInterface $from, DateTimeInterface $to): array
     {
         return $this->ticketRepository->queryAllIssueNotes($companyId, $note, $iNote, $eNote, $from, $to);
@@ -190,6 +206,18 @@ final readonly class TicketService
         return $model;
     }
 
+    public function unLinkIssuesBySourceIssueNo(int $sourceTicketNo, bool $flush): void
+    {
+        foreach ($this->getAllByLinkToTicket($sourceTicketNo) as $targetTicket) {
+            $targetTicket
+                ->setLinkToTicket(null)
+                ->setLinkToTicketId(null)
+                ->setUpdatedAt(new DateTime());
+
+            $this->ticketRepository->save($targetTicket, $flush);
+        }
+    }
+
     public function save(Ticket $model): Ticket
     {
         $this->ticketRepository->save($model->setUpdatedAt(new DateTime()), true);
@@ -197,8 +225,8 @@ final readonly class TicketService
         return $model;
     }
 
-    public function delete(Ticket $ticket): void
+    public function delete(Ticket $ticket, bool $flush): void
     {
-        $this->ticketRepository->remove($ticket, true);
+        $this->ticketRepository->remove($ticket, $flush);
     }
 }

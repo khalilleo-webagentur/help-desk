@@ -23,6 +23,8 @@
             </div>
         </div>
 
+        {% set isSuperAdmin = is_granted('ROLE_SUPER_ADMIN') %}
+
         <section class="content">
             <div class="container-fluid area-section">
 
@@ -81,10 +83,22 @@
 
                         </form>
                     </div>
+                    {% if isSuperAdmin %}
+                        <div class="col-lg-6">
+                            {% include 'dashboard/component/delete_data_target_link.html.twig' with{
+                                dataTargetId: 'deleteProjectModal',
+                                name: 'Delete Project'
+                            } %}
+                        </div>
+                    {% endif %}
                 </div>
 
             </div>
         </section>
     </div>
+
+    {% if isSuperAdmin %}
+        {% include 'dashboard/projects/modal/delete.html.twig' with{project:project} %}
+    {% endif %}
 
 {% endblock %}

@@ -122,7 +122,7 @@ class CommentController extends AbstractDashboardController
         $user = $this->getUser();
 
         if ($comment = $this->ticketCommentsService->getById($commentId)) {
-            $this->ticketCommentsService->delete($user, $comment);
+            $this->ticketCommentsService->deleteAllByUserAndTicketComment($user, $comment);
             $this->addFlash('success', 'Comment has been deleted.');
         }
 

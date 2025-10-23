@@ -32,9 +32,22 @@ final readonly class TicketCommentsService
         return $ticketComment;
     }
 
-    public function delete(UserInterface $user, TicketComment $ticketComment): void
+    public function deleteAllByTicket(Ticket $ticket, bool $flush): void
+    {
+        $ticketComments = $this->ticketCommentRepository->findBy(['ticket' => $ticket]);
+        foreach ($ticketComments as $ticketComment) {
+            $this->delete($ticketComment, $flush);
+        }
+    }
+
+    public function deleteAllByUserAndTicketComment(UserInterface $user, TicketComment $ticketComment): void
     {
         $ticketComment->removeCommentedBy($user);
         $this->ticketCommentRepository->remove($ticketComment, true);
+    }
+
+    public function delete(TicketComment $ticketComment, bool $flush): void
+    {
+        $this->ticketCommentRepository->remove($ticketComment, $flush);
     }
 }

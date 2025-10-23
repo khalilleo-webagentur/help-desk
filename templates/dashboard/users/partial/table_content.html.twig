@@ -70,9 +70,7 @@
                 <td>
                     {% if row.token %}
                         <small class="pr-1 fs-13">{{ row.token }}</small>
-                        <span class="fa fa-copy text-orangered-light pointer copyToClipBoard"
-                              title="Copy"
-                              data-token="{{ row.token }}"></span>
+                        {% include 'dashboard/component/copy_to_clipboard.html.twig' with{content:row.token} %}
                     {% else %}
                         ---
                     {% endif %}

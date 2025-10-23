@@ -499,8 +499,8 @@ class IndexController extends AbstractDashboardController
             )
         );
 
-        $this->ticketActivitiesService->deleteByIssue($issue);
-        $this->ticketService->delete($issue);
+        $this->ticketActivitiesService->deleteAllByTicket($issue, true);
+        $this->ticketService->delete($issue, true);
 
         $this->addFlash('success', 'Issue has been deleted.');
 

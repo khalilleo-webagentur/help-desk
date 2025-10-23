@@ -13,7 +13,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 final readonly class TicketActivitiesService
 {
     public function __construct(
-        private TicketActivityRepository $ticketActivityRepository
+        private TicketActivityRepository $ticketActivityRepository,
     ) {
     }
 
@@ -43,15 +43,15 @@ final readonly class TicketActivitiesService
         return $model;
     }
 
-    public function deleteByIssue(Ticket $issue): void
+    public function deleteAllByTicket(Ticket $issue, bool $flush): void
     {
         foreach ($issue->getTicketActivities() as $ticketActivity) {
-            $this->delete($ticketActivity);
+            $this->delete($ticketActivity, $flush);
         }
     }
 
-    public function delete(TicketActivity $model): void
+    public function delete(TicketActivity $model, bool $flush): void
     {
-        $this->ticketActivityRepository->remove($model, true);
+        $this->ticketActivityRepository->remove($model, $flush);
     }
 }

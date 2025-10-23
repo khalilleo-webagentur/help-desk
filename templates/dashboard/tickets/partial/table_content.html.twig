@@ -27,7 +27,10 @@
 
             {% for row in issues %}
                 <tr class="fs-14">
-                    <td>T-{{ row.ticketNo }}</td>
+                    <td>
+                        T-{{ row.ticketNo }}
+                        {% include 'dashboard/component/copy_to_clipboard.html.twig' with{content:row.ticketNo} %}
+                    </td>
 
                     {% if isAdmin %}
                         <td>

@@ -7,6 +7,10 @@ p, td, td > *, a, form > span {
     color: #ffffff;
 }
 
+.fw-bold {
+    font-weight: 600;
+}
+
 label, label:not(.form-check-label):not(.custom-file-label) {
     margin-bottom: 0;
     font-weight: 500;
@@ -375,10 +379,10 @@ body {
 }
 
 .modal-danger {
-    border-left: 3px solid #f70404;
+    border-left: 3px solid #dc3545;
     padding: 14px 14px;
     background: #ffc5c540;
-    color: #f70404;
+    color: #dc3545;
     font-size: 14px !important;
     border-top-left-radius: 7px;
     border-bottom-right-radius: 7px;

@@ -47,11 +47,13 @@ final class AppHelper
     // System Logs
     public const array SYSTEM_LOG_EVENTS = [
         self::SYSTEM_LOG_EVENT_INFO,
+        self::SYSTEM_LOG_CRITICAL,
         self::SYSTEM_LOG_EVENT_EXCEPTION,
         self::SYSTEM_LOG_EVENT_TICKET_COMMENT,
     ];
 
     public const string SYSTEM_LOG_EVENT_INFO = 'Info';
+    public const string SYSTEM_LOG_CRITICAL = 'Critical';
     public const string SYSTEM_LOG_EVENT_EXCEPTION = 'Exception';
     public const string SYSTEM_LOG_EVENT_TICKET_COMMENT = 'Ticket Comment Message';
 

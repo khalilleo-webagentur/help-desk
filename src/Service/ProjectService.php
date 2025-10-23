@@ -60,8 +60,8 @@ final readonly class ProjectService
         return $model;
     }
 
-    public function delete(Project $model): void
+    public function delete(Project $model, bool $flush): void
     {
-        $this->projectRepository->remove($model, true);
+        $this->projectRepository->remove($model, $flush);
     }
 }

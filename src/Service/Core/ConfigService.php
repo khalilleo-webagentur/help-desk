@@ -7,11 +7,11 @@ namespace App\Service\Core;
 use Exception;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-final class ConfigService
+final readonly class ConfigService
 {
     public function __construct(
-        private readonly ContainerInterface $container,
-        private readonly MonologService     $monolog
+        private ContainerInterface $container,
+        private MonologService     $monolog
     ) {
     }
 
@@ -22,6 +22,7 @@ final class ConfigService
         } catch (Exception $e) {
             $this->monolog->logger->critical($e->getTraceAsString());
         }
+
         return "";
     }
 }
