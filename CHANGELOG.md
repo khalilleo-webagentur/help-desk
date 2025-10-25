@@ -16,6 +16,8 @@ All notable changes to this project will be documented in this file.
 - Authenticate logs
 - Messages job empty-pin
 - System-Logs filter and code improvements
+- Navbar menu links
+- Dashboard delete project and all related data / code improvements
 
 ---
 
