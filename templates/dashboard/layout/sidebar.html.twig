@@ -110,7 +110,7 @@
 
                 <li class="nav-item has-treeview {{ isMessageTreeOpen ? 'menu-is-opening menu-open' : '' }}">
                     <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-envelope"></i>
+                        <i class="nav-icon fas fa-comments"></i>
                         <p>
                             Messages
                             <i class="fas fa-angle-left right"></i>
@@ -126,11 +126,9 @@
                     </ul>
                 </li>
 
-                <li class="nav-header">SETTINGS</li>
-
                 <li class="nav-item {{ _route == 'app_dashboard_settings_index' ? 'menu-is-opening menu-open' : '' }}">
                     <a href="{{ path('app_dashboard_settings_index') }}" class="nav-link">
-                        <i class="fas fa-cog nav-icon"></i>
+                        <i class="fas fa-cogs nav-icon"></i>
                         <p>Settings</p>
                     </a>
                 </li>
@@ -150,6 +148,7 @@
                         </a>
                     </li>
                 {% endif %}
+
                 <li class="nav-item" data-toggle="modal" data-target="#LogoutModalCenter">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-power-off"></i>
