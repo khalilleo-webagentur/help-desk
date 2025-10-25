@@ -18,6 +18,8 @@ All notable changes to this project will be documented in this file.
 - System-Logs filter and code improvements
 - Navbar menu links
 - Dashboard delete project and all related data / code improvements
+- General Infos fs and update text
+- Register event, log and update Text
 
 ---
 
