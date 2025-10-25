@@ -24,7 +24,7 @@ final class IssueResolvedMail extends AbstractMail implements MailInterface
     {
         [$username, $userEmail, $ticketNo, $issueTitle] = $context;
 
-        $email = (new TemplatedEmail())
+        $email = new TemplatedEmail()
             ->from(
                 new Address(
                     $this->configService->getParameter('no_reply'),
@@ -32,7 +32,7 @@ final class IssueResolvedMail extends AbstractMail implements MailInterface
                 )
             )
             ->to(new address($userEmail, $username))
-            ->subject(sprintf('Khalilleo-Helpdesk: T-%s is being resolved', $ticketNo))
+            ->subject(sprintf('Khalilleo-Helpdesk: Issue T-%s is Currently Being Resolved', $ticketNo))
             ->htmlTemplate('mails/dashboard/issue_resolved.html.twig')
             ->textTemplate('mails/dashboard/issue_resolved.txt.twig')
             ->context([

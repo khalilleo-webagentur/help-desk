@@ -26,7 +26,7 @@ final class NotifyNewIssueMail extends AbstractMail implements MailInterface
 
         $webmasterEmail = $this->configService->getParameter('webmasterEmail');
 
-        $email = (new TemplatedEmail())
+        $email = new TemplatedEmail()
             ->from(
                 new Address(
                     $this->configService->getParameter('no_reply'),
@@ -34,7 +34,7 @@ final class NotifyNewIssueMail extends AbstractMail implements MailInterface
                 )
             )
             ->to(new address($webmasterEmail, $webmasterName))
-            ->subject('Khalilleo-Helpdesk: New issue created')
+            ->subject('Khalilleo-Helpdesk: A New Issue Has Been Created')
             ->htmlTemplate('mails/dashboard/notify_new_issue.html.twig')
             ->textTemplate('mails/dashboard/notify_new_issue.txt.twig')
             ->context([

@@ -24,7 +24,7 @@ final class HandelTwoFactorAuthMail extends AbstractMail implements MailInterfac
     {
         [$username, $userEmail, $otp] = $context;
 
-        $email = (new TemplatedEmail())
+        $email = new TemplatedEmail()
             ->from(
                 new Address(
                     $this->configService->getParameter('no_reply'),
@@ -32,7 +32,7 @@ final class HandelTwoFactorAuthMail extends AbstractMail implements MailInterfac
                 )
             )
             ->to(new address($userEmail, $username))
-            ->subject('Khalilleo-Helpdesk: Two-Step Verification')
+            ->subject('Khalilleo-Helpdesk: New OTP for Account Verification')
             ->htmlTemplate('mails/account/send_otp.html.twig')
             ->textTemplate('mails/account/send_otp.txt.twig')
             ->context([

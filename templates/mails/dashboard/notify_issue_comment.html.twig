@@ -19,9 +19,12 @@
                                 <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                                     <tr>
                                         <td>
-                                            <p>Hey {{ username|capitalize }},</p>
+                                            <p>Greetings {{ username|capitalize }},</p>
 
-                                            <p>New comment on issue T-{{ ticketNo }} | {{ issueTitle }}</p>
+                                            <p>
+                                                A new comment has been added to issue T-{{ ticketNo }}: {{ issueTitle }}
+                                                . Please review the comment to stay updated on the discussion.
+                                            </p>
 
                                             <p>{{ comment }}</p>
 
@@ -46,12 +49,15 @@
                                                 </tbody>
                                             </table>
 
-                                            <p>You're receiving this email because of your account on {{ appName() }}
-                                                .</p>
-                                            <p>This is an automatically generated message, please do not reply to this
-                                                sender.</p>
+                                            <p>
+                                                You are receiving this email due to your account on {{ appName() }}.
+                                            </p>
+                                            <p>
+                                                This is an automatically generated message. Please do not reply to this
+                                                sender.
+                                            </p>
 
-                                            <p>Thanks, <br> The {{ appName() }} Team</p>
+                                            <p>Kind Regards, <br> The {{ appName() }} Team</p>
                                         </td>
                                     </tr>
                                 </table>

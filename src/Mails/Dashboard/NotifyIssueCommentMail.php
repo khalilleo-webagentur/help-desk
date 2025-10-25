@@ -32,7 +32,7 @@ final class NotifyIssueCommentMail extends AbstractMail implements MailInterface
                 )
             )
             ->to(new address($userEmail, $username))
-            ->subject(sprintf('Khalilleo-Helpdesk: new Comment on issue T-%s', $ticketNo))
+            ->subject(sprintf('Khalilleo-Helpdesk: A New Comment Has Been Added to Issue T-%s', $ticketNo))
             ->htmlTemplate('mails/dashboard/notify_issue_comment.html.twig')
             ->textTemplate('mails/dashboard/notify_issue_comment.txt.twig')
             ->context([

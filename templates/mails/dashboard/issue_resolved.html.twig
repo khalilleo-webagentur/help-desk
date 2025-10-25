@@ -19,10 +19,10 @@
                                 <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                                     <tr>
                                         <td>
-                                            <p>Hi {{ username|capitalize }},</p>
+                                            <p>Greetings {{ username|capitalize }},</p>
 
-                                            <p>Our system is detected that the issue with Title "{{ issueTitle }}" is
-                                                being closed.</p>
+                                            <p>Our system has detected that the issue titled '{{ issueTitle }}' is being
+                                                closed.</p>
 
                                             <table role="presentation" border="0" cellpadding="0" cellspacing="0"
                                                    class="btn btn-primary">
@@ -45,10 +45,12 @@
                                                 </tbody>
                                             </table>
 
-                                            <p>If you don't want to receive these kinds of Notification, you can
-                                                deactivate it unter the setting on the Dashboard at any time.</p>
+                                            <p>
+                                                If you do not wish to receive these notifications, you can deactivate
+                                                them under the settings on the Dashboard at any time.
+                                            </p>
 
-                                            <p>Thanks, <br> The {{ appName() }} Team</p>
+                                            <p>Kind Regards, <br> The {{ appName() }} Team</p>
                                         </td>
                                     </tr>
                                 </table>

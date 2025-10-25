@@ -1,16 +1,16 @@
-Hey {{ username|capitalize }},
+Greetings {{ username|capitalize }},
 
-New comment on issue T-{{ ticketNo }} | {{ issueTitle }}
+A new comment has been added to issue T-{{ ticketNo }}: {{ issueTitle }}. Please review the comment to stay updated on the discussion.
 
 {{ comment }}
 
 {{ absolute_url(path('app_auth')) }}
 
-You're receiving this email because of your account on {{ appName() }}.
+You are receiving this email due to your account on {{ appName() }}.
 
-This is an automatically generated message, please do not reply to this sender.
+This is an automatically generated message. Please do not reply to this sender.
 
-Best Regards,
+Kind Regards,
 
 The {{ appName() }} Team
 

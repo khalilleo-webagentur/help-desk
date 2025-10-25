@@ -24,7 +24,7 @@ final class ChangeEmailUserMail extends AbstractMail implements MailInterface
     {
         [$username, $userEmail, $token] = $context;
 
-        $email = (new TemplatedEmail())
+        $email = new TemplatedEmail()
             ->from(
                 new Address(
                     $this->configService->getParameter('no_reply'),
@@ -32,7 +32,7 @@ final class ChangeEmailUserMail extends AbstractMail implements MailInterface
                 )
             )
             ->to(new address($userEmail, $username))
-            ->subject('Khalilleo-Helpdesk: Email Verification')
+            ->subject('Khalilleo-Helpdesk: Please Verify Your Email Address')
             ->htmlTemplate('mails/account/update_email.html.twig')
             ->textTemplate('mails/account/update_email.txt.twig')
             ->context([

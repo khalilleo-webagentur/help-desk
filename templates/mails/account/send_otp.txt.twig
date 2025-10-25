@@ -1,18 +1,19 @@
-Hi {{ username|capitalize }},
+Greetings {{ username|capitalize }},
 
 Your OTP (one time password) is:
 
 {{ otp }}
 
-Please do not share your OTP with anyone.
+Please do not share your OTP (One-Time Password) with anyone.
 
-If you did not request this, please ignore this email. Maybe someone has mistyped his email.
+If you did not request this, please ignore this email. Someone may have accidentally entered your email address.
 
-Best Regards,
+Kind Regards,
 
 The {{ appName() }} Team
 
 ......................................................
 
 Unsere Datenschutzrichtlinie finden Sie unter {{ absolute_url(path('app_legal_privacy_policy')) }}
+
 Copyright {{ appName() }} {{ year() }} - {{ 'All Rights Reserved'|trans }} - {{ version() }}

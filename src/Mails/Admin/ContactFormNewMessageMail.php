@@ -26,7 +26,7 @@ final class ContactFormNewMessageMail extends AbstractMail implements MailInterf
 
         $webmasterEmail = $this->configService->getParameter('webmasterEmail');
 
-        $email = (new TemplatedEmail())
+        $email = new TemplatedEmail()
             ->from(
                 new Address(
                     $this->configService->getParameter('no_reply'),
@@ -34,7 +34,7 @@ final class ContactFormNewMessageMail extends AbstractMail implements MailInterf
                 )
             )
             ->to(new address($webmasterEmail, $webmasterName))
-            ->subject('Khalilleo-Helpdesk: New Message Arrived')
+            ->subject('Khalilleo-Helpdesk: A New Message Has Arrived')
             ->htmlTemplate('mails/admin/contact_form_new_message.html.twig')
             ->textTemplate('mails/admin/contact_form_new_message.txt.twig')
             ->context([

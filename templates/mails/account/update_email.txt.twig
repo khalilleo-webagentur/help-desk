@@ -1,16 +1,17 @@
-Hi {{ username|capitalize }},
+Greetings {{ username|capitalize }},
 
-you have requested to update your email on {{ appName() }}, please verify your email.
+You have requested to update your email on {{ appName() }}. Please verify your new email address.
 
 {{ absolute_url(path('app_profile_personal_data_email_verify', {token:token})) }}.
 
-If you did not request this, please ignore this email. Maybe someone has mistyped his email.
+If you did not request this, please ignore this email. Someone may have accidentally entered your email address.
 
-Best Regards,
+Kind Regards,
 
 The {{ appName() }} Team
 
 ......................................................
 
 Unsere Datenschutzrichtlinie finden Sie unter {{ absolute_url(path('app_legal_privacy_policy')) }}
+
 Copyright {{ appName() }} {{ year() }} - {{ 'All Rights Reserved'|trans }} - {{ version() }}
