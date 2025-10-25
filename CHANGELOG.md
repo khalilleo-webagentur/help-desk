@@ -20,6 +20,8 @@ All notable changes to this project will be documented in this file.
 - Dashboard delete project and all related data / code improvements
 - General Infos fs and update text
 - Register event, log and update Text
+- Update text emails
+- Dashboard TimeTrack model and implementation
 
 ---
 
