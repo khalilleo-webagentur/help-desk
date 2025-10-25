@@ -72,9 +72,9 @@ final readonly class DeletableFilesService
 
             foreach ($files as $file) {
                 $filename = $file->getFilename();
+                $this->delete($file, true);
 
                 if ($this->fileHandlerService->isFileExistsInDir($dir, $filename)) {
-                    $this->delete($file, true);
                     $this->fileHandlerService->unlinkFile($dir, $filename);
                     $i++;
                 }

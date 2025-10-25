@@ -13,6 +13,7 @@ use App\Service\TicketActivitiesService;
 use App\Service\TicketAttachmentsService;
 use App\Service\TicketCommentsService;
 use App\Service\TicketService;
+use App\Service\TimeTrackService;
 use Doctrine\ORM\EntityManager;
 use Exception;
 
@@ -21,6 +22,7 @@ use Exception;
  *  - Comments
  *  - Attachments
  *  - Activities
+ *  - TimeTracks
  *  - Unlink other Ticket
  *
  * Delete Project
@@ -29,6 +31,7 @@ final readonly class ProjectJob
 {
     public function __construct(
         private TicketService            $ticketService,
+        private TimeTrackService         $timeTrackService,
         private ProjectService           $projectService,
         private TicketAttachmentsService $ticketAttachmentsService,
         private TicketActivitiesService  $ticketActivitiesService,
@@ -51,6 +54,13 @@ final readonly class ProjectJob
                 // Unlink other Ticket to this Ticket
                 if ($targetTicktNo = $ticket->getLinkToTicket()) {
                     $this->ticketService->unLinkIssuesBySourceIssueNo((int)$targetTicktNo, false);
+                }
+
+                // Delete Time Track
+                if (count($ticket->getTimeTracks()) > 0) {
+                    foreach ($ticket->getTimeTracks() as $timeTrack) {
+                        $this->timeTrackService->delete($timeTrack, false);
+                    }
                 }
 
                 // Attachments filenames
