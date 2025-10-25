@@ -57,6 +57,7 @@ final class AppHelper
         self::SYSTEM_LOG_EVENT_EXCEPTION,
         self::SYSTEM_LOG_EVENT_TICKET_COMMENT,
         self::SYSTEM_LOG_EVENT_FILE_DELETED,
+        self::SYSTEM_LOG_EVENT_USER_ACCOUNT_CREATED
     ];
 
     public const string SYSTEM_LOG_EVENT_INFO = 'Info';
@@ -64,6 +65,7 @@ final class AppHelper
     public const string SYSTEM_LOG_EVENT_EXCEPTION = 'Exception';
     public const string SYSTEM_LOG_EVENT_TICKET_COMMENT = 'Ticket Comment Message';
     public const string SYSTEM_LOG_EVENT_FILE_DELETED = 'File Deleted';
+    public const string SYSTEM_LOG_EVENT_USER_ACCOUNT_CREATED = 'User Account Created';
 
     // FAQs
     public const array FAQS = [
