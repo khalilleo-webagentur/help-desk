@@ -102,5 +102,8 @@
         </table>
     </div>
 {% else %}
-    <small>No data has been found.</small>
+    {% include 'dashboard/component/no_data.html.twig' with{
+        title: 'Projects',
+        subTitle: 'No projects were found. Try to add a new one.'
+    } %}
 {% endif %}
