@@ -22,6 +22,7 @@ All notable changes to this project will be documented in this file.
 - Register event, log and update Text
 - Update text emails
 - Dashboard TimeTrack model and implementation
+- Time Track tool
 
 ---
 
