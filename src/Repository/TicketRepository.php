@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Company;
 use App\Entity\Ticket;
 use App\Entity\TicketStatus;
+use App\Helper\AppHelper;
 use DateTimeInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -52,6 +53,23 @@ class TicketRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('t1')
             ->join('t1.project', 't2', 'WITH', 't2.id IN (:projectIds)')
             ->setParameter('projectIds', $projectIds)
+            ->orderBy('t1.id', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * Tools
+     * @return Ticket[]
+     */
+    public function findAllNotClosedAndNotResolved(): array
+    {
+        return $this->createQueryBuilder('t1')
+            ->join('t1.status', 't2')
+            ->where('t2.name != :closed')
+            ->setParameter('closed', AppHelper::STATUS_CLOSED)
+            ->andWhere('t2.name != :resolved')
+            ->setParameter('resolved', AppHelper::STATUS_RESOLVED)
             ->orderBy('t1.id', 'DESC')
             ->getQuery()
             ->getResult();

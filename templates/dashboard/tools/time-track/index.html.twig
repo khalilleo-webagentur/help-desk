@@ -1,0 +1,42 @@
+{% extends 'dashboard/layout/base.html.twig' %}
+
+{% block title %} Dashboard Overview of Time Track {% endblock %}
+
+{% block body %}
+
+    <div class="content-wrapper">
+
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-8 mt-1">
+                        <h5 class="m-0 text-dark mt-1">Overview of Time Track</h5>
+                    </div>
+                    <div class="col-4 mt-1">
+                        <div class="breadcrumb float-right"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <section class="content">
+
+            {% if is_granted('ROLE_SUPER_ADMIN') %}
+                <div class="container-fluid area-section mb-1">
+                    <div class="row px-3 pt-3">
+                        <div class="col-lg-12">
+                            {% include 'dashboard/tools/time-track/partial/table_content.html.twig' %}
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+
+            {% include 'dashboard/component/back_to.html.twig' with{
+                route: 'app_dashboard_tools_index',
+                name: 'Back to Tools'
+            } %}
+
+        </section>
+    </div>
+
+{% endblock %}

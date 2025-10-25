@@ -8,6 +8,7 @@ use App\Entity\Company;
 use App\Entity\Project;
 use App\Entity\Ticket;
 use App\Entity\TicketStatus;
+use App\Helper\AppHelper;
 use App\Repository\TicketRepository;
 use DateTime;
 use DateTimeInterface;
@@ -18,7 +19,8 @@ final readonly class TicketService
     public function __construct(
         private TicketRepository $ticketRepository,
         private UserService      $userService,
-    ){
+        private TimeTrackService $timeTrackService,
+    ) {
     }
 
     public function getById(int $id): ?Ticket
@@ -216,6 +218,27 @@ final readonly class TicketService
 
             $this->ticketRepository->save($targetTicket, $flush);
         }
+    }
+
+    /**
+     * used for Tools
+     */
+    public function getAllNotClosedAndNotResolved(): array
+    {
+        $data = [];
+
+        foreach ($this->ticketRepository->findAllNotClosedAndNotResolved() as $ticket) {
+            if ($ticket->getStatus() !== AppHelper::STATUS_RESOLVED &&
+                $ticket->getStatus() !== AppHelper::STATUS_CLOSED &&
+                count($ticket->getTimeTracks()) > 0) {
+                $data[] = [
+                    'ticket' => $ticket,
+                    'totalSpentTime' => $this->timeTrackService->getTotalSpentTime($ticket),
+                ];
+            }
+        }
+
+        return $data;
     }
 
     public function save(Ticket $model): Ticket

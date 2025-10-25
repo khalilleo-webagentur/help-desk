@@ -1,0 +1,77 @@
+{% if count(tickets) > 0 %}
+
+    <p class="modal-info">
+        Issues with the status <q>Resolved</q> and <q>Closed</q> are excluded.
+    </p>
+
+    <div class="card-body table-responsive bg-white p-0 by-3 mb-3">
+        <table class="table table-hover table-sm text-nowrap">
+            <thead>
+            <tr class="fs-14">
+                <th>{{ 'Company'|trans }}</th>
+                <th>{{ 'Project'|trans }}</th>
+                <th>{{ 'Ticket'|trans }}</th>
+                <th>{{ 'By'|trans }}</th>
+                <th>{{ 'Total-Spent-Time'|trans }}</th>
+                <th>{{ 'Status'|trans }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for row in tickets %}
+                <tr class="fs-14">
+                    <td>
+                        <form class="pointer link-primary"
+                              action="{{ path('app_dashboard_company_edit', {id:row.ticket.project.company.id}) }}"
+                              method="post"
+                              onclick="this.closest('form').submit();">
+                            <input type="hidden" name="csrf"
+                                   value="{{ hash(csrf_token(row.ticket.project.company.id)) }}">
+                            {{ row.ticket.project.company.name }}
+                        </form>
+                    </td>
+                    <td>
+                        <form class="pointer link-primary"
+                              onclick="this.closest('form').submit();"
+                              action="{{ path('app_dashboard_project_edit', {id:row.ticket.project.id}) }}"
+                              method="post">
+                            <input type="hidden" name="csrf" value="{{ hash(csrf_token(row.ticket.project.id)) }}">
+                            {{ row.ticket.project.title }}
+                        </form>
+                    </td>
+                    <td>
+                        <form class="pointer link-primary"
+                              action="{{ path('app_dashboard_ticket_view', {id:row.ticket.id}) }}"
+                              onclick="this.closest('form').submit();"
+                              method="post">
+                            <input type="hidden" name="csrf" value="{{ hash(csrf_token(row.ticket.id)) }}">
+                            <span>
+                                    T-{{ row.ticket.ticketNo }}
+                                    <input type="hidden" name="pid" value="{{ row.ticket.project.id }}">
+                                </span>
+                        </form>
+                    </td>
+                    <td>
+                        <a href="{{ path('app_dashboard_user_edit', {id:row.ticket.customer.id}) }}"
+                           class="link-primary">
+                            {{ row.ticket.customer.name }}
+                        </a>
+                    </td>
+                    <td>
+                        {{ convertToHoursMinutes(row.totalSpentTime) }}
+                    </td>
+                    <td>
+                         <span class="ticket-status" style="background: {{ row.ticket.status.color }}">
+                             {{ row.ticket.status.name }}
+                        </span>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% else %}
+    {% include 'dashboard/component/no_data.html.twig' with{
+        title: 'Time Track',
+        subTitle: 'No issues with logged time have been found.'
+    } %}
+{% endif %}

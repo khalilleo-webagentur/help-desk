@@ -269,6 +269,10 @@ body {
     border-radius: .2rem
 }
 
+.link-primary {
+    color: #454545 !important;
+}
+
 .link-primary:hover {
     color: #007bff !important;
 }
