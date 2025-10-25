@@ -6,6 +6,7 @@ namespace App\Service\Jobs;
 
 use App\Entity\Project;
 use App\Helper\AppHelper;
+use App\Service\DeletableFilesService;
 use App\Service\ProjectService;
 use App\Service\SystemLogsService;
 use App\Service\TicketActivitiesService;
@@ -33,21 +34,27 @@ final readonly class ProjectJob
         private TicketActivitiesService  $ticketActivitiesService,
         private TicketCommentsService    $ticketCommentsService,
         private SystemLogsService        $systemLogsService,
+        private DeletableFilesService    $deletableFilesService,
     ) {
     }
 
     public function deleteEverythingRelatedToProject(Project $project, EntityManager $entityManager): bool
     {
         $entityManager->getConnection()->beginTransaction();
+        $isDoneWithoutAnyError = false;
+        $filenames = '';
 
         try {
             // Delete all Tickets related to this project
-            foreach ($this->ticketService->getAllByProject($project) as $ticket) {
+            foreach ($project->getTickets() as $ticket) {
 
                 // Unlink other Ticket to this Ticket
                 if ($targetTicktNo = $ticket->getLinkToTicket()) {
                     $this->ticketService->unLinkIssuesBySourceIssueNo((int)$targetTicktNo, false);
                 }
+
+                // Attachments filenames
+                $filenames .= $this->ticketAttachmentsService->getAllFileNamesByTicket($ticket);
 
                 // Delete Attachments to this Ticket if any
                 $this->ticketAttachmentsService->deleteAllByTicket($ticket, false);
@@ -69,7 +76,7 @@ final readonly class ProjectJob
             $entityManager->flush();
             $entityManager->getConnection()->commit();
 
-            return true;
+            $isDoneWithoutAnyError = true;
 
         } catch (Exception $e) {
             if ($entityManager->getConnection()->isConnected()) {
@@ -82,6 +89,12 @@ final readonly class ProjectJob
             }
         }
 
-        return false;
+        if ($isDoneWithoutAnyError) {
+            foreach (explode(',', rtrim($filenames, ',')) as $filename) {
+                $this->deletableFilesService->add(AppHelper::TICKET_ATTACHMENT, $filename);
+            }
+        }
+
+        return $isDoneWithoutAnyError;
     }
 }

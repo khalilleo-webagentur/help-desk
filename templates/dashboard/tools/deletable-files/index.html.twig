@@ -1,0 +1,54 @@
+{% extends 'dashboard/layout/base.html.twig' %}
+
+{% block title %} Dashboard Deletable-Files Overview {% endblock %}
+
+{% block body %}
+
+    <div class="content-wrapper">
+
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-8 mt-1">
+                        <h5 class="m-0 text-dark mt-1">Deletable-Files Overview</h5>
+                    </div>
+                    <div class="col-4 mt-1">
+                        <div class="breadcrumb float-right">
+                            {% if count(deletableFiles) > 0 %}
+                                <button class="btn btn-outline-secondary btn-headers mr-1"
+                                        data-toggle="modal" data-target="#deleteFilesModal">
+                                    <span class="fa fa-trash-alt fa-sm pr-1"></span> <span
+                                            class="ps-1 md-d-none">Delete files</span>
+                                </button>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <section class="content">
+
+            {% if is_granted('ROLE_SUPER_ADMIN') %}
+                <div class="container-fluid area-section mb-1">
+                    <div class="row px-3 pt-3">
+                        <div class="col-lg-12">
+                            {% include 'dashboard/tools/deletable-files/partial/table_content.html.twig' %}
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+
+            {% include 'dashboard/component/back_to.html.twig' with{
+                route: 'app_dashboard_tools_index',
+                name: 'Back to Tools'
+            } %}
+
+        </section>
+    </div>
+
+    {% if count(deletableFiles) > 0 %}
+        {% include 'dashboard/tools/deletable-files/modal/delete.html.twig' %}
+    {% endif %}
+
+{% endblock %}

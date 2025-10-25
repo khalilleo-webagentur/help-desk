@@ -7,6 +7,7 @@ namespace App\Service;
 use App\Entity\Ticket;
 use App\Entity\TicketAttachment;
 use App\Entity\User;
+use App\Helper\AppHelper;
 use App\Repository\TicketAttachmentRepository;
 use DateTime;
 use DateTimeInterface;
@@ -16,6 +17,7 @@ final readonly class TicketAttachmentsService
 {
     public function __construct(
         private TicketAttachmentRepository $ticketAttachmentRepository,
+        public DeletableFilesService      $deletableFilesService,
     ) {
     }
 
@@ -87,6 +89,17 @@ final readonly class TicketAttachmentsService
         );
     }
 
+    public function getAllFileNamesByTicket(Ticket $ticket): string
+    {
+        $filenames = '';
+
+        foreach ($this->getAllByTicket($ticket) as $attachment) {
+            $filenames .= $attachment->getFilename() . ',';
+        }
+
+        return $filenames;
+    }
+
     public function deleteAllByTicket(Ticket $ticket, bool $flush): void
     {
         foreach ($this->getAllByTicket($ticket) as $ticketAttachment) {
@@ -96,6 +109,13 @@ final readonly class TicketAttachmentsService
 
     public function delete(TicketAttachment $ticketAttachment, bool $flush): void
     {
+        if ($flush) {
+            $this->deletableFilesService->add(
+                AppHelper::TICKET_ATTACHMENT,
+                $ticketAttachment->getFilename()
+            );
+        }
+
         $this->ticketAttachmentRepository->remove($ticketAttachment, $flush);
     }
 }

@@ -1,0 +1,57 @@
+{% extends 'dashboard/layout/base.html.twig' %}
+
+{% block title %} Dashboard :: Tools {% endblock %}
+
+{% block body %}
+
+    <div class="content-wrapper">
+
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-6">
+                        <h5 class="m-0 text-dark mt-1">Tools</h5>
+                    </div>
+                    <div class="col-6">
+                        <div class="breadcrumb float-sm-right"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <section class="content">
+            <div class="container-fluid">
+
+                <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3">
+
+                    <div class="col">
+                        <div class="card" style="box-shadow: none;">
+                            <div class="card-body">
+                                <div class="card-title">
+                                    <a href="#"
+                                       data-toggle="modal"
+                                       data-target="#composeModal">
+                                        <span class="fa fa-envelope-open-text pr-2"></span>Compose and send E-mail
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="card" style="box-shadow: none;">
+                            <div class="card-body">
+                                <div class="card-title">
+                                    <a href="{{ path('app_dashboard_tools_deletable_files_index') }}">
+                                        <span class="fa fa-file-alt pr-2"></span>Deletable files / delete all
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+{% endblock %}

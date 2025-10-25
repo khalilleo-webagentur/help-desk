@@ -1,0 +1,5 @@
+{% if route is defined %}
+    <a href="{{ path(route) }}" class="fs-14">
+        <span class="fa fa-chevron-left mr-1"></span> {{ name is defined ? name : 'Back' }}
+    </a>
+{% endif %}

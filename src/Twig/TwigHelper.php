@@ -58,7 +58,7 @@ class TwigHelper extends AbstractExtension
 
     public function maskEmail(string $email, string $replacement = '*'): string
     {
-        list($username, $domain) = explode('@', $email);
+        [$username, $domain] = explode('@', $email);
         $maskedUsername = $username[0] . str_repeat($replacement, strlen($username) - 2) . $username[strlen($username) - 1];
         return $maskedUsername . '@' . $domain;
     }

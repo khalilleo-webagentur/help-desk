@@ -10,6 +10,12 @@ final class AppHelper
     public const bool NOTIFY_CUSTOMER_ON_TICKET_RESOLVED = true;
     public const bool NOTIFY_WEBMASTER_ON_TICKET_CREATED = true;
 
+    // Files location
+    public const string TICKET_ATTACHMENT = 'attachments';
+    public const array DIRECTORIES = [
+        self::TICKET_ATTACHMENT,
+    ];
+
     // Ticket-Status
     public const string STATUS_ALL = 'All';
     public const string STATUS_OPEN = 'Open';

@@ -1,0 +1,11 @@
+{% if id is defined %}
+    <form   class="pointer mx-1"
+            title="Open file in new Tab."
+          action="{{ path('app_dashboard_tools_deletable_file_show', {hash: hash(id)}) }}"
+          method="post">
+        <img src="{{ asset('lte/img/open_in_new.svg') }}"
+             onclick="this.closest('form').submit();"
+             alt="Icon">
+        <input type="hidden" name="id" value="{{ id }}">
+    </form>
+{% endif %}

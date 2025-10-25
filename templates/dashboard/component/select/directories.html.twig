@@ -1,0 +1,17 @@
+{% if directories is defined and directories %}
+    {% set iId = hash() %}
+    <label for="{{ iId }}">
+        Directory
+    </label>
+    <select class="form-control"
+            name="directory"
+            id="{{ iId }}"
+            required>
+        <option value="" disabled selected>---</option>
+        {% for directory in directories %}
+            <option value="{{ directory }}">
+                {{ directory|capitalize }}
+            </option>
+        {% endfor %}
+    </select>
+{% endif %}

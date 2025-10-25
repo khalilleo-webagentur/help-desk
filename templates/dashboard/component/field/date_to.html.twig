@@ -1,0 +1,10 @@
+{% if dateTimeTo is defined  %}
+    {% set hashId = hash() %}
+    <label for="{{ hashId }}" class="form-label">
+        Date to <span class="text-danger">*</span>
+    </label>
+    <input type="text" class="form-control datetimeSelectorTo" id="{{ hashId }}"
+           placeholder="{{ dateTimeTo }}"
+           style="background: #fff !important;"
+           value="{{ dateTimeTo }}" name="dateTo">
+{% endif %}

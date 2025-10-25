@@ -26,6 +26,14 @@ final readonly class TicketCommentsService
         return $this->ticketCommentRepository->findOneBy(['ticket' => $ticket]);
     }
 
+    /**
+     * @return TicketComment[]
+     */
+    public function getAllByTicket(Ticket $ticket): array
+    {
+        return $this->ticketCommentRepository->findBy(['ticket' => $ticket]);
+    }
+
     public function save(TicketComment $ticketComment): TicketComment
     {
         $this->ticketCommentRepository->save($ticketComment->setUpdatedAt(new \DateTime()), true);
@@ -34,8 +42,7 @@ final readonly class TicketCommentsService
 
     public function deleteAllByTicket(Ticket $ticket, bool $flush): void
     {
-        $ticketComments = $this->ticketCommentRepository->findBy(['ticket' => $ticket]);
-        foreach ($ticketComments as $ticketComment) {
+        foreach ($this->getAllByTicket($ticket) as $ticketComment) {
             $this->delete($ticketComment, $flush);
         }
     }

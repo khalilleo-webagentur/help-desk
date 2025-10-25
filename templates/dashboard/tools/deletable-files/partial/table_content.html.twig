@@ -1,0 +1,38 @@
+{% set isAdmin = is_granted('ROLE_SUPER_ADMIN') %}
+
+{% if isAdmin and count(deletableFiles) > 0 %}
+    <div class="card-body table-responsive bg-white p-0 mb-3">
+        <table class="table table-hover text-nowrap">
+            <thead>
+            <tr class="fs-14">
+                <th>{{ 'ID'|trans }}</th>
+                <th>{{ 'Directory'|trans }}</th>
+                <th>{{ 'Filename'|trans }}</th>
+                <th>{{ 'Created'|trans }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for row in deletableFiles %}
+                <tr class="fs-14">
+                    <td>{{ row.id }}</td>
+                    <td>{{ row.directory|capitalize }}</td>
+                    <td>
+                        <div class="d-flex">
+                            {{ row.filename }}
+                            {% include 'dashboard/component/show_file.html.twig' with{
+                                id: row.id
+                            } %}
+                        </div>
+                    </td>
+                    <td title="{{ row.createdAt|date }}">{{ timeAgo(row.createdAt) }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% else %}
+    {% include 'dashboard/component/no_data.html.twig' with{
+        title: 'No Deletable Files',
+        subTitle: 'No Deletable Files has been found.'
+    } %}
+{% endif %}

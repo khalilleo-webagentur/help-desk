@@ -1,0 +1,11 @@
+{% if dateTimeFrom is defined %}
+    {% set hashId = hash() %}
+    <label for="{{ hashId }}" class="form-label">
+        Date from <span class="text-danger">*</span>
+    </label>
+    <input type="text" class="form-control datetimeSelectorFrom"
+           id="{{ hashId }}"
+           placeholder="{{ dateTimeFrom }}" name="dateFrom"
+           style="background: #fff !important;"
+           value="{{ dateTimeFrom }}">
+{% endif %}
