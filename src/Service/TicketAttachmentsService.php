@@ -17,7 +17,7 @@ final readonly class TicketAttachmentsService
 {
     public function __construct(
         private TicketAttachmentRepository $ticketAttachmentRepository,
-        public DeletableFilesService      $deletableFilesService,
+        public DeletableFilesService       $deletableFilesService,
     ) {
     }
 

@@ -17,6 +17,7 @@ final readonly class DeletableFilesService
         private DeletableFileRepository  $deletableFileRepository,
         private ConfigService            $configService,
         private FileHandlerService       $fileHandlerService,
+        private SystemLogsService        $systemLogsService,
     ) {
     }
 
@@ -83,8 +84,17 @@ final readonly class DeletableFilesService
         return $i;
     }
 
-    public function delete(DeletableFile $deletableFile, bool $flush): void
+    public function delete(DeletableFile $file, bool $flush): void
     {
-        $this->deletableFileRepository->remove($deletableFile, $flush);
+        if ($flush) {
+            $message = sprintf(
+                'The file %s in the directory %s has been permanently deleted.',
+                $file->getFilename(),
+                $file->getDirectory()
+            );
+            $this->systemLogsService->create(AppHelper::SYSTEM_LOG_EVENT_FILE_DELETED, $message);
+        }
+
+        $this->deletableFileRepository->remove($file, $flush);
     }
 }

@@ -52,16 +52,6 @@ class JobsController extends AbstractDashboardController
         $countDeletedLogs = $this->systemLogsService->deleteAllByCriteria($event, $logDateFrom, $logDateTo);
 
         if ($countDeletedLogs > 0) {
-            $user = $this->getUser();
-            $this->systemLogsService->create(
-                AppHelper::SYSTEM_LOG_EVENT_INFO,
-                sprintf(
-                    'System-Logs [%s] event [%s] have been deleted by [%s].',
-                    ($event == '' ? 'ALL' : $event),
-                    $countDeletedLogs,
-                    $user->getUserIdentifier()
-                )
-            );
             $this->addFlash('success', sprintf('System-Logs [%s] have been deleted.', $countDeletedLogs));
             return $this->redirectToRoute(self::DASHBOARD_SYSTEM_LOGS_ROUTE);
         }

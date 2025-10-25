@@ -56,12 +56,14 @@ final class AppHelper
         self::SYSTEM_LOG_CRITICAL,
         self::SYSTEM_LOG_EVENT_EXCEPTION,
         self::SYSTEM_LOG_EVENT_TICKET_COMMENT,
+        self::SYSTEM_LOG_EVENT_FILE_DELETED,
     ];
 
     public const string SYSTEM_LOG_EVENT_INFO = 'Info';
     public const string SYSTEM_LOG_CRITICAL = 'Critical';
     public const string SYSTEM_LOG_EVENT_EXCEPTION = 'Exception';
     public const string SYSTEM_LOG_EVENT_TICKET_COMMENT = 'Ticket Comment Message';
+    public const string SYSTEM_LOG_EVENT_FILE_DELETED = 'File Deleted';
 
     // FAQs
     public const array FAQS = [
