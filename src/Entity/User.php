@@ -100,6 +100,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\JoinColumn(nullable: false)]
     private ?Company $company = null;
 
+    /**
+     * @var Collection<int, TimeTrack>
+     */
+    #[ORM\OneToMany(targetEntity: TimeTrack::class, mappedBy: 'user')]
+    private Collection $timeTracks;
+
     public function __construct()
     {
         $this->setCreatedAt(new DateTime());
@@ -110,6 +116,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->ticketActivities = new ArrayCollection();
         $this->ticketComments = new ArrayCollection();
         $this->ticketAttachments = new ArrayCollection();
+        $this->timeTracks = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -483,6 +490,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setCompany(?Company $company): static
     {
         $this->company = $company;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, TimeTrack>
+     */
+    public function getTimeTracks(): Collection
+    {
+        return $this->timeTracks;
+    }
+
+    public function addTimeTrack(TimeTrack $timeTrack): static
+    {
+        if (!$this->timeTracks->contains($timeTrack)) {
+            $this->timeTracks->add($timeTrack);
+            $timeTrack->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTimeTrack(TimeTrack $timeTrack): static
+    {
+        if ($this->timeTracks->removeElement($timeTrack)) {
+            // set the owning side to null (unless already changed)
+            if ($timeTrack->getUser() === $this) {
+                $timeTrack->setUser(null);
+            }
+        }
 
         return $this;
     }

@@ -1,0 +1,19 @@
+{% set iId = hash() %}
+<label for="{{ iId }}" class="form-label">
+    {{ label is defined ? label : '' }}
+    {% if required is defined %}
+        <span class="text-danger">*</span>
+    {% endif %}
+</label>
+<textarea type="text"
+          rows="{{ rows is defined ? rows : '3' }}"
+          class="form-control"
+          id="{{ iId }}"
+          placeholder="{{ placeholder is defined ? placeholder : '' }}"
+          name="{{ name is defined ? name : '' }}"
+          spellcheck="false"
+          autocomplete="off"
+          required="{{ required is defined ? 'true' : 'fasle' }}">{{ value is defined ? value : '' }}</textarea>
+{% if helpBlock is defined %}
+    <span class="fs-13 text-secondary">{{ helpBlock }}</span>
+{% endif %}

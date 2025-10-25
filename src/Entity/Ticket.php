@@ -93,12 +93,19 @@ class Ticket
     #[ORM\JoinColumn(nullable: false)]
     private ?TicketPriority $priority = null;
 
+    /**
+     * @var Collection<int, TimeTrack>
+     */
+    #[ORM\OneToMany(targetEntity: TimeTrack::class, mappedBy: 'ticket')]
+    private Collection $timeTracks;
+
     public function __construct()
     {
         $this->setCreatedAt(new DateTime());
         $this->ticketActivities = new ArrayCollection();
         $this->attachment = new ArrayCollection();
         $this->ticketComments = new ArrayCollection();
+        $this->timeTracks = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -396,6 +403,36 @@ class Ticket
     public function setPriority(?TicketPriority $priority): static
     {
         $this->priority = $priority;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, TimeTrack>
+     */
+    public function getTimeTracks(): Collection
+    {
+        return $this->timeTracks;
+    }
+
+    public function addTimeTrack(TimeTrack $timeTrack): static
+    {
+        if (!$this->timeTracks->contains($timeTrack)) {
+            $this->timeTracks->add($timeTrack);
+            $timeTrack->setTicket($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTimeTrack(TimeTrack $timeTrack): static
+    {
+        if ($this->timeTracks->removeElement($timeTrack)) {
+            // set the owning side to null (unless already changed)
+            if ($timeTrack->getTicket() === $this) {
+                $timeTrack->setTicket(null);
+            }
+        }
 
         return $this;
     }

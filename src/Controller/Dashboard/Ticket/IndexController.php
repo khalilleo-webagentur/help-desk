@@ -23,6 +23,7 @@ use App\Service\TicketPriorityService;
 use App\Service\TicketService;
 use App\Service\TicketStatusService;
 use App\Service\TicketTypesService;
+use App\Service\TimeTrackService;
 use App\Service\UserService;
 use App\Service\UserSettingService;
 use App\Traits\FormValidationTrait;
@@ -56,6 +57,7 @@ class IndexController extends AbstractDashboardController
         private readonly TicketPriorityService    $ticketPriorityService,
         private readonly CompanyService           $companyService,
         private readonly UserSettingService       $userSettingService,
+        private readonly TimeTrackService         $timeTrackService,
         private readonly SystemLogsService        $systemLogsService,
         private readonly MonologService           $monologService,
     ) {
@@ -281,8 +283,11 @@ class IndexController extends AbstractDashboardController
         $assigners = $this->userService->getAllByCompany($user->getCompany());
         $priorities = $this->ticketPriorityService->getAll();
 
+        $totalTimeTrack = $this->timeTrackService->getTotalSpentTime($issue);
+
         return $this->render('dashboard/tickets/view.html.twig', [
             'issue' => $issue,
+            'totalTimeTrack' => $totalTimeTrack,
             'ticketActivities' => $ticketActivities,
             'dir' => $this->getParameter('attachments'),
             'statuses' => $statuses,

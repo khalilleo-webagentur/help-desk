@@ -1,7 +1,7 @@
 <div class="modal fade" id="logTimeModal" tabindex="-1" role="dialog" aria-labelledby="logTimeModalTitle"
      aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <form action="{{ path('app_dashboard_ticket_log_time_store', {id:issue.id}) }}" method="post">
+        <form action="{{ path('app_dashboard_ticket_time_track_store', {id:hash(issue.id)}) }}" method="post">
             <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
             <div class="modal-content">
                 <div class="modal-header">
@@ -21,13 +21,22 @@
                                name="iO7nMi"
                                autofocus
                                required>
-                        <small class="text-secondary">This field is required.</small>
                     </div>
-
+                    <div class="mb-2">
+                        {% include 'dashboard/component/field/textarea.html.twig' with{
+                            label: 'Note',
+                            rows: 2,
+                            placeholder: 'Type a note',
+                            required: true,
+                            name: 'note',
+                            helpBlock: 'Please provide a brief description of the reason for logging your time.'
+                        } %}
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>
                     <button type="submit" class="btn btn-outline-primary">Log time</button>
+                    <input type="hidden" name="id" value="{{ issue.id }}">
                     <input type="hidden" name="pid" value="{{ issue.project.id }}">
                 </div>
             </div>
