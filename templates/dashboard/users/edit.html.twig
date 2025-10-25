@@ -65,12 +65,19 @@
                             </div>
 
                             <div class="form-group mb-3">
-                                <label for="4jX2hV9xO3aD7v" class="form-label">Verification-Token</label>
+                                <label for="4jX2hV9xO3aD7v" class="form-label">
+                                    Verification-Token
+                                    {% if user.token %}
+                                        {% include 'dashboard/component/copy_to_clipboard.html.twig' with{
+                                            content:user.token
+                                        } %}
+                                    {% endif %}
+                                </label>
                                 <input type="text" class="form-control" id="4jX2hV9xO3aD7v" placeholder="Type token"
                                        value="{{ user.token }}" name="token">
                             </div>
 
-                            <div class="mb-3">
+                            <div class="mb-2">
                                 <div class="form-group form-check">
                                     <input type="checkbox" class="form-check-input" id="4lN3jG3gE9oB3o"
                                            name="isVerified"
@@ -81,7 +88,7 @@
                                 </div>
                             </div>
 
-                            <div class="mb-3">
+                            <div class="mb-2">
                                 <div class="form-group form-check">
                                     <input type="checkbox" class="form-check-input" id="7lN3jG3gE9oB3Do"
                                            name="isDeleted"
@@ -93,7 +100,7 @@
                             </div>
 
                             {% if isAdmin %}
-                                <div class="mb-3">
+                                <div class="mb-2">
                                     <div class="form-group form-check">
                                         <input type="checkbox" class="form-check-input" id="7lN3isTeamLeader"
                                                name="x3h1r9u2"
@@ -106,14 +113,17 @@
                                         } %}
                                     </div>
                                 </div>
-                                <div class="mb-3">
+                                <div class="mb-2">
                                     <div class="form-group form-check">
                                         <input type="checkbox" class="form-check-input" id="c1z3n6t4"
                                                name="c1z3n6t4"
                                                 {{ user.isNinja ? 'checked' : '' }}>
                                         <label class="form-check-label text-secondary" for="c1z3n6t4">
-                                            is Employee (Ninja the one who works on issues)
+                                            is Employee
                                         </label>
+                                        {% include 'dashboard/component/popover_info.html.twig' with{
+                                            content: 'Ninja the one who works on our issues.'
+                                        } %}
                                     </div>
                                 </div>
                             {% endif %}

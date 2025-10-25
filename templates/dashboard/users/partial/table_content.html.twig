@@ -7,12 +7,14 @@
         <tr class="fs-14">
             {% if isAdmin %}
                 <th>ID</th>
-                <th>{{ 'Company'|trans }}</th>
             {% endif %}
             <th>{{ 'Name'|trans }}</th>
             <th>{{ 'Email'|trans }}</th>
             <th>{{ 'Token'|trans }}</th>
             <th>{{ 'Verified'|trans }}</th>
+            {% if isAdmin %}
+                <th>{{ 'Company'|trans }}</th>
+            {% endif %}
             <th>{{ 'Deleted'|trans }}</th>
             <th>{{ 'Modified'|trans }}</th>
             <th>{{ 'Created'|trans }}</th>
@@ -26,17 +28,6 @@
             <tr class="fs-14">
                 {% if isAdmin %}
                     <td>{{ row.id }}</td>
-                {% endif %}
-                {% if isAdmin %}
-                    <td>
-                        <form action="{{ path('app_dashboard_company_edit', {id:row.id}) }}" method="post">
-                            <input type="hidden" name="csrf" value="{{ hash(csrf_token(row.company.id)) }}">
-                            <span class="text-primary pointer"
-                                  onclick="this.closest('form').submit();">
-                                {{ row.company.name }}
-                            </span>
-                        </form>
-                    </td>
                 {% endif %}
                 <td>
                     <div class="d-flex">
@@ -76,6 +67,17 @@
                     {% endif %}
                 </td>
                 <td>{{ row.isVerified ? check('text-success') : faThumbsDown() }}</td>
+                {% if isAdmin %}
+                    <td>
+                        <form action="{{ path('app_dashboard_company_edit', {id:row.id}) }}" method="post">
+                            <input type="hidden" name="csrf" value="{{ hash(csrf_token(row.company.id)) }}">
+                            <span class="text-primary pointer"
+                                  onclick="this.closest('form').submit();">
+                                {{ row.company.name }}
+                            </span>
+                        </form>
+                    </td>
+                {% endif %}
                 <td>{{ row.isDeleted ? circle('text-danger') : circle('text-light-50') }}</td>
 
                 <td title="{{ row.updatedAt|date }}">{{ timeAgo(row.updatedAt) }}</td>
