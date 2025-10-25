@@ -11,13 +11,14 @@
                 </button>
             </div>
             <div class="modal-body bg-light">
-                <ul>
-                    <li>You can add a short description to project.</li>
+                <ul class="fs-14">
+                    <li>You can add a brief description to the project.</li>
                     {% if is_granted('ROLE_SUPER_ADMIN') %}
-                        <li>You can add Link to Project on Edit. It will be shown directly on the table content.</li>
-                        <li>Search is not implemented yet</li>
-                        <li>Pagination is not implemented yet</li>
+                        <li>You can add a link to the project in the edit. It will be displayed directly in the table content.</li>
+                        <li>The project and all related data can be deleted in the edit section.</li>
                     {% endif %}
+                    <li>Search is not implemented yet</li>
+                    <li>Pagination is not implemented yet</li>
                 </ul>
             </div>
             <div class="modal-footer">

@@ -46,7 +46,7 @@ async function copyContent(text) {
     try {
         if (isLocalStorageAvailable) {
             await navigator.clipboard.writeText(text);
-            swal('', '( ' + text + ') has been copied to clipboard.', 'success');
+            swal('', 'Content (' + text + ') has been copied to clipboard.', 'success');
         }
     } catch (err) {
         swal('', 'clipboard is not available on your Browser.', 'warning');

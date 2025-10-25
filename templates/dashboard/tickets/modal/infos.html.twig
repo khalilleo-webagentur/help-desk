@@ -11,11 +11,10 @@
                 </button>
             </div>
             <div class="modal-body bg-light">
-                <ul>
+                <ul class="fs-14">
                     <li>Search term is only Ticket-no without "T-"</li>
-
                     {% if is_granted('ROLE_SUPER_ADMIN') %}
-                        <li>Adding new issue, the webmaster will be informed.</li>
+                        <li>When adding a new issue, the webmaster will be notified if the configuration is active.</li>
                         <li>Pagination is not implemented yet</li>
                         <li>Filter is not implemented yet</li>
                     {% endif %}
