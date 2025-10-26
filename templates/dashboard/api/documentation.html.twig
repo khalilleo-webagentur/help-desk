@@ -45,18 +45,27 @@
                             <h5>Authorization</h5>
                             <ul class="fs-14">
                                 <li>Type: Bearer Token</li>
-                                <li>Value: <code>Bearer {{ apiKey }}</code></li>
+                                <li>Value: <code>Bearer {{ maskKey(apiKey) }}</code></li>
                             </ul>
 
                             <h5>Description</h5>
                             <p class="fs-14">This endpoint is used to clear user tokens.</p>
 
                             <h5>Request Example</h5>
-                            <pre class="pre-container"><code>GET {{ host }}/api/v1/users/clear-token
-User-Agent: {{ userAgent }}
-Authorization: Bearer {{ apiKey }}</code></pre>
+                            <p class="fs-14 mb-1">
+                                Copy User-Agent:
+                                {% include 'dashboard/component/copy_to_clipboard.html.twig' with{content:userAgent} %}
+                            </p>
+                            <p class="fs-14">
+                                Copy Bearer Authorization token:
+                                {% include 'dashboard/component/copy_to_clipboard.html.twig' with{content:apiKey} %}
+                            </p>
+                            <pre class="pre-container mb-1"><code class="fs-14">GET {{ host }}/api/v1/users/clear-token
+User-Agent: {{ maskKey(userAgent) }}
+Authorization: Bearer {{ maskKey(apiKey) }}
+                                </code></pre>
 
-                            <h5>Success Response</h5>
+                            <h5 class="mt-3">Success Response</h5>
                             <ul class="fs-14">
                                 <li>Status Code: <code>200 OK</code></li>
                                 <li>Response Body:

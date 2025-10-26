@@ -44,7 +44,7 @@ $(document).ready(function () {
 async function copyContent(text) {
     try {
         await navigator.clipboard.writeText(text);
-        swal('', 'Content (' + text + ') has been copied to clipboard.', 'success');
+        swal('', 'Content has been copied to clipboard.', 'success');
     } catch (err) {
         swal('', '(content) cannot be copied to clipboard.', 'error');
     }

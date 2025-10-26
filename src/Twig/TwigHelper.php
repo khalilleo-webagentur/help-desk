@@ -29,6 +29,7 @@ class TwigHelper extends AbstractExtension
     public function getFunctions(): array
     {
         return [
+            new TwigFunction('maskKey', [$this, 'maskKey']),
             new TwigFunction('maskEmail', [$this, 'maskEmail']),
             new TwigFunction('unseenMessages', [$this, 'getUnseenMessages']),
             new TwigFunction('hasTicketComment', [$this, 'hasTicketComment']),
@@ -54,6 +55,20 @@ class TwigHelper extends AbstractExtension
             new TwigFunction('madeBy', [$this, 'getMadeBy']),
             new TwigFunction('version', [$this, 'getVersion']),
         ];
+    }
+
+    public function maskKey(string $key): string
+    {
+        $length = strlen($key);
+
+        if ($length <= 8) {
+            return $key;
+        }
+
+        $firstFour = substr($key, 0, 6);
+        $lastFour = substr($key, -3);
+
+        return $firstFour . 'xxxxxx' . $lastFour;
     }
 
     public function maskEmail(string $email, string $replacement = '*'): string
