@@ -24,6 +24,8 @@ All notable changes to this project will be documented in this file.
 - Dashboard TimeTrack model and implementation
 - Time Track tool
 - Api remove token endpoint and documentation
+- Twig mask extension for api-key
+- Delete company job and all related data
 
 ---
 
