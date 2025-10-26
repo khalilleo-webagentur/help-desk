@@ -32,12 +32,6 @@ final readonly class UserService
         return $this->userRepository->findOneBy(['token' => $token]);
     }
 
-    public function hasUserRequestedNewSecurityCode(): bool
-    {
-        $users = $this->userRepository->findTheLastRecentToken();
-        return count($users) > 0;
-    }
-
     public function getOneByCompany(Company $company): ?User
     {
         return $this->userRepository->findOneBy(['company' => $company]);
@@ -149,6 +143,24 @@ final readonly class UserService
         $this->userRepository->save($model->setUpdatedAt(new DateTime()), true);
 
         return $model;
+    }
+
+    public function hasUserRequestedNewSecurityCode(): bool
+    {
+        $users = $this->userRepository->findTheLastRecentToken();
+        return count($users) > 0;
+    }
+
+    public function clearToken(): int
+    {
+        $i = 0;
+
+        foreach ($this->userRepository->findAllWithToken() as $user) {
+            $this->save($user->setToken(null));
+            $i++;
+        }
+
+        return $i;
     }
 
     public function encodePassword(string $text): string

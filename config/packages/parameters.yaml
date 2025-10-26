@@ -24,3 +24,7 @@ parameters:
   app_made_by: "khalilleo.com"
 
   attachments: '%kernel.project_dir%/public/uploads/attachment'
+
+  # API
+  api_user_agent: "Demo-Helpdesk-App"
+  api_key: "nnf407n1-en62-42n9-bn97-36fn367ncf9n"

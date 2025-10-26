@@ -1,0 +1,95 @@
+{% extends 'dashboard/layout/base.html.twig' %}
+
+{% block title %} Dashboard Api Documentation {% endblock %}
+
+{% block body %}
+
+    <div class="content-wrapper">
+
+        {% set isAdmin = is_granted('ROLE_SUPER_ADMIN') %}
+        {% set host = app.request.schemeAndHttpHost %}
+
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-6 mt-1">
+                        <h5 class="m-0 text-dark mt-1">Api Remove Token</h5>
+                    </div>
+                    <div class="col-6 mt-1">
+                        <div class="breadcrumb float-right"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <section class="content">
+            <div class="container-fluid area-section">
+                <div class="row p-2">
+                    <div class="col-lg-12">
+
+                        {% if isAdmin %}
+                            <h5>Base URL</h5>
+                            <p class="fs-14">Base URL: <code>{{ host }}</code></p>
+
+                            <h5>Endpoint</h5>
+                            <p class="fs-14">Route: <code>/api/v1/users/clear-token</code></p>
+
+                            <h5>Method</h5>
+                            <p class="fs-14">HTTP Method: <code>GET</code></p>
+
+                            <h5>Headers</h5>
+                            <p class="fs-14">
+                                User-Agent: <code>{{ userAgent }}</code>
+                            </p>
+
+                            <h5>Authorization</h5>
+                            <ul class="fs-14">
+                                <li>Type: Bearer Token</li>
+                                <li>Value: <code>Bearer {{ apiKey }}</code></li>
+                            </ul>
+
+                            <h5>Description</h5>
+                            <p class="fs-14">This endpoint is used to clear user tokens.</p>
+
+                            <h5>Request Example</h5>
+                            <pre class="pre-container"><code>GET {{ host }}/api/v1/users/clear-token
+User-Agent: {{ userAgent }}
+Authorization: Bearer {{ apiKey }}</code></pre>
+
+                            <h5>Success Response</h5>
+                            <ul class="fs-14">
+                                <li>Status Code: <code>200 OK</code></li>
+                                <li>Response Body:
+                                    <pre class="pre-container"><code>{
+    "success": true,
+    "message": "Token cleared successfully.",
+    "data": 5  <span class="fs-13 text-secondary">// Number of tokens cleared</span>
+}</code></pre>
+                                </li>
+                            </ul>
+
+                            <h5>Error Responses</h5>
+                            <h6>400 Bad Request</h6>
+                            <p class="fs-14">Response Body:</p>
+                            <pre class="pre-container"><code>{
+    "success": false,
+    "message": "No token has been cleared.",
+    "data": null
+}</code></pre>
+
+                            <h6>401 Unauthorized</h6>
+                            <p class="fs-14">Response Body:</p>
+                            <pre class="pre-container"><code>{
+    "success": false,
+    "message": "Invalid token.",
+    "data": null
+}</code></pre>
+                        {% endif %}
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+{% endblock %}

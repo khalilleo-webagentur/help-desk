@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\User;
+use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Exception;
@@ -42,16 +43,34 @@ class UserRepository extends ServiceEntityRepository
 
     /**
      * @return User[]
-     * @throws Exception
      */
     public function findTheLastRecentToken(): array
     {
-        $now = new \DateTime();
-        $now->modify('-30 minute')->format('Y-m-d H:i:s');
+        $now = new DateTime();
+        $now->modify('-30 minutes')->format('Y-m-d H:i:s');
 
         return $this->createQueryBuilder('t1')
             ->where('t1.token IS NOT NULL')
             ->andWhere('t1.updatedAt >= :now')
+            ->setParameter('now', $now)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * Used by API `Remove Token`
+     * Retrieve users with tokens that are older than 15 minutes.
+     *
+     * @return User[]
+     */
+    public function findAllWithToken(): array
+    {
+        $now = new DateTime();
+        $now->modify('-15 minutes')->format('Y-m-d H:i:s');
+
+        return $this->createQueryBuilder('t1')
+            ->where('t1.token IS NOT NULL')
+            ->andWhere('t1.updatedAt <= :now')
             ->setParameter('now', $now)
             ->getQuery()
             ->getResult();

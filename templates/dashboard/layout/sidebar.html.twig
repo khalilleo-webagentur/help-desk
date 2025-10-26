@@ -147,6 +147,26 @@
                             <p>System Logs</p>
                         </a>
                     </li>
+
+                    {% set isDocumentationTreeOpen = _route == 'app_dashboard_api_doc_index' %}
+
+                    <li class="nav-item has-treeview {{ isDocumentationTreeOpen ? 'menu-is-opening menu-open' : '' }}">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-info-circle"></i>
+                            <p>
+                                Documentation
+                                <i class="fas fa-angle-left right"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview {{ isDocumentationTreeOpen ? 'active' : '' }}">
+                            <li class="nav-item">
+                                <a href="{{ path('app_dashboard_api_doc_index') }}" class="nav-link">
+                                    <i class="far {{ _route == 'app_dashboard_api_doc_index' ? 'fa-dot-circle' : 'fa-circle' }} nav-icon text-warning"></i>
+                                    <p>Remove Token Api</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
                 {% endif %}
 
                 <li class="nav-item" data-toggle="modal" data-target="#LogoutModalCenter">
