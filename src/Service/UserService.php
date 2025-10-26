@@ -40,8 +40,9 @@ final readonly class UserService
     /**
      * @return User[]
      */
-    public function getAllByCompany(Company $company): array
+    public function getAllByCompany(?Company $company): array
     {
+        if (empty($company)) return [];
         return $this->userRepository->findBy(['company' => $company]);
     }
 
@@ -145,6 +146,23 @@ final readonly class UserService
         return $model;
     }
 
+    public function resignUserFromCompany(User|UserInterface $user, bool $flush): void
+    {
+        $user
+            ->setIsVerified(false)
+            ->setToken(null)
+            ->setCompany(null)
+            ->setTeamLeader(false)
+            ->setDeleted(true);
+
+        $this->userRepository->save($user, $flush);
+    }
+
+    public function delete(User|UserInterface $user, bool $flush): void
+    {
+        $this->userRepository->remove($user, $flush);
+    }
+
     public function hasUserRequestedNewSecurityCode(): bool
     {
         $users = $this->userRepository->findTheLastRecentToken();
@@ -168,8 +186,8 @@ final readonly class UserService
         return password_hash($text, PASSWORD_DEFAULT);
     }
 
-    public function isPasswordValid(User $user, string $text): bool
+    public function isPasswordValid(User|UserInterface $user, string $password): bool
     {
-        return password_verify($text, $user->getPassword());
+        return password_verify($password, $user->getPassword());
     }
 }

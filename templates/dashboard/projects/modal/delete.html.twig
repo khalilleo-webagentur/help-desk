@@ -15,7 +15,7 @@
                 </div>
                 <div class="modal-body bg-light">
 
-                    <div class="mb-3">
+                    <div class="mb-2">
                         <p class="modal-danger">
                             All data related to this project <q class="fw-bold">{{ project.title|capitalize }}</q>,
                             including tickets, Attachments etc., will be permanently deleted, and this action cannot be
@@ -23,14 +23,17 @@
                         </p>
                     </div>
 
-                    <div class="mb-3">
+                    <div class="mb-2">
                         <label for="V9xO3aD7v" class="form-label">
                             Name <span class="text-danger">*</span>
                         </label>
                         <input type="text" class="form-control" id="V9xO3aD7v" placeholder="Type Project name"
                                name="name"
                                required>
-                        <small class="text-secondary">Project name is required.</small>
+                    </div>
+
+                    <div class="mb-2">
+                        {% include 'dashboard/component/field/password.html.twig' with{required:true} %}
                     </div>
 
                 </div>

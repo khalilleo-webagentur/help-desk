@@ -12,7 +12,12 @@
           placeholder="{{ placeholder is defined ? placeholder : '' }}"
           name="{{ name is defined ? name : '' }}"
           spellcheck="false"
+          ondragstart="return false"
+          ondrop="return false"
+          dir="auto"
+          autocapitalize="off"
           autocomplete="off"
+          translate="no"
           required="{{ required is defined ? 'true' : 'fasle' }}">{{ value is defined ? value : '' }}</textarea>
 {% if helpBlock is defined %}
     <span class="fs-13 text-secondary">{{ helpBlock }}</span>

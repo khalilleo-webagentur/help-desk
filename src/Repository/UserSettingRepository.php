@@ -16,7 +16,7 @@ class UserSettingRepository extends ServiceEntityRepository
         parent::__construct($registry, UserSetting::class);
     }
 
-    public function save(UserSetting $entity, bool $flush = false): void
+    public function save(UserSetting $entity, bool $flush): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -25,7 +25,7 @@ class UserSettingRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(UserSetting $entity, bool $flush = false): void
+    public function remove(UserSetting $entity, bool $flush): void
     {
         $this->getEntityManager()->remove($entity);
 

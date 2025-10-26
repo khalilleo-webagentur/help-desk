@@ -16,7 +16,7 @@ class CompanyRepository extends ServiceEntityRepository
         parent::__construct($registry, Company::class);
     }
 
-    public function save(Company $entity, bool $flush = false): void
+    public function save(Company $entity, bool $flush): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -25,7 +25,7 @@ class CompanyRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(Company $entity, bool $flush = false): void
+    public function remove(Company $entity, bool $flush): void
     {
         $this->getEntityManager()->remove($entity);
 

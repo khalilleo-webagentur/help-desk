@@ -5,7 +5,7 @@
 {% block body %}
 
     <div class="content-wrapper">
-
+        {% set isSuperAdmin = is_granted('ROLE_SUPER_ADMIN') %}
         <div class="content-header">
             <div class="container-fluid">
                 <div class="row">
@@ -85,10 +85,22 @@
 
                         </form>
                     </div>
+                    {% if isSuperAdmin %}
+                        <div class="col-lg-6">
+                            {% include 'dashboard/component/delete_data_target_link.html.twig' with{
+                                dataTargetId: 'deleteCompanyModal',
+                                name: 'Delete Company'
+                            } %}
+                        </div>
+                    {% endif %}
                 </div>
 
             </div>
         </section>
     </div>
+
+    {% if isSuperAdmin %}
+        {% include 'dashboard/companies/modal/delete.html.twig' with{company:company} %}
+    {% endif %}
 
 {% endblock %}

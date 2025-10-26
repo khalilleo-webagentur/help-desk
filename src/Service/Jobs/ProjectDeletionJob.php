@@ -27,7 +27,7 @@ use Exception;
  *
  * Delete Project
  */
-final readonly class ProjectJob
+final readonly class ProjectDeletionJob
 {
     public function __construct(
         private TicketService            $ticketService,

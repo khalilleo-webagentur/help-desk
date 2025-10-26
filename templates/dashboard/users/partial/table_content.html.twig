@@ -69,13 +69,17 @@
                 <td>{{ row.isVerified ? check('text-success') : faThumbsDown() }}</td>
                 {% if isAdmin %}
                     <td>
-                        <form action="{{ path('app_dashboard_company_edit', {id:row.id}) }}" method="post">
-                            <input type="hidden" name="csrf" value="{{ hash(csrf_token(row.company.id)) }}">
-                            <span class="text-primary pointer"
-                                  onclick="this.closest('form').submit();">
-                                {{ row.company.name }}
-                            </span>
-                        </form>
+                        {% if row.company %}
+                            <form action="{{ path('app_dashboard_company_edit', {id:row.id}) }}" method="post">
+                                <input type="hidden" name="csrf" value="{{ hash(csrf_token(row.company.id)) }}">
+                                <span class="text-primary pointer"
+                                      onclick="this.closest('form').submit();">
+                                    {{ row.company.name }}
+                                </span>
+                            </form>
+                        {% else %}
+                            ---
+                        {% endif %}
                     </td>
                 {% endif %}
                 <td>{{ row.isDeleted ? circle('text-danger') : circle('text-light-50') }}</td>

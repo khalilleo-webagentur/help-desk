@@ -51,4 +51,8 @@ final readonly class CompanyService
         $this->companyRepository->save($company->setUpdatedAt(new \DateTime()), true);
         return $company;
     }
+    public function delete(Company $company, bool $flush): void
+    {
+        $this->companyRepository->remove($company, $flush);
+    }
 }

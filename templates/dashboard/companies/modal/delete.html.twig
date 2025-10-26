@@ -1,0 +1,60 @@
+{% set modelTitle = hash() %}
+<div class="modal fade" id="deleteCompanyModal" tabindex="-1" role="dialog" aria-labelledby="{{ modelTitle }}"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form action="{{ path('app_dashboard_company_delete_company_and_all_related_data', {id:company.id}) }}" method="post">
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="{{ modelTitle }}">
+                        Delete Company
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body bg-light">
+
+                    <div class="mb-2">
+                        <div class="modal-danger">
+                            <b>This action will delete:</b>
+                            <ul class="mb-1">
+                                <li>all projects</li>
+                                <li>all tickets associated with a project</li>
+                                <li>all attachments related to a ticket</li>
+                                <li>all user settings</li>
+                                <li>all users</li>
+                                <li>etc.</li>
+                            </ul>
+                            <p>
+                                All data related to this company <q class="fw-bold">{{ company.name|capitalize }}</q>,
+                                will be permanently deleted, and this action cannot be undone.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="mb-2">
+                        {% set iId = hash() %}
+                        <label for="{{ iId }}" class="form-label">
+                            Name <span class="text-danger">*</span>
+                        </label>
+                        <input type="text"
+                               class="form-control"
+                               id="{{ iId }}"
+                               placeholder="Type company name"
+                               name="name"
+                               required>
+                    </div>
+                    <div class="mb-2">
+                        {% include 'dashboard/component/field/password.html.twig' with{required:true} %}
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-outline-danger">Delete Company now</button>
+                    <input type="hidden" name="cId" value="{{ company.id }}">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

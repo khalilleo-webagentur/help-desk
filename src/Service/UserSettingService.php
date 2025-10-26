@@ -57,4 +57,11 @@ final readonly class UserSettingService
 
         return $model;
     }
+
+    public function delete(User|UserInterface $user, bool $flush): void
+    {
+        if ($userSetting = $this->getOneByUser($user)) {
+            $this->userSettingRepository->remove($userSetting, $flush);
+        }
+    }
 }
