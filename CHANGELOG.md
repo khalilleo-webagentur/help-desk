@@ -23,6 +23,7 @@ All notable changes to this project will be documented in this file.
 - Update text emails
 - Dashboard TimeTrack model and implementation
 - Time Track tool
+- Api remove token endpoint and documentation
 
 ---
 
