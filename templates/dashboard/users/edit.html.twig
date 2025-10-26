@@ -138,9 +138,21 @@
 
                         </form>
                     </div>
+                    {% if isAdmin %}
+                        <div class="col-lg-6">
+                            {% include 'dashboard/component/delete_data_target_link.html.twig' with{
+                                dataTargetId: 'deleteUserModal',
+                                name: 'Delete User'
+                            } %}
+                        </div>
+                    {% endif %}
                 </div>
             </div>
         </section>
     </div>
+
+    {% if isAdmin %}
+        {% include 'dashboard/users/modal/delete.html.twig' with{user:user} %}
+    {% endif %}
 
 {% endblock %}
