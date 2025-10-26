@@ -26,6 +26,7 @@ All notable changes to this project will be documented in this file.
 - Api remove token endpoint and documentation
 - Twig mask extension for api-key
 - Delete company job and all related data
+- User deletion job
 
 ---
 
