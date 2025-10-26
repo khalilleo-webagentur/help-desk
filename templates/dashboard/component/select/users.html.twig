@@ -1,0 +1,24 @@
+{% if users is defined and users %}
+    {% set iId = hash() %}
+    <label for="{{ iId }}">
+        {{ label is defined ? label : '' }}
+        {% if required is defined %}
+            <span class="text-danger">*</span>
+        {% endif %}
+    </label>
+    <select class="form-control"
+            name="{{ name is defined ? name : '' }}"
+            id="{{ iId }}"
+            required="{{ required is defined ? 'true' : 'false' }}">
+        {% if emptyOption is defined %}
+            <option value="0" {{ value is not defined ? 'selected' : '' }}>
+                {{ emptyOption }}
+            </option>
+        {% endif %}
+        {% for user in users %}
+            <option value="{{ user.id }}" {{ value is defined and value == user.id ? 'selected' : '' }}>
+                {{ user.company.name ~ ' | ' ~  user.name }}
+            </option>
+        {% endfor %}
+    </select>
+{% endif %}

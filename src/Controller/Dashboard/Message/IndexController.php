@@ -86,6 +86,12 @@ class IndexController extends AbstractDashboardController
                 $targetUser = $this->userService->getById($this->validateNumber(
                     $request->request->get('uId')
                 ));
+
+                if (!$targetUser) {
+                    $this->addFlash('warning', 'User not found.');
+                    return $redirectTo;
+                }
+
                 $username = $targetUser->getName();
                 $email = $targetUser->getEmail();
             }

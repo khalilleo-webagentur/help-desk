@@ -19,22 +19,19 @@
 
                     <div class="from-group">
                         <p class="modal-info">
-                            You can send Notification to a user via select or check "Send this message as Notification to all users"
-                            If checked the selected one will be ignored.
+                            You can send a notification to a user by selecting or checking 'Send this message as
+                            notification to all users.' If this option is checked, the selected notification will be
+                            ignored.
                         </p>
                     </div>
 
                     {% if isAdmin and count(users) > 0 %}
                         <div class="form-group">
-                            <label for="iO7nM4yT4bG2sO44">
-                                Message To <span class="text-danger">*</span>
-                            </label>
-                            <select class="form-control" name="uId" id="iO7nM4yT4bG2sO44">
-                                <option value="0" selected>Select User</option>
-                                {% for user in users %}
-                                    <option value="{{ user.id }}">{{ user.company.name ~ ' | ' ~  user.name }}</option>
-                                {% endfor %}
-                            </select>
+                            {% include 'dashboard/component/select/users.html.twig' with {
+                                label: 'Message To',
+                                emptyOption: '--',
+                                name: 'uId',
+                            } %}
                         </div>
                     {% endif %}
 
@@ -67,7 +64,7 @@
                                 <input type="checkbox" class="form-check-input" id="c1z3n6t4"
                                        name="addToAll">
                                 <label class="form-check-label text-secondary" for="c1z3n6t4">
-                                    Send this message as Notification to all users
+                                    Send this message as a notification to all users
                                 </label>
                             </div>
                         </div>
