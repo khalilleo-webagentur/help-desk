@@ -48,7 +48,7 @@ class ApiAbstractController extends AbstractController
     {
         return $this->json([
             'success' => false,
-            'message' => 'Not authorized'
+            'message' => 'Not authorized.'
         ], Response::HTTP_UNAUTHORIZED);
     }
 
