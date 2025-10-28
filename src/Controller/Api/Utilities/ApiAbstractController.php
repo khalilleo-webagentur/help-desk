@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Api\Utilities;
+namespace App\Controller\Api\Utilities;
 
 use App\Traits\FormValidationTrait;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -12,11 +12,14 @@ use Symfony\Component\HttpFoundation\Response;
 class ApiAbstractController extends AbstractController
 {
     use FormValidationTrait;
+
     protected function isApiKeyValid(Request $request): bool
     {
         $apiKey = $request->headers->get('Authorization');
 
-        if (empty($apiKey) || !$request->headers->has('Authorization') || !str_starts_with($apiKey, 'Bearer ')) {
+        if (empty($apiKey) ||
+            !$request->headers->has('Authorization') ||
+            !str_starts_with($apiKey, 'Bearer ')) {
             return false;
         }
 
@@ -31,9 +34,9 @@ class ApiAbstractController extends AbstractController
 
     protected function hasHeaderUserAgent(Request $request): bool
     {
-        $userAgent = $request->headers->get('User-Agent');
+        $userAgent = $request->headers->get('X-User-Agent');
 
-        if (empty($userAgent) || !$request->headers->has('User-Agent')) {
+        if (empty($userAgent) || !$request->headers->has('X-User-Agent')) {
             return false;
         }
 

@@ -57,7 +57,9 @@
                         </a>
                     </td>
                     <td>
-                        {{ convertToHoursMinutes(row.totalSpentTime) }}
+                        <span class="cursor-help" title="{{ row.notes }}">
+                            {{ convertToHoursMinutes(row.totalSpentTime) }}
+                        </span>
                     </td>
                     <td>
                          <span class="ticket-status" style="background: {{ row.ticket.status.color }}">

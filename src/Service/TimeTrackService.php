@@ -33,6 +33,17 @@ final readonly class TimeTrackService
         return $totalMinutes;
     }
 
+    public function getSpendTimeNotesByTicket(Ticket $ticket): string
+    {
+        $notes = '';
+
+        foreach ($ticket->getTimeTracks() as $i => $timeTrack) {
+            $notes .= $i+1 .') ' . $timeTrack->getNote() . ',' . PHP_EOL;
+        }
+
+        return rtrim($notes, ',' . PHP_EOL);
+    }
+
     public function add(UserInterface $user, Ticket $ticket, int $minutes, string $note): TimeTrack
     {
         $timeTrack = new TimeTrack();

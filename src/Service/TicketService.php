@@ -244,6 +244,7 @@ final readonly class TicketService
                 $data[] = [
                     'ticket' => $ticket,
                     'totalSpentTime' => $this->timeTrackService->getTotalSpentTime($ticket),
+                    'notes' => $this->timeTrackService->getSpendTimeNotesByTicket($ticket),
                 ];
             }
         }

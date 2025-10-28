@@ -39,7 +39,7 @@ final readonly class TicketStatusService
      */
     public function getAll(): array
     {
-        return $this->ticketStatusRepository->findAll();
+        return $this->ticketStatusRepository->findBy([], ['position' => 'ASC']);
     }
 
     /**

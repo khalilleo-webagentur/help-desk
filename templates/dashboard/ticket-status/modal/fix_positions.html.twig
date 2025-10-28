@@ -20,10 +20,10 @@
 
                     <div class="row">
                         {% for row in ticketStatus %}
-                            <div class="col-6">
+                            <div class="col-sm-12 col-md-6 col-lg-6">
                                 <div class="mb-1">
                                     <label for="PoiO7{{ row.id }}" class="form-label">
-                                        {{ row.name|capitalize }} Position <span class="text-danger">*</span>
+                                        Pos. {{ row.name|capitalize }}
                                     </label>
                                     <input type="number" class="form-control" id="PoiO7{{ row.id }}" placeholder="0"
                                            name="positions[]"
@@ -33,7 +33,11 @@
                                 </div>
                             </div>
                         {% endfor %}
-
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            {% include 'dashboard/component/common/fields_required.html.twig' %}
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">

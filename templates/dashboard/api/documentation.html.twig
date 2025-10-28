@@ -32,14 +32,14 @@
                             <p class="fs-14">Base URL: <code>{{ host }}</code></p>
 
                             <h5>Endpoint</h5>
-                            <p class="fs-14">Route: <code>/api/v1/users/clear-token</code></p>
+                            <p class="fs-14">Route: <code>/api/v1/users/clear_token</code></p>
 
                             <h5>Method</h5>
-                            <p class="fs-14">HTTP Method: <code>GET</code></p>
+                            <p class="fs-14">HTTP Method: <code>POST</code></p>
 
                             <h5>Headers</h5>
                             <p class="fs-14">
-                                User-Agent: <code>{{ userAgent }}</code>
+                                X-User-Agent: <code>{{ maskKey(userAgent) }}</code>
                             </p>
 
                             <h5>Authorization</h5>
@@ -53,16 +53,21 @@
 
                             <h5>Request Example</h5>
                             <p class="fs-14 mb-1">
-                                Copy User-Agent:
+                                X-User-Agent:
                                 {% include 'dashboard/component/copy_to_clipboard.html.twig' with{content:userAgent} %}
                             </p>
                             <p class="fs-14">
-                                Copy Bearer Authorization token:
+                                Bearer Authorization token:
                                 {% include 'dashboard/component/copy_to_clipboard.html.twig' with{content:apiKey} %}
                             </p>
-                            <pre class="pre-container mb-1"><code class="fs-14">GET {{ host }}/api/v1/users/clear-token
-User-Agent: {{ maskKey(userAgent) }}
-Authorization: Bearer {{ maskKey(apiKey) }}
+                            <pre class="pre-container mb-1"><code class="fs-14">
+<span class="fs-13 text-secondary">// Don't forget to copy X-User-Agent and Bearer Token.</span>
+curl -X POST \
+-H "Authorization: Bearer {{ maskKey(apiKey) }}" \
+-H "Content-Type: application/json" \
+-H "X-User-Agent: {{ maskKey(userAgent) }}" \
+-H "Accept-Language: application/json" \
+"{{ host }}/api/v1/users/clear_token"
                                 </code></pre>
 
                             <h5 class="mt-3">Success Response</h5>

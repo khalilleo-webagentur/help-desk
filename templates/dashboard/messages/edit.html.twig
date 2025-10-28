@@ -70,9 +70,10 @@
                         </form>
                     </div>
                     <div class="col-lg-6">
-                        <form action="{{ path('app_dashboard_message_delete', {id: message.id}) }}" method="post">
+                        <form action="{{ path('app_dashboard_message_delete', {id: message.id}) }}"
+                              method="post">
                             <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-                            <span class="text-danger float-lg-right text-uppercase fs-12 pointer"
+                            <span class="text-danger float-lg-right text-uppercase pointer fs-10"
                                   onclick="this.closest('form').submit();">
                                 Delete Permanently <span class="fa fa-trash"></span>
                                 <input type="hidden" name="deletePermanently" value="on">
