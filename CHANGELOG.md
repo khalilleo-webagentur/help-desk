@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
+- 
+
+## [7.4.14] 2025-10-28
+- Api fix
+- Api fix User-Agent
+
+## [7.1.14] 2025-10-27
 - Breadcrumb profile
 - Composer upgrade packages
 - Add changelog md file
