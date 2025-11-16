@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 ## [7.4.14] 2025-10-28
 - Api fix
 - Api fix User-Agent
+- Upload attachment link and fix redirect
 
 ## [7.1.14] 2025-10-27
 - Breadcrumb profile
