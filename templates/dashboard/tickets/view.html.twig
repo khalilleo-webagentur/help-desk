@@ -286,16 +286,29 @@
             {% endif %}
 
             {# Attachments #}
-            {% if count(attachments) > 0 %}
-                <div class="container-fluid area-section">
-                    <div class="row mb-3">
-                        <div class="col-12">
-                            <h5 class="px-3 pt-3 pb-2">Attachments</h5>
-                            {% include 'dashboard/tickets/partial/table_attachment_content.html.twig' %}
+            <div class="container-fluid area-section">
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <h5 class="px-3 pt-3 pb-2">Attachments</h5>
+                        <div class="float-right" style="margin-top: -40px">
+                            <button class="btn btn-light btn-sm"
+                                    type="button"
+                                    data-toggle="modal"
+                                    data-target="#newAttachmentModal">
+                                <span class="fa fa-upload text-success fa-xs"></span>
+                                <small class="text-success text-uppercase">UPLOAD ATTACHMENT</small>
+                            </button>
                         </div>
+                        {% if count(attachments) > 0 %}
+                            {% include 'dashboard/tickets/partial/table_attachment_content.html.twig' %}
+                        {% else %}
+                            <p class="px-3 fs-14 text-secondary">
+                                No attachments were found for this ticket.
+                            </p>
+                        {% endif %}
                     </div>
                 </div>
-            {% endif %}
+            </div>
 
             {# Comments #}
             <div class="container-fluid area-section">
@@ -410,7 +423,7 @@
     {% include 'dashboard/tickets/modal/external_note.html.twig' %}
     {% include 'dashboard/tickets/modal/external_note_nullable.html.twig' %}
     {% include 'dashboard/tickets/modal/change_priority.html.twig' %}
-    {% include 'dashboard/tickets/modal/upload.html.twig' with{ticketId: issue.id} %}
+    {% include 'dashboard/tickets/modal/upload.html.twig' with{ticketId: issue.id, projectId: issue.project.id} %}
     {% include 'dashboard/tickets/modal/delete_issue.html.twig' %}
 
 {% endblock %}

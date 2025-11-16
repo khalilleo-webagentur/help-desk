@@ -51,18 +51,26 @@ class AttachmentController extends AbstractDashboardController
 
         $project = $this->projectService->getById($projectId);
 
+        $redirectBackToIssue = $this->redirectToRoute(
+            'app_dashboard_ticket_view',
+            [
+                'id' => $id,
+                'pid' => $projectId
+            ]
+        );
+
         if (!$project) {
             $this->addFlash('warning', 'Issue could not be found.');
-            return $this->redirectToRoute(self::DASHBOARD_TICKETS_ROUTE);
+            return $redirectBackToIssue;
         }
 
         $issue = $isSuperAdmin
             ? $this->ticketService->getById($id)
             : $this->ticketService->getOneByProjectAndId($project, $id);
 
-        if (!$issue) {
+        if (null === $issue) {
             $this->addFlash('warning', 'Issue could not be found.');
-            return $this->redirectToRoute(self::DASHBOARD_TICKETS_ROUTE);
+            return $redirectBackToIssue;
         }
 
         /** @var UploadedFile $attachment */
@@ -84,7 +92,7 @@ class AttachmentController extends AbstractDashboardController
             }
         }
 
-        return $this->redirectToRoute(self::DASHBOARD_TICKETS_ROUTE);
+        return $redirectBackToIssue;
     }
 
     #[Route('/file/{hash}', name: 'app_dashboard_ticket_helper_show', methods: ['GET', 'POST'])]
@@ -158,17 +166,25 @@ class AttachmentController extends AbstractDashboardController
             return $this->redirectToRoute(self::DASHBOARD_TICKETS_ROUTE);
         }
 
+        $redirectBackToIssue = $this->redirectToRoute(
+            'app_dashboard_ticket_view',
+            [
+                'id' => $id,
+                'pid' => $issue->getProject() && $issue->getProject()->getId() ? $issue->getProject()->getId() : 0,
+            ]
+        );
+
         $id = $this->validateNumber($request->request->get('aId'));
         $attachment = $this->ticketAttachmentsService->getOneByTicketAndId($issue, $id);
 
         if (!$attachment) {
             $this->addFlash('warning', 'Attachment could not be found.');
-            return $this->redirectToRoute(self::DASHBOARD_TICKETS_ROUTE);
+            return $redirectBackToIssue;
         }
 
         if ($user->getId() !== $attachment->getUser()->getId()) {
             $this->addFlash('warning', 'You have not enough permission to delete the Attachment from others.');
-            return $this->redirectToRoute(self::DASHBOARD_TICKETS_ROUTE);
+            return $redirectBackToIssue;
         }
 
         $this->ticketAttachmentsService->delete($attachment, true);
@@ -178,6 +194,6 @@ class AttachmentController extends AbstractDashboardController
 
         $this->addFlash('success', 'Attachment has been deleted.');
 
-        return $this->redirectToRoute(self::DASHBOARD_TICKETS_ROUTE);
+        return $redirectBackToIssue;
     }
 }
