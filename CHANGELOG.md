@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 - Api fix
 - Api fix User-Agent
 - Upload attachment link and fix redirect
+- Api docs "Remove users token"
 
 ## [7.1.14] 2025-10-27
 - Breadcrumb profile
