@@ -8,9 +8,12 @@ All notable changes to this project will be documented in this file.
 - Api docs "Remove users token"
 - Dashboard section title component
 - Dashboard edit time-spent
+- Dashboard Removed time-spent from table content
 
 ## [7.4.14] 2025-10-28
 - Api fix
+
+---
 
 ## [7.1.14] 2025-10-27
 - Breadcrumb profile
