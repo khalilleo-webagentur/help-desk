@@ -34,30 +34,44 @@
                     <div class="col-lg-12">
 
                         {% if isAdmin %}
-                            <h5>Base URL</h5>
+                            {% include 'dashboard/component/common/area_heading.html.twig' with{
+                                title: 'Base URL'
+                            } %}
                             <p class="fs-14">Base URL: <code>{{ host }}</code></p>
 
-                            <h5>Endpoint</h5>
+                            {% include 'dashboard/component/common/area_heading.html.twig' with{
+                                title: 'Endpoint'
+                            } %}
                             <p class="fs-14">Route: <code>/api/v1/users/clear_token</code></p>
 
-                            <h5>Method</h5>
+                            {% include 'dashboard/component/common/area_heading.html.twig' with{
+                                title: 'Method'
+                            } %}
                             <p class="fs-14">HTTP Method: <code>POST</code></p>
 
-                            <h5>Headers</h5>
+                            {% include 'dashboard/component/common/area_heading.html.twig' with{
+                                title: 'Headers'
+                            } %}
                             <p class="fs-14">
                                 X-User-Agent: <code>{{ maskKey(userAgent) }}</code>
                             </p>
 
-                            <h5>Authorization</h5>
+                            {% include 'dashboard/component/common/area_heading.html.twig' with{
+                                title: 'Authorization'
+                            } %}
                             <ul class="fs-14">
                                 <li>Type: Bearer Token</li>
                                 <li>Value: <code>Bearer {{ maskKey(apiKey) }}</code></li>
                             </ul>
 
-                            <h5>Description</h5>
+                            {% include 'dashboard/component/common/area_heading.html.twig' with{
+                                title: 'Description'
+                            } %}
                             <p class="fs-14">This endpoint is used to clear user tokens.</p>
 
-                            <h5>Request Example</h5>
+                            {% include 'dashboard/component/common/area_heading.html.twig' with{
+                                title: 'Request Example'
+                            } %}
                             <p class="fs-14 mb-1">
                                 X-User-Agent:
                                 {% include 'dashboard/component/copy_to_clipboard.html.twig' with{content:userAgent} %}
@@ -88,7 +102,9 @@ curl -X POST \
                                 </li>
                             </ul>
 
-                            <h5>Error Responses</h5>
+                            {% include 'dashboard/component/common/area_heading.html.twig' with{
+                                title: 'Error Responses'
+                            } %}
                             <h6>400 Bad Request</h6>
                             <p class="fs-14">Response Body:</p>
                             <pre class="pre-container"><code>{
