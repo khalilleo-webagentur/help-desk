@@ -35,7 +35,7 @@
         <section class="content">
 
             {% if is_granted('ROLE_SUPER_ADMIN') %}
-                <div class="container-fluid area-section mb-1">
+                <div class="container-fluid area-section {{ count(systemLogs) >= limit ? 'mb-1' : 'mb-4' }}">
                     <div class="row px-3 pt-3">
                         <div class="col-lg-12">
                             {% include 'dashboard/system-logs/partial/table_content.html.twig' %}
