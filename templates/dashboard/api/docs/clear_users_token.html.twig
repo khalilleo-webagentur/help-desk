@@ -1,6 +1,6 @@
 {% extends 'dashboard/layout/base.html.twig' %}
 
-{% block title %} Dashboard Api Documentation {% endblock %}
+{% block title %} Dashboard Api Documentation - Remove users Token {% endblock %}
 
 {% block body %}
 
@@ -13,10 +13,16 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-6 mt-1">
-                        <h5 class="m-0 text-dark mt-1">Api Remove Token</h5>
+                        <h5 class="m-0 text-dark mt-1">
+                            Remove users Token
+                        </h5>
                     </div>
                     <div class="col-6 mt-1">
-                        <div class="breadcrumb float-right"></div>
+                        <div class="breadcrumb float-right">
+                            <a href="{{ path('app_dashboard_api_doc_index') }}" class="text-secondary">
+                                Close <span class="fa fa-window-close"></span>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -110,6 +116,14 @@ curl -X POST \
                     </div>
                 </div>
             </div>
+
+            <div class="mb-4">
+                {% include 'dashboard/component/back_to.html.twig' with{
+                    route: 'app_dashboard_api_doc_index',
+                    name: 'Back to Api Documentation'
+                } %}
+            </div>
+
         </section>
     </div>
 

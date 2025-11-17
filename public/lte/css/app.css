@@ -7,6 +7,12 @@ p, td, td > *, a, form > span {
     color: #ffffff;
 }
 
+.accordion-card {
+    box-shadow: none;
+    padding: 0;
+    margin: 0;
+}
+
 .fw-bold {
     font-weight: 600;
 }
