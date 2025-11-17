@@ -28,8 +28,8 @@ class TimeTrackController extends AbstractDashboardController
     ) {
     }
 
-    #[Route('/store/{id}', name: 'app_dashboard_ticket_time_track_store', methods: 'POST')]
-    public function store(Request $request): RedirectResponse
+    #[Route('/new/{hash}', name: 'app_dashboard_ticket_time_track_new', methods: 'POST')]
+    public function new(Request $request): RedirectResponse
     {
         $this->denyAccessUnlessGrantedRoleSuperAdmin();
 
@@ -78,6 +78,64 @@ class TimeTrackController extends AbstractDashboardController
         $this->ticketActivitiesService->add($issue, $user, $message);
 
         $this->addFlash('success', 'Time is being logged.');
+
+        return $redirectBack;
+    }
+
+    #[Route('/store/{hash}', name: 'app_dashboard_ticket_time_track_store', methods: 'POST')]
+    public function store(Request $request): RedirectResponse
+    {
+        $this->denyAccessUnlessGrantedRoleSuperAdmin();
+
+        $projectId = $this->validateNumber($request->request->get('pid'));
+
+        if ($projectId <= 0) {
+            $this->addFlash('warning', 'Project ID must be greater than zero.');
+            return $this->redirectToRoute(self::DASHBOARD_TICKET_VIEW_ROUTE);
+        }
+
+        $ticketId = $this->validateNumber($request->request->get('id'));
+        $issue = $this->ticketService->getById($ticketId);
+
+        if (!$issue) {
+            $this->addFlash('warning', 'Ticket not found.');
+            return $this->redirectToRoute(self::DASHBOARD_TICKET_VIEW_ROUTE);
+        }
+
+        $redirectBack = $this->redirectToRoute(self::DASHBOARD_TICKET_VIEW_ROUTE, [
+            'id' => $ticketId,
+            'pid' => $projectId
+        ]);
+
+        $minutes = $this->validateNumber($request->request->get('minutes'));
+
+        if (!$minutes) {
+            $this->addFlash('danger', 'Minutes should be greater than 0.');
+            return $redirectBack;
+        }
+
+        $note = $this->validate($request->request->get('note'));
+
+        if (!$note) {
+            $this->addFlash('danger', 'The note field is required.');
+            return $redirectBack;
+        }
+
+        $timeTrack = $this->timeTrackService->getById(
+            $this->validateNumber($request->request->get('ttId'))
+        );
+
+        if (!$timeTrack) {
+            $this->addFlash('danger', 'Time track not found.');
+            return $redirectBack;
+        }
+
+        $user = $this->getUser();
+        $message = sprintf('modified logged time spent from %s to "%s" minutes', $timeTrack->getMinutes(), $minutes);
+        $this->ticketActivitiesService->add($issue, $user, $message);
+        $this->timeTrackService->store($timeTrack, $minutes, $note);
+
+        $this->addFlash('success', 'Changes has been saved.');
 
         return $redirectBack;
     }

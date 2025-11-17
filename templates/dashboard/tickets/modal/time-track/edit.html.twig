@@ -1,0 +1,65 @@
+{% set iID = hash() %}
+<div class="modal fade"
+     id="timeTrackModal{{ timetrack.id }}"
+     tabindex="-1"
+     role="dialog"
+     aria-labelledby="{{ 'Label_' ~ iID }}"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form action="{{ path('app_dashboard_ticket_time_track_store', {hash:hash(timetrack.id)}) }}" method="post">
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="{{ 'Label_' ~ iID }}">
+                        Edit Time-Track
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body bg-light">
+
+                    {% set iID = hash() %}
+                    <div class="mb-2">
+                        <label for="{{ iID }}" class="form-label">
+                            Time spent <span class="text-danger">*</span>
+                        </label>
+                        <input type="number" class="form-control" id="{{ iID }}" placeholder="Type minutes"
+                               name="minutes"
+                               value="{{ timetrack.minutes }}"
+                               required>
+                        <small class="text-secondary">
+                            Time spent in minutes.
+                        </small>
+                    </div>
+
+                    <div class="mb-2">
+                        {% include 'dashboard/component/field/textarea.html.twig' with{
+                            label: 'Note',
+                            name: 'note',
+                            value: timetrack.note,
+                            rows: 2,
+                            required: true,
+                            placeholder: 'Type note',
+                            helpBlock: 'Please provide a brief description of the reason for logging your time.'
+                        } %}
+                    </div>
+
+                    <div class="mb-2">
+                        {% include 'dashboard/component/common/fields_required.html.twig' %}
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-outline-primary">Save changes</button>
+                    <div class="d-none">
+                        <input type="hidden" name="ttId" value="{{ timetrack.id }}">
+                        <input type="hidden" name="id" value="{{ issue.id }}">
+                        <input type="hidden" name="pid" value="{{ issue.project.id }}">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

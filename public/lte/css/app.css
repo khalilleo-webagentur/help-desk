@@ -227,7 +227,6 @@ body {
     margin-bottom: 15px;
     padding: 8px;
     border: 1px solid #ece9e9;
-    opacity: .9;
 }
 
 .form-control:disabled:focus, .form-control:focus[readonly] {

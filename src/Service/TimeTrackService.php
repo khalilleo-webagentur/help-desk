@@ -17,6 +17,11 @@ final readonly class TimeTrackService
     ){
     }
 
+    public function getById(int $id): ?TimeTrack
+    {
+        return $this->timeTrackRepository->find($id);
+    }
+
     public function getOneByTicketAndId(Ticket $ticket, int $id): ?TimeTrack
     {
         return $this->timeTrackRepository->findOneBy(['ticket' => $ticket, 'id' => $id]);
@@ -50,6 +55,15 @@ final readonly class TimeTrackService
         $timeTrack
             ->setUser($user)
             ->setTicket($ticket)
+            ->setMinutes($minutes)
+            ->setNote($note);
+
+        return $this->save($timeTrack);
+    }
+
+    public function store(TimeTrack $timeTrack, int $minutes, string $note): TimeTrack
+    {
+        $timeTrack
             ->setMinutes($minutes)
             ->setNote($note);
 

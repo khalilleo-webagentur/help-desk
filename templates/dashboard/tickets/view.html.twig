@@ -219,16 +219,24 @@
                             {% include 'dashboard/component/common/area_heading.html.twig' with{
                                 title: 'Time Track Overview'
                             } %}
-                            <div class="float-right" style="margin-top: -40px">
+                            <div class="float-right" style="margin-top: -32px">
                                 <button class="btn btn-light btn-sm"
                                         type="button"
                                         data-toggle="modal"
                                         data-target="#logTimeModal"
                                         title="Log the time you spent on this issue.">
                                     <span class="fa fa-clock text-success fa-xs"></span>
-                                    <small class="text-success text-uppercase">Log Spent Time</small>
+                                    <small class="text-success text-uppercase">Log Time Spent</small>
                                 </button>
                             </div>
+                            {% if totalTimeTrack > 0 %}
+                                <p class="fs-14 mt-3 text-secondary">
+                                    Total time tracked for this issue: {{ convertToHoursMinutes(totalTimeTrack) }}
+                                    {% include 'dashboard/component/popover_info.html.twig' with{
+                                        content: 'The Note entered for time spent will be included as a line item in the invoice later.'
+                                    } %}
+                                </p>
+                            {% endif %}
                             <div class="mb-3">
                                 {% include 'dashboard/tickets/partial/time_track_table_content.html.twig' %}
                             </div>
@@ -439,7 +447,7 @@
     {% if isAdminOrEmployee %}
         {% include 'dashboard/tickets/modal/internal_note.html.twig' %}
         {% include 'dashboard/tickets/modal/internal_note_nullable.html.twig' %}
-        {% include 'dashboard/tickets/modal/log_time.html.twig' %}
+        {% include 'dashboard/tickets/modal/time-track/new.html.twig' %}
         {% include 'dashboard/tickets/modal/change_status.html.twig' %}
         {% include 'dashboard/tickets/modal/change_assignee.html.twig' %}
         {% include 'dashboard/tickets/modal/link_issue.html.twig' %}

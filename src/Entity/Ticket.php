@@ -238,6 +238,12 @@ class Ticket
         return $this->timeSpentInMinutes;
     }
 
+    /**
+     * @deprecated
+     * @param int $timeSpentInMinutes
+     *
+     * @return $this
+     */
     public function setTimeSpentInMinutes(int $timeSpentInMinutes): static
     {
         $this->timeSpentInMinutes = $timeSpentInMinutes;
