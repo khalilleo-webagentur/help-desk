@@ -161,7 +161,11 @@
                                 </div>
                             {% endif %}
 
-                            <h5 class="my-3">{{ issue.title }}</h5>
+                            <div class="my-2">
+                                {% include 'dashboard/component/common/area_heading.html.twig' with{
+                                    title: issue.title
+                                } %}
+                            </div>
 
                             <div class="text-secondary">
                                 <div class="pm-bottom">{{ issue.description|raw }}</div>
@@ -212,7 +216,9 @@
                 <div class="container-fluid area-section">
                     <div class="row px-3 py-3">
                         <div class="col">
-                            <h5 class="mb-3">Time Track Overview</h5>
+                            {% include 'dashboard/component/common/area_heading.html.twig' with{
+                                title: 'Time Track Overview'
+                            } %}
                             <div class="float-right" style="margin-top: -40px">
                                 <button class="btn btn-light btn-sm"
                                         type="button"
@@ -236,7 +242,11 @@
                 <div class="container-fluid area-section">
                     <div class="row mb-3">
                         <div class="col-12">
-                            <h5 class="px-3 pt-3 pb-2">{{ isAdminOrEmployee ? 'External Note' : 'Note Related to Issue' }}</h5>
+                            <div class="px-3 pt-3 pb-2">
+                                {% include 'dashboard/component/common/area_heading.html.twig' with{
+                                    title: isAdminOrEmployee ? 'External Note' : 'Note Related to Issue'
+                                } %}
+                            </div>
                             <p class="px-3">{{ issue.externalNote }}</p>
 
                             {% if not isAdminOrEmployee %}
@@ -264,7 +274,11 @@
                 <div class="container-fluid area-section">
                     <div class="row mb-3">
                         <div class="col-12">
-                            <h5 class="px-3 pt-3 pb-2">Internal Note</h5>
+                            <div class="px-3 pt-3 pb-2">
+                                {% include 'dashboard/component/common/area_heading.html.twig' with{
+                                    title: 'Internal Note'
+                                } %}
+                            </div>
                             <div class="px-3">{{ issue.internalNote|raw }}</div>
 
                             <div class="d-flex float-right">
@@ -289,7 +303,11 @@
             <div class="container-fluid area-section">
                 <div class="row mb-3">
                     <div class="col-12">
-                        <h5 class="px-3 pt-3 pb-2">Attachments</h5>
+                        <div class="px-3 pt-3 pb-2">
+                            {% include 'dashboard/component/common/area_heading.html.twig' with{
+                                title: 'Attachments'
+                            } %}
+                        </div>
                         <div class="float-right" style="margin-top: -40px">
                             <button class="btn btn-light btn-sm"
                                     type="button"
@@ -315,7 +333,11 @@
 
                 <div class="row pl-3 mt-3">
                     <div class="col">
-                        <h5>Comments</h5>
+                        <div class="mb-2">
+                            {% include 'dashboard/component/common/area_heading.html.twig' with{
+                                title: 'Comments'
+                            } %}
+                        </div>
                     </div>
                 </div>
 
@@ -396,8 +418,11 @@
                 <div class="container-fluid area-section">
                     <div class="row px-3 py-3">
                         <div class="col">
-                            <h5 class="mb-3">Activities</h5>
-
+                            <div class="mb-3">
+                                {% include 'dashboard/component/common/area_heading.html.twig' with{
+                                    title: 'Activities'
+                                } %}
+                            </div>
                             <div class="mb-3">
                                 {% include 'dashboard/tickets/partial/table_activities_content.html.twig' %}
                             </div>
