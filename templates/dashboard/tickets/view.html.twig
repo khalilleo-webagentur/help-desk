@@ -168,7 +168,9 @@
                             </div>
 
                             <div class="text-secondary">
-                                <div class="pm-bottom">{{ issue.description|raw }}</div>
+                                <div class="pm-bottom mb-2 pb-2" style="border-bottom: 1px solid #f6f1f19e;">
+                                    {{ issue.description|raw }}
+                                </div>
                                 <p class="mb-1"><b>Type: </b> <span>{{ issue.type.name }}</span></p>
                                 <p class="mb-1"><b>Issue created by: </b> <span>{{ issue.customer.name }}</span></p>
                                 <p class="mb-1">
@@ -196,7 +198,7 @@
                                     <b>Modified at: </b>
                                     <span title="{{ issue.updatedAt|date }}">{{ timeAgo(issue.updatedAt) }}</span>
                                 </p>
-                                <p>
+                                <p class="mb-0">
                                     <b>Created at: </b>
                                     <span title="{{ issue.createdAt|date }}">
                                         {{ timeAgo(issue.createdAt) }}
