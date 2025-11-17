@@ -14,7 +14,7 @@
                     </div>
                     <div class="col-4">
                         <div class="breadcrumb float-right">
-                            <a href="{{ path('app_dashboard_tickets_index') }}" class="text-secondary">
+                            <a href="{{ path('app_dashboard_tickets_index', {status: issue.status.name|lower}) }}" class="text-secondary">
                                 Close <span class="fa fa-window-close"></span>
                             </a>
                         </div>
