@@ -3,6 +3,11 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
+-
+
+---
+
+## [7.12.4] 2025-11-18
 - Api fix User-Agent
 - Upload attachment link and fix redirect
 - Api docs "Remove users token"
@@ -12,6 +17,8 @@ All notable changes to this project will be documented in this file.
 - Dashboard fix close btn in edit and view
 - Dashboard area-header class and use component
 - Dashboard message edit and checkbox component
+
+---
 
 ## [7.4.14] 2025-10-28
 - Api fix
