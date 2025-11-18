@@ -32,14 +32,11 @@
                                     {% endfor %}
                                 </select>
                             </div>
-                            <div class="mb-3">
-                                <div class="form-group form-check">
-                                    <input type="checkbox" class="form-check-input" id="c1z3n6t4"
-                                           name="hasToken">
-                                    <label class="form-check-label text-secondary" for="c1z3n6t4">
-                                        Only users that have Tokens
-                                    </label>
-                                </div>
+                            <div class="mb-2">
+                                {% include 'dashboard/component/field/checkbox.html.twig' with{
+                                    label: 'Only users that have Tokens',
+                                    name: 'hasToken'
+                                } %}
                             </div>
                         </div>
                     </div>

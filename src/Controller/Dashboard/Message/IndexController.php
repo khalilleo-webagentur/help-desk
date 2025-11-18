@@ -11,6 +11,7 @@ use App\Service\MessageContentService;
 use App\Service\MessagesService;
 use App\Service\UserService;
 use App\Traits\FormValidationTrait;
+use DateTime;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -191,11 +192,14 @@ class IndexController extends AbstractDashboardController
         }
 
         $isSeen = !$this->validateCheckbox($request->request->get('isSeen'));
+        $isDeleted = $this->validateCheckbox($request->request->get('isDeleted'));
+
         $this->messagesService->save(
             $message
                 ->setSubject($subject)
                 ->setIsSeen($isSeen)
-                ->setSeenAt($isSeen ? new \DateTime() : null)
+                ->setDeleted($isDeleted)
+                ->setSeenAt($isSeen ? new DateTime() : null)
         );
 
         $this->messageContentService->save($message->getMessageContent()->setContent($content));

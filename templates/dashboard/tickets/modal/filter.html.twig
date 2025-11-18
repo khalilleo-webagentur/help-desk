@@ -124,13 +124,10 @@
 
                     <div class="row">
                         <div class="col">
-                            <div class="form-group form-check">
-                                <input type="checkbox" class="form-check-input" id="bQ0dN1dZ"
-                                       name="bQ0dN1dZ">
-                                <label class="form-check-label text-secondary" for="bQ0dN1dZ">
-                                    Only Issues that has been linked to another Issues
-                                </label>
-                            </div>
+                            {% include 'dashboard/component/field/checkbox.html.twig' with{
+                                label: 'Only Issues that has been linked to another Issues',
+                                name: 'bQ0dN1dZ'
+                            } %}
                         </div>
                     </div>
 

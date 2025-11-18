@@ -85,6 +85,14 @@ label, label:not(.form-check-label):not(.custom-file-label) {
     margin-bottom: 7px;
 }
 
+.text-light-75 {
+    color: #cccccc;
+}
+
+.text-light-75:hover {
+    color: #aeaeae;
+}
+
 .fs-10 {
     font-size: 10px !important;
 }

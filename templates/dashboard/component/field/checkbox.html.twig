@@ -1,0 +1,32 @@
+{% if label is defined and name is defined %}
+    {% set iId = hash() %}
+    <div class="form-check">
+        <input class="form-check-input"
+               type="checkbox"
+               id="{{ iId }}"
+               name="{{ name }}"
+                {% if required is defined %}
+                    required="required"
+                {% endif %}
+                {% if checked is defined and checked %}
+                    checked="checked"
+                {% endif %}
+                {% if disabled is defined and disabled %}
+                    disabled="disabled"
+                {% endif %}
+        >
+        <label class="form-check-label text-gray-dark" for="{{ iId }}">
+            {{ label }}
+            <span class="text-danger pr-1">{{ required is defined ? '*' : '' }}</span>
+        </label>
+
+        {% if poboverInfoText is defined %}
+            <span class="fa fa-info-circle fs-14 text-light-75 pointer"
+                  data-container="body"
+                  data-toggle="popover"
+                  data-placement="top"
+                  data-content="{{ poboverInfoText }}">
+                </span>
+        {% endif %}
+    </div>
+{% endif %}

@@ -53,16 +53,20 @@
                                           placeholder="Type description"
                                           name="content">{{ message.messageContent.content }}</textarea>
                             </div>
+                            <div class="mb-2">
+                                {% include 'dashboard/component/field/checkbox.html.twig' with{
+                                    label: 'Mark this message as not seen yet',
+                                    checked: true,
+                                    name: 'isSeen'
+                                } %}
+                            </div>
 
                             <div class="mb-3">
-                                <div class="form-group form-check">
-                                    <input type="checkbox" class="form-check-input" id="c1z3n6t4"
-                                           name="isSeen"
-                                           checked>
-                                    <label class="form-check-label text-secondary" for="c1z3n6t4">
-                                        Mark this message as not seen yet
-                                    </label>
-                                </div>
+                                {% include 'dashboard/component/field/checkbox.html.twig' with{
+                                    label: 'Message is deleted',
+                                    checked: message.isDeleted,
+                                    name: 'isDeleted'
+                                } %}
                             </div>
 
                             {% include "dashboard/component/edit_save_btn.html.twig" %}

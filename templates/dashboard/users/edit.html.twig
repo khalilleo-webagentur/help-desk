@@ -80,53 +80,37 @@
                             </div>
 
                             <div class="mb-2">
-                                <div class="form-group form-check">
-                                    <input type="checkbox" class="form-check-input" id="4lN3jG3gE9oB3o"
-                                           name="isVerified"
-                                            {{ user.isVerified ? 'checked' : '' }}>
-                                    <label class="form-check-label text-secondary" for="4lN3jG3gE9oB3o">
-                                        is Account being verified
-                                    </label>
-                                </div>
+                                {% include 'dashboard/component/field/checkbox.html.twig' with{
+                                    label: 'is Account being verified',
+                                    checked: user.isVerified,
+                                    name: 'isVerified'
+                                } %}
                             </div>
 
                             <div class="mb-2">
-                                <div class="form-group form-check">
-                                    <input type="checkbox" class="form-check-input" id="7lN3jG3gE9oB3Do"
-                                           name="isDeleted"
-                                            {{ user.isDeleted ? 'checked' : '' }}>
-                                    <label class="form-check-label text-secondary" for="7lN3jG3gE9oB3Do">
-                                        is Account being deleted
-                                    </label>
-                                </div>
+                                {% include 'dashboard/component/field/checkbox.html.twig' with{
+                                    label: 'is Account being deleted',
+                                    checked: user.isDeleted,
+                                    name: 'isDeleted'
+                                } %}
                             </div>
 
                             {% if isAdmin %}
                                 <div class="mb-2">
-                                    <div class="form-group form-check">
-                                        <input type="checkbox" class="form-check-input" id="7lN3isTeamLeader"
-                                               name="x3h1r9u2"
-                                                {{ user.isTeamLeader ? 'checked' : '' }}>
-                                        <label class="form-check-label text-secondary" for="7lN3isTeamLeader">
-                                            is Team-Leader
-                                        </label>
-                                        {% include 'dashboard/component/popover_info.html.twig' with{
-                                            content: 'Each company has only one Team Leader. If this checked, it indicates that the user is a Team Leader and has more Permissions.'
-                                        } %}
-                                    </div>
+                                    {% include 'dashboard/component/field/checkbox.html.twig' with{
+                                        label: 'is Team-Leader',
+                                        checked: user.isTeamLeader,
+                                        name: 'x3h1r9u2',
+                                        poboverInfoText: 'Each company has only one Team Leader. If this checked, it indicates that the user is a Team Leader and has more Permissions.'
+                                    } %}
                                 </div>
                                 <div class="mb-2">
-                                    <div class="form-group form-check">
-                                        <input type="checkbox" class="form-check-input" id="c1z3n6t4"
-                                               name="c1z3n6t4"
-                                                {{ user.isNinja ? 'checked' : '' }}>
-                                        <label class="form-check-label text-secondary" for="c1z3n6t4">
-                                            is Employee
-                                        </label>
-                                        {% include 'dashboard/component/popover_info.html.twig' with{
-                                            content: 'Ninja the one who works on our issues.'
-                                        } %}
-                                    </div>
+                                    {% include 'dashboard/component/field/checkbox.html.twig' with{
+                                        label: 'is Employee',
+                                        checked: user.isNinja,
+                                        name: 'c1z3n6t4',
+                                        poboverInfoText: 'Ninja the one who works on our issues.'
+                                    } %}
                                 </div>
                             {% endif %}
 
